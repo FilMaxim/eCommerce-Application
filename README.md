@@ -56,3 +56,30 @@ This app is SPA and develop with:
 
 8. **About Us Page 🙋‍♂️🙋‍♀️**  
    The About Us page give a brief introduction to the development team. It highlight each member's contributions to the project and provide personal details such as names, roles, short bios, relevant photos, and GitHub profile links.
+
+# Locally setup instruction & available scripts
+
+-  clone this repo
+
+- `yarn install`
+If you don't have yarn, `npm i --global yarn` before
+
+- `yarn start` 
+Runs dev-server on http://localhost:3000/
+
+- `yarn build`
+Build production bundle
+
+## Other scripts
+
+- `yarn test`
+Runs jest tests
+
+- `yarn lint`
+Runs js, jsx, ts, tsx files linting
+
+- `yarn format`
+Runs Prettier formatting across the codebase
+
+- `yarn eject`
+Give access to dependancies config files
