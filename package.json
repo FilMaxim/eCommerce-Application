@@ -31,18 +31,20 @@
       "plugin:react/recommended",
       "standard-with-typescript"
     ],
-    "overrides": [
-    ],
+    "overrides": [],
     "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module",
-        "project": "./tsconfig.json"
+      "ecmaVersion": "latest",
+      "sourceType": "module",
+      "project": "./tsconfig.json"
     },
     "plugins": [
-        "react"
+      "react"
     ],
     "rules": {
-      "@typescript-eslint/semi": ["error", "always"],
+      "@typescript-eslint/semi": [
+        "error",
+        "always"
+      ],
       "@typescript-eslint/no-explicit-any": "error"
     }
   },
@@ -65,6 +67,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.33.1"
+    "eslint-plugin-react": "^7.33.1",
+    "prettier": "^3.0.1"
   }
 }
