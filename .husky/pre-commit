@@ -3,4 +3,4 @@
 
 yarn format
 # yarn test
-# yarn lint
+yarn lint
