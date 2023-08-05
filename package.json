@@ -47,7 +47,8 @@
         "always"
       ],
       "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/explicit-function-return-type": "off"
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/member-delimiter-style": "off"
     }
   },
   "browserslist": {
