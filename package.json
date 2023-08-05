@@ -47,7 +47,9 @@
         "always"
       ],
       "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/explicit-function-return-type": "off"
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-uses-react": "off"
     }
   },
   "browserslist": {
