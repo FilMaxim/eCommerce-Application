@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 
-const BurgerBtn: React.FC<{ clickHandler: (open: boolean) => void }> = ({
+export const BurgerBtn: React.FC<{ clickHandler: (open: boolean) => void }> = ({
   clickHandler
 }: {
   clickHandler: (open: boolean) => void;
@@ -22,5 +22,3 @@ const BurgerBtn: React.FC<{ clickHandler: (open: boolean) => void }> = ({
     </button>
   );
 };
-
-export default BurgerBtn;

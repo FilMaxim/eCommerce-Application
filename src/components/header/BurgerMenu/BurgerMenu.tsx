@@ -1,14 +1,14 @@
 import React from 'react';
 import { Dialog } from '@headlessui/react';
 import { Logo } from '../logo/logo';
-import BurgerCloseBtn from './BurgerCloseBtn/BurgerCloseBtn';
+import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
 
 interface IBurgerMenu {
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
 }
 
-const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenu) => {
+export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenu) => {
   return (
     <Dialog
       as="div"
@@ -46,5 +46,3 @@ const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenu) => {
     </Dialog>
   );
 };
-
-export default BurgerMenu;

@@ -1,9 +1,9 @@
 import '../../styles/App.css';
 import React, { useState } from 'react';
-import NavBar from './NavBar/NavBar';
-import BurgerMenu from './BurgerMenu/BurgerMenu';
+import { NavBar } from './NavBar/NavBar';
+import { BurgerMenu } from './BurgerMenu/BurgerMenu';
 
-const Header = () => {
+export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -16,5 +16,3 @@ const Header = () => {
     </header>
   );
 };
-
-export default Header;

@@ -1,7 +1,9 @@
 import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-const BurgerCloseBtn: React.FC<{ clickHandler: (open: boolean) => void }> = ({ clickHandler }) => {
+export const BurgerCloseBtn: React.FC<{ clickHandler: (open: boolean) => void }> = ({
+  clickHandler
+}) => {
   return (
     <button
       type="button"
@@ -18,5 +20,3 @@ const BurgerCloseBtn: React.FC<{ clickHandler: (open: boolean) => void }> = ({ c
     </button>
   );
 };
-
-export default BurgerCloseBtn;

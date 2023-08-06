@@ -1,12 +1,12 @@
 import React from 'react';
 import { Logo } from '../logo/logo';
-import BurgerBtn from './BurgerBtn/BurgerBtn';
+import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 
 interface INavBar {
   clickHandler: (open: boolean) => void;
 }
 
-const NavBar: React.FC<INavBar> = ({ clickHandler }) => {
+export const NavBar: React.FC<INavBar> = ({ clickHandler }) => {
   return (
     <nav
       className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-6 lg:px-8"
@@ -34,5 +34,3 @@ const NavBar: React.FC<INavBar> = ({ clickHandler }) => {
     </nav>
   );
 };
-
-export default NavBar;
