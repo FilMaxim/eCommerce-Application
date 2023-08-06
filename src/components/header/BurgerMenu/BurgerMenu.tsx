@@ -26,8 +26,6 @@ const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenu) => {
         </div>
 
         <div className="mt-6 flow-root">
-          {/* <BurgerNav /> */}
-
           {['LogIn', 'Register'].map((item) => (
             <div
               key={item}

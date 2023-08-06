@@ -14,8 +14,6 @@ const NavBar: React.FC<INavBar> = ({ clickHandler }) => {
     >
       <Logo className="flex lg:flex-1" />
 
-      {/* <MainMenu /> */}
-
       <div className="flex lg:hidden">
         <BurgerBtn clickHandler={clickHandler} />
       </div>
