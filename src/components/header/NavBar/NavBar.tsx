@@ -14,25 +14,22 @@ export const NavBar = ({ clickHandler }: INavBaProps) => {
       className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-6 lg:px-8"
       aria-label="Global"
     >
-      <Logo className="flex lg:flex-1" />
+      <Logo className="block" />
 
-      <div className="flex lg:hidden">
-        <BurgerBtn clickHandler={clickHandler} />
-      </div>
+      <BurgerBtn clickHandler={clickHandler} />
 
-      {links.map((item) => (
-        <div
-          key={item}
-          className="hidden lg:flex lg:justify-end"
-        >
-          <a
-            href="#"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-cyan-500"
-          >
-            {item}
-          </a>
-        </div>
-      ))}
+      <ul className="hidden gap-3 lg:flex">
+        {links.map((item) => (
+          <li key={item}>
+            <a
+              href="#"
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-cyan-500"
+            >
+              {item}
+            </a>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 };
