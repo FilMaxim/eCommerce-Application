@@ -2,12 +2,10 @@ import React from 'react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 
 interface IBurgerBtnProps {
-  clickHandler: (open: boolean) => void
+  clickHandler: (open: boolean) => void;
 }
 
-export const BurgerBtn = ({
-  clickHandler
-}: IBurgerBtnProps) => {
+export const BurgerBtn = ({ clickHandler }: IBurgerBtnProps) => {
   return (
     <button
       type="button"

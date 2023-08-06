@@ -2,7 +2,7 @@ import logo from '../../../assets/logo.svg';
 import React from 'react';
 
 interface ILogoParams {
-  className?: string
+  className?: string;
 }
 
 export const Logo = ({ className }: ILogoParams) => {

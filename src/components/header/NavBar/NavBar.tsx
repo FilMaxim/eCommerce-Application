@@ -2,6 +2,8 @@ import React from 'react';
 import { Logo } from '../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 
+const links = ['LogIn', 'Register'];
+
 interface INavBaProps {
   clickHandler: (open: boolean) => void;
 }
@@ -18,7 +20,7 @@ export const NavBar = ({ clickHandler }: INavBaProps) => {
         <BurgerBtn clickHandler={clickHandler} />
       </div>
 
-      {['LogIn', 'Register'].map((item) => (
+      {links.map((item) => (
         <div
           key={item}
           className="hidden lg:flex lg:justify-end"

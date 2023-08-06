@@ -3,6 +3,8 @@ import { Dialog } from '@headlessui/react';
 import { Logo } from '../logo/logo';
 import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
 
+const links = ['LogIn', 'Register'];
+
 interface IBurgerMenuProps {
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
@@ -26,7 +28,7 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenuPro
         </div>
 
         <div className="mt-6 flow-root">
-          {['LogIn', 'Register'].map((item) => (
+          {links.map((item) => (
             <div
               key={item}
               className="-my-6 divide-y divide-gray-500/10"

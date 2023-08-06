@@ -5,9 +5,7 @@ interface IBurgerCloseBtnProps {
   clickHandler: (open: boolean) => void;
 }
 
-export const BurgerCloseBtn = ({
-  clickHandler
-}: IBurgerCloseBtnProps) => {
+export const BurgerCloseBtn = ({ clickHandler }: IBurgerCloseBtnProps) => {
   return (
     <button
       type="button"
