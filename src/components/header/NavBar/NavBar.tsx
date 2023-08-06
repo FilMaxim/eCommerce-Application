@@ -3,10 +3,7 @@ import { Logo } from '../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 import { Link } from 'react-router-dom';
 
-const linksData = [
-  links.login,
-  links.registration
-];
+const linksData = [links.login, links.registration];
 
 interface INavBaProps {
   clickHandler: (open: boolean) => void;

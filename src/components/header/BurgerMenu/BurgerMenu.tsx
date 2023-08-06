@@ -4,10 +4,7 @@ import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
 import { links } from '../../utils/links';
 import { Link } from 'react-router-dom';
 
-const linksData = [
-  links.login,
-  links.registration
-];
+const linksData = [links.login, links.registration];
 
 interface IBurgerMenuProps {
   mobileMenuOpen: boolean;
