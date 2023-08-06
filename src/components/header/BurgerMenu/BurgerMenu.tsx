@@ -3,12 +3,12 @@ import { Dialog } from '@headlessui/react';
 import { Logo } from '../logo/logo';
 import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
 
-interface IBurgerMenu {
+interface IBurgerMenuProps {
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
 }
 
-export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenu) => {
+export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenuProps) => {
   return (
     <Dialog
       as="div"

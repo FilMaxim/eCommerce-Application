@@ -1,9 +1,13 @@
 import React from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-export const BurgerCloseBtn: React.FC<{ clickHandler: (open: boolean) => void }> = ({
+interface IBurgerCloseBtnProps {
+  clickHandler: (open: boolean) => void;
+}
+
+export const BurgerCloseBtn = ({
   clickHandler
-}) => {
+}: IBurgerCloseBtnProps) => {
   return (
     <button
       type="button"

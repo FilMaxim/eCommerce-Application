@@ -1,7 +1,11 @@
 import logo from '../../../assets/logo.svg';
 import React from 'react';
 
-export const Logo: React.FC<{ className?: string }> = ({ className }) => {
+interface ILogoParams {
+  className?: string
+}
+
+export const Logo = ({ className }: ILogoParams) => {
   return (
     <a
       href="#"

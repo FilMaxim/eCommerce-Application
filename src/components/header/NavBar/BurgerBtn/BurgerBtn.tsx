@@ -1,11 +1,13 @@
 import React from 'react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 
-export const BurgerBtn: React.FC<{ clickHandler: (open: boolean) => void }> = ({
+interface IBurgerBtnProps {
+  clickHandler: (open: boolean) => void
+}
+
+export const BurgerBtn = ({
   clickHandler
-}: {
-  clickHandler: (open: boolean) => void;
-}) => {
+}: IBurgerBtnProps) => {
   return (
     <button
       type="button"
