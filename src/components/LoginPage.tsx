@@ -13,8 +13,9 @@ export const LoginPage = () => (
         <li key={item.text}>
           <Link
             to={item.path}
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-cyan-500"
+            className="flex items-center gap-1 rounded-lg border border-black px-2 py-1 text-sm font-semibold leading-6 text-gray-900 hover:border-cyan-500 hover:text-cyan-500"
           >
+            <item.icon className="h-6 w-6" />
             {item.text}
           </Link>
         </li>
