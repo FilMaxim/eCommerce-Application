@@ -10,7 +10,7 @@ export const App = () => (
     <Router>
       <Routes>
         <Route
-          path={routes.mainPagePaath()}
+          path={routes.mainPagePath()}
           element={<MainPage />}
         />
         <Route

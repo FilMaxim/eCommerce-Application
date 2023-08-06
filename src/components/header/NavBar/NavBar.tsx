@@ -1,8 +1,12 @@
-import React from 'react';
+import { links } from '../../utils/links';
 import { Logo } from '../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
+import { Link } from 'react-router-dom';
 
-const links = ['LogIn', 'Register'];
+const linksData = [
+  links.login,
+  links.registration
+];
 
 interface INavBaProps {
   clickHandler: (open: boolean) => void;
@@ -19,14 +23,14 @@ export const NavBar = ({ clickHandler }: INavBaProps) => {
       <BurgerBtn clickHandler={clickHandler} />
 
       <ul className="hidden gap-3 lg:flex">
-        {links.map((item) => (
-          <li key={item}>
-            <a
-              href="#"
+        {linksData.map((item) => (
+          <li key={item.text}>
+            <Link
+              to={item.path}
               className="text-sm font-semibold leading-6 text-gray-900 hover:text-cyan-500"
             >
-              {item}
-            </a>
+              {item.text}
+            </Link>
           </li>
         ))}
       </ul>

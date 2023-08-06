@@ -1,9 +1,13 @@
-import React from 'react';
 import { Dialog } from '@headlessui/react';
 import { Logo } from '../logo/logo';
 import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
+import { links } from '../../utils/links';
+import { Link } from 'react-router-dom';
 
-const links = ['LogIn', 'Register'];
+const linksData = [
+  links.login,
+  links.registration
+];
 
 interface IBurgerMenuProps {
   mobileMenuOpen: boolean;
@@ -26,12 +30,12 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenuPro
         </div>
 
         <ul className="mt-6 flow-root">
-          {links.map((item) => (
+          {linksData.map((item) => (
             <li
-              key={item}
+              key={item.text}
               className="-mx-6 cursor-pointer p-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 hover:text-cyan-500"
             >
-              <a href="#">{item}</a>
+              <Link to={item.path}>{item.text}</Link>
             </li>
           ))}
         </ul>
