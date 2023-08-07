@@ -6,26 +6,24 @@ import { NotFoundPage } from './NotFoundPage';
 import { MainPage } from './MainPage';
 
 export const App = () => (
-  <div>
-    <Router>
-      <Routes>
-        <Route
-          path={routes.mainPagePaath()}
-          element={<MainPage />}
-        />
-        <Route
-          path={routes.loginPagePath()}
-          element={<LoginPage />}
-        />
-        <Route
-          path={routes.registrationPagePath()}
-          element={<RegistrationPage />}
-        />
-        <Route
-          path={routes.notFoundPagePath()}
-          element={<NotFoundPage />}
-        />
-      </Routes>
-    </Router>
-  </div>
+  <Router>
+    <Routes>
+      <Route
+        path={routes.mainPagePath()}
+        element={<MainPage />}
+      />
+      <Route
+        path={routes.loginPagePath()}
+        element={<LoginPage />}
+      />
+      <Route
+        path={routes.registrationPagePath()}
+        element={<RegistrationPage />}
+      />
+      <Route
+        path={routes.notFoundPagePath()}
+        element={<NotFoundPage />}
+      />
+    </Routes>
+  </Router>
 );

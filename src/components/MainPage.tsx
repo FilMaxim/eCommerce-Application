@@ -1,1 +1,10 @@
-export const MainPage = () => <p>MainPage</p>;
+import { Header } from './header/header';
+
+export const MainPage = () => (
+  <>
+    <Header />
+    <main>
+      <p>MainPage</p>
+    </main>
+  </>
+);

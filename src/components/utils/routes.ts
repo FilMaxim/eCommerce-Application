@@ -1,5 +1,5 @@
 export const routes = {
-  mainPagePaath: () => '/',
+  mainPagePath: () => '/',
   loginPagePath: () => '/login',
   registrationPagePath: () => '/signup',
   notFoundPagePath: () => '*'
