@@ -2,7 +2,7 @@ import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { validationsSchema } from './utils/validations';
 
-export const Login = () => {
+export const LoginForm = () => {
   const handleSubmit = (values: { email: string; password: string }) => {
     console.log('submit', values);
   };
