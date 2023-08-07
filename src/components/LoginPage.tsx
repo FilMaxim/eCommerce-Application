@@ -18,7 +18,7 @@ const Login = () => {
       .matches(/[0-9]/, 'Пароль должен содержать как минимум одну цифру')
       .matches(/[!@#$%^&*]/, 'Пароль должен содержать хотя бы один специальный символ')
       .trim()
-      .required('Обязательная строка')
+      .required('Обязательное поле')
   });
 
   const handleSubmit = (values: { email: string; password: string }) => {
