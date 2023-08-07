@@ -3,6 +3,8 @@ import { Header } from './header/header';
 export const MainPage = () => (
   <>
     <Header />
-    <p>MainPage</p>
+    <main>
+      <p>MainPage</p>
+    </main>
   </>
 );

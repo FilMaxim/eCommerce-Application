@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 
 const linksData = [links.login, links.registration];
 
-interface INavBaProps {
+interface INavBarProps {
   clickHandler: (open: boolean) => void;
 }
 
-export const NavBar = ({ clickHandler }: INavBaProps) => {
+export const NavBar = ({ clickHandler }: INavBarProps) => {
   return (
     <nav
       className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-6 lg:px-8"

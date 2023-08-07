@@ -5,7 +5,7 @@ import { Logo } from './header/logo/logo';
 const linksData = [links.registration];
 
 export const LoginPage = () => (
-  <>
+  <main>
     <Logo />
     <p>LoginPage</p>
     <ul className="mt-6 flex gap-3">
@@ -21,5 +21,5 @@ export const LoginPage = () => (
         </li>
       ))}
     </ul>
-  </>
+  </main>
 );
