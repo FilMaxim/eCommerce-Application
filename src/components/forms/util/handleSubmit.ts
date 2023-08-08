@@ -1,4 +1,4 @@
-export const handleSubmit = (values: {
+interface IHandleSubmit {
   email: string;
   password: string;
   firstName?: string;
@@ -8,6 +8,8 @@ export const handleSubmit = (values: {
   city?: string;
   postalCode?: string;
   country?: string;
-}) => {
+}
+
+export const handleSubmit = (values: IHandleSubmit) => {
   console.log('submit', values);
 };
