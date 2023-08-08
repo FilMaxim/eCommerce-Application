@@ -90,7 +90,10 @@ const Country = () => {
         placeholder="Country"
       >
         {countries.map((country) => (
-          <option key={country} value={country}>
+          <option
+            key={country}
+            value={country}
+          >
             {country}
           </option>
         ))}
