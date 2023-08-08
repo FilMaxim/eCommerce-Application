@@ -1,5 +1,5 @@
-import { links } from '../../utils/links';
-import { Logo } from '../logo/logo';
+import { links } from '../../../utils/links';
+import { Logo } from '../../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 import { Link } from 'react-router-dom';
 

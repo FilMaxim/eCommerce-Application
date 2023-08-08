@@ -1,7 +1,7 @@
 import { Dialog } from '@headlessui/react';
-import { Logo } from '../logo/logo';
+import { Logo } from '../../logo/logo';
 import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
-import { links } from '../../utils/links';
+import { links } from '../../../utils/links';
 import { Link } from 'react-router-dom';
 
 const linksData = [links.login, links.registration];

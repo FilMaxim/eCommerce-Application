@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import { links } from './utils/links';
-import { Logo } from './header/logo/logo';
+import { links } from '../utils/links';
+import { Logo } from '../components/logo/logo';
 
-const linksData = [links.login];
+const linksData = [links.registration];
 
-export const RegistrationPage = () => (
+export const LoginPage = () => (
   <main>
     <Logo />
-    <p>RegistrationPage</p>
+    <p>LoginPage</p>
     <ul className="mt-6 flex gap-3">
       {linksData.map((item) => (
         <li key={item.text}>
