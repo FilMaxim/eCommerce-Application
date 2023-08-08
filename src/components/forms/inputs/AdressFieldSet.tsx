@@ -1,4 +1,5 @@
 import { Field, ErrorMessage } from 'formik';
+import { countries } from '../util/countriesList';
 
 const Street = () => {
   return (
@@ -88,13 +89,11 @@ const Country = () => {
         name="country"
         placeholder="Country"
       >
-        <option value="Afghanistan">Afghanistan</option>
-        <option value="Albania">Albania</option>
-        <option value="Algeria">Algeria</option>
-        <option value="Andorra">Andorra</option>
-        <option value="Angola">Angola</option>
-        <option value="Anguilla">Anguilla</option>
-        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+        {countries.map((country) => (
+          <option key={country} value={country}>
+            {country}
+          </option>
+        ))}
       </Field>
       <ErrorMessage
         name="country"
