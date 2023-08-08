@@ -3,11 +3,32 @@ import view from '../../../assets/view.svg';
 import noView from '../../../assets/no-view.svg';
 import { useState } from 'react';
 
+interface IVisibilityIconProps {
+  handleVisibility: () => void;
+  passwordVisibility: boolean;
+}
+
+const VisibilityIcon = ({ handleVisibility, passwordVisibility }: IVisibilityIconProps) => {
+  return (
+    <button
+      type="button"
+      onClick={handleVisibility}
+      className="absolute right-2 top-2 w-5"
+    >
+      <img
+        src={passwordVisibility ? view : noView}
+        alt="visibility icon"
+      />
+    </button>
+  );
+};
+
 export const PasswordInput = () => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const handleVisibility = () => {
     setPasswordVisibility((prev: boolean) => !prev);
+    return false;
   };
 
   return (
@@ -25,15 +46,10 @@ export const PasswordInput = () => {
           name="password"
           placeholder="Password"
         />
-        <button
-          onClick={handleVisibility}
-          className="absolute right-2 top-2 w-5"
-        >
-          <img
-            src={passwordVisibility ? view : noView}
-            alt="visibility icon"
-          />
-        </button>
+        <VisibilityIcon
+          handleVisibility={handleVisibility}
+          passwordVisibility={passwordVisibility}
+        />
       </div>
       <ErrorMessage
         name="password"
