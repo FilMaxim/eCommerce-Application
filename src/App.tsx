@@ -1,9 +1,9 @@
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { routes } from './utils/routes';
-import { LoginPage } from './LoginPage';
-import { RegistrationPage } from './RegistrationPage';
-import { NotFoundPage } from './NotFoundPage';
-import { MainPage } from './MainPage';
+import { LoginPage } from './pages/LoginPage';
+import { RegistrationPage } from './pages/RegistrationPage';
+import { NotFoundPage } from './pages/NotFoundPage';
+import { MainPage } from './pages/MainPage';
 
 export const App = () => (
   <Router>
