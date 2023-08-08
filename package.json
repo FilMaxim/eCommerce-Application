@@ -53,6 +53,10 @@
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/member-delimiter-style": "off",
+      "@typescript-eslint/indent": [
+        "error",
+        2
+      ],
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off"
     }

@@ -3,17 +3,17 @@ import * as yup from 'yup';
 export const validationsSchema = yup.object().shape({
   email: yup
     .string()
-    .email('Адрес электронной почты должен быть правильно отформатирован')
-    .matches(/\.[A-Z]{2,4}$/i, 'Адрес электронной почты должен быть содержать доменную зону')
+    .email('Email address must be properly formatted')
+    .matches(/\.[A-Z]{2,4}$/i, 'Email address must contain a domain')
     .trim()
-    .required('Обязательное поле'),
+    .required('Required field'),
   password: yup
     .string()
-    .min(8, 'Пароль должен содержать не менее 8 символов')
-    .matches(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
-    .matches(/[a-z]/, 'Пароль должен содержать хотя бы одну строчную букву')
-    .matches(/[0-9]/, 'Пароль должен содержать как минимум одну цифру')
-    .matches(/[!@#$%^&*]/, 'Пароль должен содержать хотя бы один специальный символ')
+    .min(8, 'Password must be at least 8 characters long')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .matches(/[0-9]/, 'Password must contain at least one digit')
+    .matches(/[!@#$%^&*]/, 'Password must contain at least one special character')
     .trim()
-    .required('Обязательное поле')
+    .required('Required field')
 });

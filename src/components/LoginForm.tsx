@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { validationsSchema } from './utils/validations';
+import view from '../assets/view.svg';
+import noView from '../assets/no-view.svg';
 
 export const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleSubmit = (values: { email: string; password: string }) => {
     console.log('submit', values);
+  };
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -39,14 +47,24 @@ export const LoginForm = () => {
               htmlFor="password"
               className="mb-2 block text-sm font-bold text-gray-700"
             >
-              Password
+              Password:
             </label>
-            <Field
-              className="focus:shadow-outline mb-3 w-full appearance-none rounded border border-red-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-              type="password"
-              name="password"
-              placeholder="Password"
-            />
+            <div className="relative">
+              <Field
+                className="focus:shadow-outline mb-3 w-full appearance-none rounded border border-red-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                type={showPassword ? 'password' : 'text'}
+                name="password"
+                placeholder="Password"
+              />
+              <button
+                type="button"
+                className="absolute right-0  top-0 mr-2 mt-2 w-5"
+                onClick={handleTogglePassword}
+              >
+                {showPassword ? (<img src={view} alt="Показать" />) : (<img src={noView} alt="Скрыть" />)}
+              </button>
+            </div>
+
             <ErrorMessage
               name="password"
               component="p"

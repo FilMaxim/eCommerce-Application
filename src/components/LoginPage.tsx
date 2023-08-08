@@ -1,1 +1,3 @@
-export const LoginPage = () => <p>LoginPage</p>;
+import { LoginForm } from './LoginForm';
+
+export const LoginPage = () => <LoginForm />;
