@@ -5,12 +5,12 @@ export const LastNameInput = () => {
     <>
       <label
         htmlFor="lastName"
-        className="mb-2 block text-sm font-bold text-gray-700"
+        className="text-sm font-bold text-gray-700"
       >
         Last Name
       </label>
       <Field
-        className="focus:shadow-outline mb-3 appearance-none rounded border border-red-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
         type="text"
         name="lastName"
         placeholder="Last Name"

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { links } from '../utils/links';
 import { Logo } from '../components/logo/logo';
+import { RegistrationForm } from '../components/forms/RegistrationForm/RegistrationForm';
 
 export const RegistrationPage = () => (
   <main>
@@ -13,5 +14,6 @@ export const RegistrationPage = () => (
       <links.login.icon className="h-6 w-6" />
       {links.login.text}
     </Link>
+    <RegistrationForm />
   </main>
 );

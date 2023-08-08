@@ -14,13 +14,13 @@ export const PasswordInput = () => {
     <>
       <label
         htmlFor="password"
-        className="mb-2 block text-sm font-bold text-gray-700"
+        className="text-sm font-bold text-gray-700"
       >
         Password
       </label>
       <div className="relative">
         <Field
-          className="focus:shadow-outline mb-3 w-full appearance-none rounded border border-red-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+          className="focus:shadow-outline w-full appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
           type={passwordVisibility ? 'text' : 'password'}
           name="password"
           placeholder="Password"

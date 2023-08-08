@@ -3,7 +3,7 @@ export const SubmitBtn = () => {
     <>
       <button
         type="submit"
-        className="focus:shadow-outline self-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
+        className="focus:shadow-outline self-center rounded bg-cyan-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
       >
         Submit
       </button>
