@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import dayjs from 'dayjs';
 
-export const eighteenYearsAgo = dayjs().subtract(18, 'year').format('YYYY-MM-DD');
+export const minAge = dayjs().subtract(18, 'year').format('YYYY-MM-DD');
 
 export const validationsSchemaLogin = {
   email: yup
@@ -35,10 +35,7 @@ export const validationsSchemaRegistration = {
     .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
     .trim()
     .required('Required field'),
-  date: yup
-    .date()
-    .max(eighteenYearsAgo, 'You should be older than 18 years')
-    .required('Required field'),
+  date: yup.date().max(minAge, 'You should be older than 18 years').required('Required field'),
   street: yup
     .string()
     .min(1, 'Street should contain at least 1 character')
