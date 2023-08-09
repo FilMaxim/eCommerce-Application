@@ -1,5 +1,5 @@
 import { apiPaths } from '../../utils/clientApiData';
-import { getAuthToken } from './getAuthToken';
+import { getAccessToken } from './getAccessToken';
 
 interface ICustomerData {
   firstName: string;
@@ -8,8 +8,8 @@ interface ICustomerData {
   password: string;
 }
 
-export const createCustomer = async (data: ICustomerData) => {
-  const accessToken = await getAuthToken();
+export const createCustomer = async (data: ICustomerData): Promise<Response> => {
+  const accessToken = await getAccessToken();
 
   return await fetch(apiPaths.CUSTOMERS, {
     method: 'POST',

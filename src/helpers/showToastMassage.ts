@@ -1,7 +1,7 @@
 import 'toastify-js/src/toastify.css';
 import Toastify from 'toastify-js';
 
-export const showToastMassage = (message: string, color: 'green' | 'red') => {
+export const showToastMassage = (message: string, color: 'green' | 'red'): void => {
   const background =
     color === 'green'
       ? 'linear-gradient(to right, #00b09b, #96c93d)'
