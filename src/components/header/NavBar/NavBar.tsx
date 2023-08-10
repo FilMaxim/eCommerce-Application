@@ -12,7 +12,7 @@ interface INavBarProps {
 export const NavBar = ({ clickHandler }: INavBarProps) => {
   return (
     <nav
-      className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-6 lg:px-8"
+      className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-4 lg:px-8"
       aria-label="Global"
     >
       <Logo className="block" />
