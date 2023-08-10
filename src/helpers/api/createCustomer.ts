@@ -4,6 +4,7 @@ import { getAccessToken } from './getAccessToken';
 export interface ICustomerData {
   firstName: string;
   lastName: string;
+  dateOfBirth: string;
   email: string;
   password: string;
   addresses: [

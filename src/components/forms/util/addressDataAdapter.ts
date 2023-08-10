@@ -14,6 +14,7 @@ export const addressAdapter = (formData: IHandleSubmit): ICustomerData => {
   return {
     firstName: formData.firstName,
     lastName: formData.lastName,
+    dateOfBirth: formData.date,
     email: formData.email,
     password: formData.password,
     addresses: [
