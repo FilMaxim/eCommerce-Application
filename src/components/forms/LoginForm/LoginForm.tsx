@@ -5,7 +5,7 @@ import { SubmitBtn } from '../inputs/SubmitBtn';
 import { validationsSchemaLogin } from '../util/validationSchema';
 import { handleSubmit } from '../util/handleSubmit';
 import * as yup from 'yup';
-import { useAuth } from '../../../helpers/hoks';
+import { useAuth } from '../../../helpers/hooks';
 
 export const LoginForm = () => {
   const auth = useAuth();

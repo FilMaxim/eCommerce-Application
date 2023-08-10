@@ -9,7 +9,7 @@ import { AdressFieldSet } from '../inputs/AdressFieldSet';
 import { eighteenYearsAgo, validationsSchemaRegistration } from '../util/validationSchema';
 import { handleSubmit } from '../util/handleSubmit';
 import * as yup from 'yup';
-import { useAuth } from '../../../helpers/hoks';
+import { useAuth } from '../../../helpers/hooks';
 
 export const RegistrationForm = () => {
   const auth = useAuth();
