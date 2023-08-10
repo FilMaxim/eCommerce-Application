@@ -9,7 +9,7 @@ import { Header } from './components/header/header';
 export const App = () => (
   <Router>
     <Header />
-    <main className='h-screen bg-main bg-cover bg-center w-full'>
+    <main className="w-full">
       <Routes>
         <Route
           path={routes.mainPagePath()}
