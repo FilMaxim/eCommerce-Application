@@ -24,14 +24,6 @@ export interface UserDataInterface {
   refreshAccessToken: string;
 }
 
-export interface AuthResponseInterface {
-  access_token: string;
-  expires_in: number;
-  token_type: string;
-  scope: string;
-  refresh_token: string;
-}
-
 export interface AuthProviderPropsInterface {
   children: ReactNode;
 }
