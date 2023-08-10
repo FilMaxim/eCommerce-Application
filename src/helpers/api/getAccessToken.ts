@@ -29,10 +29,7 @@ export const getAccessToken = async (): Promise<string> => {
   let accessToken: string | null = localStorage.getItem('accessToken');
   let tokenExpiration: number = Number(localStorage.getItem('tokenExpiration'));
 
-  if (
-    accessToken === null ||
-    tokenExpiration < Date.now()
-  ) {
+  if (accessToken === null || tokenExpiration < Date.now()) {
     const data = await tokenRequest();
     accessToken = data.accessToken;
     tokenExpiration = data.tokenExpiration + Date.now();

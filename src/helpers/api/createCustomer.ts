@@ -1,11 +1,23 @@
 import { apiPaths } from '../../utils/clientApiData';
 import { getAccessToken } from './getAccessToken';
 
-interface ICustomerData {
+export interface ICustomerData {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  addresses: [
+    {
+      country: string;
+      firstName: string;
+      lastName: string;
+      streetName: string;
+      postalCode: string;
+      city: string;
+      email: string;
+    }
+  ];
+  salutation: string;
 }
 
 export const createCustomer = async (data: ICustomerData): Promise<Response> => {

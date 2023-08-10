@@ -1,7 +1,8 @@
 import { createCustomer } from '../../../helpers/api/createCustomer';
 import { showToastMassage } from '../../../helpers/showToastMassage';
+import { addressAdapter } from './addressDataAdapter';
 
-interface IHandleSubmit {
+export interface IHandleSubmit {
   email: string;
   password: string;
   firstName: string;
@@ -14,7 +15,8 @@ interface IHandleSubmit {
 }
 
 export const handleRegistrationSubmit = async (values: IHandleSubmit) => {
-  const response = await createCustomer(values);
+  const normalizedData = addressAdapter(values);
+  const response = await createCustomer(normalizedData);
 
   if (response.ok) {
     showToastMassage('Registration successful', 'green');
