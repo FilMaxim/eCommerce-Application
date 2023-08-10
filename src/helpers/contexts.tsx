@@ -1,4 +1,7 @@
 import { createContext } from 'react';
-import type { ContextType } from '../utils/types';
+import type { UserDataInterface, AuthContextInterface } from '../utils/types';
 
-export const AuthContext = createContext<ContextType>({});
+export const AuthContext = createContext<AuthContextInterface>({
+  // user: null,
+  login: (data: UserDataInterface) => {}
+});

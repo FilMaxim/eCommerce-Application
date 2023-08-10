@@ -1,14 +1,14 @@
 import axios from 'axios';
-import type { UserAuthInterface, AuthResponseInterface } from '../../utils/types';
+import type { UserAuthInterface, UserDataInterface } from '../../utils/types';
 import { clientApiData, endpoints } from '../../utils/clientApiData';
 
 export const getUserAccessData = async (
   userAuthData: UserAuthInterface
-): Promise<AuthResponseInterface> => {
+): Promise<UserDataInterface> => {
   const { email, password } = userAuthData;
   const { clientId, clientSecret, scopes } = clientApiData;
   const url = endpoints.auth;
-  const data = {
+  const body = {
     grant_type: 'password',
     scope: scopes,
     username: email,
@@ -16,7 +16,7 @@ export const getUserAccessData = async (
   };
 
   try {
-    const response = await axios.post(url, data, {
+    const response = await axios.post(url, body, {
       auth: {
         username: clientId,
         password: clientSecret
@@ -25,8 +25,12 @@ export const getUserAccessData = async (
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
+    const { data } = response;
 
-    return response.data;
+    return {
+      accessToken: data.access_token,
+      refreshAccessToken: data.refresh_token
+    };
   } catch (error) {
     if (!(error instanceof Error)) {
       throw error;

@@ -9,8 +9,10 @@ import { AdressFieldSet } from '../inputs/AdressFieldSet';
 import { eighteenYearsAgo, validationsSchemaRegistration } from '../util/validationSchema';
 import { handleSubmit } from '../util/handleSubmit';
 import * as yup from 'yup';
+import { useAuth } from '../../../helpers/hoks';
 
 export const RegistrationForm = () => {
+  const auth = useAuth();
   return (
     <Formik
       initialValues={{
@@ -25,7 +27,9 @@ export const RegistrationForm = () => {
         country: ''
       }}
       validationSchema={yup.object(validationsSchemaRegistration)}
-      onSubmit={handleSubmit}
+      onSubmit={async (values) => {
+        await handleSubmit(values, auth);
+      }}
     >
       <Form className="flex max-w-xs flex-col justify-center gap-2 rounded bg-white px-8 pb-8 pt-6 shadow-md">
         <FirstNameInput />

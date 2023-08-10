@@ -20,8 +20,8 @@ export interface UserAuthInterface {
 }
 
 export interface UserDataInterface {
-  authToken: string;
-  authRefreshToken: string;
+  accessToken: string;
+  refreshAccessToken: string;
 }
 
 export interface AuthResponseInterface {
@@ -36,6 +36,14 @@ export interface AuthProviderPropsInterface {
   children: ReactNode;
 }
 
-export interface ContextType {
-  login?: (userData: UserDataInterface) => void
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface AuthContextInterface {
+  // user: User | null;
+  login: (userData: UserDataInterface) => void;
 }
