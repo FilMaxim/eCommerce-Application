@@ -1,5 +1,5 @@
 import { createCustomer } from '../../../helpers/api/createCustomer';
-import { showToastMassage } from '../../../helpers/showToastMassage';
+import { showToastMessage } from '../../../helpers/showToastMessage';
 import { addressAdapter } from './addressDataAdapter';
 
 export interface IHandleSubmit {
@@ -20,10 +20,10 @@ export const handleRegistrationSubmit = async (values: IHandleSubmit) => {
   const data = await response.json();
 
   if (response.ok) {
-    showToastMassage('Registration successful', 'green');
+    showToastMessage('Registration successful', 'green');
   } else if (data.errors[0].code === 'DuplicateField') {
-    showToastMassage('Customer with this email already exist', 'red');
+    showToastMessage('Customer with this email already exist', 'red');
   } else {
-    showToastMassage('Registration failed, please try again', 'red');
+    showToastMessage('Registration failed, please try again', 'red');
   }
 };
