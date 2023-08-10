@@ -8,11 +8,11 @@ export const NotFoundPage = () => (
       src={error404}
       alt="logo"
     />
-    <p className="mt-3 text-center text-[30px]">
-      Sorry, the page you requested was not found...
-
-    </p>
-    <Link to={routes.mainPagePath()} className="text-link-color text-[30px]">
+    <p className="mt-3 text-center text-[30px]">Sorry, the page you requested was not found...</p>
+    <Link
+      to={routes.mainPagePath()}
+      className="text-[30px] text-link-color"
+    >
       Go To Home
     </Link>
   </div>

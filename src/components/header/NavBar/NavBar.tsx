@@ -21,10 +21,10 @@ export const NavBar = ({ clickHandler }: INavBarProps) => {
 
       <ul className="hidden gap-3 lg:flex">
         {linksData.map((item) => (
-          <li key={item.text}>
+          <li key={item.text} className='rounded-lg border border-black bg-slate-400 hover:bg-slate-200'>
             <Link
               to={item.path}
-              className="flex items-center gap-1 rounded-lg border border-black px-2 py-1 text-sm font-semibold leading-6 text-gray-900 hover:border-cyan-500 hover:text-cyan-500"
+              className="flex items-center gap-1 px-2 py-1 text-sm font-semibold leading-6 text-gray-900"
             >
               <item.icon className="h-6 w-6" />
               {item.text}
