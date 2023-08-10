@@ -4,7 +4,7 @@ import { routes } from '../utils/routes';
 export const NotFoundPage = () => (
   <div className="flex flex-col items-center pb-5">
     <img
-      className="w-1/2"
+      className="max-w-sm"
       src={error404}
       alt="logo"
     />
