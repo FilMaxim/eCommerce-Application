@@ -22,8 +22,8 @@ export const handleRegistrationSubmit = async (values: IHandleSubmit) => {
   if (response.ok) {
     showToastMessage('Registration successful', 'green');
   } else if (data.errors[0].code === 'DuplicateField') {
-    showToastMessage('Customer with this email already exist', 'red');
+    showToastMessage('Customer with this email already exist, login or create new account', 'red');
   } else {
-    showToastMessage('Registration failed, please try again', 'red');
+    showToastMessage('Registration failed, please try again later', 'red');
   }
 };
