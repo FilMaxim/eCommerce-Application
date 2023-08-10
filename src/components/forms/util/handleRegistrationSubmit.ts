@@ -17,11 +17,13 @@ export interface IHandleSubmit {
 export const handleRegistrationSubmit = async (values: IHandleSubmit) => {
   const normalizedData = addressAdapter(values);
   const response = await createCustomer(normalizedData);
+  const data = await response.json();
 
   if (response.ok) {
     showToastMassage('Registration successful', 'green');
+  } else if (data.errors[0].code === 'DuplicateField') {
+    showToastMassage('Customer with this email already exist', 'red');
   } else {
-    showToastMassage('Registration failed', 'red');
+    showToastMassage('Registration failed, please try again', 'red');
   }
-  console.log(await response.json());
 };
