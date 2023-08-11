@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import logo from '../../assets/logo.svg';
 import { routes } from '../../utils/routes';
 import type { ILogoParams } from '../../utils/types';
+import logo from '../../assets/logo.png';
 
 export const Logo = ({ className }: ILogoParams) => {
   return (
@@ -12,7 +12,7 @@ export const Logo = ({ className }: ILogoParams) => {
       <span className="sr-only">Our shop name should be there</span>
 
       <img
-        className="h-8 w-auto"
+        className="h-14 w-auto"
         src={logo}
         alt="logo"
       />
