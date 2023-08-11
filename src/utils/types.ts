@@ -64,6 +64,4 @@ export interface AuthProviderPropsInterface {
   children: ReactNode;
 }
 
-export interface AuthContextInterface {
-  login: (userData: TokenInterface) => void;
-}
+export type AuthContextInterface = (userData: TokenInterface) => void;
