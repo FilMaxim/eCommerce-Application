@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react';
 
-export type EndpointsInterface = Record<string, string>;
-
 export interface HandleSubmitInterface {
   email: string;
   password: string;

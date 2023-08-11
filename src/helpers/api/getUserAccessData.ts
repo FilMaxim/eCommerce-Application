@@ -1,13 +1,13 @@
 import axios from 'axios';
 import type { UserAuthInterface, UserDataInterface } from '../../utils/types';
-import { clientApiData, endpoints } from '../../utils/clientApiData';
+import { clientApiData, Endpoints } from '../../utils/clientApiData';
 
 export const getUserAccessData = async (
   userAuthData: UserAuthInterface
 ): Promise<UserDataInterface> => {
   const { email, password } = userAuthData;
   const { clientId, clientSecret, scopes } = clientApiData;
-  const url = endpoints.auth;
+  const url = Endpoints.auth;
   const body = {
     grant_type: 'password',
     scope: scopes,
