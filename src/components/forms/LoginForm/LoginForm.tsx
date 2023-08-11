@@ -5,12 +5,10 @@ import { SubmitBtn } from '../inputs/SubmitBtn';
 import { validationsSchemaLogin } from '../util/validationSchema';
 import { handleSubmitLoginForm } from '../util/handleSubmitLoginForm';
 import * as yup from 'yup';
-import { useAuth } from '../../../helpers/hooks';
 import { links } from '../../../utils/links';
 import { Link } from 'react-router-dom';
 
 export const LoginForm = () => {
-  const auth = useAuth();
   return (
     <Formik
       initialValues={{
@@ -19,7 +17,7 @@ export const LoginForm = () => {
       }}
       validationSchema={yup.object(validationsSchemaLogin)}
       onSubmit={async (values) => {
-        await handleSubmitLoginForm(values, auth);
+        await handleSubmitLoginForm(values);
       }}
     >
       <Form className="flex w-3/5 flex-col justify-center gap-2 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)]">
