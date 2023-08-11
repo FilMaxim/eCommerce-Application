@@ -3,13 +3,9 @@ import { Logo } from '../../logo/logo';
 import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
 import { links } from '../../../utils/links';
 import { Link } from 'react-router-dom';
+import type { IBurgerMenuProps } from '../../../utils/types';
 
 const linksData = [links.login, links.registration];
-
-interface IBurgerMenuProps {
-  mobileMenuOpen: boolean;
-  setMobileMenuOpen: (open: boolean) => void;
-}
 
 export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenuProps) => {
   return (
