@@ -5,28 +5,32 @@ import { RegistrationPage } from './pages/RegistrationPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { MainPage } from './pages/MainPage';
 import { AuthProvider } from './components/authProvider/AuthProvider';
+import { Header } from './components/header/header';
 
 export const App = () => (
   <AuthProvider>
     <Router>
-      <Routes>
-        <Route
-          path={routes.mainPagePath()}
-          element={<MainPage />}
-        />
-        <Route
-          path={routes.loginPagePath()}
-          element={<LoginPage />}
-        />
-        <Route
-          path={routes.registrationPagePath()}
-          element={<RegistrationPage />}
-        />
-        <Route
-          path={routes.notFoundPagePath()}
-          element={<NotFoundPage />}
-        />
-      </Routes>
+      <Header />
+      <main className="w-full">
+        <Routes>
+          <Route
+            path={routes.mainPagePath()}
+            element={<MainPage />}
+          />
+          <Route
+            path={routes.loginPagePath()}
+            element={<LoginPage />}
+          />
+          <Route
+            path={routes.registrationPagePath()}
+            element={<RegistrationPage />}
+          />
+          <Route
+            path={routes.notFoundPagePath()}
+            element={<NotFoundPage />}
+          />
+        </Routes>
+      </main>
     </Router>
   </AuthProvider>
 );
