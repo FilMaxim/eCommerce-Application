@@ -1,10 +1,10 @@
 import { apiPaths } from '../../utils/clientApiData';
 import type { ICustomerData } from '../../utils/types';
-import { getAccessToken } from './getAccessToken';
 
-export const createCustomer = async (data: ICustomerData): Promise<Response> => {
-  const accessToken = await getAccessToken();
-
+export const createCustomer = async (
+  data: ICustomerData,
+  accessToken: string
+): Promise<Response> => {
   return await fetch(apiPaths.CUSTOMERS, {
     method: 'POST',
     headers: {
