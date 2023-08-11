@@ -21,7 +21,7 @@ export const RegistrationForm = () => {
         date: minAge,
         email: '',
         password: '',
-        street: '',
+        streetName: '',
         city: '',
         postalCode: '',
         country: ''
