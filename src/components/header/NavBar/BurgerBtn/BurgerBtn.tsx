@@ -1,7 +1,7 @@
 import { Bars3Icon } from '@heroicons/react/24/outline';
-import type { IBurgerBtnProps } from '../../../../utils/types';
+import type { ClickHandlerInterface } from '../../../../utils/types';
 
-export const BurgerBtn = ({ clickHandler }: IBurgerBtnProps) => {
+export const BurgerBtn = ({ clickHandler }: ClickHandlerInterface) => {
   return (
     <button
       type="button"

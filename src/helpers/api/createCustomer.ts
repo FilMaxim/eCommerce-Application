@@ -1,8 +1,8 @@
 import { apiPaths } from '../../utils/clientApiData';
-import type { ICustomerData } from '../../utils/types';
+import type { CustomerData } from '../../utils/types';
 
 export const createCustomer = async (
-  data: ICustomerData,
+  data: CustomerData,
   accessToken: string
 ): Promise<Response> => {
   return await fetch(apiPaths.CUSTOMERS, {

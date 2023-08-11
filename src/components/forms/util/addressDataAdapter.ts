@@ -1,4 +1,4 @@
-import type { IHandleSignUpSubmit, ICustomerData } from '../../../utils/types';
+import type { HandleSubmitInterface, CustomerData } from '../../../utils/types';
 import { countries } from './countriesList';
 
 const getCountryCode = (country: string): string => {
@@ -9,7 +9,7 @@ const getCountryCode = (country: string): string => {
   return selectedCountry.code;
 };
 
-export const addressAdapter = (formData: IHandleSignUpSubmit): ICustomerData => {
+export const addressAdapter = (formData: HandleSubmitInterface): CustomerData => {
   return {
     firstName: formData.firstName,
     lastName: formData.lastName,
@@ -21,7 +21,7 @@ export const addressAdapter = (formData: IHandleSignUpSubmit): ICustomerData => 
         country: getCountryCode(formData.country),
         firstName: formData.firstName,
         lastName: formData.lastName,
-        streetName: formData.street,
+        streetName: formData.streetName,
         postalCode: formData.postalCode,
         city: formData.city,
         email: formData.email

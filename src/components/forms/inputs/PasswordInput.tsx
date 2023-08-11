@@ -2,9 +2,9 @@ import { Field, ErrorMessage } from 'formik';
 import view from '../../../assets/view.svg';
 import noView from '../../../assets/no-view.svg';
 import { useState } from 'react';
-import type { IVisibilityIconProps } from '../../../utils/types';
+import type { VisibilityIconProps } from '../../../utils/types';
 
-const VisibilityIcon = ({ handleVisibility, passwordVisibility }: IVisibilityIconProps) => {
+const VisibilityIcon = ({ handleVisibility, passwordVisibility }: VisibilityIconProps) => {
   return (
     <button
       type="button"

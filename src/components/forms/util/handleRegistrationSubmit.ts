@@ -1,10 +1,10 @@
 import { createCustomer } from '../../../helpers/api/createCustomer';
 import { requestAnonymousToken } from '../../../helpers/api/requestAnonymousToken';
 import { showToastMessage } from '../../../helpers/showToastMessage';
-import type { IHandleSignUpSubmit } from '../../../utils/types';
+import type { HandleSubmitInterface } from '../../../utils/types';
 import { addressAdapter } from './addressDataAdapter';
 
-export const handleRegistrationSubmit = async (values: IHandleSignUpSubmit) => {
+export const handleRegistrationSubmit = async (values: HandleSubmitInterface) => {
   const normalizedData = addressAdapter(values);
   const accessToken = (await requestAnonymousToken()).accessToken;
   const response = await createCustomer(normalizedData, accessToken);

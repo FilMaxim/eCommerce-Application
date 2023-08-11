@@ -1,7 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import type { IBurgerCloseBtnProps } from '../../../../utils/types';
+import type { ClickHandlerInterface } from '../../../../utils/types';
 
-export const BurgerCloseBtn = ({ clickHandler }: IBurgerCloseBtnProps) => {
+export const BurgerCloseBtn = ({ clickHandler }: ClickHandlerInterface) => {
   return (
     <button
       type="button"

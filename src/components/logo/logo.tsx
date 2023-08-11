@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { routes } from '../../utils/routes';
-import type { ILogoParams } from '../../utils/types';
+import type { LogoParams } from '../../utils/types';
 import logo from '../../assets/logo.png';
 
-export const Logo = ({ className }: ILogoParams) => {
+export const Logo = ({ className }: LogoParams) => {
   return (
     <Link
       to={routes.mainPagePath()}

@@ -1,10 +1,8 @@
 import axios from 'axios';
-import type { UserAuthInterface, UserDataInterface } from '../../utils/types';
+import type { LoginInterface, TokenInterface } from '../../utils/types';
 import { clientApiData, Endpoints } from '../../utils/clientApiData';
 
-export const getUserAccessData = async (
-  userAuthData: UserAuthInterface
-): Promise<UserDataInterface> => {
+export const getUserAccessData = async (userAuthData: LoginInterface): Promise<TokenInterface> => {
   const { email, password } = userAuthData;
   const { clientId, clientSecret, scopes } = clientApiData;
   const url = Endpoints.auth;
@@ -29,7 +27,8 @@ export const getUserAccessData = async (
 
     return {
       accessToken: data.access_token,
-      refreshAccessToken: data.refresh_token
+      refreshToken: data.refresh_token,
+      tokenExpiration: data.expires_in
     };
   } catch (error) {
     if (!(error instanceof Error)) {

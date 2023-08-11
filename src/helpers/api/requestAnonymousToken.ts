@@ -1,7 +1,7 @@
 import { clientApiData, apiPaths } from '../../utils/clientApiData';
-import type { IAuthData } from '../../utils/types';
+import type { TokenInterface } from '../../utils/types';
 
-export const requestAnonymousToken = async (): Promise<IAuthData> => {
+export const requestAnonymousToken = async (): Promise<TokenInterface> => {
   const { CLIENT_ID, CLIENT_SECRET } = clientApiData;
 
   const response = await fetch(apiPaths.AUTORIZATION, {
