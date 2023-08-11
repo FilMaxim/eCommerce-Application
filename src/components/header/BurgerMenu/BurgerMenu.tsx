@@ -3,11 +3,11 @@ import { Logo } from '../../logo/logo';
 import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
 import { links } from '../../../utils/links';
 import { Link } from 'react-router-dom';
-import type { IBurgerMenuProps } from '../../../utils/types';
+import type { BurgerMenuProps } from '../../../utils/types';
 
 const linksData = [links.login, links.registration];
 
-export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IBurgerMenuProps) => {
+export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProps) => {
   return (
     <Dialog
       as="div"

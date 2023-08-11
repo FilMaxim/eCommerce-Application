@@ -25,7 +25,7 @@ export interface PostalAddress {
 
 export type AddressInterface = UserName | PostalAddress | { email: string };
 
-export interface User extends UserName, Profile {}
+export interface User extends UserName, Profile { }
 
 export interface LoginInterface {
   email: string;

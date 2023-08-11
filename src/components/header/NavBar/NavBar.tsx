@@ -1,12 +1,12 @@
 import { links } from '../../../utils/links';
-import type { INavBarProps } from '../../../utils/types';
+import type { ClickHandlerInterface } from '../../../utils/types';
 import { Logo } from '../../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 import { Link } from 'react-router-dom';
 
 const linksData = [links.login, links.registration];
 
-export const NavBar = ({ clickHandler }: INavBarProps) => {
+export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
   return (
     <nav
       className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-4 lg:px-8"
