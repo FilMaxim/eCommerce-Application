@@ -1,20 +1,9 @@
 import { createCustomer } from '../../../helpers/api/createCustomer';
 import { showToastMessage } from '../../../helpers/showToastMessage';
+import type { IHandleSignUpSubmit } from '../../../utils/types';
 import { addressAdapter } from './addressDataAdapter';
 
-export interface IHandleSubmit {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  date: string;
-  street: string;
-  city: string;
-  postalCode: string;
-  country: string;
-}
-
-export const handleRegistrationSubmit = async (values: IHandleSubmit) => {
+export const handleRegistrationSubmit = async (values: IHandleSignUpSubmit) => {
   const normalizedData = addressAdapter(values);
   const response = await createCustomer(normalizedData);
   const data = await response.json();

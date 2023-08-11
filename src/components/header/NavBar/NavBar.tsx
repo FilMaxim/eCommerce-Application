@@ -1,13 +1,10 @@
 import { links } from '../../../utils/links';
+import type { INavBarProps } from '../../../utils/types';
 import { Logo } from '../../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 import { Link } from 'react-router-dom';
 
 const linksData = [links.login, links.registration];
-
-interface INavBarProps {
-  clickHandler: (open: boolean) => void;
-}
 
 export const NavBar = ({ clickHandler }: INavBarProps) => {
   return (

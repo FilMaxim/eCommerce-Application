@@ -1,6 +1,5 @@
-import type { ICustomerData } from '../../../helpers/api/createCustomer';
+import type { IHandleSignUpSubmit, ICustomerData } from '../../../utils/types';
 import { countries } from './countriesList';
-import type { IHandleSubmit } from './handleRegistrationSubmit';
 
 const getCountryCode = (country: string): string => {
   const selectedCountry = countries.find((countryData) => countryData.country === country);
@@ -10,7 +9,7 @@ const getCountryCode = (country: string): string => {
   return selectedCountry.code;
 };
 
-export const addressAdapter = (formData: IHandleSubmit): ICustomerData => {
+export const addressAdapter = (formData: IHandleSignUpSubmit): ICustomerData => {
   return {
     firstName: formData.firstName,
     lastName: formData.lastName,

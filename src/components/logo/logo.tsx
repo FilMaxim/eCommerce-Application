@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
 import { routes } from '../../utils/routes';
-
-interface ILogoParams {
-  className?: string;
-}
+import type { ILogoParams } from '../../utils/types';
 
 export const Logo = ({ className }: ILogoParams) => {
   return (

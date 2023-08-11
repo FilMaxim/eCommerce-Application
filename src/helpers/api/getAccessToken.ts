@@ -1,9 +1,5 @@
 import { clientApiData, apiPaths } from '../../utils/clientApiData';
-
-interface IAuthData {
-  accessToken: string;
-  tokenExpiration: number;
-}
+import type { IAuthData } from '../../utils/types';
 
 const tokenRequest = async (): Promise<IAuthData> => {
   const { CLIENT_ID, CLIENT_SECRET } = clientApiData;
