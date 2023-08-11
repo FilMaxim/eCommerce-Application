@@ -1,11 +1,11 @@
-import { apiPaths } from '../../utils/clientApiData';
+import { endpoints } from '../../utils/clientApiData';
 import type { CustomerData } from '../../utils/types';
 
 export const createCustomer = async (
   data: CustomerData,
   accessToken: string
 ): Promise<Response> => {
-  return await fetch(apiPaths.CUSTOMERS, {
+  return await fetch(endpoints.customers, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,

@@ -1,11 +1,11 @@
 import axios from 'axios';
 import type { LoginInterface, TokenInterface } from '../../utils/types';
-import { clientApiData, Endpoints } from '../../utils/clientApiData';
+import { clientApiData, endpoints } from '../../utils/clientApiData';
 
 export const getUserAccessData = async (userAuthData: LoginInterface): Promise<TokenInterface> => {
   const { email, password } = userAuthData;
   const { clientId, clientSecret, scopes } = clientApiData;
-  const url = Endpoints.auth;
+  const url = endpoints.auth;
   const body = {
     grant_type: 'password',
     scope: scopes,

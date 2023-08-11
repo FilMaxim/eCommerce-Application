@@ -1,13 +1,13 @@
-import { clientApiData, apiPaths } from '../../utils/clientApiData';
+import { clientApiData, endpoints } from '../../utils/clientApiData';
 import type { TokenInterface } from '../../utils/types';
 
 export const requestAnonymousToken = async (): Promise<TokenInterface> => {
-  const { CLIENT_ID, CLIENT_SECRET } = clientApiData;
+  const { clientId, clientSecret } = clientApiData;
 
-  const response = await fetch(apiPaths.AUTORIZATION, {
+  const response = await fetch(endpoints.registration, {
     method: 'POST',
     headers: {
-      Authorization: `Basic ${btoa(CLIENT_ID + ':' + CLIENT_SECRET)}`
+      Authorization: `Basic ${btoa(clientId + ':' + clientSecret)}`
     }
   });
 
