@@ -1,15 +1,5 @@
-interface IHandleSubmit {
-  email: string;
-  password: string;
-  firstName?: string;
-  lastName?: string;
-  date?: string;
-  street?: string;
-  city?: string;
-  postalCode?: string;
-  country?: string;
-}
+import type { IHandleLogInSubmit } from '../../../utils/types';
 
-export const handleSubmit = (values: IHandleSubmit) => {
+export const handleSubmit = (values: IHandleLogInSubmit) => {
   console.log('submit', values);
 };

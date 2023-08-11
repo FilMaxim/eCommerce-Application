@@ -6,9 +6,9 @@ import { PasswordInput } from '../inputs/PasswordInput';
 import { SubmitBtn } from '../inputs/SubmitBtn';
 import { DateInput } from '../inputs/DateInput';
 import { AdressFieldSet } from '../inputs/AdressFieldSet';
-import { eighteenYearsAgo, validationsSchemaRegistration } from '../util/validationSchema';
-import { handleSubmit } from '../util/handleSubmit';
+import { minAge, validationsSchemaRegistration } from '../util/validationSchema';
 import * as yup from 'yup';
+import { handleRegistrationSubmit } from '../util/handleRegistrationSubmit';
 import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';
 
@@ -18,7 +18,7 @@ export const RegistrationForm = () => {
       initialValues={{
         firstName: '',
         lastName: '',
-        date: eighteenYearsAgo,
+        date: minAge,
         email: '',
         password: '',
         street: '',
@@ -27,7 +27,7 @@ export const RegistrationForm = () => {
         country: ''
       }}
       validationSchema={yup.object(validationsSchemaRegistration)}
-      onSubmit={handleSubmit}
+      onSubmit={handleRegistrationSubmit}
     >
       <Form className="flex w-3/5 flex-col justify-center gap-1 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)]">
         <FirstNameInput />

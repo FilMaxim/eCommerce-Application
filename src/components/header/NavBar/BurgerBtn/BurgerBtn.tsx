@@ -1,8 +1,5 @@
 import { Bars3Icon } from '@heroicons/react/24/outline';
-
-interface IBurgerBtnProps {
-  clickHandler: (open: boolean) => void;
-}
+import type { IBurgerBtnProps } from '../../../../utils/types';
 
 export const BurgerBtn = ({ clickHandler }: IBurgerBtnProps) => {
   return (

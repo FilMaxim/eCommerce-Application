@@ -89,7 +89,7 @@ const Country = () => {
         name="country"
         placeholder="Country"
       >
-        {countries.map((country) => (
+        {countries.map(({ country }) => (
           <option
             key={country}
             value={country}
