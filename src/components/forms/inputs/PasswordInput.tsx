@@ -37,7 +37,7 @@ export const PasswordInput = () => {
         htmlFor="password"
         className="text-sm font-bold text-gray-700"
       >
-        Password
+        Password:
       </label>
       <div className="relative">
         <Field

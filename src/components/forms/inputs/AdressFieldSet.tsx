@@ -8,7 +8,7 @@ const Street = () => {
         htmlFor="street"
         className="text-sm font-bold text-gray-700"
       >
-        Street
+        Street:
       </label>
       <Field
         className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -32,7 +32,7 @@ const City = () => {
         htmlFor="city"
         className="text-sm font-bold text-gray-700"
       >
-        City
+        City:
       </label>
       <Field
         className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -56,7 +56,7 @@ const PostalCode = () => {
         htmlFor="postalCode"
         className="text-sm font-bold text-gray-700"
       >
-        Postal Code
+        Postal Code:
       </label>
       <Field
         className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
@@ -80,7 +80,7 @@ const Country = () => {
         htmlFor="country"
         className="text-sm font-bold text-gray-700"
       >
-        Country
+        Country:
       </label>
       <Field
         as="select"
