@@ -36,7 +36,7 @@ export const validationsSchemaRegistration = {
     .trim()
     .required('Required field'),
   date: yup.date().max(minAge, 'You should be older than 18 years').required('Required field'),
-  street: yup
+  streetName: yup
     .string()
     .min(1, 'Street should contain at least 1 character')
     .trim()
