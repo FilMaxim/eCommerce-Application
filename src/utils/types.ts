@@ -60,4 +60,4 @@ export interface VisibilityIconProps {
   passwordVisibility: boolean;
 }
 
-export type AuthLoginInterface = (userData: TokenInterface) => void;
+export type AuthLogin = (userData: TokenInterface) => void;
