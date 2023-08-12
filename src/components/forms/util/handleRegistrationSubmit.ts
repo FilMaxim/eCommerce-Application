@@ -14,12 +14,10 @@ export const handleRegistrationSubmit = async (
   const data = await response.json();
 
   if (response.ok) {
-    const loginData: LoginInterface = {
+    await login({
       email: values.email,
       password: values.password
-    };
-
-    await login(loginData);
+    });
     showToastMessage('Registration successful', 'green');
   } else if (data.errors[0].code === 'DuplicateField') {
     showToastMessage('Customer with this email already exist, login or create new account', 'red');
