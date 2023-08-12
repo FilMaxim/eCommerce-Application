@@ -16,8 +16,8 @@ export const useAuth = () => {
     const { from } = location.state ?? { from: { pathname: routes.mainPagePath() } };
     navigate(from);
 
-    localStorage.setItem('token', JSON.stringify(accessToken));
-    localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
+    localStorage.setItem('token', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
   };
 
   const isLogged = Boolean(isAuth);
