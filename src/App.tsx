@@ -6,28 +6,30 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { MainPage } from './pages/MainPage';
 import { Header } from './components/header/header';
 
-export const App = () => (
-  <Router>
-    <Header />
-    <main className="w-full">
-      <Routes>
-        <Route
-          path={routes.mainPagePath()}
-          element={<MainPage />}
-        />
-        <Route
-          path={routes.loginPagePath()}
-          element={<LoginPage />}
-        />
-        <Route
-          path={routes.registrationPagePath()}
-          element={<RegistrationPage />}
-        />
-        <Route
-          path={routes.notFoundPagePath()}
-          element={<NotFoundPage />}
-        />
-      </Routes>
-    </main>
-  </Router>
-);
+export const App = () => {
+  return (
+    <Router>
+      <Header />
+      <main className="w-full">
+        <Routes>
+          <Route
+            path={routes.mainPagePath()}
+            element={<MainPage />}
+          />
+          <Route
+            path={routes.loginPagePath()}
+            element={<LoginPage />}
+          />
+          <Route
+            path={routes.registrationPagePath()}
+            element={<RegistrationPage />}
+          />
+          <Route
+            path={routes.notFoundPagePath()}
+            element={<NotFoundPage />}
+          />
+        </Routes>
+      </main>
+    </Router>
+  );
+};
