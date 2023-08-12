@@ -57,4 +57,7 @@ export interface PrivateOutletProps {
   children: JSX.Element;
 }
 
-export type AuthLogin = (userData: LoginInterface) => void;
+export interface AuthReturnInterface {
+  login: (userData: LoginInterface) => Promise<void>;
+  isLogged: boolean;
+}

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import type { LoginInterface } from '../utils/types';
+import type { AuthReturnInterface, LoginInterface } from '../utils/types';
 import { getUserAccessData } from './api/getUserAccessData';
 import { useNavigate } from 'react-router-dom';
 import { NavRoutes } from '../utils/routes';
 
-export const useAuth = () => {
+export const useAuth = (): AuthReturnInterface => {
   const [isAuth] = useState(localStorage.getItem('token'));
   const navigate = useNavigate();
 
