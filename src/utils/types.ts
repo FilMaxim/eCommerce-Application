@@ -1,31 +1,31 @@
-import type { ReactNode } from 'react';
-
 export interface TokenInterface {
   accessToken: string;
   tokenExpiration: number;
   refreshToken?: string;
 }
 
-export interface UserName {
+interface UserName {
   firstName: string;
   lastName: string;
 }
 
-export interface Profile {
+interface Profile {
   id: string;
   email: string;
 }
 
-export interface PostalAddress {
+interface PostalAddress {
   country: string;
   city: string;
   streetName: string;
   postalCode: string;
 }
 
-export type AddressInterface = UserName | PostalAddress | { email: string };
+export interface AddressInterface extends UserName, PostalAddress {
+  email: string;
+}
 
-export interface User extends UserName, Profile {}
+export interface User extends UserName, Profile { }
 
 export interface LoginInterface {
   email: string;
@@ -60,8 +60,4 @@ export interface VisibilityIconProps {
   passwordVisibility: boolean;
 }
 
-export interface AuthProviderPropsInterface {
-  children: ReactNode;
-}
-
-export type AuthContextInterface = (userData: TokenInterface) => void;
+export type AuthLoginInterface = (userData: TokenInterface) => void;
