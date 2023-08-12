@@ -25,7 +25,7 @@ export interface AddressInterface extends UserName, PostalAddress {
   email: string;
 }
 
-export interface User extends UserName, Profile { }
+export interface User extends UserName, Profile {}
 
 export interface LoginInterface {
   email: string;
