@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import error404 from '../assets/404.png';
-import { routes } from '../utils/routes';
+import { NavRoutes } from '../utils/routes';
 export const NotFoundPage = () => (
   <div className="flex flex-col items-center pb-5">
     <img
@@ -10,7 +10,7 @@ export const NotFoundPage = () => (
     />
     <p className="mt-3 text-center text-[30px]">Sorry, the page you requested was not found...</p>
     <Link
-      to={routes.mainPagePath()}
+      to={NavRoutes.mainPagePath}
       className="text-[30px] text-link-color"
     >
       Go To Home

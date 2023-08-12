@@ -1,8 +1,8 @@
-import { routes } from './routes';
 import { UserIcon, UserPlusIcon } from '@heroicons/react/24/outline';
+import { NavRoutes } from './routes';
 
 export const links = {
-  main: { text: 'MainPage', path: routes.mainPagePath() },
-  login: { text: 'LogIn', path: routes.loginPagePath(), icon: UserIcon },
-  registration: { text: 'Registration', path: routes.registrationPagePath(), icon: UserPlusIcon }
+  main: { text: 'MainPage', path: NavRoutes.mainPagePath },
+  login: { text: 'LogIn', path: NavRoutes.loginPagePath, icon: UserIcon },
+  registration: { text: 'Registration', path: NavRoutes.registrationPagePath, icon: UserPlusIcon }
 };
