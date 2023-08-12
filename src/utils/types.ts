@@ -9,11 +9,6 @@ interface UserName {
   lastName: string;
 }
 
-interface Profile {
-  id: string;
-  email: string;
-}
-
 interface PostalAddress {
   country: string;
   city: string;
@@ -24,8 +19,6 @@ interface PostalAddress {
 export interface AddressInterface extends UserName, PostalAddress {
   email: string;
 }
-
-export interface User extends UserName, Profile {}
 
 export interface LoginInterface {
   email: string;
