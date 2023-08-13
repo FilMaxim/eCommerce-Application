@@ -1,20 +1,17 @@
 import { useState } from 'react';
-import type { LoginInterface } from '../utils/types';
+import type { AuthReturnInterface, LoginInterface } from '../utils/types';
 import { getUserAccessData } from './api/getUserAccessData';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { routes } from '../utils/routes';
+import { useNavigate } from 'react-router-dom';
+import { NavRoutes } from '../utils/routes';
 
-export const useAuth = () => {
+export const useAuth = (): AuthReturnInterface => {
   const [isAuth] = useState(localStorage.getItem('token'));
-  const location = useLocation();
   const navigate = useNavigate();
 
   const login = async (userData: LoginInterface): Promise<void> => {
     const tokens = await getUserAccessData(userData);
     const { accessToken, refreshToken } = tokens;
-
-    const { from } = location.state ?? { from: { pathname: routes.mainPagePath() } };
-    navigate(from);
+    navigate({ pathname: NavRoutes.mainPagePath });
 
     localStorage.setItem('token', accessToken);
     localStorage.setItem('refreshToken', refreshToken);

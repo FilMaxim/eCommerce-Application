@@ -53,4 +53,11 @@ export interface VisibilityIconProps {
   passwordVisibility: boolean;
 }
 
-export type AuthLogin = (userData: LoginInterface) => void;
+export interface PrivateOutletProps {
+  children: JSX.Element;
+}
+
+export interface AuthReturnInterface {
+  login: (userData: LoginInterface) => Promise<void>;
+  isLogged: boolean;
+}
