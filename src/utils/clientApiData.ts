@@ -13,5 +13,6 @@ const baseAuthUrl = `https://auth.${clientApiData.region}/oauth`;
 export const endpoints = {
   auth: `${baseAuthUrl}/rs-online-shop/customers/token`,
   customers: `${baseApiUrl}/customers`,
-  registration: `${baseAuthUrl}/token?grant_type=client_credentials&scope=${clientApiData.scopes}`
+  registration: `${baseAuthUrl}/token?grant_type=client_credentials&scope=${clientApiData.scopes}`,
+  refreshToken: `${baseAuthUrl}/token`
 };
