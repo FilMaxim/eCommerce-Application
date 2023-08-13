@@ -1,7 +1,7 @@
 export interface TokenInterface {
   accessToken: string;
   tokenExpiration: number;
-  refreshToken?: string;
+  refreshToken: string;
 }
 
 interface UserName {

@@ -5,7 +5,7 @@ const Street = () => {
   return (
     <>
       <label
-        htmlFor="street"
+        htmlFor="streetName"
         className="text-sm font-bold text-gray-700"
       >
         Street:
@@ -13,11 +13,11 @@ const Street = () => {
       <Field
         className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
         type="text"
-        name="street"
+        name="streetName"
         placeholder="Street"
       />
       <ErrorMessage
-        name="street"
+        name="streetName"
         component="p"
         className="text-xs italic text-red-500"
       />
