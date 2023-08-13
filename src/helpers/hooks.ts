@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { NavRoutes } from '../utils/routes';
 import { getRefreshedToken } from './api/getRefreshedToken';
 import { getTokensFromLs, setExpirationTime, setTokensToLs } from './manageTokens';
+import { showToastMessage } from './showToastMessage';
 
 export const useAuth = () => {
   const { tokenFromLs, refreshTokenFromLs } = getTokensFromLs();
@@ -15,11 +16,16 @@ export const useAuth = () => {
 
   const login = async (userData: LoginInterface): Promise<void> => {
     const tokens = await getUserAccessData(userData);
+    if (tokens === null) {
+      showToastMessage('Invalid email or password, please try again', 'red');
+      return;
+    }
 
     navigate({ pathname: NavRoutes.mainPagePath });
 
     const newToken = { ...tokens, tokenExpiration: setExpirationTime(tokens.tokenExpiration) };
     setTokensToLs(newToken);
+    showToastMessage('LogIn successful', 'green');
   };
 
   const isExpired = (): boolean => isLogged && getTokensFromLs().expirationFromLs < Date.now();
