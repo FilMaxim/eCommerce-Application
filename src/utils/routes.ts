@@ -1,6 +1,6 @@
-export const routes = {
-  mainPagePath: () => '/',
-  loginPagePath: () => '/login',
-  registrationPagePath: () => '/signup',
-  notFoundPagePath: () => '*'
-};
+export enum NavRoutes {
+  mainPagePath = '/',
+  loginPagePath = '/login',
+  registrationPagePath = '/signup',
+  notFoundPagePath = '*'
+}

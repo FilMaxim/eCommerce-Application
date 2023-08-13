@@ -60,3 +60,12 @@ export interface TokensFromLs {
   refreshTokenFromLs: string | null;
   expirationFromLs: number;
 }
+
+export interface PrivateOutletProps {
+  children: JSX.Element;
+}
+
+export interface AuthReturnInterface {
+  login: (userData: LoginInterface) => Promise<void>;
+  isLogged: boolean;
+}

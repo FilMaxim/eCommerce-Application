@@ -2,23 +2,21 @@ import { useState } from 'react';
 import type { LoginInterface } from '../utils/types';
 import { getUserAccessData } from './api/getUserAccessData';
 import { useNavigate } from 'react-router-dom';
-import { routes } from '../utils/routes';
+import { NavRoutes } from '../utils/routes';
 import { getRefreshedToken } from './api/getRefreshedToken';
 import { getTokensFromLs, setExpirationTime, setTokensToLs } from './manageTokens';
 
 export const useAuth = () => {
   const { tokenFromLs, refreshTokenFromLs } = getTokensFromLs();
-
   const [token] = useState(tokenFromLs);
   const [refreshToken] = useState(refreshTokenFromLs);
-
-  const navigate = useNavigate();
   const isLogged = Boolean(token);
+  const navigate = useNavigate();
 
   const login = async (userData: LoginInterface): Promise<void> => {
     const tokens = await getUserAccessData(userData);
 
-    navigate(routes.mainPagePath());
+    navigate({ pathname: NavRoutes.mainPagePath });
 
     const newToken = { ...tokens, tokenExpiration: setExpirationTime(tokens.tokenExpiration) };
     setTokensToLs(newToken);

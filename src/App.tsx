@@ -1,9 +1,5 @@
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import { routes } from './utils/routes';
-import { LoginPage } from './pages/LoginPage';
-import { RegistrationPage } from './pages/RegistrationPage';
-import { NotFoundPage } from './pages/NotFoundPage';
-import { MainPage } from './pages/MainPage';
+import { routesConfig } from './utils/routesConfig';
 import { Header } from './components/header/header';
 
 export const App = () => {
@@ -12,22 +8,13 @@ export const App = () => {
       <Header />
       <main className="w-full">
         <Routes>
-          <Route
-            path={routes.mainPagePath()}
-            element={<MainPage />}
-          />
-          <Route
-            path={routes.loginPagePath()}
-            element={<LoginPage />}
-          />
-          <Route
-            path={routes.registrationPagePath()}
-            element={<RegistrationPage />}
-          />
-          <Route
-            path={routes.notFoundPagePath()}
-            element={<NotFoundPage />}
-          />
+          {routesConfig.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              element={route.element}
+            />
+          ))}
         </Routes>
       </main>
     </Router>
