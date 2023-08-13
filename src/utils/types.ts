@@ -69,3 +69,7 @@ export interface AuthReturnInterface {
   login: (userData: LoginInterface) => Promise<void>;
   isLogged: boolean;
 }
+
+export interface RootState {
+  isLogged: boolean;
+}

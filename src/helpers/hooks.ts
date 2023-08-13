@@ -6,7 +6,11 @@ import { NavRoutes } from '../utils/routes';
 import { getRefreshedToken } from './api/getRefreshedToken';
 import { getTokensFromLs, setExpirationTime, setTokensToLs } from './manageTokens';
 
+import { useDispatch } from 'react-redux';
+import { setLogged } from '../slices/authSlice';
+
 export const useAuth = () => {
+  const dispatch = useDispatch();
   const { tokenFromLs, refreshTokenFromLs } = getTokensFromLs();
   const [token] = useState(tokenFromLs);
   const [refreshToken] = useState(refreshTokenFromLs);
@@ -15,11 +19,12 @@ export const useAuth = () => {
 
   const login = async (userData: LoginInterface): Promise<void> => {
     const tokens = await getUserAccessData(userData);
-
     navigate({ pathname: NavRoutes.mainPagePath });
 
     const newToken = { ...tokens, tokenExpiration: setExpirationTime(tokens.tokenExpiration) };
     setTokensToLs(newToken);
+
+    dispatch(setLogged(Boolean(newToken)));
   };
 
   const isExpired = (): boolean => isLogged && getTokensFromLs().expirationFromLs < Date.now();
