@@ -7,11 +7,10 @@ import { getRefreshedToken } from './api/getRefreshedToken';
 import { getTokensFromLs, setExpirationTime, setTokensToLs } from './manageTokens';
 
 export const useAuth = () => {
-  const { tokenFromLs, refreshTokenFromLs, expirationFromLs } = getTokensFromLs();
+  const { tokenFromLs, refreshTokenFromLs } = getTokensFromLs();
 
   const [token] = useState(tokenFromLs);
   const [refreshToken] = useState(refreshTokenFromLs);
-  const [expiration] = useState(expirationFromLs);
 
   const navigate = useNavigate();
   const isLogged = Boolean(token);
@@ -25,7 +24,7 @@ export const useAuth = () => {
     setTokensToLs(newToken);
   };
 
-  const isExpired = (): boolean => isLogged && expiration < Date.now();
+  const isExpired = (): boolean => isLogged && getTokensFromLs().expirationFromLs < Date.now();
 
   const getToken = async () => {
     if (isExpired() && refreshToken !== null) {
