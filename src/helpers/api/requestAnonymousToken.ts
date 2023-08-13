@@ -1,7 +1,7 @@
 import { clientApiData, endpoints } from '../../utils/clientApiData';
 import type { TokenInterface } from '../../utils/types';
 
-export const requestAnonymousToken = async (): Promise<TokenInterface> => {
+export const requestAnonymousToken = async (): Promise<Omit<TokenInterface, 'refreshToken'>> => {
   const { clientId, clientSecret } = clientApiData;
 
   const response = await fetch(endpoints.registration, {
