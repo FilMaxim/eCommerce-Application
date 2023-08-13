@@ -19,9 +19,9 @@ export const handleRegistrationSubmit = async (
       password: values.password
     });
     showToastMessage('Registration successful', 'green');
-  } else if (data.errors[0].code === 'DuplicateField') {
-    showToastMessage('Customer with this email already exist, login or create new account', 'red');
-  } else {
-    showToastMessage('Registration failed, please try again later', 'red');
+    return;
   }
+  data.errors[0].code === 'DuplicateField'
+    ? showToastMessage('Customer with this email already exist, login or create new account', 'red')
+    : showToastMessage('Registration failed, please try again later', 'red');
 };
