@@ -20,10 +20,13 @@ export const useAuth = (): AuthReturnInterface => {
 
   const login = async ({ email, password }: LoginInterface): Promise<void> => {
     try {
-      const response = await customerLogIn(email, password);
+      const {
+        statusCode,
+        body: { customer }
+      } = await customerLogIn(email, password);
 
-      if (response.statusCode === 200) {
-        successfulAuth(response.body.customer.id, AuthMessages.SUCCESSFUL_LOGIN_MESSAGE);
+      if (statusCode === 200) {
+        successfulAuth(customer.id, AuthMessages.SUCCESSFUL_LOGIN_MESSAGE);
       }
     } catch (error) {
       showToastMessage(AuthMessages.FAILED_LOGIN_MESSAGE, 'red');
@@ -33,10 +36,13 @@ export const useAuth = (): AuthReturnInterface => {
   const signUp = async (values: HandleSubmitInterface): Promise<void> => {
     try {
       const normalizedData = addressAdapter(values);
-      const response = await createCustomer(normalizedData);
+      const {
+        statusCode,
+        body: { customer }
+      } = await createCustomer(normalizedData);
 
-      if (response.statusCode === 201) {
-        successfulAuth(response.body.customer.id, AuthMessages.SUCCESSFUL_REGISTRATION_MESSAGE);
+      if (statusCode === 201) {
+        successfulAuth(customer.id, AuthMessages.SUCCESSFUL_REGISTRATION_MESSAGE);
       }
     } catch (error) {
       if (!(error instanceof Error)) return;
