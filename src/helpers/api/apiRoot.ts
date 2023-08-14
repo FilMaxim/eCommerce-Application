@@ -7,10 +7,9 @@ import {
 } from '@commercetools/platform-sdk';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
-const apiRoot = createApiBuilderFromCtpClient(ctpClient)
-  .withProjectKey({
-    projectKey: ClientApiData.projectKey
-  });
+const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
+  projectKey: ClientApiData.projectKey
+});
 
 export const getCustomers = async () => {
   return await apiRoot.customers().get().execute();
@@ -38,11 +37,7 @@ export const customerLogIn = async (email: string, password: string) => {
 };
 
 export const getCustomerCarts = async (id: string) => {
-  return await apiRoot
-    .carts()
-    .withCustomerId({ customerId: id })
-    .get()
-    .execute();
+  return await apiRoot.carts().withCustomerId({ customerId: id }).get().execute();
 };
 
 export const updateCustomerFirstName = async (id: string, version: number) => {
