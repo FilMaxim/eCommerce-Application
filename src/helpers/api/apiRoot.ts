@@ -1,12 +1,8 @@
 import { ClientApiData } from '../../utils/clientApiData';
 import type { CustomerData } from '../../utils/types';
 import { ctpClient } from './BuildClient';
-import {
-  // ApiRoot,
-  createApiBuilderFromCtpClient
-} from '@commercetools/platform-sdk';
+import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
-// Create apiRoot from the imported ClientBuilder and include your Project key
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
   projectKey: ClientApiData.projectKey
 });
@@ -40,7 +36,12 @@ export const getCustomerCarts = async (id: string) => {
   return await apiRoot.carts().withCustomerId({ customerId: id }).get().execute();
 };
 
-export const updateCustomerFirstName = async (id: string, version: number) => {
+export const updateCustomerFirstName = async (
+  id: string,
+  version: number,
+  newFirstName: string,
+  newLastName: string
+) => {
   return await apiRoot
     .customers()
     .withId({ ID: id })
@@ -50,7 +51,11 @@ export const updateCustomerFirstName = async (id: string, version: number) => {
         actions: [
           {
             action: 'setFirstName',
-            firstName: 'JohnnyBoy'
+            firstName: newFirstName
+          },
+          {
+            action: 'setLastName',
+            lastName: newLastName
           }
         ]
       }

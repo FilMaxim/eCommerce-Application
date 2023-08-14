@@ -26,10 +26,10 @@ export const useAuth = (): AuthReturnInterface => {
       } = await customerLogIn(email, password);
 
       if (statusCode === 200) {
-        successfulAuth(customer.id, AuthMessages.SUCCESSFUL_LOGIN_MESSAGE);
+        successfulAuth(customer.id, AuthMessages.successLoginMessage);
       }
     } catch (error) {
-      showToastMessage(AuthMessages.FAILED_LOGIN_MESSAGE, 'red');
+      showToastMessage(AuthMessages.failedLoginMessage, 'red');
     }
   };
 
@@ -42,14 +42,14 @@ export const useAuth = (): AuthReturnInterface => {
       } = await createCustomer(normalizedData);
 
       if (statusCode === 201) {
-        successfulAuth(customer.id, AuthMessages.SUCCESSFUL_REGISTRATION_MESSAGE);
+        successfulAuth(customer.id, AuthMessages.successRegistrationMessage);
       }
     } catch (error) {
       if (!(error instanceof Error)) return;
 
-      error.message === AuthMessages.EXISTING_CUSTOMER_ERROR
-        ? showToastMessage(AuthMessages.EXISTING_CUSTOMER_MESSAGE, 'red')
-        : showToastMessage(AuthMessages.OTHER_ERROR_MESSAGE, 'red');
+      error.message === AuthMessages.existingCustomerError
+        ? showToastMessage(AuthMessages.existingCustomerError, 'red')
+        : showToastMessage(AuthMessages.otherErrorMessage, 'red');
     }
   };
 
