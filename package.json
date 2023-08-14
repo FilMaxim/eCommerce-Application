@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@commercetools/platform-sdk": "^5.0.0",
+    "@commercetools/sdk-client-v2": "^2.2.0",
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
     "@testing-library/jest-dom": "^5.14.1",
