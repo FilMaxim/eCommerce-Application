@@ -1,47 +1,51 @@
 import { useState } from 'react';
-import type { LoginInterface } from '../utils/types';
-import { getUserAccessData } from './api/getUserAccessData';
+import type { AuthReturnInterface, HandleSubmitInterface, LoginInterface } from '../utils/types';
 import { useNavigate } from 'react-router-dom';
 import { NavRoutes } from '../utils/routes';
-import { getRefreshedToken } from './api/getRefreshedToken';
-import { getTokensFromLs, setExpirationTime, setTokensToLs } from './manageTokens';
+import { createCustomer, customerLogIn } from './api/apiRoot';
+import { showToastMessage } from './showToastMessage';
+import { addressAdapter } from '../components/forms/util/addressDataAdapter';
+import { AuthMessages } from '../components/forms/util/authMessages';
 
-export const useAuth = () => {
-  const { tokenFromLs, refreshTokenFromLs } = getTokensFromLs();
-  const [token] = useState(tokenFromLs);
-  const [refreshToken] = useState(refreshTokenFromLs);
-  const isLogged = Boolean(token);
+export const useAuth = (): AuthReturnInterface => {
+  const [userId] = useState(localStorage.getItem('id'));
+  const isLogged = Boolean(userId);
   const navigate = useNavigate();
 
-  const login = async (userData: LoginInterface): Promise<void> => {
-    const tokens = await getUserAccessData(userData);
-
+  const successfulAuth = (id: string, message: string) => {
+    showToastMessage(message, 'green');
+    localStorage.setItem('id', id);
     navigate({ pathname: NavRoutes.mainPagePath });
-
-    const newToken = { ...tokens, tokenExpiration: setExpirationTime(tokens.tokenExpiration) };
-    setTokensToLs(newToken);
   };
 
-  const isExpired = (): boolean => isLogged && getTokensFromLs().expirationFromLs < Date.now();
+  const login = async ({ email, password }: LoginInterface): Promise<void> => {
+    try {
+      const response = await customerLogIn(email, password);
 
-  const getToken = async () => {
-    if (isExpired() && refreshToken !== null) {
-      try {
-        const newTokens = await getRefreshedToken(refreshToken);
-        setTokensToLs({
-          accessToken: newTokens.accessToken,
-          tokenExpiration: setExpirationTime(newTokens.tokenExpiration),
-          refreshToken: null
-        });
-
-        return newTokens.accessToken;
-      } catch (error) {
-        console.error(error);
+      if (response.statusCode === 200) {
+        successfulAuth(response.body.customer.id, AuthMessages.SUCCESSFUL_LOGIN_MESSAGE);
       }
+    } catch (error) {
+      showToastMessage(AuthMessages.FAILED_LOGIN_MESSAGE, 'red');
     }
-
-    return getTokensFromLs().tokenFromLs;
   };
 
-  return { login, isLogged, getToken };
+  const signUp = async (values: HandleSubmitInterface): Promise<void> => {
+    try {
+      const normalizedData = addressAdapter(values);
+      const response = await createCustomer(normalizedData);
+
+      if (response.statusCode === 201) {
+        successfulAuth(response.body.customer.id, AuthMessages.SUCCESSFUL_REGISTRATION_MESSAGE);
+      }
+    } catch (error) {
+      if (!(error instanceof Error)) return;
+
+      error.message === AuthMessages.EXISTING_CUSTOMER_ERROR
+        ? showToastMessage(AuthMessages.EXISTING_CUSTOMER_MESSAGE, 'red')
+        : showToastMessage(AuthMessages.OTHER_ERROR_MESSAGE, 'red');
+    }
+  };
+
+  return { login, signUp, isLogged, userId };
 };

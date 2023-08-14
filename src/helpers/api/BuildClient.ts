@@ -5,23 +5,23 @@ import {
   type AuthMiddlewareOptions, // Required for auth
   type HttpMiddlewareOptions // Required for sending HTTP requests
 } from '@commercetools/sdk-client-v2';
-import { clientApiData, endpoints } from '../../utils/clientApiData';
+import { ClientApiData, Endpoints } from '../../utils/clientApiData';
 
 // Configure authMiddlewareOptions
 const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: endpoints.baseAuthUrl,
-  projectKey: clientApiData.projectKey,
+  host: Endpoints.auth,
+  projectKey: ClientApiData.projectKey,
   credentials: {
-    clientId: clientApiData.clientId,
-    clientSecret: clientApiData.clientSecret
+    clientId: ClientApiData.clientId,
+    clientSecret: ClientApiData.clientSecret
   },
-  scopes: clientApiData.scopes.split(' '),
+  scopes: ClientApiData.scopes.split(' '),
   fetch
 };
 
 // Configure httpMiddlewareOptions
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: endpoints.baseApiUrl,
+  host: Endpoints.base,
   fetch
 };
 

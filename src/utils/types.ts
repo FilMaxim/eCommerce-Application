@@ -1,9 +1,3 @@
-export interface TokenInterface {
-  accessToken: string;
-  tokenExpiration: number;
-  refreshToken: string | null;
-}
-
 interface UserName {
   firstName: string;
   lastName: string;
@@ -55,17 +49,13 @@ export interface VisibilityIconProps {
 
 export type AuthLogin = (userData: LoginInterface) => void;
 
-export interface TokensFromLs {
-  tokenFromLs: string | null;
-  refreshTokenFromLs: string | null;
-  expirationFromLs: number;
-}
-
 export interface PrivateOutletProps {
   children: JSX.Element;
 }
 
 export interface AuthReturnInterface {
   login: (userData: LoginInterface) => Promise<void>;
+  signUp: (userData: HandleSubmitInterface) => Promise<void>;
   isLogged: boolean;
+  userId: string | null;
 }
