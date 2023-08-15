@@ -1,11 +1,15 @@
 import { createCustomer } from '../../../helpers/api/createCustomer';
 import { requestAnonymousToken } from '../../../helpers/api/requestAnonymousToken';
 import { showToastMessage } from '../../../helpers/showToastMessage';
-import type { HandleSubmitInterface, LoginInterface } from '../../../utils/types';
+import type {
+  HandleSubminWithBoth,
+  HandleSubminWithShipping,
+  LoginInterface
+} from '../../../utils/types';
 import { addressAdapter } from './addressDataAdapter';
 
 export const handleRegistrationSubmit = async (
-  values: HandleSubmitInterface,
+  values: HandleSubminWithBoth | HandleSubminWithShipping,
   login: (values: LoginInterface) => Promise<void>
 ): Promise<void> => {
   const normalizedData = addressAdapter(values);

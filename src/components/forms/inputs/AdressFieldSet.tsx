@@ -1,83 +1,10 @@
 import { Field, ErrorMessage } from 'formik';
 import { countries } from '../util/countriesList';
-import React, { useState } from 'react';
+import { Input } from './Input';
+import { inputsData } from './inputsData';
+import type { AddressFieldSetProps } from '../../../utils/types';
 
-const Street = () => {
-  const [firstName, setFirstName] = useState('');
-  return (
-    <>
-      <label
-        htmlFor="streetName"
-        className="text-sm font-bold text-gray-700"
-      >
-        Street:
-      </label>
-      <Field
-        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-        type="text"
-        name='streetName'
-        placeholder="Street"
-        value={firstName}
-        onChange={(value: string) => { setFirstName(value); }}
-      />
-      <ErrorMessage
-        name="streetName"
-        component="p"
-        className="text-xs italic text-red-500"
-      />
-    </>
-  );
-};
-
-const City = () => {
-  return (
-    <>
-      <label
-        htmlFor="city"
-        className="text-sm font-bold text-gray-700"
-      >
-        City:
-      </label>
-      <Field
-        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-        type="text"
-        name="city"
-        placeholder="City"
-      />
-      <ErrorMessage
-        name="city"
-        component="p"
-        className="text-xs italic text-red-500"
-      />
-    </>
-  );
-};
-
-const PostalCode = () => {
-  return (
-    <>
-      <label
-        htmlFor="postalCode"
-        className="text-sm font-bold text-gray-700"
-      >
-        Postal Code:
-      </label>
-      <Field
-        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-        type="text"
-        name="postalCode"
-        placeholder="Postal Code"
-      />
-      <ErrorMessage
-        name="postalCode"
-        component="p"
-        className="text-xs italic text-red-500"
-      />
-    </>
-  );
-};
-
-const Country = () => {
+const Country = ({ fieldSet }: AddressFieldSetProps) => {
   return (
     <>
       <label
@@ -90,7 +17,7 @@ const Country = () => {
         as="select"
         className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
         type="text"
-        name="country"
+        name={`${fieldSet}country`}
         placeholder="Country"
       >
         {countries.map(({ country }) => (
@@ -111,13 +38,26 @@ const Country = () => {
   );
 };
 
-export const AdressFieldSet = () => {
+export const AdressFieldSet = ({ fieldSet }: AddressFieldSetProps) => {
+  const { streetName, city, postalCode } = inputsData.shippingAddressFieldSet;
   return (
     <>
-      <Street />
-      <City />
-      <PostalCode />
-      <Country />
+      <Input
+        name={`${fieldSet}${streetName.name}`}
+        type={streetName.type}
+        placeholder={streetName.placeholder}
+      />
+      <Input
+        name={`${fieldSet}${city.name}`}
+        type={city.type}
+        placeholder={city.placeholder}
+      />
+      <Input
+        name={`${fieldSet}${postalCode.name}`}
+        type={postalCode.type}
+        placeholder={postalCode.placeholder}
+      />
+      <Country fieldSet={fieldSet} />
     </>
   );
 };
