@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTokensFromLs } from '../helpers/manageTokens';
 
 const initialState = {
-  isLogged: Boolean(getTokensFromLs().tokenFromLs)
+  isLogged: Boolean(localStorage.getItem('id'))
 };
 
 const authSlice = createSlice({

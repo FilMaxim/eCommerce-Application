@@ -55,8 +55,8 @@ export interface PrivateOutletProps {
 
 export interface AuthReturnInterface {
   login: (userData: LoginInterface) => Promise<void>;
+  logout: () => void;
   signUp: (userData: HandleSubmitInterface) => Promise<void>;
-  isLogged: boolean;
   userId: string | null;
 }
 
