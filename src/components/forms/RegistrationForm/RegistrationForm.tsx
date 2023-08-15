@@ -34,7 +34,6 @@ export const RegistrationForm = () => {
       }} // TODO: надо дописать логику добавления полей в инициализацию для билинга по состоянию чекбокса
       validationSchema={yup.object(validationsSchemaRegistrationShipping)} // TODO:  надо дописать логику изменения схемы, по состоянию чекбокса (схема готова, лежит рядом с первой)
       onSubmit={async (values) => {
-        console.debug(values);
         await handleRegistrationSubmit(values, login);
       }}
     >
@@ -60,7 +59,6 @@ export const RegistrationForm = () => {
           type={email.type}
         />
         <PasswordInput />
-        <hr />
         <h3 className="text-sm font-bold text-gray-700">Shipping address:</h3>
         <AdressFieldSet fieldSet={FieldSetType.Shipping} />
         <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
@@ -83,7 +81,6 @@ export const RegistrationForm = () => {
           <>
             <h3 className="text-sm font-bold text-gray-700">Billing address:</h3>
             <AdressFieldSet fieldSet={FieldSetType.Billing} />
-            <hr />
           </>
         )}
         <SubmitBtn />

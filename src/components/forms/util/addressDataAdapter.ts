@@ -23,7 +23,6 @@ export const addressAdapter = (
       dateOfBirth: formData.date,
       email: formData.email,
       password: formData.password,
-
       addresses: [
         {
           country: getCountryCode(formData.billingCountry),
@@ -45,7 +44,6 @@ export const addressAdapter = (
     dateOfBirth: formData.date,
     email: formData.email,
     password: formData.password,
-
     addresses: [
       {
         country: getCountryCode(formData.shippingCountry),

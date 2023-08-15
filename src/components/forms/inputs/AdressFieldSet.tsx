@@ -8,7 +8,7 @@ const Country = ({ fieldSet }: AddressFieldSetProps) => {
   return (
     <>
       <label
-        htmlFor="country"
+        htmlFor={`${fieldSet}Country`}
         className="text-sm font-bold text-gray-700"
       >
         Country:
@@ -17,7 +17,7 @@ const Country = ({ fieldSet }: AddressFieldSetProps) => {
         as="select"
         className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
         type="text"
-        name={`${fieldSet}country`}
+        name={`${fieldSet}Country`}
         placeholder="Country"
       >
         {countries.map(({ country }) => (
@@ -30,7 +30,7 @@ const Country = ({ fieldSet }: AddressFieldSetProps) => {
         ))}
       </Field>
       <ErrorMessage
-        name="country"
+        name={`${fieldSet}Country`}
         component="p"
         className="text-xs italic text-red-500"
       />
