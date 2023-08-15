@@ -1,7 +1,9 @@
 import { Field, ErrorMessage } from 'formik';
 import { countries } from '../util/countriesList';
+import React, { useState } from 'react';
 
 const Street = () => {
+  const [firstName, setFirstName] = useState('');
   return (
     <>
       <label
@@ -13,8 +15,10 @@ const Street = () => {
       <Field
         className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
         type="text"
-        name="streetName"
+        name='streetName'
         placeholder="Street"
+        value={firstName}
+        onChange={(value: string) => { setFirstName(value); }}
       />
       <ErrorMessage
         name="streetName"

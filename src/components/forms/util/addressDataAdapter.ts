@@ -16,6 +16,7 @@ export const addressAdapter = (formData: HandleSubmitInterface): CustomerData =>
     dateOfBirth: formData.date,
     email: formData.email,
     password: formData.password,
+
     addresses: [
       {
         country: getCountryCode(formData.country),
@@ -27,6 +28,8 @@ export const addressAdapter = (formData: HandleSubmitInterface): CustomerData =>
         email: formData.email
       }
     ],
+    shippingAddresses: [0],
+    billingAddresses: [0],
     salutation: Math.random() > 0.5 ? 'Mr' : 'Ms'
   };
 };

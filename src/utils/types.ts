@@ -28,6 +28,8 @@ export interface LoginInterface {
 export interface CustomerData extends LoginInterface, UserName {
   dateOfBirth: string;
   addresses: AddressInterface[];
+  shippingAddresses: number[];
+  billingAddresses: number[];
   salutation: string;
 }
 
@@ -68,4 +70,14 @@ export interface PrivateOutletProps {
 export interface AuthReturnInterface {
   login: (userData: LoginInterface) => Promise<void>;
   isLogged: boolean;
+}
+
+export interface AddressFieldComponent {
+  label: string;
+  name: string;
+  placeholder: string;
+}
+
+export interface NameInput {
+  name: string
 }
