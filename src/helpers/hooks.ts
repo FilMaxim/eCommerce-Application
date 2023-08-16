@@ -6,16 +6,19 @@ import { createCustomer, customerLogIn } from './api/apiRoot';
 import { showToastMessage } from './showToastMessage';
 import { addressAdapter } from '../components/forms/util/addressDataAdapter';
 import { AuthMessages } from '../components/forms/util/authMessages';
+import { setLogged } from '../slices/authSlice';
+import { useDispatch } from 'react-redux';
 
 export const useAuth = (): AuthReturnInterface => {
   const [userId] = useState(localStorage.getItem('id'));
-  const isLogged = Boolean(userId);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const successfulAuth = (id: string, message: string) => {
     showToastMessage(message, 'green');
     localStorage.setItem('id', id);
     navigate({ pathname: NavRoutes.mainPagePath });
+    dispatch(setLogged(true));
   };
 
   const login = async ({ email, password }: LoginInterface): Promise<void> => {
@@ -31,6 +34,11 @@ export const useAuth = (): AuthReturnInterface => {
     } catch (error) {
       showToastMessage(AuthMessages.failedLoginMessage, 'red');
     }
+  };
+
+  const logout = (): void => {
+    localStorage.clear();
+    dispatch(setLogged(false));
   };
 
   const signUp = async (values: HandleSubmitInterface): Promise<void> => {
@@ -53,5 +61,5 @@ export const useAuth = (): AuthReturnInterface => {
     }
   };
 
-  return { login, signUp, isLogged, userId };
+  return { login, logout, signUp, userId };
 };
