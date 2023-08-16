@@ -8,19 +8,25 @@ import { handleRegistrationSubmit } from '../util/handleRegistrationSubmit';
 import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';
 import { useAuth } from '../../../helpers/hooks';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FieldSetType, inputsData } from '../inputs/inputsData';
 import { Input } from '../inputs/Input';
+
+export const stateCheckboxs = {
+  bothSameShippingBilling: true
+};
 
 export const RegistrationForm = () => {
   const { login } = useAuth();
   const [isSameAddress, setIsSameAddress] = useState(true); // Состояние чекбокса
+
   const handleCheckboxChange = () => {
-    setIsSameAddress((isSameAddress) => !isSameAddress); // Изменение состояния чекбокса
+    setIsSameAddress(!isSameAddress); // Изменение состояния чекбокса
+    stateCheckboxs.bothSameShippingBilling = isSameAddress;
   };
   const { firstName, lastName, date, email } = inputsData;
 
-  const initialValues = {
+  const initialValuesShipping = {
     firstName: '',
     lastName: '',
     date: minAge,
@@ -31,33 +37,26 @@ export const RegistrationForm = () => {
     shippingPostalCode: '',
     shippingCountry: ''
   };
-
   const initialValuesBilling = {
-    firstName: '',
-    lastName: '',
-    date: minAge,
-    email: '',
-    password: '',
-    shippingStreetName: '',
-    shippingCity: '',
-    shippingPostalCode: '',
-    shippingCountry: '',
     billingStreetName: '',
     billingCity: '',
     billingPostalCode: '',
     billingCountry: ''
   };
-  // if (!isSameAddress) {
-  //   initialValues.billingStreetName = '';
-  //   initialValues.billingCity = '';
-  //   initialValues.billingPostalCode = '';
-  //   initialValues.billingCountry = '';
-  // }
+  const [initialValues, setInitialValues] = useState(initialValuesShipping);
+  useEffect(() => {
+    const updatedInitialValues = isSameAddress
+      ? initialValuesShipping
+      : { ...initialValuesShipping, ...initialValuesBilling };
+
+    setInitialValues(updatedInitialValues);
+  }, [isSameAddress]);
   return (
     <Formik
-      initialValues={isSameAddress ? initialValues : initialValuesBilling}
+      initialValues={initialValues}
       validationSchema={yup.object(validationsSchemaRegistrationShipping)} // TODO:  надо дописать логику изменения схемы, по состоянию чекбокса (схема готова, лежит рядом с первой)
       onSubmit={async (values) => {
+        console.log(initialValues);
         console.log(values);
         await handleRegistrationSubmit(values, login);
       }}

@@ -1,4 +1,5 @@
 import type { HandleSubminWithShipping, HandleSubminWithBoth, CustomerData } from '../../../utils/types';
+import { stateCheckboxs } from '../RegistrationForm/RegistrationForm';
 import { countries } from './countriesList';
 
 const getCountryCode = (country: string): string => {
@@ -24,7 +25,7 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
   let shippingAddresses = [0];
   const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
 
-  if ('billingCountry' in formData) {
+  if (!stateCheckboxs.bothSameShippingBilling && 'billingCountry' in formData) { // второе условие заглушка от ошибок
     const billingAddress = {
       country: getCountryCode(formData.billingCountry),
       firstName,

@@ -108,8 +108,8 @@ export interface AddressFieldSetProps {
 }
 
 export interface InitialValues extends HandleSubminWithShipping {
-  billingCountry?: string;
-  billingCity?: string;
-  billingStreetName?: string;
-  billingPostalCode?: string;
+  billingCountry: string;
+  billingCity: string;
+  billingStreetName: string;
+  billingPostalCode: string;
 }
