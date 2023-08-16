@@ -1,11 +1,7 @@
 import { createCustomer } from '../../../helpers/api/createCustomer';
 import { requestAnonymousToken } from '../../../helpers/api/requestAnonymousToken';
 import { showToastMessage } from '../../../helpers/showToastMessage';
-import type {
-  HandleSubminWithBoth,
-  HandleSubminWithShipping,
-  LoginInterface
-} from '../../../utils/types';
+import type { HandleSubminWithBoth, HandleSubminWithShipping, LoginInterface } from '../../../utils/types';
 import { addressAdapter } from './addressDataAdapter';
 
 export const handleRegistrationSubmit = async (

@@ -49,7 +49,7 @@ export interface HandleSubminWithShipping extends LoginInterface, UserName, Ship
   date: string;
 }
 
-export interface HandleSubminWithBoth extends LoginInterface, UserName, BillingAddress {
+export interface HandleSubminWithBoth extends LoginInterface, UserName, BillingAddress, ShippingAddress {
   date: string;
 }
 export interface LogoParams {
@@ -105,4 +105,11 @@ export interface InputProps {
 
 export interface AddressFieldSetProps {
   fieldSet: 'shipping' | 'billing';
+}
+
+export interface InitialValues extends HandleSubminWithShipping {
+  billingCountry?: string;
+  billingCity?: string;
+  billingStreetName?: string;
+  billingPostalCode?: string;
 }

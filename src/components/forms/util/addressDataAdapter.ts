@@ -1,8 +1,4 @@
-import type {
-  HandleSubminWithShipping,
-  HandleSubminWithBoth,
-  CustomerData
-} from '../../../utils/types';
+import type { HandleSubminWithShipping, HandleSubminWithBoth, CustomerData } from '../../../utils/types';
 import { countries } from './countriesList';
 
 const getCountryCode = (country: string): string => {
@@ -13,49 +9,44 @@ const getCountryCode = (country: string): string => {
   return selectedCountry.code;
 };
 
-export const addressAdapter = (
-  formData: HandleSubminWithShipping | HandleSubminWithBoth
-): CustomerData => {
+export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubminWithBoth): CustomerData => {
+  const { firstName, lastName, date, email, password } = formData;
+  const shippingAddress = {
+    country: getCountryCode(formData.shippingCountry),
+    firstName,
+    lastName,
+    streetName: formData.shippingStreetName,
+    postalCode: formData.shippingPostalCode,
+    city: formData.shippingCity
+  };
+  const addresses = [shippingAddress];
+  let billingAddresses = [0];
+  let shippingAddresses = [0];
+  const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
+
   if ('billingCountry' in formData) {
-    return {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      dateOfBirth: formData.date,
-      email: formData.email,
-      password: formData.password,
-      addresses: [
-        {
-          country: getCountryCode(formData.billingCountry),
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          streetName: formData.billingStreetName,
-          postalCode: formData.billingPostalCode,
-          city: formData.billingCity
-        }
-      ],
-      shippingAddresses: [0],
-      billingAddresses: [0],
-      salutation: Math.random() > 0.5 ? 'Mr' : 'Ms'
+    const billingAddress = {
+      country: getCountryCode(formData.billingCountry),
+      firstName,
+      lastName,
+      streetName: formData.billingStreetName,
+      postalCode: formData.billingPostalCode,
+      city: formData.billingCity
     };
-  } // это временная првоерка, чтобы работали интерфейсы, потом надо будет заменить на что-то нормальное
+    addresses.push(billingAddress);
+    billingAddresses = [1];
+    shippingAddresses = [0];
+  }
+
   return {
-    firstName: formData.firstName,
-    lastName: formData.lastName,
-    dateOfBirth: formData.date,
-    email: formData.email,
-    password: formData.password,
-    addresses: [
-      {
-        country: getCountryCode(formData.shippingCountry),
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        streetName: formData.shippingStreetName,
-        postalCode: formData.shippingPostalCode,
-        city: formData.shippingCity
-      }
-    ],
-    shippingAddresses: [0],
-    billingAddresses: [0],
-    salutation: Math.random() > 0.5 ? 'Mr' : 'Ms'
+    firstName,
+    lastName,
+    dateOfBirth: date,
+    email,
+    password,
+    addresses,
+    shippingAddresses,
+    billingAddresses,
+    salutation
   };
 };

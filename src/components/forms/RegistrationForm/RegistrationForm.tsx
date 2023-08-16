@@ -19,21 +19,46 @@ export const RegistrationForm = () => {
     setIsSameAddress((isSameAddress) => !isSameAddress); // Изменение состояния чекбокса
   };
   const { firstName, lastName, date, email } = inputsData;
+
+  const initialValues = {
+    firstName: '',
+    lastName: '',
+    date: minAge,
+    email: '',
+    password: '',
+    shippingStreetName: '',
+    shippingCity: '',
+    shippingPostalCode: '',
+    shippingCountry: ''
+  };
+
+  const initialValuesBilling = {
+    firstName: '',
+    lastName: '',
+    date: minAge,
+    email: '',
+    password: '',
+    shippingStreetName: '',
+    shippingCity: '',
+    shippingPostalCode: '',
+    shippingCountry: '',
+    billingStreetName: '',
+    billingCity: '',
+    billingPostalCode: '',
+    billingCountry: ''
+  };
+  // if (!isSameAddress) {
+  //   initialValues.billingStreetName = '';
+  //   initialValues.billingCity = '';
+  //   initialValues.billingPostalCode = '';
+  //   initialValues.billingCountry = '';
+  // }
   return (
     <Formik
-      initialValues={{
-        firstName: '',
-        lastName: '',
-        date: minAge,
-        email: '',
-        password: '',
-        shippingStreetName: '',
-        shippingCity: '',
-        shippingPostalCode: '',
-        shippingCountry: ''
-      }} // TODO: надо дописать логику добавления полей в инициализацию для билинга по состоянию чекбокса
+      initialValues={isSameAddress ? initialValues : initialValuesBilling}
       validationSchema={yup.object(validationsSchemaRegistrationShipping)} // TODO:  надо дописать логику изменения схемы, по состоянию чекбокса (схема готова, лежит рядом с первой)
       onSubmit={async (values) => {
+        console.log(values);
         await handleRegistrationSubmit(values, login);
       }}
     >
