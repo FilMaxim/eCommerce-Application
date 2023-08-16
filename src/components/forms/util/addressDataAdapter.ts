@@ -25,7 +25,8 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
   let shippingAddresses = [0];
   const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
 
-  if (!stateCheckboxs.bothSameShippingBilling && 'billingCountry' in formData) { // второе условие заглушка от ошибок
+  if (!stateCheckboxs.bothSameShippingBilling && 'billingCountry' in formData) {
+    // второе условие заглушка от ошибок
     const billingAddress = {
       country: getCountryCode(formData.billingCountry),
       firstName,

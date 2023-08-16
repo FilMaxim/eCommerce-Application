@@ -17,8 +17,8 @@ export const Input = ({ name, type, placeholder }: InputProps) => {
         type={type}
         name={name}
         placeholder={placeholder}
-      // value={inputValue}
-      // onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setInputValue(event.target.value); }}
+        // value={inputValue}
+        // onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setInputValue(event.target.value); }}
       />
       <ErrorMessage
         name={name}

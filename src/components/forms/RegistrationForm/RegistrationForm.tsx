@@ -50,6 +50,7 @@ export const RegistrationForm = () => {
       : { ...initialValuesShipping, ...initialValuesBilling };
 
     setInitialValues(updatedInitialValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
   return (
     <Formik

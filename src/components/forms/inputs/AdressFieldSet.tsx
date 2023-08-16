@@ -49,7 +49,7 @@ export const AdressFieldSet = ({ fieldSet }: AddressFieldSetProps) => {
           value=""
           id="checkboxDefault"
           checked={true} // Привязка состояния чекбокса
-        // onChange={handleCheckboxChange} // Обработчик события изменения чекбокса
+          // onChange={handleCheckboxChange} // Обработчик события изменения чекбокса
         />
         <label
           className="inline-block pl-[0.15rem] hover:cursor-pointer"
