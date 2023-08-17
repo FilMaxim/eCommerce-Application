@@ -24,7 +24,7 @@ export const inputsData = {
     type: 'date',
     placeholder: 'Date of Birth'
   },
-  shippingAddressFieldSet: {
+  addressFieldSet: {
     city: {
       name: 'City',
       type: 'text',
