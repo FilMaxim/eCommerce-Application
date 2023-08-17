@@ -3,6 +3,8 @@ import { countries } from '../util/countriesList';
 import { Input } from './Input';
 import { inputsData } from './inputsData';
 import type { AddressFieldSetProps } from '../../../utils/types';
+import { useState } from 'react';
+import { stateCheckboxs } from '../RegistrationForm/RegistrationForm';
 
 const Country = ({ fieldSet }: AddressFieldSetProps) => {
   return (
@@ -40,6 +42,13 @@ const Country = ({ fieldSet }: AddressFieldSetProps) => {
 
 export const AdressFieldSet = ({ fieldSet }: AddressFieldSetProps) => {
   const { streetName, city, postalCode } = inputsData.shippingAddressFieldSet;
+
+  const [isDefaultAddress, setIsDefaultAddress] = useState(true);
+  stateCheckboxs[fieldSet] = isDefaultAddress;
+  const handleCheckboxChange = () => {
+    setIsDefaultAddress(!isDefaultAddress);
+    stateCheckboxs[fieldSet] = isDefaultAddress;
+  };
   return (
     <>
       <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
@@ -48,8 +57,8 @@ export const AdressFieldSet = ({ fieldSet }: AddressFieldSetProps) => {
           type="checkbox"
           value=""
           id="checkboxDefault"
-          checked={true} // Привязка состояния чекбокса
-          // onChange={handleCheckboxChange} // Обработчик события изменения чекбокса
+          checked={isDefaultAddress} // Привязка состояния чекбокса
+          onChange={handleCheckboxChange} // Обработчик события изменения чекбокса
         />
         <label
           className="inline-block pl-[0.15rem] hover:cursor-pointer"

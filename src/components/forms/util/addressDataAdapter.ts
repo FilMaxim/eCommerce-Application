@@ -21,12 +21,14 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
     city: formData.shippingCity
   };
   const addresses = [shippingAddress];
+  const shippingAddresses = [0];
   let billingAddresses = [0];
-  let shippingAddresses = [0];
+  const defaultShippingAddress = stateCheckboxs.shipping ? 0 : undefined;
+  let defaultBillingAddress = defaultShippingAddress;
+
   const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
 
-  if (!stateCheckboxs.bothSameShippingBilling && 'billingCountry' in formData) {
-    // второе условие заглушка от ошибок
+  if ('billingCountry' in formData) {
     const billingAddress = {
       country: getCountryCode(formData.billingCountry),
       firstName,
@@ -37,9 +39,22 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
     };
     addresses.push(billingAddress);
     billingAddresses = [1];
-    shippingAddresses = [0];
+    defaultBillingAddress = stateCheckboxs.billing ? 1 : undefined;
   }
-
+  console.log(stateCheckboxs);
+  console.log({
+    firstName,
+    lastName,
+    dateOfBirth: date,
+    email,
+    password,
+    addresses,
+    shippingAddresses,
+    billingAddresses,
+    defaultShippingAddress,
+    defaultBillingAddress,
+    salutation
+  });
   return {
     firstName,
     lastName,
@@ -49,6 +64,8 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
     addresses,
     shippingAddresses,
     billingAddresses,
+    defaultShippingAddress,
+    defaultBillingAddress,
     salutation
   };
 };

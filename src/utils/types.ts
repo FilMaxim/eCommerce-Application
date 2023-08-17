@@ -42,6 +42,8 @@ export interface CustomerData extends LoginInterface, UserName {
   addresses: Address[];
   shippingAddresses: number[];
   billingAddresses: number[];
+  defaultShippingAddress?: number;
+  defaultBillingAddress?: number;
   salutation: string;
 }
 
@@ -113,3 +115,5 @@ export interface InitialValues extends HandleSubminWithShipping {
   billingStreetName: string;
   billingPostalCode: string;
 }
+
+export type StateCheckboxs = Record<string, boolean>;

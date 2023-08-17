@@ -11,8 +11,9 @@ import { useAuth } from '../../../helpers/hooks';
 import React, { useEffect, useState } from 'react';
 import { FieldSetType, inputsData } from '../inputs/inputsData';
 import { Input } from '../inputs/Input';
+import { type StateCheckboxs } from '../../../utils/types';
 
-export const stateCheckboxs = {
+export const stateCheckboxs: StateCheckboxs = {
   bothSameShippingBilling: true
 };
 
