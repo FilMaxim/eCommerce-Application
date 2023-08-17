@@ -30,11 +30,7 @@ const initialValues = {
   shippingStreetName: '',
   shippingCity: '',
   shippingPostalCode: '',
-  shippingCountry: 'Cyprus'
-};
-
-const valuesWithBilling = {
-  ...initialValues,
+  shippingCountry: 'Cyprus',
   billingStreetName: '',
   billingCity: '',
   billingPostalCode: '',
@@ -45,7 +41,6 @@ export const RegistrationForm = () => {
   const { login } = useAuth();
   const [isSameAddress, setIsSameAddress] = useState(true);
   const [schema, setSchema] = useState(validationsSchemaRegistrationShipping);
-  const [values, setInitialValues] = useState(initialValues);
 
   const handleCheckboxChange = () => {
     setIsSameAddress(!isSameAddress); // Изменение состояния чекбокса
@@ -55,16 +50,14 @@ export const RegistrationForm = () => {
 
   useEffect(() => {
     if (isSameAddress) {
-      setInitialValues(initialValues);
       setSchema(validationsSchemaRegistrationShipping);
     } else {
-      setInitialValues(valuesWithBilling);
       setSchema(validationsSchemaRegistrationBoth);
     }
   }, [isSameAddress]);
   return (
     <Formik
-      initialValues={values}
+      initialValues={initialValues}
       validationSchema={yup.object(schema)}
       onSubmit={async (values) => {
         await handleRegistrationSubmit(values, login);
