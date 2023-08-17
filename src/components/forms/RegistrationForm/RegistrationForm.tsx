@@ -30,7 +30,7 @@ const initialValues = {
   shippingStreetName: '',
   shippingCity: '',
   shippingPostalCode: '',
-  shippingCountry: ''
+  shippingCountry: 'Cyprus'
 };
 
 const valuesWithBilling = {
@@ -38,7 +38,7 @@ const valuesWithBilling = {
   billingStreetName: '',
   billingCity: '',
   billingPostalCode: '',
-  billingCountry: ''
+  billingCountry: 'Cyprus'
 };
 
 export const RegistrationForm = () => {
