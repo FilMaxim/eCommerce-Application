@@ -61,7 +61,6 @@ export const RegistrationForm = () => {
       setInitialValues(valuesWithBilling);
       setSchema(validationsSchemaRegistrationBoth);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
   return (
     <Formik
