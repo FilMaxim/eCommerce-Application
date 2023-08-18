@@ -18,7 +18,10 @@ export const useAuth = () => {
 
     navigate({ pathname: NavRoutes.mainPagePath });
 
-    const newToken = { ...tokens, tokenExpiration: setExpirationTime(tokens.tokenExpiration) };
+    const newToken = {
+      ...tokens,
+      tokenExpiration: setExpirationTime(tokens.tokenExpiration)
+    };
     setTokensToLs(newToken);
   };
 

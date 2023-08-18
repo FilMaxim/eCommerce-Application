@@ -2,9 +2,7 @@ import axios from 'axios';
 import type { TokenInterface } from '../../utils/types';
 import { clientApiData, endpoints } from '../../utils/clientApiData';
 
-export const getRefreshedToken = async (
-  refreshToken: string
-): Promise<Omit<TokenInterface, 'refreshToken'>> => {
+export const getRefreshedToken = async (refreshToken: string): Promise<Omit<TokenInterface, 'refreshToken'>> => {
   const { clientId, clientSecret } = clientApiData;
   const url = endpoints.refreshToken;
   const body = {

@@ -1,10 +1,7 @@
 import { endpoints } from '../../utils/clientApiData';
 import type { CustomerData } from '../../utils/types';
 
-export const createCustomer = async (
-  data: CustomerData,
-  accessToken: string
-): Promise<Response> => {
+export const createCustomer = async (data: CustomerData, accessToken: string): Promise<Response> => {
   return await fetch(endpoints.customers, {
     method: 'POST',
     headers: {
