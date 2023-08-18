@@ -1,3 +1,5 @@
+import { minAge } from '../util/validationSchema';
+
 export const inputsData = {
   firstName: {
     name: 'firstName',
@@ -47,3 +49,21 @@ export enum FieldSetType {
   Shipping = 'shipping',
   Billing = 'billing'
 }
+
+export const initialValues = {
+  firstName: '',
+  lastName: '',
+  date: minAge,
+  email: '',
+  password: '',
+  shippingStreetName: '',
+  shippingCity: '',
+  shippingPostalCode: '',
+  shippingCountry: 'Cyprus',
+  billingStreetName: '',
+  billingCity: '',
+  billingPostalCode: '',
+  billingCountry: 'Cyprus',
+  billingStateChecked: true,
+  shippingStateChecked: true
+};

@@ -3,7 +3,6 @@ import { PasswordInput } from '../inputs/PasswordInput';
 import { SubmitBtn } from '../inputs/SubmitBtn';
 import { AdressFieldSet } from '../inputs/AdressFieldSet';
 import {
-  minAge,
   validationsSchemaRegistrationBoth,
   validationsSchemaRegistrationShipping
 } from '../util/validationSchema';
@@ -13,26 +12,8 @@ import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';
 import { useAuth } from '../../../helpers/hooks';
 import { useEffect, useState } from 'react';
-import { FieldSetType, inputsData } from '../inputs/inputsData';
+import { FieldSetType, initialValues, inputsData } from '../inputs/inputsData';
 import { Input } from '../inputs/Input';
-
-const initialValues = {
-  firstName: '',
-  lastName: '',
-  date: minAge,
-  email: '',
-  password: '',
-  shippingStreetName: '',
-  shippingCity: '',
-  shippingPostalCode: '',
-  shippingCountry: 'Cyprus',
-  billingStreetName: '',
-  billingCity: '',
-  billingPostalCode: '',
-  billingCountry: 'Cyprus',
-  billingStateChecked: true,
-  shippingStateChecked: true
-};
 
 export const RegistrationForm = () => {
   const { login } = useAuth();
@@ -40,16 +21,12 @@ export const RegistrationForm = () => {
   const [schema, setSchema] = useState(validationsSchemaRegistrationShipping);
 
   const handleCheckboxChange = () => {
-    setIsSameAddress(!isSameAddress); // Изменение состояния чекбокса
+    setIsSameAddress(!isSameAddress);
   };
   const { firstName, lastName, date, email } = inputsData;
 
   useEffect(() => {
-    if (isSameAddress) {
-      setSchema(validationsSchemaRegistrationShipping);
-    } else {
-      setSchema(validationsSchemaRegistrationBoth);
-    }
+    isSameAddress ? setSchema(validationsSchemaRegistrationShipping) : setSchema(validationsSchemaRegistrationBoth);
   }, [isSameAddress]);
   return (
     <Formik

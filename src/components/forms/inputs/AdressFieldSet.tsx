@@ -3,8 +3,6 @@ import { countries } from '../util/countriesList';
 import { Input } from './Input';
 import { inputsData } from './inputsData';
 import type { AddressFieldSetProps } from '../../../utils/types';
-// import { useState } from 'react';
-// import { stateCheckboxs } from '../RegistrationForm/RegistrationForm';
 
 const Country = ({ fieldSet }: AddressFieldSetProps) => {
   return (

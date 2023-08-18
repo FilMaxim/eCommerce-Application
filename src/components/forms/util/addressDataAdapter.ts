@@ -28,7 +28,6 @@ export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => 
   const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
 
   if (formData.billingStreetName !== '') {
-    console.log(111);
     const billingAddress = {
       country: getCountryCode(formData.billingCountry),
       firstName,
@@ -41,19 +40,6 @@ export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => 
     billingAddresses = [1];
     defaultBillingAddress = formData.billingStateChecked ? 1 : undefined;
   }
-  console.log({
-    firstName,
-    lastName,
-    dateOfBirth: date,
-    email,
-    password,
-    addresses,
-    shippingAddresses,
-    billingAddresses,
-    defaultShippingAddress,
-    defaultBillingAddress,
-    salutation
-  });
 
   return {
     firstName,
