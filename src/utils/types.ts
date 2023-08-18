@@ -3,16 +3,30 @@ interface UserName {
   lastName: string;
 }
 
-interface PostalAddress {
+interface ShippingAddress {
+  shippingCountry: string;
+  shippingCity: string;
+  shippingStreetName: string;
+  shippingPostalCode: string;
+  shippingStateChecked: boolean;
+}
+
+interface BillingAddress {
+  billingCountry: string;
+  billingCity: string;
+  billingStreetName: string;
+  billingPostalCode: string;
+  billingStateChecked: boolean;
+}
+
+interface Address extends UserName {
   country: string;
   city: string;
   streetName: string;
   postalCode: string;
 }
 
-export interface AddressInterface extends UserName, PostalAddress {
-  email: string;
-}
+export type AddressInterface = UserName & (ShippingAddress | BillingAddress);
 
 export interface LoginInterface {
   email: string;
@@ -21,14 +35,17 @@ export interface LoginInterface {
 
 export interface CustomerData extends LoginInterface, UserName {
   dateOfBirth: string;
-  addresses: AddressInterface[];
+  addresses: Address[];
+  shippingAddresses: number[];
+  billingAddresses: number[];
+  defaultShippingAddress?: number;
+  defaultBillingAddress?: number;
   salutation: string;
 }
 
-export interface HandleSubmitInterface extends LoginInterface, UserName, PostalAddress {
+export interface HandleSubmitWithBoth extends LoginInterface, UserName, BillingAddress, ShippingAddress {
   date: string;
 }
-
 export interface LogoParams {
   className?: string;
 }
@@ -56,10 +73,30 @@ export interface PrivateOutletProps {
 export interface AuthReturnInterface {
   login: (userData: LoginInterface) => Promise<void>;
   logout: () => void;
-  signUp: (userData: HandleSubmitInterface) => Promise<void>;
+  signUp: (userData: HandleSubmitWithBoth) => Promise<void>;
   userId: string | null;
 }
 
 export interface RootState {
   isLogged: boolean;
+}
+
+export interface AddressFieldComponent {
+  label: string;
+  name: string;
+  placeholder: string;
+}
+
+export interface NameInput {
+  name: string;
+}
+
+export interface InputProps {
+  name: string;
+  type: string;
+  placeholder: string;
+}
+
+export interface AddressFieldSetProps {
+  fieldSet: 'shipping' | 'billing';
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { AuthReturnInterface, HandleSubmitInterface, LoginInterface } from '../utils/types';
+import type { AuthReturnInterface, HandleSubmitWithBoth, LoginInterface } from '../utils/types';
 import { useNavigate } from 'react-router-dom';
 import { NavRoutes } from '../utils/routes';
 import { createCustomer, customerLogIn } from './api/apiRoot';
@@ -41,7 +41,7 @@ export const useAuth = (): AuthReturnInterface => {
     dispatch(setLogged(false));
   };
 
-  const signUp = async (values: HandleSubmitInterface): Promise<void> => {
+  const signUp = async (values: HandleSubmitWithBoth): Promise<void> => {
     try {
       const normalizedData = addressAdapter(values);
       const {

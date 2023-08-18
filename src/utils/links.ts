@@ -5,5 +5,9 @@ export const links = {
   main: { text: 'MainPage', path: NavRoutes.mainPagePath },
   login: { text: 'LogIn', path: NavRoutes.loginPagePath, icon: UserIcon },
   logout: { text: 'Logout', path: NavRoutes.mainPagePath, icon: UserMinusIcon },
-  registration: { text: 'Registration', path: NavRoutes.registrationPagePath, icon: UserPlusIcon }
+  registration: {
+    text: 'Registration',
+    path: NavRoutes.registrationPagePath,
+    icon: UserPlusIcon
+  }
 };

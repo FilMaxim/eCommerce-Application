@@ -21,7 +21,7 @@ export const validationsSchemaLogin = {
     .required('Required field')
 };
 
-export const validationsSchemaRegistration = {
+export const validationsSchemaRegistrationShipping = {
   ...validationsSchemaLogin,
   firstName: yup
     .string()
@@ -36,21 +36,42 @@ export const validationsSchemaRegistration = {
     .trim()
     .required('Required field'),
   date: yup.date().max(minAge, 'You should be older than 18 years').required('Required field'),
-  streetName: yup
+  shippingStreetName: yup
     .string()
     .min(1, 'Street should contain at least 1 character')
     .trim()
     .required('Required field'),
-  city: yup
+  shippingCity: yup
     .string()
     .min(1, 'City should contain at least 1 character')
     .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
     .trim()
     .required('Required field'),
-  postalCode: yup
+  shippingPostalCode: yup
     .string()
     .min(1, 'Postal Code should contain at least 1 character')
     .trim()
     .required('Required field'),
-  country: yup.string().required('Required field')
+  shippingCountry: yup.string().required('Required field')
+};
+
+export const validationsSchemaRegistrationBoth = {
+  ...validationsSchemaRegistrationShipping,
+  billingStreetName: yup
+    .string()
+    .min(1, 'Street should contain at least 1 character')
+    .trim()
+    .required('Required field'),
+  billingCity: yup
+    .string()
+    .min(1, 'City should contain at least 1 character')
+    .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
+    .trim()
+    .required('Required field'),
+  billingPostalCode: yup
+    .string()
+    .min(1, 'Postal Code should contain at least 1 character')
+    .trim()
+    .required('Required field'),
+  billingCountry: yup.string().required('Required field')
 };

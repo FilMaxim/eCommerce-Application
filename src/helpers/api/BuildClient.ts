@@ -1,8 +1,4 @@
-import {
-  ClientBuilder,
-  type AuthMiddlewareOptions,
-  type HttpMiddlewareOptions
-} from '@commercetools/sdk-client-v2';
+import { ClientBuilder, type AuthMiddlewareOptions, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import { ClientApiData, Endpoints } from '../../utils/clientApiData';
 
 const authMiddlewareOptions: AuthMiddlewareOptions = {
