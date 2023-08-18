@@ -2,36 +2,30 @@ import { Form, Formik } from 'formik';
 import { PasswordInput } from '../inputs/PasswordInput';
 import { SubmitBtn } from '../inputs/SubmitBtn';
 import { AdressFieldSet } from '../inputs/AdressFieldSet';
-import {
-  validationsSchemaRegistrationBoth,
-  validationsSchemaRegistrationShipping
-} from '../util/validationSchema';
+import { validationsSchemaRegistrationBoth, validationsSchemaRegistrationShipping } from '../util/validationSchema';
 import * as yup from 'yup';
 import { handleRegistrationSubmit } from '../util/handleRegistrationSubmit';
 import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';
 import { useAuth } from '../../../helpers/hooks';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FieldSetType, initialValues, inputsData } from '../inputs/inputsData';
 import { Input } from '../inputs/Input';
 
 export const RegistrationForm = () => {
   const { login } = useAuth();
   const [isSameAddress, setIsSameAddress] = useState(true);
-  const [schema, setSchema] = useState(validationsSchemaRegistrationShipping);
-
   const handleCheckboxChange = () => {
     setIsSameAddress(!isSameAddress);
   };
   const { firstName, lastName, date, email } = inputsData;
 
-  useEffect(() => {
-    isSameAddress ? setSchema(validationsSchemaRegistrationShipping) : setSchema(validationsSchemaRegistrationBoth);
-  }, [isSameAddress]);
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={yup.object(schema)}
+      validationSchema={yup.object(
+        isSameAddress ? validationsSchemaRegistrationShipping : validationsSchemaRegistrationBoth
+      )}
       onSubmit={async (values) => {
         await handleRegistrationSubmit(values, login);
       }}
