@@ -1,5 +1,4 @@
 import type { HandleSubminWithShipping, HandleSubminWithBoth, CustomerData } from '../../../utils/types';
-import { stateCheckboxs } from '../RegistrationForm/RegistrationForm';
 import { countries } from './countriesList';
 
 const getCountryCode = (country: string): string => {
@@ -23,12 +22,12 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
   const addresses = [shippingAddress];
   const shippingAddresses = [0];
   let billingAddresses = [0];
-  const defaultShippingAddress = stateCheckboxs.shipping ? 0 : undefined;
+  const defaultShippingAddress = (formData.shippingStateChecked) ? 0 : undefined;
   let defaultBillingAddress = defaultShippingAddress;
 
   const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
 
-  if ('billingCountry' in formData) {
+  if ('billingStreetName' in formData) {
     const billingAddress = {
       country: getCountryCode(formData.billingCountry),
       firstName,
@@ -39,9 +38,8 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
     };
     addresses.push(billingAddress);
     billingAddresses = [1];
-    defaultBillingAddress = stateCheckboxs.billing ? 1 : undefined;
+    defaultBillingAddress = (formData.billingStateChecked) ? 1 : undefined;
   }
-  console.log(stateCheckboxs);
   console.log({
     firstName,
     lastName,
@@ -55,6 +53,7 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
     defaultBillingAddress,
     salutation
   });
+
   return {
     firstName,
     lastName,

@@ -14,6 +14,7 @@ interface ShippingAddress {
   shippingCity: string;
   shippingStreetName: string;
   shippingPostalCode: string;
+  shippingStateChecked: boolean
 }
 
 interface BillingAddress {
@@ -21,6 +22,7 @@ interface BillingAddress {
   billingCity: string;
   billingStreetName: string;
   billingPostalCode: string;
+  billingStateChecked: boolean,
 }
 
 interface Address extends UserName {
@@ -115,5 +117,3 @@ export interface InitialValues extends HandleSubminWithShipping {
   billingStreetName: string;
   billingPostalCode: string;
 }
-
-export type StateCheckboxs = Record<string, boolean>;
