@@ -1,4 +1,4 @@
-import type { HandleSubminWithShipping, HandleSubminWithBoth, CustomerData } from '../../../utils/types';
+import type { HandleSubminWithBoth, CustomerData } from '../../../utils/types';
 import { countries } from './countriesList';
 
 const getCountryCode = (country: string): string => {
@@ -9,7 +9,7 @@ const getCountryCode = (country: string): string => {
   return selectedCountry.code;
 };
 
-export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubminWithBoth): CustomerData => {
+export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => {
   const { firstName, lastName, date, email, password } = formData;
   const shippingAddress = {
     country: getCountryCode(formData.shippingCountry),
@@ -22,12 +22,13 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
   const addresses = [shippingAddress];
   const shippingAddresses = [0];
   let billingAddresses = [0];
-  const defaultShippingAddress = (formData.shippingStateChecked) ? 0 : undefined;
+  const defaultShippingAddress = formData.shippingStateChecked ? 0 : undefined;
   let defaultBillingAddress = defaultShippingAddress;
 
   const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
 
-  if ('billingStreetName' in formData) {
+  if (formData.billingStreetName !== '') {
+    console.log(111);
     const billingAddress = {
       country: getCountryCode(formData.billingCountry),
       firstName,
@@ -38,7 +39,7 @@ export const addressAdapter = (formData: HandleSubminWithShipping | HandleSubmin
     };
     addresses.push(billingAddress);
     billingAddresses = [1];
-    defaultBillingAddress = (formData.billingStateChecked) ? 1 : undefined;
+    defaultBillingAddress = formData.billingStateChecked ? 1 : undefined;
   }
   console.log({
     firstName,

@@ -14,7 +14,7 @@ interface ShippingAddress {
   shippingCity: string;
   shippingStreetName: string;
   shippingPostalCode: string;
-  shippingStateChecked: boolean
+  shippingStateChecked: boolean;
 }
 
 interface BillingAddress {
@@ -22,7 +22,7 @@ interface BillingAddress {
   billingCity: string;
   billingStreetName: string;
   billingPostalCode: string;
-  billingStateChecked: boolean,
+  billingStateChecked: boolean;
 }
 
 interface Address extends UserName {
