@@ -20,6 +20,12 @@ const Country = ({ fieldSet }: AddressFieldSetProps) => {
         name={`${fieldSet}Country`}
         placeholder="Country"
       >
+        <option
+          value=""
+          disabled
+        >
+          Select a country
+        </option>
         {countries.map(({ country }) => (
           <option
             key={country}

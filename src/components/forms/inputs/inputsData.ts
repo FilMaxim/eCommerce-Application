@@ -59,11 +59,11 @@ export const initialValues = {
   shippingStreetName: '',
   shippingCity: '',
   shippingPostalCode: '',
-  shippingCountry: 'Cyprus',
+  shippingCountry: '',
   billingStreetName: '',
   billingCity: '',
   billingPostalCode: '',
-  billingCountry: 'Cyprus',
+  billingCountry: '',
   billingStateChecked: true,
   shippingStateChecked: true
 };
