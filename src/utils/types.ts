@@ -1,3 +1,6 @@
+import type { initialValues } from '../components/forms/inputs/inputsData';
+import type * as yup from 'yup';
+
 export interface TokenInterface {
   accessToken: string;
   tokenExpiration: number;
@@ -105,4 +108,11 @@ export interface InputProps {
 
 export interface AddressFieldSetProps {
   fieldSet: 'shipping' | 'billing';
+}
+
+export type ImitialValues = typeof initialValues;
+
+export interface RegistrationFormProps {
+  initialValues: ImitialValues;
+  getValidationSchema: (isSameAddress: boolean) => yup.Schema;
 }

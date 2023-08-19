@@ -21,7 +21,7 @@ export const validationsSchemaLogin = {
     .required('Required field')
 };
 
-export const validationsSchemaRegistrationShipping = {
+const validationsSchemaRegistrationShipping = {
   ...validationsSchemaLogin,
   firstName: yup
     .string()
@@ -55,7 +55,7 @@ export const validationsSchemaRegistrationShipping = {
   shippingCountry: yup.string().required('Required field')
 };
 
-export const validationsSchemaRegistrationBoth = {
+const validationsSchemaRegistrationBoth = {
   ...validationsSchemaRegistrationShipping,
   billingStreetName: yup
     .string()
@@ -74,4 +74,8 @@ export const validationsSchemaRegistrationBoth = {
     .trim()
     .required('Required field'),
   billingCountry: yup.string().required('Required field')
+};
+
+export const getValidationSchema = (isSameAddress: boolean): yup.AnyObjectSchema => {
+  return yup.object(isSameAddress ? validationsSchemaRegistrationShipping : validationsSchemaRegistrationBoth);
 };
