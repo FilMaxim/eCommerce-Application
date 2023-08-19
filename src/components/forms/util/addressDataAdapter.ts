@@ -9,6 +9,27 @@ const getCountryCode = (country: string): string => {
   return selectedCountry.code;
 };
 
+const applyBillingAddress = (formData: HandleSubminWithBoth, dataWithShipping: CustomerData): CustomerData => {
+  const result = { ...dataWithShipping };
+  const billingAddress = {
+    country: getCountryCode(formData.billingCountry),
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    streetName: formData.billingStreetName,
+    postalCode: formData.billingPostalCode,
+    city: formData.billingCity
+  };
+
+  result.addresses.push(billingAddress);
+  result.billingAddresses = [1];
+
+  if (formData.billingStateChecked) {
+    result.defaultBillingAddress = 1;
+  }
+
+  return result;
+};
+
 export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => {
   const { firstName, lastName, date, email, password } = formData;
   const shippingAddress = {
@@ -19,29 +40,12 @@ export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => 
     postalCode: formData.shippingPostalCode,
     city: formData.shippingCity
   };
+
   const addresses = [shippingAddress];
   const shippingAddresses = [0];
-  let billingAddresses = [0];
-  const defaultShippingAddress = formData.shippingStateChecked ? 0 : undefined;
-  let defaultBillingAddress = defaultShippingAddress;
-
   const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
 
-  if (formData.billingStreetName !== '') {
-    const billingAddress = {
-      country: getCountryCode(formData.billingCountry),
-      firstName,
-      lastName,
-      streetName: formData.billingStreetName,
-      postalCode: formData.billingPostalCode,
-      city: formData.billingCity
-    };
-    addresses.push(billingAddress);
-    billingAddresses = [1];
-    defaultBillingAddress = formData.billingStateChecked ? 1 : undefined;
-  }
-
-  return {
+  const result: CustomerData = {
     firstName,
     lastName,
     dateOfBirth: date,
@@ -49,9 +53,17 @@ export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => 
     password,
     addresses,
     shippingAddresses,
-    billingAddresses,
-    defaultShippingAddress,
-    defaultBillingAddress,
     salutation
   };
+
+  if (formData.shippingStateChecked) {
+    result.defaultShippingAddress = 0;
+  }
+
+  if (formData.billingStreetName !== '') {
+    const resultWithBilling = applyBillingAddress(formData, result);
+    return resultWithBilling;
+  }
+
+  return result;
 };
