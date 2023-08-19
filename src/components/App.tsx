@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import { routesConfig } from './utils/routesConfig';
-import { Header } from './components/header/header';
+import { routesConfig } from '../utils/routesConfig';
+import { Header } from './header/header';
 
 export const App = () => {
   return (

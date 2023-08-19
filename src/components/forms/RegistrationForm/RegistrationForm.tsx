@@ -4,7 +4,6 @@ import { SubmitBtn } from '../inputs/SubmitBtn';
 import { AdressFieldSet } from '../inputs/AdressFieldSet';
 import { validationsSchemaRegistrationBoth, validationsSchemaRegistrationShipping } from '../util/validationSchema';
 import * as yup from 'yup';
-import { handleRegistrationSubmit } from '../util/handleRegistrationSubmit';
 import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';
 import { useAuth } from '../../../helpers/hooks';
@@ -13,7 +12,7 @@ import { FieldSetType, initialValues, inputsData } from '../inputs/inputsData';
 import { Input } from '../inputs/Input';
 
 export const RegistrationForm = () => {
-  const { login } = useAuth();
+  const { signUp } = useAuth();
   const [isSameAddress, setIsSameAddress] = useState(true);
   const handleCheckboxChange = () => {
     setIsSameAddress(!isSameAddress);
@@ -26,9 +25,7 @@ export const RegistrationForm = () => {
       validationSchema={yup.object(
         isSameAddress ? validationsSchemaRegistrationShipping : validationsSchemaRegistrationBoth
       )}
-      onSubmit={async (values) => {
-        await handleRegistrationSubmit(values, login);
-      }}
+      onSubmit={signUp}
     >
       <Form className="flex w-96 flex-col justify-center gap-1 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)] max-sm:w-56">
         <Input

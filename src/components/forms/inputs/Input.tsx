@@ -1,6 +1,5 @@
 import { Field, ErrorMessage } from 'formik';
 import type { InputProps } from '../../../utils/types';
-// import { useState } from 'react';
 
 export const Input = ({ name, type, placeholder }: InputProps) => {
   return (

@@ -1,4 +1,4 @@
-import type { HandleSubminWithBoth, CustomerData } from '../../../utils/types';
+import type { HandleSubmitWithBoth, CustomerData } from '../../../utils/types';
 import { countries } from './countriesList';
 
 const getCountryCode = (country: string): string => {
@@ -9,7 +9,7 @@ const getCountryCode = (country: string): string => {
   return selectedCountry.code;
 };
 
-export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => {
+export const addressAdapter = (formData: HandleSubmitWithBoth): CustomerData => {
   const { firstName, lastName, date, email, password } = formData;
   const shippingAddress = {
     country: getCountryCode(formData.shippingCountry),
