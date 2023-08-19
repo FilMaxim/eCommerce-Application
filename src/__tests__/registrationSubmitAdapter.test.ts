@@ -22,14 +22,13 @@ describe('correct adapt submit data into request data', () => {
   const adaptedSubmitData = addressAdapter(submitDataWithBilling);
   const submitDataWithoutBilling: HandleSubminWithBoth = { ...submitDataWithBilling, billingStreetName: '' };
   const adaptedSubmitDataWithoutBilling = addressAdapter(submitDataWithoutBilling);
-  if (adaptedSubmitData.billingAddresses === undefined) throw new Error('billingAddresses is undefined');
   const billingAddressIndex = adaptedSubmitData.billingAddresses[0];
+  const shippingAddressIndex = adaptedSubmitData.shippingAddresses[0];
   const adaptedSubmitDatawithoutCheckedDefault = addressAdapter({
     ...submitDataWithBilling,
     shippingStateChecked: false,
     billingStateChecked: false
   });
-  const shippingAddressIndex = adaptedSubmitData.shippingAddresses[0];
 
   it('add shipping address into addresses array', () => {
     expect(adaptedSubmitData.shippingAddresses).toHaveLength(1);
@@ -39,9 +38,9 @@ describe('correct adapt submit data into request data', () => {
 
   it('ignore billing address, if empty billing fields', () => {
     expect(adaptedSubmitDataWithoutBilling.addresses).toHaveLength(1);
-    expect(adaptedSubmitDataWithoutBilling.billingAddresses).toBeUndefined();
     expect(adaptedSubmitDataWithoutBilling.shippingAddresses).toHaveLength(1);
     expect(adaptedSubmitDataWithoutBilling.addresses[0].city).toBe('shippingCity');
+    expect(adaptedSubmitDataWithoutBilling.billingAddresses[0] === shippingAddressIndex).toBe(true);
   });
 
   it('add billing address into addresses array', () => {

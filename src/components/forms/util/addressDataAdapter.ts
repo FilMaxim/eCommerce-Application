@@ -1,6 +1,11 @@
 import type { HandleSubminWithBoth, CustomerData } from '../../../utils/types';
 import { countries } from './countriesList';
 
+enum AddressSequence {
+  Shipping = 0,
+  Billing = 1
+}
+
 const getCountryCode = (country: string): string => {
   const selectedCountry = countries.find((countryData) => countryData.country === country);
   if (selectedCountry === undefined) {
@@ -21,10 +26,10 @@ const applyBillingAddress = (formData: HandleSubminWithBoth, dataWithShipping: C
   };
 
   result.addresses.push(billingAddress);
-  result.billingAddresses = [1];
+  result.billingAddresses = [AddressSequence.Billing];
 
   if (formData.billingStateChecked) {
-    result.defaultBillingAddress = 1;
+    result.defaultBillingAddress = AddressSequence.Billing;
   }
 
   return result;
@@ -42,7 +47,8 @@ export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => 
   };
 
   const addresses = [shippingAddress];
-  const shippingAddresses = [0];
+  const shippingAddresses = [AddressSequence.Shipping];
+  const billingAddresses = shippingAddresses;
   const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
 
   const result: CustomerData = {
@@ -53,11 +59,12 @@ export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => 
     password,
     addresses,
     shippingAddresses,
+    billingAddresses,
     salutation
   };
 
   if (formData.shippingStateChecked) {
-    result.defaultShippingAddress = 0;
+    result.defaultShippingAddress = AddressSequence.Shipping;
   }
 
   if (formData.billingStreetName !== '') {

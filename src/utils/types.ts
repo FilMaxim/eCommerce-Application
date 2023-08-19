@@ -43,7 +43,7 @@ export interface CustomerData extends LoginInterface, UserName {
   dateOfBirth: string;
   addresses: Address[];
   shippingAddresses: number[];
-  billingAddresses?: number[];
+  billingAddresses: number[];
   defaultShippingAddress?: number;
   defaultBillingAddress?: number;
   salutation: string;
