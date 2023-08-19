@@ -24,7 +24,11 @@ describe('correct adapt submit data into request data', () => {
   const adaptedSubmitDataWithoutBilling = addressAdapter(submitDataWithoutBilling);
   if (adaptedSubmitData.billingAddresses === undefined) throw new Error('billingAddresses is undefined');
   const billingAddressIndex = adaptedSubmitData.billingAddresses[0];
-  const adaptedSubmitDatawithoutCheckedDefault = addressAdapter({ ...submitDataWithBilling, shippingStateChecked: false, billingStateChecked: false });
+  const adaptedSubmitDatawithoutCheckedDefault = addressAdapter({
+    ...submitDataWithBilling,
+    shippingStateChecked: false,
+    billingStateChecked: false
+  });
   const shippingAddressIndex = adaptedSubmitData.shippingAddresses[0];
 
   it('add shipping address into addresses array', () => {
@@ -54,7 +58,7 @@ describe('correct adapt submit data into request data', () => {
   });
 
   it('no default shipping/billing addresses, if not checked', () => {
-    expect(adaptedSubmitDatawithoutCheckedDefault.defaultBillingAddress).toBeUndefined();// !!
+    expect(adaptedSubmitDatawithoutCheckedDefault.defaultBillingAddress).toBeUndefined();
     expect(adaptedSubmitDatawithoutCheckedDefault.defaultShippingAddress).toBeUndefined();
   });
 
