@@ -1,24 +1,8 @@
 import { addressAdapter } from '../components/forms/util/addressDataAdapter';
 import type { HandleSubminWithBoth } from '../utils/types';
+import { submitDataWithBilling } from '../components/forms/util/submitFakeData';
 
 describe('correct adapt submit data into request data', () => {
-  const submitDataWithBilling: HandleSubminWithBoth = {
-    email: 'email@example.com',
-    password: 'Password123#',
-    firstName: 'firstName',
-    lastName: 'lastName',
-    date: '2002-01-01',
-    shippingCountry: 'Cyprus',
-    shippingStreetName: 'shippingStreetName',
-    shippingPostalCode: 'shippingPostalCode',
-    shippingCity: 'shippingCity',
-    shippingStateChecked: true,
-    billingCountry: 'Afghanistan',
-    billingStreetName: 'billingStreetName',
-    billingPostalCode: 'billingPostalCode',
-    billingCity: 'billingCity',
-    billingStateChecked: true
-  };
   const adaptedSubmitData = addressAdapter(submitDataWithBilling);
   const submitDataWithoutBilling: HandleSubminWithBoth = { ...submitDataWithBilling, billingStreetName: '' };
   const adaptedSubmitDataWithoutBilling = addressAdapter(submitDataWithoutBilling);
