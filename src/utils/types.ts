@@ -91,12 +91,18 @@ export interface NameInput {
   name: string;
 }
 
+export interface FormikProps {
+  handleChange: (e: Event) => void;
+  setFieldTouched: (field: string, isTouched?: boolean, shouldValidate?: boolean) => void;
+}
 export interface InputProps {
   name: string;
   type: string;
   placeholder: string;
+  formik: FormikProps;
 }
 
 export interface AddressFieldSetProps {
   fieldSet: 'shipping' | 'billing';
+  formik: FormikProps;
 }

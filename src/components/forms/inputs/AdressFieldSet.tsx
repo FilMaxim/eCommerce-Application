@@ -44,7 +44,7 @@ const Country = ({ fieldSet }: AddressFieldSetProps) => {
   );
 };
 
-export const AdressFieldSet = ({ fieldSet }: AddressFieldSetProps) => {
+export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
   const { streetName, city, postalCode } = inputsData.addressFieldSet;
   return (
     <>
@@ -62,18 +62,21 @@ export const AdressFieldSet = ({ fieldSet }: AddressFieldSetProps) => {
         name={`${fieldSet}${streetName.name}`}
         type={streetName.type}
         placeholder={streetName.placeholder}
+        formik={formik}
       />
       <Input
         name={`${fieldSet}${city.name}`}
         type={city.type}
         placeholder={city.placeholder}
+        formik={formik}
       />
       <Input
         name={`${fieldSet}${postalCode.name}`}
         type={postalCode.type}
         placeholder={postalCode.placeholder}
+        formik={formik}
       />
-      <Country fieldSet={fieldSet} />
+      <Country fieldSet={fieldSet} formik={formik} />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { Field, ErrorMessage } from 'formik';
 import type { InputProps } from '../../../utils/types';
 
-export const Input = ({ name, type, placeholder }: InputProps) => {
+export const Input = ({ name, type, placeholder, formik }: InputProps) => {
   return (
     <>
       <label
@@ -15,6 +15,10 @@ export const Input = ({ name, type, placeholder }: InputProps) => {
         type={type}
         name={name}
         placeholder={placeholder}
+        onChange={(e: Event) => {
+          formik.handleChange(e);
+          formik.setFieldTouched(name, true, false);
+        }}
       />
       <ErrorMessage
         name={name}
