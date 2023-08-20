@@ -17,7 +17,44 @@ const httpMiddlewareOptions: HttpMiddlewareOptions = {
   fetch
 };
 
-export const ctpClient = new ClientBuilder()
-  .withClientCredentialsFlow(authMiddlewareOptions)
-  .withHttpMiddleware(httpMiddlewareOptions)
-  .build();
+export const buildClientWithPasswordFlow = (username: string, password: string) => {
+  const options = {
+    host: 'https://auth.europe-west1.gcp.commercetools.com',
+    projectKey: ClientApiData.projectKey,
+    credentials: {
+      clientId: ClientApiData.clientId,
+      clientSecret: ClientApiData.clientSecret,
+      user: {
+        username,
+        password
+      }
+    },
+    scopes: ClientApiData.scopes.split(' '),
+    fetch
+  };
+
+  return new ClientBuilder()
+    .withClientCredentialsFlow(authMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .withPasswordFlow(options)
+    .build();
+};
+
+export const buildClientWithClientCredentialsFlow = () => {
+  const options = {
+    host: 'https://auth.europe-west1.gcp.commercetools.com',
+    projectKey: ClientApiData.projectKey,
+    credentials: {
+      clientId: ClientApiData.clientId,
+      clientSecret: ClientApiData.clientSecret
+    },
+    scopes: ClientApiData.scopes.split(' '),
+    fetch
+  };
+
+  return new ClientBuilder()
+    .withClientCredentialsFlow(authMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .withClientCredentialsFlow(options)
+    .build();
+};
