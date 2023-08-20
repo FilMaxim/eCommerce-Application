@@ -111,3 +111,8 @@ export interface RegistrationFormProps {
   getValidationSchema: (isSameAddress: boolean) => yup.Schema;
   onSubmit: (values: HandleSubmitWithBoth) => Promise<void>;
 }
+
+export interface PrivateNavGroupProps {
+  isLogged: boolean;
+  logout: () => void;
+}
