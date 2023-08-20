@@ -109,4 +109,5 @@ export type ImitialValues = typeof initialValues;
 export interface RegistrationFormProps {
   initialValues: ImitialValues;
   getValidationSchema: (isSameAddress: boolean) => yup.Schema;
+  onSubmit: (values: HandleSubmitWithBoth) => Promise<void>;
 }

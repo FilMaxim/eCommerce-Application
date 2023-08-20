@@ -4,14 +4,12 @@ import { SubmitBtn } from '../inputs/SubmitBtn';
 import { AdressFieldSet } from '../inputs/AdressFieldSet';
 import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';
-import { useAuth } from '../../../helpers/hooks';
 import { useState } from 'react';
 import { FieldSetType, inputsData } from '../inputs/inputsData';
 import { Input } from '../inputs/Input';
 import type { RegistrationFormProps } from '../../../utils/types';
 
-export const RegistrationForm = ({ initialValues, getValidationSchema }: RegistrationFormProps) => {
-  const { signUp } = useAuth();
+export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit }: RegistrationFormProps) => {
   const [isSameAddress, setIsSameAddress] = useState(true);
   const handleCheckboxChange = () => {
     setIsSameAddress(!isSameAddress);
@@ -22,7 +20,7 @@ export const RegistrationForm = ({ initialValues, getValidationSchema }: Registr
     <Formik
       initialValues={initialValues}
       validationSchema={getValidationSchema(isSameAddress)}
-      onSubmit={signUp}
+      onSubmit={onSubmit}
     >
       <Form className="flex w-96 flex-col justify-center gap-1 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)] max-sm:w-56">
         <Input
