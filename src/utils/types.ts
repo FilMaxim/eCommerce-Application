@@ -1,12 +1,6 @@
 import type { initialValues } from '../components/forms/inputs/inputsData';
 import type * as yup from 'yup';
 
-export interface TokenInterface {
-  accessToken: string;
-  tokenExpiration: number;
-  refreshToken: string | null;
-}
-
 interface UserName {
   firstName: string;
   lastName: string;
@@ -52,7 +46,7 @@ export interface CustomerData extends LoginInterface, UserName {
   salutation: string;
 }
 
-export interface HandleSubminWithBoth extends LoginInterface, UserName, BillingAddress, ShippingAddress {
+export interface HandleSubmitWithBoth extends LoginInterface, UserName, BillingAddress, ShippingAddress {
   date: string;
 }
 export interface LogoParams {
@@ -75,18 +69,18 @@ export interface VisibilityIconProps {
 
 export type AuthLogin = (userData: LoginInterface) => void;
 
-export interface TokensFromLs {
-  tokenFromLs: string | null;
-  refreshTokenFromLs: string | null;
-  expirationFromLs: number;
-}
-
 export interface PrivateOutletProps {
   children: JSX.Element;
 }
 
 export interface AuthReturnInterface {
   login: (userData: LoginInterface) => Promise<void>;
+  logout: () => void;
+  signUp: (userData: HandleSubmitWithBoth) => Promise<void>;
+  userId: string | null;
+}
+
+export interface RootState {
   isLogged: boolean;
 }
 

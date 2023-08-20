@@ -1,4 +1,4 @@
-import type { HandleSubminWithBoth, CustomerData } from '../../../utils/types';
+import type { HandleSubmitWithBoth, CustomerData } from '../../../utils/types';
 import { countries } from './countriesList';
 
 enum AddressSequence {
@@ -14,7 +14,7 @@ const getCountryCode = (country: string): string => {
   return selectedCountry.code;
 };
 
-const applyBillingAddress = (formData: HandleSubminWithBoth, dataWithShipping: CustomerData): CustomerData => {
+const applyBillingAddress = (formData: HandleSubmitWithBoth, dataWithShipping: CustomerData): CustomerData => {
   const result = { ...dataWithShipping };
   const billingAddress = {
     country: getCountryCode(formData.billingCountry),
@@ -35,7 +35,7 @@ const applyBillingAddress = (formData: HandleSubminWithBoth, dataWithShipping: C
   return result;
 };
 
-export const addressAdapter = (formData: HandleSubminWithBoth): CustomerData => {
+export const addressAdapter = (formData: HandleSubmitWithBoth): CustomerData => {
   const { firstName, lastName, date, email, password } = formData;
   const shippingAddress = {
     country: getCountryCode(formData.shippingCountry),

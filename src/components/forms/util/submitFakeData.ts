@@ -1,4 +1,4 @@
-import type { HandleSubminWithBoth } from '../../../utils/types';
+import type { HandleSubmitWithBoth } from '../../../utils/types';
 
 export const submitDataWithShipping = {
   email: 'email@example.com',
@@ -13,7 +13,7 @@ export const submitDataWithShipping = {
   shippingStateChecked: true
 };
 
-export const submitDataWithBilling: HandleSubminWithBoth = {
+export const submitDataWithBilling: HandleSubmitWithBoth = {
   ...submitDataWithShipping,
   billingCountry: 'Afghanistan',
   billingStreetName: 'billingStreetName',

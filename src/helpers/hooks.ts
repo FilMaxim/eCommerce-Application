@@ -1,50 +1,65 @@
 import { useState } from 'react';
-import type { LoginInterface } from '../utils/types';
-import { getUserAccessData } from './api/getUserAccessData';
+import type { AuthReturnInterface, HandleSubmitWithBoth, LoginInterface } from '../utils/types';
 import { useNavigate } from 'react-router-dom';
 import { NavRoutes } from '../utils/routes';
-import { getRefreshedToken } from './api/getRefreshedToken';
-import { getTokensFromLs, setExpirationTime, setTokensToLs } from './manageTokens';
+import { createCustomer, customerLogIn } from './api/apiRoot';
+import { showToastMessage } from './showToastMessage';
+import { addressAdapter } from '../components/forms/util/addressDataAdapter';
+import { AuthMessages } from '../components/forms/util/authMessages';
+import { setLogged } from '../slices/authSlice';
+import { useDispatch } from 'react-redux';
 
-export const useAuth = () => {
-  const { tokenFromLs, refreshTokenFromLs } = getTokensFromLs();
-  const [token] = useState(tokenFromLs);
-  const [refreshToken] = useState(refreshTokenFromLs);
-  const isLogged = Boolean(token);
+export const useAuth = (): AuthReturnInterface => {
+  const [userId] = useState(localStorage.getItem('id'));
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const login = async (userData: LoginInterface): Promise<void> => {
-    const tokens = await getUserAccessData(userData);
-
+  const successfulAuth = (id: string, message: string) => {
+    showToastMessage(message, 'green');
+    localStorage.setItem('id', id);
     navigate({ pathname: NavRoutes.mainPagePath });
-
-    const newToken = {
-      ...tokens,
-      tokenExpiration: setExpirationTime(tokens.tokenExpiration)
-    };
-    setTokensToLs(newToken);
+    dispatch(setLogged(true));
   };
 
-  const isExpired = (): boolean => isLogged && getTokensFromLs().expirationFromLs < Date.now();
+  const login = async ({ email, password }: LoginInterface): Promise<void> => {
+    try {
+      const {
+        statusCode,
+        body: { customer }
+      } = await customerLogIn(email, password);
 
-  const getToken = async () => {
-    if (isExpired() && refreshToken !== null) {
-      try {
-        const newTokens = await getRefreshedToken(refreshToken);
-        setTokensToLs({
-          accessToken: newTokens.accessToken,
-          tokenExpiration: setExpirationTime(newTokens.tokenExpiration),
-          refreshToken: null
-        });
-
-        return newTokens.accessToken;
-      } catch (error) {
-        console.error(error);
+      if (statusCode === 200) {
+        successfulAuth(customer.id, AuthMessages.successLoginMessage);
       }
+    } catch (error) {
+      showToastMessage(AuthMessages.failedLoginMessage, 'red');
     }
-
-    return getTokensFromLs().tokenFromLs;
   };
 
-  return { login, isLogged, getToken };
+  const logout = (): void => {
+    localStorage.clear();
+    dispatch(setLogged(false));
+  };
+
+  const signUp = async (values: HandleSubmitWithBoth): Promise<void> => {
+    try {
+      const normalizedData = addressAdapter(values);
+      const {
+        statusCode,
+        body: { customer }
+      } = await createCustomer(normalizedData);
+
+      if (statusCode === 201) {
+        successfulAuth(customer.id, AuthMessages.successRegistrationMessage);
+      }
+    } catch (error) {
+      if (!(error instanceof Error)) return;
+
+      error.message === AuthMessages.existingCustomerError
+        ? showToastMessage(AuthMessages.existingCustomerMessage, 'red')
+        : showToastMessage(AuthMessages.otherErrorMessage, 'red');
+    }
+  };
+
+  return { login, logout, signUp, userId };
 };
