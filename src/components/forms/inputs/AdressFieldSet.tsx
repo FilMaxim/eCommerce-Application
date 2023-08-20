@@ -76,7 +76,10 @@ export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
         placeholder={postalCode.placeholder}
         formik={formik}
       />
-      <Country fieldSet={fieldSet} formik={formik} />
+      <Country
+        fieldSet={fieldSet}
+        formik={formik}
+      />
     </>
   );
 };

@@ -56,7 +56,10 @@ export const RegistrationForm = () => {
             />
             <PasswordInput formik={formik} />
             <h3 className="text-sm font-bold text-gray-700">Shipping address:</h3>
-            <AdressFieldSet fieldSet={FieldSetType.Shipping} formik={formik} />
+            <AdressFieldSet
+              fieldSet={FieldSetType.Shipping}
+              formik={formik}
+            />
             <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
               <label className="inline-block pl-[0.15rem] hover:cursor-pointer">
                 <input
