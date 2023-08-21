@@ -73,10 +73,10 @@ export const RegistrationForm = () => {
               </label>
             </div>
             {!isSameAddress && (
-                <AdressFieldSet
-                  fieldSet={FieldSetType.Billing}
-                  formik={formik}
-                />
+              <AdressFieldSet
+                fieldSet={FieldSetType.Billing}
+                formik={formik}
+              />
             )}
             <SubmitBtn />
             <p className="mt-3 text-center text-[14px]">
