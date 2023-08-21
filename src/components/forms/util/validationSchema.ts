@@ -49,30 +49,27 @@ export const validationsSchemaRegistrationShipping = {
     .trim()
     .required('Required field'),
   shippingCountry: yup.string().required('Required field'),
-  shippingPostalCode: yup
-    .string()
-    .when('shippingCountry', (country: string[], schema) => {
-      switch (country[0]) {
-        case 'Cyprus':
-          return schema
-            .matches(/^\d{4}$/, 'Postcode must be 4 digits')
-            .required('Required field')
-            .trim();
-        case 'Greece':
-          return schema
-            .matches(/^\d{3}[ ]?\d{2}$/, 'Invalid zip code format')
-            .required('Required field')
-            .trim();
-        case 'Italy':
-          return schema
-            .matches(/^\d{5}$/, 'Postcode must be 5 digits')
-            .required('Required field')
-            .trim();
-        default:
-          return schema
-            .required('Required field');
-      }
-    })
+  shippingPostalCode: yup.string().when('shippingCountry', (country: string[], schema) => {
+    switch (country[0]) {
+      case 'Cyprus':
+        return schema
+          .matches(/^\d{4}$/, 'Postcode must be 4 digits')
+          .required('Required field')
+          .trim();
+      case 'Greece':
+        return schema
+          .matches(/^\d{3}[ ]?\d{2}$/, 'Invalid zip code format')
+          .required('Required field')
+          .trim();
+      case 'Italy':
+        return schema
+          .matches(/^\d{5}$/, 'Postcode must be 5 digits')
+          .required('Required field')
+          .trim();
+      default:
+        return schema.required('Required field');
+    }
+  })
 };
 
 export const validationsSchemaRegistrationBoth = {
@@ -89,28 +86,25 @@ export const validationsSchemaRegistrationBoth = {
     .trim()
     .required('Required field'),
   billingCountry: yup.string().required('Required field'),
-  billingPostalCode: yup
-    .string()
-    .when('billingCountry', (country: string[], schema) => {
-      switch (country[0]) {
-        case 'Cyprus':
-          return schema
-            .matches(/^\d{4}$/, 'Postcode must be 4 digits')
-            .required('Required field')
-            .trim();
-        case 'Greece':
-          return schema
-            .matches(/^\d{3}[ ]?\d{2}$/, 'Invalid zip code format')
-            .required('Required field')
-            .trim();
-        case 'Italy':
-          return schema
-            .matches(/^\d{5}$/, 'Postcode must be 5 digits')
-            .required('Required field')
-            .trim();
-        default:
-          return schema
-            .required('Required field');
-      }
-    })
+  billingPostalCode: yup.string().when('billingCountry', (country: string[], schema) => {
+    switch (country[0]) {
+      case 'Cyprus':
+        return schema
+          .matches(/^\d{4}$/, 'Postcode must be 4 digits')
+          .required('Required field')
+          .trim();
+      case 'Greece':
+        return schema
+          .matches(/^\d{3}[ ]?\d{2}$/, 'Invalid zip code format')
+          .required('Required field')
+          .trim();
+      case 'Italy':
+        return schema
+          .matches(/^\d{5}$/, 'Postcode must be 5 digits')
+          .required('Required field')
+          .trim();
+      default:
+        return schema.required('Required field');
+    }
+  })
 };

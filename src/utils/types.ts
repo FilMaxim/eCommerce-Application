@@ -1,5 +1,3 @@
-import { type FieldInputProps } from 'formik';
-
 interface UserName {
   firstName: string;
   lastName: string;
@@ -96,8 +94,8 @@ export interface NameInput {
 export interface FormikProps {
   handleChange: (e: Event) => void;
   setFieldTouched: (field: string, isTouched?: boolean, shouldValidate?: boolean) => void;
-  getFieldProps: (value: string) => FieldInputProps<string>
 }
+
 export interface InputProps {
   name: string;
   type: string;
