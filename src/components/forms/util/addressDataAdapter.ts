@@ -1,7 +1,7 @@
 import type { HandleSubmitWithBoth, CustomerData } from '../../../utils/types';
 import { countries } from './countriesList';
 
-const getCountryCode = (country: string): string => {
+export const getCountryCode = (country: string): string => {
   const selectedCountry = countries.find((countryData) => countryData.country === country);
   if (selectedCountry === undefined) {
     return '';

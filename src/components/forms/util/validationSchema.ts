@@ -1,5 +1,7 @@
 import * as yup from 'yup';
+import { postcodeValidator } from 'postcode-validator';
 import dayjs from 'dayjs';
+import { getCountryCode } from './addressDataAdapter';
 
 export const minAge = dayjs().subtract(18, 'year').format('YYYY-MM-DD');
 
@@ -48,12 +50,16 @@ export const validationsSchemaRegistrationShipping = {
     .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
     .trim()
     .required('Required field'),
-  shippingPostalCode: yup
-    .string()
-    .min(1, 'Postal Code should contain at least 1 character')
-    .trim()
-    .required('Required field'),
-  shippingCountry: yup.string().required('Required field')
+  shippingCountry: yup.string().required('Required field'),
+  shippingPostalCode: yup.string().when('shippingCountry', (country: string[], schema) => {
+    const code = getCountryCode(country[0]);
+    return schema
+      .test('postal-validate', 'Invalid zip code format', (value) => {
+        const currentValue = value ?? '';
+        return postcodeValidator(currentValue, code);
+      })
+      .required('Required field');
+  })
 };
 
 export const validationsSchemaRegistrationBoth = {
@@ -69,10 +75,14 @@ export const validationsSchemaRegistrationBoth = {
     .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
     .trim()
     .required('Required field'),
-  billingPostalCode: yup
-    .string()
-    .min(1, 'Postal Code should contain at least 1 character')
-    .trim()
-    .required('Required field'),
-  billingCountry: yup.string().required('Required field')
+  billingCountry: yup.string().required('Required field'),
+  billingPostalCode: yup.string().when('billingCountry', (country: string[], schema) => {
+    const code = getCountryCode(country[0]);
+    return schema
+      .test('postal-validate', 'Invalid zip code format', (value) => {
+        const currentValue = value ?? '';
+        return postcodeValidator(currentValue, code);
+      })
+      .required('Required field');
+  })
 };
