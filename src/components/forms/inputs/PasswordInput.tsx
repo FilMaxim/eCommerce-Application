@@ -2,7 +2,7 @@ import { Field, ErrorMessage } from 'formik';
 import view from '../../../assets/view.svg';
 import noView from '../../../assets/no-view.svg';
 import { useState } from 'react';
-import type { VisibilityIconProps } from '../../../utils/types';
+import type { VisibilityIconProps, FormikProps } from '../../../utils/types';
 
 const VisibilityIcon = ({ handleVisibility, passwordVisibility }: VisibilityIconProps) => {
   return (
@@ -19,7 +19,7 @@ const VisibilityIcon = ({ handleVisibility, passwordVisibility }: VisibilityIcon
   );
 };
 
-export const PasswordInput = () => {
+export const PasswordInput = ({ formik }: { formik: FormikProps }) => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const handleVisibility = () => {
@@ -41,6 +41,10 @@ export const PasswordInput = () => {
           type={passwordVisibility ? 'text' : 'password'}
           name="password"
           placeholder="Password"
+          onChange={(e: Event) => {
+            formik.handleChange(e);
+            formik.setFieldTouched('password', true, false);
+          }}
         />
         <VisibilityIcon
           handleVisibility={handleVisibility}
