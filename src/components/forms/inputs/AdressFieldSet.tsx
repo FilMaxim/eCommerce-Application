@@ -1,7 +1,7 @@
 import { Field, ErrorMessage } from 'formik';
 import { countries } from '../util/countriesList';
 import { Input } from './Input';
-import { FieldSetType, inputsData } from './inputsData';
+import { FieldSetName, inputsData } from './inputsData';
 import type { AddressFieldSetProps } from '../../../utils/types';
 
 const Country = ({ fieldSet }: AddressFieldSetProps) => {
@@ -49,7 +49,7 @@ export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
   return (
     <div className="my-1 flex flex-col gap-1 rounded border border-cyan-500 bg-slate-300 p-1">
       <h3 className="text-sm font-bold text-gray-700">
-        {fieldSet === FieldSetType.Billing ? 'Billing address:' : 'Shipping address:'}
+        {fieldSet === FieldSetName.Billing ? 'Billing address:' : 'Shipping address:'}
       </h3>
       <hr className="my-1 border-cyan-500" />
       <Input

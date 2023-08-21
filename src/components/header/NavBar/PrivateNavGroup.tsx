@@ -10,7 +10,7 @@ export const PrivateNavGroup = () => {
 
   const linksData = isLogged ? [links.logout] : [links.login, links.registration];
   return (
-    <ul className="hidden gap-3 lg:flex">
+    <>
       {linksData.map((item) => (
         <li
           key={item.text}
@@ -26,6 +26,6 @@ export const PrivateNavGroup = () => {
           </Link>
         </li>
       ))}
-    </ul>
+    </>
   );
 };

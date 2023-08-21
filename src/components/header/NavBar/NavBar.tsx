@@ -11,7 +11,9 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
     >
       <Logo className="block" />
       <BurgerBtn clickHandler={clickHandler} />
-      <PrivateNavGroup />
+      <ul className="hidden gap-3 lg:flex">
+        <PrivateNavGroup />
+      </ul>
     </nav>
   );
 };
