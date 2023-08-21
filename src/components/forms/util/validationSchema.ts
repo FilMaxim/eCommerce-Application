@@ -1,5 +1,7 @@
 import * as yup from 'yup';
+import { postcodeValidator } from 'postcode-validator';
 import dayjs from 'dayjs';
+import { getCountryCode } from './addressDataAdapter';
 
 export const minAge = dayjs().subtract(18, 'year').format('YYYY-MM-DD');
 
@@ -50,25 +52,13 @@ export const validationsSchemaRegistrationShipping = {
     .required('Required field'),
   shippingCountry: yup.string().required('Required field'),
   shippingPostalCode: yup.string().when('shippingCountry', (country: string[], schema) => {
-    switch (country[0]) {
-      case 'Cyprus':
-        return schema
-          .matches(/^\d{4}$/, 'Postcode must be 4 digits')
-          .required('Required field')
-          .trim();
-      case 'Greece':
-        return schema
-          .matches(/^\d{3}[ ]?\d{2}$/, 'Invalid zip code format')
-          .required('Required field')
-          .trim();
-      case 'Italy':
-        return schema
-          .matches(/^\d{5}$/, 'Postcode must be 5 digits')
-          .required('Required field')
-          .trim();
-      default:
-        return schema.required('Required field');
-    }
+    const code = getCountryCode(country[0]);
+    return schema
+      .test('postal-validate', 'Invalid zip code format', (value) => {
+        const currentValue = value ?? '';
+        return postcodeValidator(currentValue, code);
+      })
+      .required('Required field');
   })
 };
 
@@ -87,24 +77,12 @@ export const validationsSchemaRegistrationBoth = {
     .required('Required field'),
   billingCountry: yup.string().required('Required field'),
   billingPostalCode: yup.string().when('billingCountry', (country: string[], schema) => {
-    switch (country[0]) {
-      case 'Cyprus':
-        return schema
-          .matches(/^\d{4}$/, 'Postcode must be 4 digits')
-          .required('Required field')
-          .trim();
-      case 'Greece':
-        return schema
-          .matches(/^\d{3}[ ]?\d{2}$/, 'Invalid zip code format')
-          .required('Required field')
-          .trim();
-      case 'Italy':
-        return schema
-          .matches(/^\d{5}$/, 'Postcode must be 5 digits')
-          .required('Required field')
-          .trim();
-      default:
-        return schema.required('Required field');
-    }
+    const code = getCountryCode(country[0]);
+    return schema
+      .test('postal-validate', 'Invalid zip code format', (value) => {
+        const currentValue = value ?? '';
+        return postcodeValidator(currentValue, code);
+      })
+      .required('Required field');
   })
 };
