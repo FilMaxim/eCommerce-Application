@@ -74,7 +74,6 @@ export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
         placeholder={postalCode.placeholder}
         formik={formik}
       />
-
       <div className="mb-[0.125rem] ml-auto block min-h-[1.5rem] pl-[1.5rem]">
         <label className="inline-block pl-[0.15rem] hover:cursor-pointer">
           <Field

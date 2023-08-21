@@ -55,7 +55,6 @@ export const RegistrationForm = () => {
               formik={formik}
             />
             <PasswordInput formik={formik} />
-            <h3 className="text-sm font-bold text-gray-700">Shipping address:</h3>
             <AdressFieldSet
               fieldSet={FieldSetType.Shipping}
               formik={formik}
@@ -70,17 +69,14 @@ export const RegistrationForm = () => {
                   checked={isSameAddress}
                   onChange={handleCheckboxChange}
                 />
-                to use the same address for both billing and shipping
+                same as billing address
               </label>
             </div>
             {!isSameAddress && (
-              <>
-                <h3 className="text-sm font-bold text-gray-700">Billing address:</h3>
-                <AdressFieldSet
-                  fieldSet={FieldSetType.Billing}
-                  formik={formik}
-                />
-              </>
+              <AdressFieldSet
+                fieldSet={FieldSetType.Billing}
+                formik={formik}
+              />
             )}
             <SubmitBtn />
             <p className="mt-3 text-center text-[14px]">
