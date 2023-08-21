@@ -3,6 +3,7 @@ import { countries } from '../util/countriesList';
 import { Input } from './Input';
 import { FieldSetType, inputsData } from './inputsData';
 import type { AddressFieldSetProps } from '../../../utils/types';
+import { PostalcodeInput } from './PostalcodeInput';
 
 const Country = ({ fieldSet }: AddressFieldSetProps) => {
   return (
@@ -68,11 +69,12 @@ export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
         fieldSet={fieldSet}
         formik={formik}
       />
-      <Input
+      <PostalcodeInput
         name={`${fieldSet}${postalCode.name}`}
         type={postalCode.type}
         placeholder={postalCode.placeholder}
         formik={formik}
+        fieldSet={fieldSet}
       />
       <div className="mb-[0.125rem] ml-auto block min-h-[1.5rem] pl-[1.5rem]">
         <label className="inline-block pl-[0.15rem] hover:cursor-pointer">
