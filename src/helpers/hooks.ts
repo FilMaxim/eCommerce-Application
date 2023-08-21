@@ -50,6 +50,7 @@ export const useAuth = (): AuthReturnInterface => {
       } = await createCustomer(normalizedData);
 
       if (statusCode === 201) {
+        await login({ email: values.email, password: values.password });
         successfulAuth(customer.id, AuthMessages.successRegistrationMessage);
       }
     } catch (error) {

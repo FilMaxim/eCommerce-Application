@@ -45,7 +45,7 @@ export const inputsData = {
   }
 };
 
-export enum FieldSetType {
+export enum FieldSetName {
   Shipping = 'shipping',
   Billing = 'billing'
 }

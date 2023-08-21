@@ -8,16 +8,16 @@ export const submitDataWithShipping = {
   date: '2002-01-01',
   shippingCountry: 'Cyprus',
   shippingStreetName: 'shippingStreetName',
-  shippingPostalCode: 'shippingPostalCode',
+  shippingPostalCode: '1234',
   shippingCity: 'shippingCity',
   shippingStateChecked: true
 };
 
 export const submitDataWithBilling: HandleSubmitWithBoth = {
   ...submitDataWithShipping,
-  billingCountry: 'Afghanistan',
+  billingCountry: 'Greece',
   billingStreetName: 'billingStreetName',
-  billingPostalCode: 'billingPostalCode',
+  billingPostalCode: '12345',
   billingCity: 'billingCity',
   billingStateChecked: true
 };

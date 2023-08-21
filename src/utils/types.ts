@@ -1,5 +1,6 @@
 import type { initialValues } from '../components/forms/inputs/inputsData';
 import type * as yup from 'yup';
+import type { FieldInputProps } from 'formik';
 
 interface UserName {
   firstName: string;
@@ -94,13 +95,25 @@ export interface NameInput {
   name: string;
 }
 
+export interface FormikProps {
+  handleChange: (e: Event) => void;
+  setFieldTouched: (field: string, isTouched?: boolean, shouldValidate?: boolean) => void;
+  getFieldProps: (value: string) => FieldInputProps<string>;
+}
+
 export interface InputProps {
   name: string;
   type: string;
   placeholder: string;
+  formik: FormikProps;
 }
 
 export interface AddressFieldSetProps {
+  fieldSet: 'shipping' | 'billing';
+  formik: FormikProps;
+}
+
+export interface PostalcodeInterface extends InputProps {
   fieldSet: 'shipping' | 'billing';
 }
 

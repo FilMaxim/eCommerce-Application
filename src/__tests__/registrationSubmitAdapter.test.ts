@@ -1,10 +1,10 @@
 import { addressAdapter } from '../components/forms/util/addressDataAdapter';
-import type { HandleSubminWithBoth } from '../utils/types';
+import type { HandleSubmitWithBoth } from '../utils/types';
 import { submitDataWithBilling } from '../components/forms/util/submitFakeData';
 
 describe('correct adapt submit data into request data', () => {
   const adaptedSubmitData = addressAdapter(submitDataWithBilling);
-  const submitDataWithoutBilling: HandleSubminWithBoth = { ...submitDataWithBilling, billingStreetName: '' };
+  const submitDataWithoutBilling: HandleSubmitWithBoth = { ...submitDataWithBilling, billingStreetName: '' };
   const adaptedSubmitDataWithoutBilling = addressAdapter(submitDataWithoutBilling);
   const billingAddressIndex = adaptedSubmitData.billingAddresses[0];
   const shippingAddressIndex = adaptedSubmitData.shippingAddresses[0];
@@ -32,7 +32,7 @@ describe('correct adapt submit data into request data', () => {
     expect(adaptedSubmitData.billingAddresses).toHaveLength(1);
     expect(billingAddressIndex).toBe(1);
     expect(adaptedSubmitData.addresses[billingAddressIndex].city).toBe('billingCity');
-    expect(adaptedSubmitData.addresses[billingAddressIndex].country).toBe('AF');
+    expect(adaptedSubmitData.addresses[billingAddressIndex].country).toBe('GR');
   });
 
   it('add default billing & shipping address, if checked', () => {

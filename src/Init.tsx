@@ -5,7 +5,7 @@ import { store } from './slices';
 export const Init = () => {
   return (
     <Provider store={store}>
-      <div className="App min-h-screen bg-main bg-[length:100%_100%] bg-no-repeat  object-contain">
+      <div className="App min-h-screen">
         <App />
       </div>
     </Provider>

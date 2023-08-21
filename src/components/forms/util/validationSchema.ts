@@ -1,5 +1,7 @@
 import * as yup from 'yup';
+import { postcodeValidator } from 'postcode-validator';
 import dayjs from 'dayjs';
+import { getCountryCode } from './addressDataAdapter';
 
 export const minAge = dayjs().subtract(18, 'year').format('YYYY-MM-DD');
 
@@ -8,7 +10,6 @@ export const validationsSchemaLogin = {
     .string()
     .email('Email should be correctly formatted')
     .matches(/\.[A-Z]{2,4}$/i, 'Email should be correctly formatted')
-    .trim()
     .required('Required field'),
   password: yup
     .string()
@@ -17,8 +18,10 @@ export const validationsSchemaLogin = {
     .matches(/[a-z]/, 'Password should contain at least one lowercase letter')
     .matches(/[0-9]/, 'Password should contain at least one digit')
     .matches(/[!@#$%^&*]/, 'Password should contain at least one special character')
-    .trim()
     .required('Required field')
+    .test('no-leading-or-trailing-whitespace', 'Password must not contain leading or trailing whitespace', (value) => {
+      return value === value.trim();
+    })
 };
 
 const validationsSchemaRegistrationShipping = {
@@ -47,12 +50,16 @@ const validationsSchemaRegistrationShipping = {
     .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
     .trim()
     .required('Required field'),
-  shippingPostalCode: yup
-    .string()
-    .min(1, 'Postal Code should contain at least 1 character')
-    .trim()
-    .required('Required field'),
-  shippingCountry: yup.string().required('Required field')
+  shippingCountry: yup.string().required('Required field'),
+  shippingPostalCode: yup.string().when('shippingCountry', (country: string[], schema) => {
+    const code = getCountryCode(country[0]);
+    return schema
+      .test('postal-validate', 'Invalid zip code format', (value) => {
+        const currentValue = value ?? '';
+        return postcodeValidator(currentValue, code);
+      })
+      .required('Required field');
+  })
 };
 
 const validationsSchemaRegistrationBoth = {
@@ -68,12 +75,16 @@ const validationsSchemaRegistrationBoth = {
     .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
     .trim()
     .required('Required field'),
-  billingPostalCode: yup
-    .string()
-    .min(1, 'Postal Code should contain at least 1 character')
-    .trim()
-    .required('Required field'),
-  billingCountry: yup.string().required('Required field')
+  billingCountry: yup.string().required('Required field'),
+  billingPostalCode: yup.string().when('billingCountry', (country: string[], schema) => {
+    const code = getCountryCode(country[0]);
+    return schema
+      .test('postal-validate', 'Invalid zip code format', (value) => {
+        const currentValue = value ?? '';
+        return postcodeValidator(currentValue, code);
+      })
+      .required('Required field');
+  })
 };
 
 export const getValidationSchema = (isSameAddress: boolean): yup.AnyObjectSchema => {

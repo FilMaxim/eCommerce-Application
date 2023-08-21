@@ -5,11 +5,11 @@ import type { PrivateNavGroupProps } from '../../../utils/types';
 export const PrivateNavGroup = ({ isLogged, logout }: PrivateNavGroupProps) => {
   const linksData = isLogged ? [links.logout] : [links.login, links.registration];
   return (
-    <ul className="hidden gap-3 lg:flex">
+    <>
       {linksData.map((item) => (
         <li
           key={item.text}
-          className="rounded-lg border border-black bg-slate-400 hover:bg-slate-200"
+          className="rounded-lg border border-black hover:bg-slate-200"
         >
           <Link
             to={item.path}
@@ -21,6 +21,6 @@ export const PrivateNavGroup = ({ isLogged, logout }: PrivateNavGroupProps) => {
           </Link>
         </li>
       ))}
-    </ul>
+    </>
   );
 };
