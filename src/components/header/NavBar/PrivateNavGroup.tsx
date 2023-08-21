@@ -14,7 +14,7 @@ export const PrivateNavGroup = () => {
       {linksData.map((item) => (
         <li
           key={item.text}
-          className="rounded-lg border border-black bg-slate-400 hover:bg-slate-200"
+          className="rounded-lg border border-black hover:bg-slate-200"
         >
           <Link
             to={item.path}
