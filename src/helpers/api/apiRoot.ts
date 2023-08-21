@@ -1,8 +1,9 @@
 import { ClientApiData } from '../../utils/clientApiData';
 import type { CustomerData } from '../../utils/types';
-import { ctpClient } from './BuildClient';
+import { buildClientWithClientCredentialsFlow, buildClientWithPasswordFlow } from './BuildClient';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
+const ctpClient = buildClientWithClientCredentialsFlow();
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
   projectKey: ClientApiData.projectKey
 });
@@ -21,7 +22,11 @@ export const createCustomer = async (data: CustomerData) => {
 };
 
 export const customerLogIn = async (email: string, password: string) => {
-  return await apiRoot
+  const authClient = buildClientWithPasswordFlow(email, password);
+  const authApiRoot = createApiBuilderFromCtpClient(authClient).withProjectKey({
+    projectKey: ClientApiData.projectKey
+  });
+  return await authApiRoot
     .login()
     .post({
       body: {

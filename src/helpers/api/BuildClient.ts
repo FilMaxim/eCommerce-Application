@@ -17,7 +17,28 @@ const httpMiddlewareOptions: HttpMiddlewareOptions = {
   fetch
 };
 
-export const ctpClient = new ClientBuilder()
-  .withClientCredentialsFlow(authMiddlewareOptions)
-  .withHttpMiddleware(httpMiddlewareOptions)
-  .build();
+export const buildClientWithPasswordFlow = (username: string, password: string) => {
+  const options = {
+    host: Endpoints.auth,
+    projectKey: ClientApiData.projectKey,
+    credentials: {
+      clientId: ClientApiData.clientId,
+      clientSecret: ClientApiData.clientSecret,
+      user: {
+        username,
+        password
+      }
+    },
+    scopes: ClientApiData.scopes.split(' '),
+    fetch
+  };
+
+  return new ClientBuilder().withPasswordFlow(options).withHttpMiddleware(httpMiddlewareOptions).build();
+};
+
+export const buildClientWithClientCredentialsFlow = () => {
+  return new ClientBuilder()
+    .withClientCredentialsFlow(authMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
+};
