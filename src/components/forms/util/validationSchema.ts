@@ -48,12 +48,31 @@ export const validationsSchemaRegistrationShipping = {
     .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
     .trim()
     .required('Required field'),
+  shippingCountry: yup.string().required('Required field'),
   shippingPostalCode: yup
     .string()
-    .min(1, 'Postal Code should contain at least 1 character')
-    .trim()
-    .required('Required field'),
-  shippingCountry: yup.string().required('Required field')
+    .when('shippingCountry', (country: string[], schema) => {
+      switch (country[0]) {
+        case 'Cyprus':
+          return schema
+            .matches(/^\d{4}$/, 'Postcode must be 4 digits')
+            .required('Required field')
+            .trim();
+        case 'Greece':
+          return schema
+            .matches(/^\d{3}[ ]?\d{2}$/, 'Invalid zip code format')
+            .required('Required field')
+            .trim();
+        case 'Italy':
+          return schema
+            .matches(/^\d{5}$/, 'Postcode must be 5 digits')
+            .required('Required field')
+            .trim();
+        default:
+          return schema
+            .required('Required field');
+      }
+    })
 };
 
 export const validationsSchemaRegistrationBoth = {
@@ -69,10 +88,29 @@ export const validationsSchemaRegistrationBoth = {
     .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
     .trim()
     .required('Required field'),
+  billingCountry: yup.string().required('Required field'),
   billingPostalCode: yup
     .string()
-    .min(1, 'Postal Code should contain at least 1 character')
-    .trim()
-    .required('Required field'),
-  billingCountry: yup.string().required('Required field')
+    .when('billingCountry', (country: string[], schema) => {
+      switch (country[0]) {
+        case 'Cyprus':
+          return schema
+            .matches(/^\d{4}$/, 'Postcode must be 4 digits')
+            .required('Required field')
+            .trim();
+        case 'Greece':
+          return schema
+            .matches(/^\d{3}[ ]?\d{2}$/, 'Invalid zip code format')
+            .required('Required field')
+            .trim();
+        case 'Italy':
+          return schema
+            .matches(/^\d{5}$/, 'Postcode must be 5 digits')
+            .required('Required field')
+            .trim();
+        default:
+          return schema
+            .required('Required field');
+      }
+    })
 };

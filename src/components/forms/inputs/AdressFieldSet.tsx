@@ -2,7 +2,7 @@ import { Field, ErrorMessage } from 'formik';
 import { countries } from '../util/countriesList';
 import { Input } from './Input';
 import { inputsData } from './inputsData';
-import type { AddressFieldSetProps } from '../../../utils/types';
+import type { AddressFieldSetProps, InputProps } from '../../../utils/types';
 
 const Country = ({ fieldSet }: AddressFieldSetProps) => {
   return (
@@ -44,6 +44,36 @@ const Country = ({ fieldSet }: AddressFieldSetProps) => {
   );
 };
 
+export const PostalCodeInput = ({ name, type, placeholder, formik }: InputProps) => {
+  return (
+    <>
+      <label
+        htmlFor={name}
+        className="text-sm font-bold text-gray-700"
+      >
+        {placeholder}
+      </label>
+      <Field
+        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        onChange={(e: Event) => {
+          formik.handleChange(e);
+          formik.setFieldTouched(name, true, false);
+          // const country = formik.getFieldProps('shippingCountry').value;
+          // postcodeValidator('dfd', country);
+        }}
+      />
+      <ErrorMessage
+        name={name}
+        component="p"
+        className="text-xs italic text-red-500"
+      />
+    </>
+  );
+};
+
 export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
   const { streetName, city, postalCode } = inputsData.addressFieldSet;
   return (
@@ -70,16 +100,17 @@ export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
         placeholder={city.placeholder}
         formik={formik}
       />
-      <Input
+      <Country
+        fieldSet={fieldSet}
+        formik={formik}
+      />
+      <PostalCodeInput
         name={`${fieldSet}${postalCode.name}`}
         type={postalCode.type}
         placeholder={postalCode.placeholder}
         formik={formik}
       />
-      <Country
-        fieldSet={fieldSet}
-        formik={formik}
-      />
+
     </>
   );
 };
