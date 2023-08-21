@@ -57,7 +57,7 @@ export const useAuth = (): AuthReturnInterface => {
       if (!(error instanceof Error)) return;
 
       error.message === AuthMessages.existingCustomerError
-        ? showToastMessage(AuthMessages.existingCustomerError, 'red')
+        ? showToastMessage(AuthMessages.existingCustomerMessage, 'red')
         : showToastMessage(AuthMessages.otherErrorMessage, 'red');
     }
   };

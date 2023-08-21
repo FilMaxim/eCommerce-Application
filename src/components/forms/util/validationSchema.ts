@@ -58,6 +58,7 @@ export const validationsSchemaRegistrationShipping = {
         const currentValue = value ?? '';
         return postcodeValidator(currentValue, code);
       })
+      .trim()
       .required('Required field');
   })
 };
@@ -83,6 +84,7 @@ export const validationsSchemaRegistrationBoth = {
         const currentValue = value ?? '';
         return postcodeValidator(currentValue, code);
       })
+      .trim()
       .required('Required field');
   })
 };
