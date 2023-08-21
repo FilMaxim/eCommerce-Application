@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';
 import { useAuth } from '../../../helpers/hooks';
 import { useState } from 'react';
-import { FieldSetType, initialValues, inputsData } from '../inputs/inputsData';
+import { FieldSetName, initialValues, inputsData } from '../inputs/inputsData';
 import { Input } from '../inputs/Input';
 
 export const RegistrationForm = () => {
@@ -56,7 +56,7 @@ export const RegistrationForm = () => {
             />
             <PasswordInput formik={formik} />
             <AdressFieldSet
-              fieldSet={FieldSetType.Shipping}
+              fieldSet={FieldSetName.Shipping}
               formik={formik}
             />
             <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
@@ -74,7 +74,7 @@ export const RegistrationForm = () => {
             </div>
             {!isSameAddress && (
               <AdressFieldSet
-                fieldSet={FieldSetType.Billing}
+                fieldSet={FieldSetName.Billing}
                 formik={formik}
               />
             )}
