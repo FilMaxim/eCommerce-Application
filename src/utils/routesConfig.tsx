@@ -4,10 +4,20 @@ import { MainPage } from '../pages/MainPage';
 import { RegistrationPage } from '../pages/RegistrationPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { NavRoutes } from './routes';
+import { AboutPage } from '../pages/AboutPage';
+import { ContactsPage } from '../pages/ContactsPage';
 export const routesConfig = [
   {
     path: NavRoutes.mainPagePath,
     element: <MainPage />
+  },
+  {
+    path: NavRoutes.aboutPage,
+    element: <AboutPage />
+  },
+  {
+    path: NavRoutes.contactsPage,
+    element: <ContactsPage />
   },
   {
     path: NavRoutes.loginPagePath,
