@@ -18,7 +18,7 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
           <Logo />
           <BurgerCloseBtn clickHandler={setMobileMenuOpen} />
         </div>
-        <ul>
+        <ul className='nav-burger'>
           <NavGroup />
         </ul>
         <ul className="mt-auto flex flex-col items-center gap-2">

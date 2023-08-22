@@ -11,7 +11,7 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
       aria-label="Global"
     >
       <Logo className="block" />
-      <ul>
+      <ul className='hidden gap-4 lg:flex text-xl'>
         <NavGroup />
       </ul>
       <BurgerBtn clickHandler={clickHandler} />
