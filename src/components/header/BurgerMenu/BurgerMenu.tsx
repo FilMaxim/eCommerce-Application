@@ -3,6 +3,7 @@ import { Logo } from '../../logo/logo';
 import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
 import type { BurgerMenuProps } from '../../../utils/types';
 import { PrivateNavGroup } from '../NavBar/PrivateNavGroup';
+import { NavGroup } from '../NavBar/NavGroup';
 
 export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProps) => {
   return (
@@ -17,6 +18,9 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
           <Logo />
           <BurgerCloseBtn clickHandler={setMobileMenuOpen} />
         </div>
+        <ul>
+          <NavGroup />
+        </ul>
         <ul className="mt-auto flex flex-col items-center gap-2">
           <PrivateNavGroup />
         </ul>

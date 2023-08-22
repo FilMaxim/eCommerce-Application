@@ -2,6 +2,7 @@ import type { ClickHandlerInterface } from '../../../utils/types';
 import { Logo } from '../../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 import { PrivateNavGroup } from './PrivateNavGroup';
+import { NavGroup } from './NavGroup';
 
 export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
   return (
@@ -10,6 +11,9 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
       aria-label="Global"
     >
       <Logo className="block" />
+      <ul>
+        <NavGroup />
+      </ul>
       <BurgerBtn clickHandler={clickHandler} />
       <ul className="hidden gap-3 lg:flex">
         <PrivateNavGroup />
