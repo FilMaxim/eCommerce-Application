@@ -11,6 +11,9 @@ export const PrivateNavGroup = () => {
   const linksData = isLogged ? [links.logout] : [links.login, links.registration];
   return (
     <>
+      <Link to={links.main.path}>{links.main.text}</Link>
+      <Link to={links.about.path}>{links.about.text}</Link>
+      <Link to={links.contacts.path}>{links.contacts.text}</Link>
       {linksData.map((item) => (
         <li
           key={item.text}
