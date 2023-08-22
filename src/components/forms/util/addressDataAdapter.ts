@@ -1,12 +1,38 @@
 import type { HandleSubmitWithBoth, CustomerData } from '../../../utils/types';
 import { countries } from './countriesList';
 
+enum AddressSequence {
+  Shipping = 0,
+  Billing = 1
+}
+
 export const getCountryCode = (country: string): string => {
   const selectedCountry = countries.find((countryData) => countryData.country === country);
   if (selectedCountry === undefined) {
     return '';
   }
   return selectedCountry.code;
+};
+
+const applyBillingAddress = (formData: HandleSubmitWithBoth, dataWithShipping: CustomerData): CustomerData => {
+  const result = { ...dataWithShipping };
+  const billingAddress = {
+    country: getCountryCode(formData.billingCountry),
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    streetName: formData.billingStreetName,
+    postalCode: formData.billingPostalCode,
+    city: formData.billingCity
+  };
+
+  result.addresses.push(billingAddress);
+  result.billingAddresses = [AddressSequence.Billing];
+
+  if (formData.billingStateChecked) {
+    result.defaultBillingAddress = AddressSequence.Billing;
+  }
+
+  return result;
 };
 
 export const addressAdapter = (formData: HandleSubmitWithBoth): CustomerData => {
@@ -19,29 +45,13 @@ export const addressAdapter = (formData: HandleSubmitWithBoth): CustomerData => 
     postalCode: formData.shippingPostalCode,
     city: formData.shippingCity
   };
-  const addresses = [shippingAddress];
-  const shippingAddresses = [0];
-  let billingAddresses = [0];
-  const defaultShippingAddress = formData.shippingStateChecked ? 0 : undefined;
-  let defaultBillingAddress = defaultShippingAddress;
 
+  const addresses = [shippingAddress];
+  const shippingAddresses = [AddressSequence.Shipping];
+  const billingAddresses = shippingAddresses;
   const salutation = Math.random() > 0.5 ? 'Mr' : 'Ms';
 
-  if (formData.billingStreetName !== '') {
-    const billingAddress = {
-      country: getCountryCode(formData.billingCountry),
-      firstName,
-      lastName,
-      streetName: formData.billingStreetName,
-      postalCode: formData.billingPostalCode,
-      city: formData.billingCity
-    };
-    addresses.push(billingAddress);
-    billingAddresses = [1];
-    defaultBillingAddress = formData.billingStateChecked ? 1 : undefined;
-  }
-
-  return {
+  const result: CustomerData = {
     firstName,
     lastName,
     dateOfBirth: date,
@@ -50,8 +60,17 @@ export const addressAdapter = (formData: HandleSubmitWithBoth): CustomerData => 
     addresses,
     shippingAddresses,
     billingAddresses,
-    defaultShippingAddress,
-    defaultBillingAddress,
     salutation
   };
+
+  if (formData.shippingStateChecked) {
+    result.defaultShippingAddress = AddressSequence.Shipping;
+  }
+
+  if (formData.billingStreetName !== '') {
+    const resultWithBilling = applyBillingAddress(formData, result);
+    return resultWithBilling;
+  }
+
+  return result;
 };

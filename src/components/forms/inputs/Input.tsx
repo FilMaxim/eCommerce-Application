@@ -6,12 +6,12 @@ export const Input = ({ name, type, placeholder, formik }: InputProps) => {
     <>
       <label
         htmlFor={name}
-        className="text-sm font-bold text-gray-700"
+        className="text-sm text-gray-500"
       >
         {placeholder}
       </label>
       <Field
-        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+        className="focus:shadow-outline w-full appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow transition-all focus:outline-none"
         type={type}
         name={name}
         placeholder={placeholder}

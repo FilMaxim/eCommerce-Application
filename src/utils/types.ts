@@ -1,3 +1,5 @@
+import type { initialValues } from '../components/forms/inputs/inputsData';
+import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
 
 interface UserName {
@@ -113,4 +115,17 @@ export interface AddressFieldSetProps {
 
 export interface PostalcodeInterface extends InputProps {
   fieldSet: 'shipping' | 'billing';
+}
+
+export type ImitialValues = typeof initialValues;
+
+export interface RegistrationFormProps {
+  initialValues: ImitialValues;
+  getValidationSchema: (isSameAddress: boolean) => yup.Schema;
+  onSubmit: (values: HandleSubmitWithBoth) => Promise<void>;
+}
+
+export interface PrivateNavGroupProps {
+  isLogged: boolean;
+  logout: () => void;
 }

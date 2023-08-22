@@ -1,11 +1,16 @@
 import { Dialog } from '@headlessui/react';
 import { Logo } from '../../logo/logo';
 import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
-import type { BurgerMenuProps } from '../../../utils/types';
+import type { BurgerMenuProps, RootState } from '../../../utils/types';
 import { PrivateNavGroup } from '../NavBar/PrivateNavGroup';
+import { useAuth } from '../../../helpers/hooks';
+import { useSelector } from 'react-redux';
 import { NavGroup } from '../NavBar/NavGroup';
 
 export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProps) => {
+  const isLogged = useSelector((state: RootState) => state.isLogged);
+  const { logout } = useAuth();
+
   return (
     <Dialog
       as="div"
@@ -18,11 +23,14 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
           <Logo />
           <BurgerCloseBtn clickHandler={setMobileMenuOpen} />
         </div>
-        <ul className='nav-burger'>
+        <ul className="nav-burger">
           <NavGroup />
         </ul>
         <ul className="mt-auto flex flex-col items-center gap-2">
-          <PrivateNavGroup />
+          <PrivateNavGroup
+            isLogged={isLogged}
+            logout={logout}
+          />
         </ul>
       </Dialog.Panel>
     </Dialog>

@@ -1,13 +1,8 @@
-import { useSelector } from 'react-redux';
 import { links } from '../../../utils/links';
-import type { RootState } from '../../../utils/types';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../../helpers/hooks';
+import type { PrivateNavGroupProps } from '../../../utils/types';
 
-export const PrivateNavGroup = () => {
-  const isLogged = useSelector((state: RootState) => state.isLogged);
-  const { logout } = useAuth();
-
+export const PrivateNavGroup = ({ isLogged, logout }: PrivateNavGroupProps) => {
   const linksData = isLogged ? [links.logout] : [links.login, links.registration];
   return (
     <>
