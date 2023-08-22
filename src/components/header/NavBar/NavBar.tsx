@@ -4,6 +4,7 @@ import type { ClickHandlerInterface, RootState } from '../../../utils/types';
 import { Logo } from '../../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 import { PrivateNavGroup } from './PrivateNavGroup';
+import { NavGroup } from './NavGroup';
 
 export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
   const isLogged = useSelector((state: RootState) => state.isLogged);
@@ -15,6 +16,9 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
       aria-label="Global"
     >
       <Logo className="block" />
+      <ul className='hidden gap-4 lg:flex text-xl'>
+        <NavGroup />
+      </ul>
       <BurgerBtn clickHandler={clickHandler} />
       <ul className="hidden gap-3 lg:flex">
         <PrivateNavGroup

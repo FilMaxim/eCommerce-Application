@@ -15,6 +15,10 @@ export const PostalcodeInput = ({ name, type, placeholder, formik, fieldSet }: P
         type={type}
         name={name}
         placeholder={placeholder}
+        onChange={(e: Event) => {
+          formik.handleChange(e);
+          formik.setFieldTouched(name, true, false);
+        }}
         disabled={formik.getFieldProps(`${fieldSet}Country`).value.length === 0}
       />
       <ErrorMessage

@@ -5,6 +5,7 @@ import type { BurgerMenuProps, RootState } from '../../../utils/types';
 import { PrivateNavGroup } from '../NavBar/PrivateNavGroup';
 import { useAuth } from '../../../helpers/hooks';
 import { useSelector } from 'react-redux';
+import { NavGroup } from '../NavBar/NavGroup';
 
 export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProps) => {
   const isLogged = useSelector((state: RootState) => state.isLogged);
@@ -22,6 +23,9 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
           <Logo />
           <BurgerCloseBtn clickHandler={setMobileMenuOpen} />
         </div>
+        <ul className='nav-burger'>
+          <NavGroup />
+        </ul>
         <ul className="mt-auto flex flex-col items-center gap-2">
           <PrivateNavGroup
             isLogged={isLogged}
