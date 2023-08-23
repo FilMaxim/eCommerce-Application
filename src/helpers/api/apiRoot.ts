@@ -38,7 +38,13 @@ export const customerLogIn = async (email: string, password: string) => {
 };
 
 export const getCustomerCarts = async (id: string) => {
-  return await apiRoot.carts().withCustomerId({ customerId: id }).get().execute();
+  return await apiRoot
+    .carts()
+    .withCustomerId({
+      customerId: id
+    })
+    .get()
+    .execute();
 };
 
 export const updateCustomerFirstName = async (
@@ -49,7 +55,9 @@ export const updateCustomerFirstName = async (
 ) => {
   return await apiRoot
     .customers()
-    .withId({ ID: id })
+    .withId({
+      ID: id
+    })
     .post({
       body: {
         version,

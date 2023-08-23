@@ -8,6 +8,7 @@ import { AboutPage } from '../pages/AboutPage';
 import { ContactsPage } from '../pages/ContactsPage';
 import { UserProfilePage } from '../pages/UserProfilePage';
 import { AnonymOutlet } from '../components/AnonymOutlet';
+
 export const routesConfig = [
   {
     path: NavRoutes.mainPagePath,

@@ -23,12 +23,14 @@ export const LoginForm = () => {
       onSubmit={login}
     >
       {(formik) => {
+        const { name, placeholder, type } = email;
+        const { path } = links.registration;
         return (
           <Form className="flex w-96 flex-col justify-center gap-2 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)] max-sm:w-56">
             <Input
-              name={email.name}
-              placeholder={email.placeholder}
-              type={email.type}
+              name={name}
+              placeholder={placeholder}
+              type={type}
               formik={formik}
             />
             <PasswordInput formik={formik} />
@@ -36,7 +38,7 @@ export const LoginForm = () => {
             <p className="mt-3 text-center text-[14px]">
               Don&#x27;t have an account?
               <Link
-                to={links.registration.path}
+                to={path}
                 className="text-link-color hover:text-hover-link"
               >
                 {' '}

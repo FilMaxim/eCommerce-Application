@@ -4,6 +4,7 @@ import type { PrivateNavGroupProps } from '../../../utils/types';
 
 export const PrivateNavGroup = ({ isLogged, logout }: PrivateNavGroupProps) => {
   const linksData = isLogged ? [links.profile, links.logout] : [links.login, links.registration];
+
   return (
     <>
       {linksData.map((item) => (
