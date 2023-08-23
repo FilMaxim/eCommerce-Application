@@ -15,7 +15,9 @@ export const getCountryCode = (country: string): string => {
 };
 
 const applyBillingAddress = (formData: HandleSubmitWithBoth, dataWithShipping: CustomerData): CustomerData => {
-  const result = { ...dataWithShipping };
+  const result = {
+    ...dataWithShipping
+  };
   const billingAddress = {
     country: getCountryCode(formData.billingCountry),
     firstName: formData.firstName,

@@ -20,7 +20,7 @@ const VisibilityIcon = ({ handleVisibility, passwordVisibility }: VisibilityIcon
 };
 
 export const PasswordInput = ({ formik }: { formik: FormikProps }) => {
-  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
 
   const handleVisibility = () => {
     setPasswordVisibility((prev: boolean) => !prev);

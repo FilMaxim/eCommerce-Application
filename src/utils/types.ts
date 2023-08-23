@@ -129,3 +129,5 @@ export interface PrivateNavGroupProps {
   isLogged: boolean;
   logout: () => void;
 }
+
+export type FakeOnSubmit = (values: HandleSubmitWithBoth) => Promise<void>;

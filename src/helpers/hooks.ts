@@ -17,7 +17,9 @@ export const useAuth = (): AuthReturnInterface => {
   const successfulAuth = (id: string, message: string) => {
     showToastMessage(message, 'green');
     localStorage.setItem('id', id);
-    navigate({ pathname: NavRoutes.mainPagePath });
+    navigate({
+      pathname: NavRoutes.mainPagePath
+    });
     dispatch(setLogged(true));
   };
 
@@ -50,7 +52,10 @@ export const useAuth = (): AuthReturnInterface => {
       } = await createCustomer(normalizedData);
 
       if (statusCode === 201) {
-        await login({ email: values.email, password: values.password });
+        await login({
+          email: values.email,
+          password: values.password
+        });
         successfulAuth(customer.id, AuthMessages.successRegistrationMessage);
       }
     } catch (error) {
@@ -62,5 +67,10 @@ export const useAuth = (): AuthReturnInterface => {
     }
   };
 
-  return { login, logout, signUp, userId };
+  return {
+    login,
+    logout,
+    signUp,
+    userId
+  };
 };
