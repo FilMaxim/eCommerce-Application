@@ -78,11 +78,11 @@ export interface AuthReturnInterface {
   login: (userData: LoginInterface) => Promise<void>;
   logout: () => void;
   signUp: (userData: HandleSubmitWithBoth) => Promise<void>;
-  userId: string | null;
 }
 
 export interface RootState {
   isLogged: boolean;
+  customer: CustomerData | null;
 }
 
 export interface AddressFieldComponent {
