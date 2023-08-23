@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import type { PrivateNavGroupProps } from '../../../utils/types';
 
 export const PrivateNavGroup = ({ isLogged, logout }: PrivateNavGroupProps) => {
-  const linksData = isLogged ? [links.logout] : [links.login, links.registration];
+  const linksData = isLogged ? [links.profile, links.logout] : [links.login, links.registration];
   return (
     <>
       {linksData.map((item) => (
@@ -14,7 +14,7 @@ export const PrivateNavGroup = ({ isLogged, logout }: PrivateNavGroupProps) => {
           <Link
             to={item.path}
             className="flex items-center gap-1 px-2 py-1 text-sm font-semibold leading-6 text-gray-900"
-            onClick={isLogged ? logout : undefined}
+            onClick={item.text === 'Logout' ? logout : undefined}
           >
             <item.icon className="h-6 w-6" />
             {item.text}

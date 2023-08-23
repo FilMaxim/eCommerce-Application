@@ -38,11 +38,7 @@ export const routesConfig = [
   },
   {
     path: NavRoutes.profilePagePath,
-    element: (
-      <PrivateOutlet>
-        <UserProfilePage />
-      </PrivateOutlet>
-    )
+    element: <UserProfilePage />
   },
   {
     path: NavRoutes.notFoundPagePath,
