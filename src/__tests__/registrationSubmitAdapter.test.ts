@@ -4,7 +4,10 @@ import { submitDataWithBilling } from '../components/forms/util/submitFakeData';
 
 describe('correct adapt submit data into request data', () => {
   const adaptedSubmitData = addressAdapter(submitDataWithBilling);
-  const submitDataWithoutBilling: HandleSubmitWithBoth = { ...submitDataWithBilling, billingStreetName: '' };
+  const submitDataWithoutBilling: HandleSubmitWithBoth = {
+    ...submitDataWithBilling,
+    billingStreetName: ''
+  };
   const adaptedSubmitDataWithoutBilling = addressAdapter(submitDataWithoutBilling);
   const billingAddressIndex = adaptedSubmitData.billingAddresses[0];
   const shippingAddressIndex = adaptedSubmitData.shippingAddresses[0];

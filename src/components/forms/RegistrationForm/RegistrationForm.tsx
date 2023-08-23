@@ -12,7 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit }: RegistrationFormProps) => {
-  const [isSameAddress, setIsSameAddress] = useState(true);
+  const [isSameAddress, setIsSameAddress] = useState<boolean>(true);
   const handleCheckboxChange = () => {
     setIsSameAddress(!isSameAddress);
   };
