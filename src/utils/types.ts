@@ -70,7 +70,7 @@ export interface VisibilityIconProps {
 
 export type AuthLogin = (userData: LoginInterface) => void;
 
-export interface PrivateOutletProps {
+export interface OutletProps {
   children: JSX.Element;
 }
 

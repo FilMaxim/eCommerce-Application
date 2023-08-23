@@ -7,6 +7,7 @@ import { NavRoutes } from './routes';
 import { AboutPage } from '../pages/AboutPage';
 import { ContactsPage } from '../pages/ContactsPage';
 import { UserProfilePage } from '../pages/UserProfilePage';
+import { AnonymOutlet } from '../components/AnonymOutlet';
 export const routesConfig = [
   {
     path: NavRoutes.mainPagePath,
@@ -38,7 +39,11 @@ export const routesConfig = [
   },
   {
     path: NavRoutes.profilePagePath,
-    element: <UserProfilePage />
+    element: (
+      <AnonymOutlet>
+        <UserProfilePage />
+      </AnonymOutlet>
+    )
   },
   {
     path: NavRoutes.notFoundPagePath,
