@@ -1,12 +1,13 @@
 import { Input } from './Input';
 import { FieldSetName, inputsData } from './inputsData';
 import type { AddressFieldSetProps } from '../../../utils/types';
-import { PostalcodeInput } from './PostalcodeInput';
 import { CountryInput } from './CountryInput';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useState } from 'react';
 
 export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
+  const [postalCodeDisabled, setPostalCodeDisabled] = useState(true);
   const { streetName, city, postalCode } = inputsData.addressFieldSet;
   return (
     <div className="my-1 flex flex-col gap-1 rounded border border-cyan-500 bg-slate-300 p-1">
@@ -29,13 +30,14 @@ export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
       <CountryInput
         fieldSet={fieldSet}
         formik={formik}
+        setPostalCodeDisabled={setPostalCodeDisabled}
       />
-      <PostalcodeInput
+      <Input
         name={`${fieldSet}${postalCode.name}`}
         type={postalCode.type}
         placeholder={postalCode.placeholder}
         formik={formik}
-        fieldSet={fieldSet}
+        disabled={postalCodeDisabled}
       />
       <FormControlLabel
         control={

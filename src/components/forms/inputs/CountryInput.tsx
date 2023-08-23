@@ -1,8 +1,8 @@
 import { ErrorMessage, Field } from 'formik';
-import type { AddressFieldSetProps } from '../../../utils/types';
+import type { CountryInputProps } from '../../../utils/types';
 import { countries } from '../util/countriesList';
 
-export const CountryInput = ({ fieldSet }: AddressFieldSetProps) => {
+export const CountryInput = ({ fieldSet, formik, setPostalCodeDisabled }: CountryInputProps) => {
   return (
     <>
       <label
@@ -17,6 +17,10 @@ export const CountryInput = ({ fieldSet }: AddressFieldSetProps) => {
         type="text"
         name={`${fieldSet}Country`}
         placeholder="Country"
+        onChange={(e: Event) => {
+          formik.handleChange(e);
+          setPostalCodeDisabled(false);
+        }}
       >
         <option
           value=""

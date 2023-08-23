@@ -106,11 +106,16 @@ export interface InputProps {
   type: string;
   placeholder: string;
   formik: FormikProps;
+  disabled?: boolean;
 }
 
 export interface AddressFieldSetProps {
   fieldSet: 'shipping' | 'billing';
   formik: FormikProps;
+}
+
+export interface CountryInputProps extends AddressFieldSetProps {
+  setPostalCodeDisabled: (editable: boolean) => void;
 }
 
 export interface PostalcodeInterface extends InputProps {
