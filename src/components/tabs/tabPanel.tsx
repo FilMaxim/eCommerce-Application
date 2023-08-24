@@ -31,7 +31,7 @@ export const TabsPanel = (props: TabsPanelProps) => {
         <Tabs
           value={tabValue}
           onChange={handleChange}
-          aria-label="basic tabs example"
+          aria-label="customer profile tabs"
         >
           <Tab label="Personal Information" />
           <Tab label="Addresses" />

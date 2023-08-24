@@ -1,7 +1,7 @@
 import { Input } from '../inputs/Input';
-import { FieldSetName } from '../inputs/inputsData';
+import { FieldSetName, inputsData } from '../inputs/inputsData';
 import { AdressFieldSet } from '../inputs/AdressFieldSet';
-import type { FormInnerComponent, UserProfileProps } from '../../../utils/types';
+import type { FormInnerComponent, ProfileInitialValues, RootState } from '../../../utils/types';
 import { TabsPanel } from '../../tabs/tabPanel';
 import { getInitialValues } from '../util/getInitialValuesFromCustomer';
 import {
@@ -10,12 +10,19 @@ import {
   customerPersonalDataSchema
 } from '../util/validationSchema';
 import { CustomerPageForm } from './CustomerPageForm';
+import type { Customer } from '@commercetools/platform-sdk';
+import { useSelector } from 'react-redux';
 
-export const CustomerProfile = ({ customer, inputsData, onSubmit }: UserProfileProps) => {
-  const isBillingAddress = customer.addresses.length > 1;
+export const CustomerProfile = () => {
+  const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
   const { firstName, lastName, date, email } = inputsData;
-
   const initialValues = getInitialValues(customer);
+
+  const isBillingAddress = customer.addresses.length > 1;
+
+  const onSubmit = (value: ProfileInitialValues) => {
+    console.log(value);
+  };
 
   const PersonalData: FormInnerComponent = (editable: boolean) => {
     return [firstName, lastName, date, email].map(({ name, placeholder, type }) => (
