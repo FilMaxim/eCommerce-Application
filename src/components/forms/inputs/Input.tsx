@@ -3,7 +3,7 @@ import type { InputProps } from '../../../utils/types';
 
 export const Input = ({ name, type, placeholder, formik, disabled }: InputProps) => {
   return (
-    <>
+    <div className="min-w-[18rem]">
       <label
         htmlFor={name}
         className="text-sm text-gray-500"
@@ -26,6 +26,6 @@ export const Input = ({ name, type, placeholder, formik, disabled }: InputProps)
         component="p"
         className="text-xs italic text-red-500"
       />
-    </>
+    </div>
   );
 };

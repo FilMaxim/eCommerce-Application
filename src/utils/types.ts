@@ -1,6 +1,7 @@
-import type { initialValues } from '../components/forms/inputs/inputsData';
+import type { initialValues, inputsData } from '../components/forms/inputs/inputsData';
 import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
+import type { Customer } from '@commercetools/platform-sdk';
 
 interface UserName {
   firstName: string;
@@ -82,7 +83,7 @@ export interface AuthReturnInterface {
 
 export interface RootState {
   isLogged: boolean;
-  customer: CustomerData | null;
+  customer: Customer | null;
 }
 
 export interface AddressFieldComponent {
@@ -123,10 +124,10 @@ export interface PostalcodeInterface extends InputProps {
   fieldSet: 'shipping' | 'billing';
 }
 
-export type ImitialValues = typeof initialValues;
+export type InitialValues = typeof initialValues;
 
 export interface RegistrationFormProps {
-  initialValues: ImitialValues;
+  initialValues: InitialValues;
   getValidationSchema: (isSameAddress: boolean) => yup.Schema;
   onSubmit: (values: HandleSubmitWithBoth) => Promise<void>;
 }
@@ -137,3 +138,37 @@ export interface PrivateNavGroupProps {
 }
 
 export type FakeOnSubmit = (values: HandleSubmitWithBoth) => Promise<void>;
+
+export interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+export interface ProfileInitialValues {
+  firstName: string;
+  lastName: string;
+  date: string;
+  email: string;
+  shippingCountry: string;
+  shippingStreetName: string;
+  shippingPostalCode: string;
+  shippingCity: string;
+  billingCountry: string;
+  billingStreetName: string;
+  billingPostalCode: string;
+  billingCity: string;
+}
+
+export interface UserProfileProps {
+  // validationSchema: ;
+  customer: Customer;
+  inputsData: typeof inputsData;
+  onSubmit: (value: ProfileInitialValues) => void;
+}
+
+export interface TabsPanelProps {
+  children1: React.ReactNode;
+  children2: React.ReactNode;
+  children3: React.ReactNode;
+}
