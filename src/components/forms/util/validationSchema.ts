@@ -105,9 +105,27 @@ export const getValidationSchema = (isSameAddress: boolean): yup.AnyObjectSchema
   return yup.object(isSameAddress ? validationsSchemaRegistrationShipping : validationsSchemaRegistrationBoth);
 };
 
-export const customerPersonalDataValidations = yup.object({
+export const customerPersonalDataSchema = yup.object({
   firstName,
   lastName,
   date,
   email
+});
+
+export const customerAddressSchemaShipping = yup.object({
+  shippingStreetName,
+  shippingCity,
+  shippingCountry,
+  shippingPostalCode
+});
+
+export const customerAddressSchemaBoth = yup.object({
+  shippingStreetName,
+  shippingCity,
+  shippingCountry,
+  shippingPostalCode,
+  billingStreetName,
+  billingCity,
+  billingCountry,
+  billingPostalCode
 });

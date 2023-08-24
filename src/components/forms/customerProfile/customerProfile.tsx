@@ -4,7 +4,11 @@ import { AdressFieldSet } from '../inputs/AdressFieldSet';
 import type { FormInnerComponent, UserProfileProps } from '../../../utils/types';
 import { TabsPanel } from '../../tabs/tabPanel';
 import { getInitialValues } from '../util/getInitialValuesFromCustomer';
-import { customerPersonalDataValidations } from '../util/validationSchema';
+import {
+  customerAddressSchemaBoth,
+  customerAddressSchemaShipping,
+  customerPersonalDataSchema
+} from '../util/validationSchema';
 import { CustomerPageForm } from './CustomerPageForm';
 
 export const CustomerProfile = ({ customer, inputsData, onSubmit }: UserProfileProps) => {
@@ -52,7 +56,7 @@ export const CustomerProfile = ({ customer, inputsData, onSubmit }: UserProfileP
           <CustomerPageForm
             initialValues={initialValues}
             onSubmit={onSubmit}
-            validationSchema={customerPersonalDataValidations}
+            validationSchema={customerPersonalDataSchema}
             formInner={PersonalData}
           />
         }
@@ -60,7 +64,7 @@ export const CustomerProfile = ({ customer, inputsData, onSubmit }: UserProfileP
           <CustomerPageForm
             initialValues={initialValues}
             onSubmit={onSubmit}
-            validationSchema={customerPersonalDataValidations}
+            validationSchema={isBillingAddress ? customerAddressSchemaBoth : customerAddressSchemaShipping}
             formInner={AddressData}
           />
         }
