@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { postcodeValidator } from 'postcode-validator';
 import dayjs from 'dayjs';
-import { getCountryCode } from './addressDataAdapter';
+import { getCountryCode } from './getCountry';
 
 export const minAge = dayjs().subtract(18, 'year').format('YYYY-MM-DD');
 

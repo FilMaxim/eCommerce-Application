@@ -1,18 +1,10 @@
 import type { HandleSubmitWithBoth, CustomerData } from '../../../utils/types';
-import { countries } from './countriesList';
+import { getCountryCode } from './getCountry';
 
 enum AddressSequence {
   Shipping = 0,
   Billing = 1
 }
-
-export const getCountryCode = (country: string): string => {
-  const selectedCountry = countries.find((countryData) => countryData.country === country);
-  if (selectedCountry === undefined) {
-    return '';
-  }
-  return selectedCountry.code;
-};
 
 const applyBillingAddress = (formData: HandleSubmitWithBoth, dataWithShipping: CustomerData): CustomerData => {
   const result = {
