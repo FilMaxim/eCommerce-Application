@@ -6,7 +6,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
 
-export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
+export const AdressFieldSet = ({ fieldSet, formik, disabled }: AddressFieldSetProps) => {
   const [postalCodeDisabled, setPostalCodeDisabled] = useState(true);
   const { streetName, city, postalCode } = inputsData.addressFieldSet;
   return (
@@ -15,35 +15,35 @@ export const AdressFieldSet = ({ fieldSet, formik }: AddressFieldSetProps) => {
         {fieldSet === FieldSetName.Billing ? 'Billing address:' : 'Shipping address:'}
       </h3>
       <hr className="my-1 border-cyan-500" />
-      <Input
-        name={`${fieldSet}${streetName.name}`}
-        type={streetName.type}
-        placeholder={streetName.placeholder}
-        formik={formik}
-      />
-      <Input
-        name={`${fieldSet}${city.name}`}
-        type={city.type}
-        placeholder={city.placeholder}
-        formik={formik}
-      />
+      {[streetName, city].map(({ name, placeholder, type }) => (
+        <Input
+          key={name}
+          name={`${fieldSet}${name}`}
+          placeholder={placeholder}
+          type={type}
+          formik={formik}
+          disabled={disabled}
+        />
+      ))}
       <CountryInput
         fieldSet={fieldSet}
         formik={formik}
         setPostalCodeDisabled={setPostalCodeDisabled}
+        disabled={disabled}
       />
       <Input
         name={`${fieldSet}${postalCode.name}`}
         type={postalCode.type}
         placeholder={postalCode.placeholder}
         formik={formik}
-        disabled={postalCodeDisabled}
+        disabled={postalCodeDisabled || disabled}
       />
       <FormControlLabel
         control={
           <Checkbox
             name={`${fieldSet}StateChecked`}
             defaultChecked
+            disabled={disabled}
           />
         }
         label="as default"

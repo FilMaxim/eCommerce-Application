@@ -11,7 +11,7 @@ export const Input = ({ name, type, placeholder, formik, disabled }: InputProps)
         {placeholder}
       </label>
       <Field
-        className="focus:shadow-outline w-full appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow transition-all focus:outline-none"
+        className="focus:shadow-outline w-full appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow transition-all focus:outline-none disabled:border-slate-500 disabled:bg-slate-200"
         type={type}
         name={name}
         placeholder={placeholder}

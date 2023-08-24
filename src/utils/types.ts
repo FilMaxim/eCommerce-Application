@@ -112,6 +112,7 @@ export interface InputProps {
 export interface AddressFieldSetProps {
   fieldSet: 'shipping' | 'billing';
   formik: FormikProps;
+  disabled?: boolean;
 }
 
 export interface CountryInputProps extends AddressFieldSetProps {

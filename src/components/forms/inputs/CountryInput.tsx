@@ -2,7 +2,7 @@ import { ErrorMessage, Field } from 'formik';
 import type { CountryInputProps } from '../../../utils/types';
 import { countries } from '../util/countriesList';
 
-export const CountryInput = ({ fieldSet, formik, setPostalCodeDisabled }: CountryInputProps) => {
+export const CountryInput = ({ fieldSet, formik, setPostalCodeDisabled, disabled }: CountryInputProps) => {
   return (
     <>
       <label
@@ -13,7 +13,7 @@ export const CountryInput = ({ fieldSet, formik, setPostalCodeDisabled }: Countr
       </label>
       <Field
         as="select"
-        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none  disabled:border-slate-500 disabled:bg-slate-200"
         type="text"
         name={`${fieldSet}Country`}
         placeholder="Country"
@@ -21,6 +21,7 @@ export const CountryInput = ({ fieldSet, formik, setPostalCodeDisabled }: Countr
           formik.handleChange(e);
           setPostalCodeDisabled(false);
         }}
+        disabled={disabled}
       >
         <option
           value=""
