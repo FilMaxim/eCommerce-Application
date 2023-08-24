@@ -15,10 +15,14 @@ export const Input = ({ name, type, placeholder, formik, disabled }: InputProps)
         type={type}
         name={name}
         placeholder={placeholder}
-        onChange={(e: Event) => {
-          formik.handleChange(e);
-          formik.setFieldTouched(name, true, false);
-        }}
+        {...(formik !== undefined
+          ? {
+              onChange: (e: Event) => {
+                formik.handleChange(e);
+                formik.setFieldTouched(name, true, false);
+              }
+            }
+          : {})}
         disabled={disabled}
       />
       <ErrorMessage

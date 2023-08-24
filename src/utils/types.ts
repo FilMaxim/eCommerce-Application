@@ -106,13 +106,13 @@ export interface InputProps {
   name: string;
   type: string;
   placeholder: string;
-  formik: FormikProps;
+  formik?: FormikProps;
   disabled?: boolean;
 }
 
 export interface AddressFieldSetProps {
   fieldSet: 'shipping' | 'billing';
-  formik: FormikProps;
+  formik?: FormikProps;
   disabled?: boolean;
 }
 
@@ -171,4 +171,13 @@ export interface TabsPanelProps {
   children1: React.ReactNode;
   children2: React.ReactNode;
   children3: React.ReactNode;
+}
+
+export type FormInnerComponent = (editable: boolean) => JSX.Element[] | JSX.Element;
+
+export interface CustomerPageFormProps {
+  initialValues: ProfileInitialValues;
+  formInner: FormInnerComponent;
+  onSubmit: (value: ProfileInitialValues) => void;
+  validationSchema: yup.Schema;
 }
