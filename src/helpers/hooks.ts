@@ -1,4 +1,10 @@
-import type { AuthReturnInterface, HandleSubmitWithBoth, LoginInterface, ProfileInitialValues, RootState } from '../utils/types';
+import type {
+  AuthReturnInterface,
+  HandleSubmitWithBoth,
+  LoginInterface,
+  ProfileInitialValues,
+  RootState
+} from '../utils/types';
 import { useNavigate } from 'react-router-dom';
 import { NavRoutes } from '../utils/routes';
 import { createCustomer, customerLogIn, updateCustomer } from './api/apiRoot';

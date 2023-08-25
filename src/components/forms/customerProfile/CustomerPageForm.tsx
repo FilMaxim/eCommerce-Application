@@ -37,33 +37,28 @@ export const CustomerPageForm = ({
             {formInner(editable, formik)}
             {editable && (
               <div className="flex w-full justify-center gap-2">
-                {['Cancel', 'Save'].map((btnText) => (
-                  <Button
-                    key={btnText}
-                    type={btnText === 'Cancel' ? 'button' : 'submit'}
-                    {...(btnText === 'Cancel'
-                      ? {
-                          onClick: () => {
-                            formik.resetForm();
-                            setEditable(false);
-                          }
-                        }
-                      : {
-                          onClick: () => {
-                            setEditable(false);
-                            formik.submitForm().catch((err) => {
-                              console.error(err);
-                            });
-                          }
-                        })}
-                    color={btnText === 'Cancel' ? 'secondary' : 'primary'}
-                    disabled={
-                      btnText === 'Cancel' ? formik.isSubmitting : formik.isSubmitting || !formik.isValid
-                    }
-                  >
-                    {btnText}
-                  </Button>
-                ))}
+                <Button
+                  onClick={() => {
+                    formik.resetForm();
+                    setEditable(false);
+                  }}
+                  color="secondary"
+                  disabled={formik.isSubmitting}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={formik.isSubmitting || !formik.isValid}
+                  onClick={() => {
+                    setEditable(false);
+                    formik.submitForm().catch((err) => {
+                      console.error(err);
+                    });
+                  }}
+                >
+                  Save
+                </Button>
               </div>
             )}
           </Form>
