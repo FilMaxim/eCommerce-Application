@@ -1,8 +1,8 @@
 import { ErrorMessage, Field } from 'formik';
-import type { AddressFieldSetProps } from '../../../utils/types';
+import type { CountryInputProps } from '../../../utils/types';
 import { countries } from '../util/countriesList';
 
-export const CountryInput = ({ fieldSet }: AddressFieldSetProps) => {
+export const CountryInput = ({ fieldSet, setPostalCodeDisabled, formik, disabled }: CountryInputProps) => {
   return (
     <>
       <label
@@ -13,10 +13,23 @@ export const CountryInput = ({ fieldSet }: AddressFieldSetProps) => {
       </label>
       <Field
         as="select"
-        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none  disabled:border-slate-500 disabled:bg-slate-200"
         type="text"
         name={`${fieldSet}Country`}
         placeholder="Country"
+        {...(formik !== undefined
+          ? {
+              onChange: (e: Event) => {
+                formik.handleChange(e);
+                setPostalCodeDisabled(false);
+              }
+            }
+          : {
+              onClick: () => {
+                setPostalCodeDisabled(false);
+              }
+            })}
+        disabled={disabled}
       >
         <option
           value=""
