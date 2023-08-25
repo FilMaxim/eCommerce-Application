@@ -18,6 +18,8 @@ export const CustomerPageForm = ({
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={validationSchema}
+      enableReinitialize
+      // validateOnChange  todo
     >
       {(formik) => (
         <div className="relative pb-3 pt-[3rem]">

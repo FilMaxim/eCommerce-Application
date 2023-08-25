@@ -10,18 +10,65 @@ import {
   customerPersonalDataSchema
 } from '../util/validationSchema';
 import { CustomerPageForm } from './CustomerPageForm';
-import type { Customer } from '@commercetools/platform-sdk';
-import { useSelector } from 'react-redux';
+import type { Customer, CustomerUpdateAction } from '@commercetools/platform-sdk';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCustomer } from '../../../helpers/api/apiRoot';
+import { showToastMessage } from '../../../helpers/showToastMessage';
+import { setCustomer } from '../../../slices/authSlice';
 
 export const CustomerProfile = () => {
   const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
   const { firstName, lastName, date, email } = inputsData;
   const initialValues = getInitialValues(customer);
+  const dispatch = useDispatch();
 
   const isBillingAddress = customer.addresses.length > 1;
 
   const onSubmit = (value: ProfileInitialValues) => {
     console.log(value);
+  };
+
+  const onPersonalDataSubmit = async (value: ProfileInitialValues) => {
+    const actions = [] as CustomerUpdateAction[];
+    if (value.firstName !== initialValues.firstName) {
+      actions.push({
+        action: 'setFirstName',
+        firstName: value.firstName
+      });
+    }
+    if (value.lastName !== initialValues.lastName) {
+      actions.push({
+        action: 'setLastName',
+        lastName: value.lastName
+      });
+    }
+    if (value.date !== initialValues.date) {
+      actions.push({
+        action: 'setDateOfBirth',
+        dateOfBirth: value.date
+      });
+    }
+    if (value.email !== initialValues.email) {
+      actions.push({
+        action: 'changeEmail',
+        email: value.email
+      });
+    }
+    console.log(actions);
+    try {
+      const response = await updateCustomer(customer.id, customer.version, actions);
+      console.log(response);
+      if (response.statusCode === 200) {
+        const customer = response.body;
+        showToastMessage('Profile successfully updated', 'green');
+        localStorage.setItem('customer', JSON.stringify(customer));
+        dispatch(setCustomer(customer));
+      } else {
+        showToastMessage('Profile update failed, please try again later', 'red');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const PersonalData: FormInnerComponent = (editable: boolean, formik) => {
@@ -67,7 +114,8 @@ export const CustomerProfile = () => {
         children1={
           <CustomerPageForm
             initialValues={initialValues}
-            onSubmit={onSubmit}
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onSubmit={onPersonalDataSubmit}
             validationSchema={customerPersonalDataSchema}
             formInner={PersonalData}
           />
