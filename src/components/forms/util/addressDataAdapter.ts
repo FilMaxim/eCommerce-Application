@@ -6,7 +6,10 @@ enum AddressSequence {
   Billing = 1
 }
 
-const applyBillingAddress = (formData: HandleSubmitWithBoth, dataWithShipping: CustomerData): CustomerData => {
+const applyBillingAddress = (
+  formData: HandleSubmitWithBoth,
+  dataWithShipping: CustomerData
+): CustomerData => {
   const result = {
     ...dataWithShipping
   };

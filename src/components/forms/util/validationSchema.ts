@@ -19,9 +19,13 @@ const password = yup
   .matches(/[0-9]/, 'Password should contain at least one digit')
   .matches(/[!@#$%^&*]/, 'Password should contain at least one special character')
   .required('Required field')
-  .test('no-leading-or-trailing-whitespace', 'Password must not contain leading or trailing whitespace', (value) => {
-    return value === value.trim();
-  });
+  .test(
+    'no-leading-or-trailing-whitespace',
+    'Password must not contain leading or trailing whitespace',
+    (value) => {
+      return value === value.trim();
+    }
+  );
 
 export const validationsSchemaLogin = {
   email,
@@ -102,7 +106,9 @@ const validationsSchemaRegistrationBoth = {
 };
 
 export const getValidationSchema = (isSameAddress: boolean): yup.AnyObjectSchema => {
-  return yup.object(isSameAddress ? validationsSchemaRegistrationShipping : validationsSchemaRegistrationBoth);
+  return yup.object(
+    isSameAddress ? validationsSchemaRegistrationShipping : validationsSchemaRegistrationBoth
+  );
 };
 
 export const customerPersonalDataSchema = yup.object({
