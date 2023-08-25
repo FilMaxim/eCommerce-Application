@@ -1,5 +1,8 @@
-import { UserIcon, UserMinusIcon, UserPlusIcon } from '@heroicons/react/24/outline';
+import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import { NavRoutes } from './routes';
+import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 
 export const links = {
   main: {
@@ -17,16 +20,21 @@ export const links = {
   login: {
     text: 'LogIn',
     path: NavRoutes.loginPagePath,
-    icon: UserIcon
+    icon: LoginOutlinedIcon
   },
   logout: {
     text: 'Logout',
     path: NavRoutes.mainPagePath,
-    icon: UserMinusIcon
+    icon: LogoutOutlinedIcon
+  },
+  profile: {
+    text: 'Profile',
+    path: NavRoutes.profilePagePath,
+    icon: PermIdentityOutlinedIcon
   },
   registration: {
     text: 'Registration',
     path: NavRoutes.registrationPagePath,
-    icon: UserPlusIcon
+    icon: HowToRegOutlinedIcon
   }
 };

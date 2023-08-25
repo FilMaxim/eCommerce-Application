@@ -27,36 +27,20 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
       {(formik) => {
         return (
           <Form className="flex w-96 flex-col justify-center gap-1 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)] max-sm:w-56">
-            <Input
-              name={firstName.name}
-              placeholder={firstName.placeholder}
-              type={firstName.type}
-              formik={formik}
-            />
-            <Input
-              name={lastName.name}
-              placeholder={lastName.placeholder}
-              type={lastName.type}
-              formik={formik}
-            />
-            <Input
-              name={date.name}
-              placeholder={date.placeholder}
-              type={date.type}
-              formik={formik}
-            />
-            <Input
-              name={email.name}
-              placeholder={email.placeholder}
-              type={email.type}
-              formik={formik}
-            />
+            {[firstName, lastName, date, email].map(({ name, placeholder, type }) => (
+              <Input
+                key={name}
+                name={name}
+                placeholder={placeholder}
+                type={type}
+                formik={formik}
+              />
+            ))}
             <PasswordInput formik={formik} />
             <AdressFieldSet
               fieldSet={FieldSetName.Shipping}
               formik={formik}
             />
-
             <FormControlLabel
               control={
                 <Checkbox
