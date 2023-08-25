@@ -173,7 +173,7 @@ export interface TabsPanelProps {
   children3: React.ReactNode;
 }
 
-export type FormInnerComponent = (editable: boolean) => JSX.Element[] | JSX.Element;
+export type FormInnerComponent = (editable: boolean, formik: FormikProps) => JSX.Element[] | JSX.Element;
 
 export interface CustomerPageFormProps {
   initialValues: ProfileInitialValues;

@@ -34,7 +34,7 @@ export const CustomerPageForm = ({
                 <EditOutlinedIcon />
               </IconButton>
             </div>
-            {formInner(editable)}
+            {formInner(editable, formik)}
             {editable && (
               <div className="flex w-full justify-center gap-2">
                 {['Cancel', 'Save'].map((btnText) => (

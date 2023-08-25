@@ -24,7 +24,7 @@ export const CustomerProfile = () => {
     console.log(value);
   };
 
-  const PersonalData: FormInnerComponent = (editable: boolean) => {
+  const PersonalData: FormInnerComponent = (editable: boolean, formik) => {
     return [firstName, lastName, date, email].map(({ name, placeholder, type }) => (
       <Input
         key={name}
@@ -32,23 +32,28 @@ export const CustomerProfile = () => {
         placeholder={placeholder}
         type={type}
         disabled={!editable}
+        formik={formik}
       />
     ));
   };
 
-  const AddressData: FormInnerComponent = (editable: boolean) => {
+  const AddressData: FormInnerComponent = (editable: boolean, formik) => {
     return (
       <div className="flex flex-wrap justify-center gap-2">
         <div className="relative">
-          {!isBillingAddress && <span className="absolute right-2 top-1 text-sm text-gray-500">*same as billing</span>}
+          {!isBillingAddress && (
+            <span className="absolute right-2 top-1 text-sm text-gray-500">*same as billing</span>
+          )}
           <AdressFieldSet
             fieldSet={FieldSetName.Shipping}
+            formik={formik}
             disabled={!editable}
           />
         </div>
         {isBillingAddress && (
           <AdressFieldSet
             fieldSet={FieldSetName.Billing}
+            formik={formik}
             disabled={!editable}
           />
         )}
