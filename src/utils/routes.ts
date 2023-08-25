@@ -4,5 +4,6 @@ export enum NavRoutes {
   contactsPage = '/contacts',
   loginPagePath = '/login',
   registrationPagePath = '/signup',
-  notFoundPagePath = '*'
+  notFoundPagePath = '*',
+  catalogPage = '/catalog'
 }

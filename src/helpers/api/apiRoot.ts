@@ -12,6 +12,10 @@ export const getCustomers = async () => {
   return await apiRoot.customers().get().execute();
 };
 
+export const getCategoris = async () => {
+  return await apiRoot.categories().get().execute();
+};
+
 export const createCustomer = async (data: CustomerData) => {
   return await apiRoot
     .customers()

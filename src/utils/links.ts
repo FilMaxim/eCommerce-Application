@@ -28,5 +28,9 @@ export const links = {
     text: 'Registration',
     path: NavRoutes.registrationPagePath,
     icon: UserPlusIcon
+  },
+  catalog: {
+    text: 'Catalog',
+    path: NavRoutes.catalogPage
   }
 };
