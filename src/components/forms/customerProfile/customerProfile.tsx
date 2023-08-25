@@ -12,7 +12,7 @@ import {
 import { CustomerPageForm } from './CustomerPageForm';
 import type { Customer } from '@commercetools/platform-sdk';
 import { useSelector } from 'react-redux';
-import { useUpdateCustomer } from '../../../helpers/hooks';
+import { useUpdateCustomer } from '../../../hooks/useUpdateCustomer';
 
 export const CustomerProfile = () => {
   const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;

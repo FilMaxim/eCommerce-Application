@@ -3,7 +3,7 @@ import { Logo } from '../../logo/logo';
 import { BurgerCloseBtn } from './BurgerCloseBtn/BurgerCloseBtn';
 import type { BurgerMenuProps, RootState } from '../../../utils/types';
 import { PrivateNavGroup } from '../NavBar/PrivateNavGroup';
-import { useAuth } from '../../../helpers/hooks';
+import { useAuth } from '../../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { NavGroup } from '../NavBar/NavGroup';
 
