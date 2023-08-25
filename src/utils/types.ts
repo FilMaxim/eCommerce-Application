@@ -1,4 +1,4 @@
-import type { initialValues, inputsData } from '../components/forms/inputs/inputsData';
+import type { initialValuesRegistration, inputsData } from '../components/forms/inputs/inputsData';
 import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
 import type { Customer } from '@commercetools/platform-sdk';
@@ -124,7 +124,7 @@ export interface PostalcodeInterface extends InputProps {
   fieldSet: 'shipping' | 'billing';
 }
 
-export type InitialValues = typeof initialValues;
+export type InitialValues = typeof initialValuesRegistration;
 
 export interface RegistrationFormProps {
   initialValues: InitialValues;

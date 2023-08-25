@@ -18,8 +18,6 @@ export const CustomerPageForm = ({
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={validationSchema}
-      enableReinitialize
-      // validateOnChange  todo
     >
       {(formik) => (
         <div className="relative pb-3 pt-[3rem]">
@@ -50,8 +48,18 @@ export const CustomerPageForm = ({
                             setEditable(false);
                           }
                         }
-                      : {})}
+                      : {
+                          onClick: () => {
+                            setEditable(false);
+                            formik.submitForm().catch((err) => {
+                              console.error(err);
+                            });
+                          }
+                        })}
                     color={btnText === 'Cancel' ? 'secondary' : 'primary'}
+                    disabled={
+                      btnText === 'Cancel' ? formik.isSubmitting : formik.isSubmitting || !formik.isValid
+                    }
                   >
                     {btnText}
                   </Button>

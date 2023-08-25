@@ -50,7 +50,7 @@ export enum FieldSetName {
   Billing = 'billing'
 }
 
-export const initialValues = {
+export const initialValuesRegistration = {
   firstName: '',
   lastName: '',
   date: minAge,

@@ -1,7 +1,7 @@
 import { Input } from '../inputs/Input';
 import { FieldSetName, inputsData } from '../inputs/inputsData';
 import { AdressFieldSet } from '../inputs/AdressFieldSet';
-import type { FormInnerComponent, ProfileInitialValues, RootState } from '../../../utils/types';
+import type { FormInnerComponent, RootState } from '../../../utils/types';
 import { TabsPanel } from '../../tabs/tabPanel';
 import { getInitialValues } from '../util/getInitialValuesFromCustomer';
 import {
@@ -10,66 +10,17 @@ import {
   customerPersonalDataSchema
 } from '../util/validationSchema';
 import { CustomerPageForm } from './CustomerPageForm';
-import type { Customer, CustomerUpdateAction } from '@commercetools/platform-sdk';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateCustomer } from '../../../helpers/api/apiRoot';
-import { showToastMessage } from '../../../helpers/showToastMessage';
-import { setCustomer } from '../../../slices/authSlice';
+import type { Customer } from '@commercetools/platform-sdk';
+import { useSelector } from 'react-redux';
+import { useUpdateCustomer } from '../../../helpers/hooks';
 
 export const CustomerProfile = () => {
   const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
   const { firstName, lastName, date, email } = inputsData;
   const initialValues = getInitialValues(customer);
-  const dispatch = useDispatch();
+  const [onPersonalDataSubmit, onSubmit] = useUpdateCustomer();
 
   const isBillingAddress = customer.addresses.length > 1;
-
-  const onSubmit = (value: ProfileInitialValues) => {
-    console.log(value);
-  };
-
-  const onPersonalDataSubmit = async (value: ProfileInitialValues) => {
-    const actions = [] as CustomerUpdateAction[];
-    if (value.firstName !== initialValues.firstName) {
-      actions.push({
-        action: 'setFirstName',
-        firstName: value.firstName
-      });
-    }
-    if (value.lastName !== initialValues.lastName) {
-      actions.push({
-        action: 'setLastName',
-        lastName: value.lastName
-      });
-    }
-    if (value.date !== initialValues.date) {
-      actions.push({
-        action: 'setDateOfBirth',
-        dateOfBirth: value.date
-      });
-    }
-    if (value.email !== initialValues.email) {
-      actions.push({
-        action: 'changeEmail',
-        email: value.email
-      });
-    }
-    console.log(actions);
-    try {
-      const response = await updateCustomer(customer.id, customer.version, actions);
-      console.log(response);
-      if (response.statusCode === 200) {
-        const customer = response.body;
-        showToastMessage('Profile successfully updated', 'green');
-        localStorage.setItem('customer', JSON.stringify(customer));
-        dispatch(setCustomer(customer));
-      } else {
-        showToastMessage('Profile update failed, please try again later', 'red');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const PersonalData: FormInnerComponent = (editable: boolean, formik) => {
     return [firstName, lastName, date, email].map(({ name, placeholder, type }) => (
