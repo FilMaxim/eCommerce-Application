@@ -14,7 +14,7 @@ export const useUpdateCustomer = () => {
 
   const onPersonalDataSubmit = async (value: ProfileInitialValues) => {
     const actions = [] as CustomerUpdateAction[];
-
+    // todo: implement switch-case
     if (value.firstName !== initialValues.firstName) {
       actions.push({
         action: 'setFirstName',
