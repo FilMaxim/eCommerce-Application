@@ -50,9 +50,10 @@ export const useUpdateCustomer = () => {
         showToastMessage('Profile successfully updated', 'green');
         localStorage.setItem('customer', JSON.stringify(customer));
         dispatch(setCustomer(customer));
-      } else {
-        showToastMessage('Profile update failed, please try again later', 'red');
+        return;
       }
+
+      showToastMessage('Profile update failed, please try again later', 'red');
     } catch (error) {
       console.error(error);
     }
