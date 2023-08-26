@@ -1,5 +1,5 @@
 import type { InitialValuesCustomerPage, RootState } from '../utils/types';
-import { updateCustomer } from '../helpers/api/apiRoot';
+import { updateCustomer, updateCustomerPassword } from '../helpers/api/apiRoot';
 import { showToastMessage } from '../helpers/showToastMessage';
 import { setCustomer } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ export const useUpdateCustomer = () => {
   const dispatch = useDispatch();
   const personalDataInitialValues = getPersonalDataInitialValues(customer);
 
-  const onPersonalDataSubmit = async (value: InitialValuesCustomerPage) => {
+  const onPersonalDataSubmit = async (value: InitialValuesCustomerPage): Promise<void> => {
     if (!('firstName' in value)) return;
 
     const actions = [] as CustomerUpdateAction[];
@@ -57,7 +57,7 @@ export const useUpdateCustomer = () => {
 
       showToastMessage('Profile update failed, please try again later', 'red');
     } catch (error) {
-      console.error(error);
+      showToastMessage('Profile update failed, please try again later', 'red');
     }
   };
 
@@ -65,5 +65,28 @@ export const useUpdateCustomer = () => {
     console.log(value);
   };
 
-  return [onPersonalDataSubmit, onSubmit];
+  const onPasswordChangeSubmit = async (value: InitialValuesCustomerPage): Promise<void> => {
+    if (!('newPassword' in value)) return;
+
+    const body = {
+      id: customer.id,
+      version: customer.version,
+      currentPassword: value.currentPassword,
+      newPassword: value.newPassword
+    };
+
+    try {
+      const response = await updateCustomerPassword(body);
+      if (response.statusCode === StatusCodes.OK) {
+        const customer = response.body;
+        showToastMessage('Password successfully updated', 'green');
+        localStorage.setItem('customer', JSON.stringify(customer));
+        dispatch(setCustomer(customer));
+      }
+    } catch (error) {
+      showToastMessage('Password update failed, please try again later', 'red');
+    }
+  };
+
+  return { onPersonalDataSubmit, onSubmit, onPasswordChangeSubmit };
 };

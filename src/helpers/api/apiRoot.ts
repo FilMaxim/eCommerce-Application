@@ -62,22 +62,17 @@ export const updateCustomer = async (id: string, version: number, actions: Custo
     .execute();
 };
 
-export const updateCustomerPassword = async (
-  id: string,
-  version: number,
-  currentPassword: string,
-  newPassword: string
-) => {
+export const updateCustomerPassword = async (body: {
+  id: string;
+  version: number;
+  currentPassword: string;
+  newPassword: string;
+}) => {
   return await apiRoot
     .customers()
     .password()
     .post({
-      body: {
-        id,
-        version,
-        currentPassword,
-        newPassword
-      }
+      body
     })
     .execute();
 };

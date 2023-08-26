@@ -175,12 +175,12 @@ export interface TabsPanelProps {
 
 export type FormInnerComponent = (editable: boolean, formik: FormikProps) => JSX.Element[] | JSX.Element;
 
-interface PasswordChangeValues {
+export interface PasswordChangeInitialValues {
   currentPassword: string;
   newPassword: string;
 }
 
-export type InitialValuesCustomerPage = PersonalDataInitialValues | PasswordChangeValues;
+export type InitialValuesCustomerPage = PersonalDataInitialValues | PasswordChangeInitialValues;
 
 export interface CustomerPageFormProps {
   initialValues: InitialValuesCustomerPage;

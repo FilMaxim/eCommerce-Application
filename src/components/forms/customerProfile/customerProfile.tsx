@@ -24,7 +24,7 @@ export const CustomerProfile = () => {
     currentPassword: '',
     newPassword: ''
   };
-  const [onPersonalDataSubmit, onSubmit] = useUpdateCustomer();
+  const { onPersonalDataSubmit, onSubmit, onPasswordChangeSubmit } = useUpdateCustomer();
 
   const isBillingAddress = customer.addresses.length > 1;
 
@@ -90,7 +90,12 @@ export const CustomerProfile = () => {
         children1={
           <CustomerPageForm
             initialValues={personalDataInitialValues}
-            onSubmit={onPersonalDataSubmit}
+            // todo: how to implement without catch
+            onSubmit={(value) => {
+              onPersonalDataSubmit(value).catch((e) => {
+                console.error(e);
+              });
+            }}
             validationSchema={customerPersonalDataSchema}
             formInner={PersonalData}
           />
@@ -107,7 +112,12 @@ export const CustomerProfile = () => {
         children3={
           <CustomerPageForm
             initialValues={passwordChangeInitialValues}
-            onSubmit={onSubmit}
+            // todo: how to implement without catch
+            onSubmit={(value) => {
+              onPasswordChangeSubmit(value).catch((e) => {
+                console.error(e);
+              });
+            }}
             validationSchema={passwordChangeSchema}
             formInner={PasswordChange}
           />
