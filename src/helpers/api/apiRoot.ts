@@ -56,16 +56,7 @@ export const updateCustomer = async (id: string, version: number, actions: Custo
     .post({
       body: {
         version,
-        actions /* : [
-          {
-            action: 'setFirstName',
-            firstName: newFirstName
-          },
-          {
-            action: 'setLastName',
-            lastName: newLastName
-          }
-        ] */
+        actions
       }
     })
     .execute();
