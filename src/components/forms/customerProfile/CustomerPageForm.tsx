@@ -50,7 +50,7 @@ export const CustomerPageForm = ({
                 </Button>
                 <Button
                   type="submit"
-                  disabled={formik.isSubmitting || !formik.isValid}
+                  disabled={formik.isSubmitting || !formik.isValid || !formik.dirty}
                   onClick={() => {
                     setEditable(false);
                     formik.submitForm().catch((err) => {
