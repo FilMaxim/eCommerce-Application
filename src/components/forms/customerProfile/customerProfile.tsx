@@ -65,7 +65,6 @@ export const CustomerProfile = () => {
         children1={
           <CustomerPageForm
             initialValues={initialValues}
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSubmit={onPersonalDataSubmit}
             validationSchema={customerPersonalDataSchema}
             formInner={PersonalData}
