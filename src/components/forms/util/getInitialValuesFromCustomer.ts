@@ -8,15 +8,5 @@ export const getPersonalDataInitialValues = (customer: Customer): PersonalDataIn
     lastName: customer.lastName as string,
     date: customer.dateOfBirth as string,
     email: customer.email
-    // shippingCountry: getCountryByCode(customer.addresses[0].country),
-    // shippingStreetName: customer.addresses[0].streetName as string,
-    // shippingPostalCode: customer.addresses[0].postalCode as string,
-    // shippingCity: customer.addresses[0].city as string,
-    // // shippingStateChecked: customer.defaultShippingAddressId as string,
-    // billingCountry: getCountryByCode(customer.addresses[1]?.country),
-    // billingStreetName: customer.addresses[1]?.streetName as string,
-    // billingPostalCode: customer.addresses[1]?.postalCode as string,
-    // // billingStateChecked: customer.defaultShippingAddressId as string,
-    // billingCity: customer.addresses[1]?.city as string
   };
 };

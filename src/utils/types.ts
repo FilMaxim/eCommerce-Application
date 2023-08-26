@@ -150,22 +150,7 @@ export interface PersonalDataInitialValues {
   lastName: string;
   date: string;
   email: string;
-  // shippingCountry: string;
-  // shippingStreetName: string;
-  // shippingPostalCode: string;
-  // shippingCity: string;
-  // billingCountry: string;
-  // billingStreetName: string;
-  // billingPostalCode: string;
-  // billingCity: string;
 }
-
-// export interface UserProfileProps {
-//   // validationSchema: ;
-//   customer: Customer;
-//   inputsData: typeof inputsData;
-//   onSubmit: (value: ProfileInitialValues) => void;
-// }
 
 export interface TabsPanelProps {
   children1: React.ReactNode;
