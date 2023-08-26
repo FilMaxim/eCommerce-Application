@@ -3,21 +3,27 @@ import { FieldSetName, inputsData } from '../inputs/inputsData';
 import { AdressFieldSet } from '../inputs/AdressFieldSet';
 import type { FormInnerComponent, RootState } from '../../../utils/types';
 import { TabsPanel } from '../../tabs/tabPanel';
-import { getInitialValues } from '../util/getInitialValuesFromCustomer';
+import { getPersonalDataInitialValues } from '../util/getInitialValuesFromCustomer';
 import {
   customerAddressSchemaBoth,
   customerAddressSchemaShipping,
-  customerPersonalDataSchema
+  customerPersonalDataSchema,
+  passwordChangeSchema
 } from '../util/validationSchema';
 import { CustomerPageForm } from './CustomerPageForm';
 import type { Customer } from '@commercetools/platform-sdk';
 import { useSelector } from 'react-redux';
 import { useUpdateCustomer } from '../../../hooks/useUpdateCustomer';
+import { PasswordInput } from '../inputs/PasswordInput';
 
 export const CustomerProfile = () => {
   const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
   const { firstName, lastName, date, email } = inputsData;
-  const initialValues = getInitialValues(customer);
+  const personalDataInitialValues = getPersonalDataInitialValues(customer);
+  const passwordChangeInitialValues = {
+    currentPassword: '',
+    newPassword: ''
+  };
   const [onPersonalDataSubmit, onSubmit] = useUpdateCustomer();
 
   const isBillingAddress = customer.addresses.length > 1;
@@ -59,26 +65,53 @@ export const CustomerProfile = () => {
     );
   };
 
+  const PasswordChange: FormInnerComponent = (editable: boolean, formik) => {
+    return (
+      <div>
+        <PasswordInput
+          placeholder="Current Password:"
+          formik={formik}
+          disabled={!editable}
+          name="currentPassword"
+        />
+        <PasswordInput
+          placeholder="New Password:"
+          formik={formik}
+          disabled={!editable}
+          name="newPassword"
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="m-auto mt-4 max-w-[42rem] rounded border p-2">
       <TabsPanel
         children1={
           <CustomerPageForm
-            initialValues={initialValues}
+            initialValues={personalDataInitialValues}
             onSubmit={onPersonalDataSubmit}
             validationSchema={customerPersonalDataSchema}
             formInner={PersonalData}
           />
         }
         children2={
+          // todo: next issue
           <CustomerPageForm
-            initialValues={initialValues}
+            initialValues={passwordChangeInitialValues}
             onSubmit={onSubmit}
             validationSchema={isBillingAddress ? customerAddressSchemaBoth : customerAddressSchemaShipping}
             formInner={AddressData}
           />
         }
-        children3={'Chenge Password would be here'}
+        children3={
+          <CustomerPageForm
+            initialValues={passwordChangeInitialValues}
+            onSubmit={onSubmit}
+            validationSchema={passwordChangeSchema}
+            formInner={PasswordChange}
+          />
+        }
       />
     </div>
   );

@@ -1,39 +1,41 @@
-import type { ProfileInitialValues, RootState } from '../utils/types';
+import type { InitialValuesCustomerPage, RootState } from '../utils/types';
 import { updateCustomer } from '../helpers/api/apiRoot';
 import { showToastMessage } from '../helpers/showToastMessage';
 import { setCustomer } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { type CustomerUpdateAction, type Customer } from '@commercetools/platform-sdk';
-import { getInitialValues } from '../components/forms/util/getInitialValuesFromCustomer';
+import { getPersonalDataInitialValues } from '../components/forms/util/getInitialValuesFromCustomer';
 import { StatusCodes } from '../utils/statusCodes';
 
 export const useUpdateCustomer = () => {
   const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
   const dispatch = useDispatch();
-  const initialValues = getInitialValues(customer);
+  const personalDataInitialValues = getPersonalDataInitialValues(customer);
 
-  const onPersonalDataSubmit = async (value: ProfileInitialValues) => {
+  const onPersonalDataSubmit = async (value: InitialValuesCustomerPage) => {
+    if (!('firstName' in value)) return;
+
     const actions = [] as CustomerUpdateAction[];
     // todo: implement switch-case
-    if (value.firstName !== initialValues.firstName) {
+    if (value.firstName !== personalDataInitialValues.firstName) {
       actions.push({
         action: 'setFirstName',
         firstName: value.firstName
       });
     }
-    if (value.lastName !== initialValues.lastName) {
+    if (value.lastName !== personalDataInitialValues.lastName) {
       actions.push({
         action: 'setLastName',
         lastName: value.lastName
       });
     }
-    if (value.date !== initialValues.date) {
+    if (value.date !== personalDataInitialValues.date) {
       actions.push({
         action: 'setDateOfBirth',
         dateOfBirth: value.date
       });
     }
-    if (value.email !== initialValues.email) {
+    if (value.email !== personalDataInitialValues.email) {
       actions.push({
         action: 'changeEmail',
         email: value.email
@@ -59,7 +61,7 @@ export const useUpdateCustomer = () => {
     }
   };
 
-  const onSubmit = (value: ProfileInitialValues) => {
+  const onSubmit = (value: InitialValuesCustomerPage) => {
     console.log(value);
   };
 
