@@ -152,6 +152,17 @@ export interface PersonalDataInitialValues {
   email: string;
 }
 
+export interface AddressesInitialValues {
+  streetName: string;
+  city: string;
+  country: string;
+  postalCode: string;
+  shippingStateChecked: boolean;
+  billingStateChecked: boolean;
+  defaultShippingAddress: boolean;
+  defaultBillingAddress: boolean;
+}
+
 export interface TabsPanelProps {
   children1: React.ReactNode;
   children2: React.ReactNode;
@@ -165,7 +176,10 @@ export interface PasswordChangeInitialValues {
   newPassword: string;
 }
 
-export type InitialValuesCustomerPage = PersonalDataInitialValues | PasswordChangeInitialValues;
+export type InitialValuesCustomerPage =
+  | PersonalDataInitialValues
+  | PasswordChangeInitialValues
+  | AddressesInitialValues;
 
 export interface CustomerPageFormProps {
   initialValues: InitialValuesCustomerPage;

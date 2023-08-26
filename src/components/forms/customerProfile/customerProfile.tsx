@@ -1,12 +1,13 @@
 import { Input } from '../inputs/Input';
-import { FieldSetName, inputsData } from '../inputs/inputsData';
-import { AdressFieldSet } from '../inputs/AdressFieldSet';
+import { inputsData } from '../inputs/inputsData';
 import type { FormInnerComponent, RootState } from '../../../utils/types';
 import { TabsPanel } from '../../tabs/tabPanel';
-import { getPersonalDataInitialValues } from '../util/getInitialValuesFromCustomer';
 import {
-  customerAddressSchemaBoth,
-  customerAddressSchemaShipping,
+  getAddressesInitialValues,
+  getPersonalDataInitialValues
+} from '../util/getInitialValuesFromCustomer';
+import {
+  customerAddressSchema,
   customerPersonalDataSchema,
   passwordChangeSchema
 } from '../util/validationSchema';
@@ -24,9 +25,11 @@ export const CustomerProfile = () => {
     currentPassword: '',
     newPassword: ''
   };
+  const addressInitialValues = getAddressesInitialValues(customer);
+
   const { onPersonalDataSubmit, onSubmit, onPasswordChangeSubmit } = useUpdateCustomer();
 
-  const isBillingAddress = customer.addresses.length > 1;
+  // const isBillingAddress = customer.addresses.length > 1;
 
   const PersonalData: FormInnerComponent = (editable: boolean, formik) => {
     return [firstName, lastName, date, email].map(({ name, placeholder, type }) => (
@@ -44,23 +47,16 @@ export const CustomerProfile = () => {
   const AddressData: FormInnerComponent = (editable: boolean, formik) => {
     return (
       <div className="flex flex-wrap justify-center gap-2">
-        <div className="relative">
-          {!isBillingAddress && (
-            <span className="absolute right-2 top-1 text-sm text-gray-500">*same as billing</span>
-          )}
-          <AdressFieldSet
-            fieldSet={FieldSetName.Shipping}
-            formik={formik}
+        {['country', 'streetName', 'postalCode', 'city'].map((name, index) => (
+          <Input
+            key={`${name}${index}`}
+            name={name}
+            placeholder={name[0].toUpperCase() + name.slice(1)}
+            type="text"
             disabled={!editable}
-          />
-        </div>
-        {isBillingAddress && (
-          <AdressFieldSet
-            fieldSet={FieldSetName.Billing}
             formik={formik}
-            disabled={!editable}
           />
-        )}
+        ))}
       </div>
     );
   };
@@ -100,15 +96,15 @@ export const CustomerProfile = () => {
             formInner={PersonalData}
           />
         }
-        children2={
-          // todo: next issue
+        children2={addressInitialValues.map((address, index) => (
           <CustomerPageForm
-            initialValues={passwordChangeInitialValues}
+            key={customer.addresses[index].id}
+            initialValues={address}
             onSubmit={onSubmit}
-            validationSchema={isBillingAddress ? customerAddressSchemaBoth : customerAddressSchemaShipping}
+            validationSchema={customerAddressSchema}
             formInner={AddressData}
           />
-        }
+        ))}
         children3={
           <CustomerPageForm
             initialValues={passwordChangeInitialValues}

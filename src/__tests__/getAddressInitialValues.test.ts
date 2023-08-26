@@ -4,7 +4,7 @@ import { getAddressesInitialValues } from '../components/forms/util/getInitialVa
 describe('getAddressInitialValues', () => {
   const fakeCustomerData: Customer = {
     id: '',
-    version: 0,
+    version: 1,
     createdAt: '',
     lastModifiedAt: '',
     email: '',
@@ -97,10 +97,10 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with only 1 address', () => {
     expect(getAddressesInitialValues(fakeCustomerWithOnlyOneAddress)).toEqual([
       {
-        city0: 'fd',
-        country0: 'Aland Islands',
-        postalCode0: 'df',
-        streetName0: 'sd',
+        city: 'fd',
+        country: 'Aland Islands',
+        postalCode: 'df',
+        streetName: 'sd',
         shippingStateChecked: false,
         billingStateChecked: false,
         defaultShippingAddress: false,
@@ -111,20 +111,20 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with 2 addresses', () => {
     expect(getAddressesInitialValues(fakeCustomerWithTwoAddresses)).toEqual([
       {
-        city0: 'fd',
-        country0: 'Aland Islands',
-        postalCode0: '12345',
-        streetName0: 'sd',
+        city: 'fd',
+        country: 'Aland Islands',
+        postalCode: '12345',
+        streetName: 'sd',
         shippingStateChecked: false,
         billingStateChecked: false,
         defaultShippingAddress: false,
         defaultBillingAddress: false
       },
       {
-        city1: 'test',
-        country1: 'Aland Islands',
-        postalCode1: 'df',
-        streetName1: 'sdsfd',
+        city: 'test',
+        country: 'Aland Islands',
+        postalCode: 'df',
+        streetName: 'sdsfd',
         shippingStateChecked: false,
         billingStateChecked: false,
         defaultShippingAddress: false,
@@ -135,10 +135,10 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with shippingAddressIds', () => {
     expect(getAddressesInitialValues(fakeCustomerWithShippingAddressIds)).toEqual([
       {
-        city0: 'fd',
-        country0: 'Aland Islands',
-        postalCode0: 'df',
-        streetName0: 'sd',
+        city: 'fd',
+        country: 'Aland Islands',
+        postalCode: 'df',
+        streetName: 'sd',
         shippingStateChecked: true,
         billingStateChecked: false,
         defaultShippingAddress: false,
@@ -150,20 +150,20 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with billingAddressIds', () => {
     expect(getAddressesInitialValues(fakeCustomerWithBillingAddressIds)).toEqual([
       {
-        city0: 'fd',
-        country0: 'Aland Islands',
-        postalCode0: '12345',
-        streetName0: 'sd',
+        city: 'fd',
+        country: 'Aland Islands',
+        postalCode: '12345',
+        streetName: 'sd',
         shippingStateChecked: false,
         billingStateChecked: false,
         defaultShippingAddress: false,
         defaultBillingAddress: false
       },
       {
-        city1: 'test',
-        country1: 'Aland Islands',
-        postalCode1: 'df',
-        streetName1: 'sdsfd',
+        city: 'test',
+        country: 'Aland Islands',
+        postalCode: 'df',
+        streetName: 'sdsfd',
         shippingStateChecked: false,
         billingStateChecked: true,
         defaultShippingAddress: false,
@@ -175,10 +175,10 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with defaultShippingAddressId', () => {
     expect(getAddressesInitialValues(fakeCustomerWithDefaultShippingAddress)).toEqual([
       {
-        city0: 'fd',
-        country0: 'Aland Islands',
-        postalCode0: 'df',
-        streetName0: 'sd',
+        city: 'fd',
+        country: 'Aland Islands',
+        postalCode: 'df',
+        streetName: 'sd',
         shippingStateChecked: true,
         billingStateChecked: false,
         defaultShippingAddress: true,
@@ -190,20 +190,20 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with defaultBillingAddressId', () => {
     expect(getAddressesInitialValues(fakeCustomerWithDefaultBillingAddress)).toEqual([
       {
-        city0: 'fd',
-        country0: 'Aland Islands',
-        postalCode0: '12345',
-        streetName0: 'sd',
+        city: 'fd',
+        country: 'Aland Islands',
+        postalCode: '12345',
+        streetName: 'sd',
         shippingStateChecked: false,
         billingStateChecked: false,
         defaultBillingAddress: false,
         defaultShippingAddress: false
       },
       {
-        city1: 'test',
-        country1: 'Aland Islands',
-        postalCode1: 'df',
-        streetName1: 'sdsfd',
+        city: 'test',
+        country: 'Aland Islands',
+        postalCode: 'df',
+        streetName: 'sdsfd',
         shippingStateChecked: false,
         billingStateChecked: true,
         defaultBillingAddress: true,
@@ -215,20 +215,20 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with full data & 2 address', () => {
     expect(getAddressesInitialValues(fakeCustomerwithFullData)).toEqual([
       {
-        city0: 'fd',
-        country0: 'Aland Islands',
-        postalCode0: '12345',
-        streetName0: 'sd',
+        city: 'fd',
+        country: 'Aland Islands',
+        postalCode: '12345',
+        streetName: 'sd',
         shippingStateChecked: true,
         billingStateChecked: false,
         defaultShippingAddress: true,
         defaultBillingAddress: false
       },
       {
-        city1: 'test',
-        country1: 'Aland Islands',
-        postalCode1: 'df',
-        streetName1: 'sdsfd',
+        city: 'test',
+        country: 'Aland Islands',
+        postalCode: 'df',
+        streetName: 'sdsfd',
         shippingStateChecked: false,
         billingStateChecked: true,
         defaultBillingAddress: true,
@@ -240,10 +240,10 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with full data & 1 address', () => {
     expect(getAddressesInitialValues(fakeCustomerWithOneAddressFullData)).toEqual([
       {
-        city0: 'fd',
-        country0: 'Aland Islands',
-        postalCode0: 'df',
-        streetName0: 'sd',
+        city: 'fd',
+        country: 'Aland Islands',
+        postalCode: 'df',
+        streetName: 'sd',
         shippingStateChecked: true,
         billingStateChecked: true,
         defaultShippingAddress: true,

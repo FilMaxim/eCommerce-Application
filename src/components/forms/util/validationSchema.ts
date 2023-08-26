@@ -118,22 +118,20 @@ export const customerPersonalDataSchema = yup.object({
   email
 });
 
-export const customerAddressSchemaShipping = yup.object({
-  shippingStreetName,
-  shippingCity,
-  shippingCountry,
-  shippingPostalCode
-});
-
-export const customerAddressSchemaBoth = yup.object({
-  shippingStreetName,
-  shippingCity,
-  shippingCountry,
-  shippingPostalCode,
-  billingStreetName,
-  billingCity,
-  billingCountry,
-  billingPostalCode
+export const customerAddressSchema = yup.object({
+  streetName: shippingStreetName,
+  city: shippingCity,
+  country: shippingCountry,
+  postalCode: yup.string().when('country', (country: string[], schema) => {
+    const code = getCountryCode(country[0]);
+    return schema
+      .test('postal-validate', 'Invalid zip code format', (value) => {
+        const currentValue = value ?? '';
+        return postcodeValidator(currentValue, code);
+      })
+      .trim()
+      .required('Required field');
+  })
 });
 
 export const passwordChangeSchema = yup.object({

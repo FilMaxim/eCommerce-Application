@@ -1,5 +1,5 @@
 import type { Customer } from '@commercetools/platform-sdk';
-import type { PersonalDataInitialValues } from '../../../utils/types';
+import type { AddressesInitialValues, PersonalDataInitialValues } from '../../../utils/types';
 import { getCountryByCode } from './getCountry';
 
 export const getPersonalDataInitialValues = (customer: Customer): PersonalDataInitialValues => {
@@ -11,16 +11,16 @@ export const getPersonalDataInitialValues = (customer: Customer): PersonalDataIn
   };
 };
 
-export const getAddressesInitialValues = (customer: Customer) => {
+export const getAddressesInitialValues = (customer: Customer): AddressesInitialValues[] => {
   const { addresses } = customer;
 
-  if (addresses.length === 0) return [];
+  if (addresses.length === 0) return [] as unknown as AddressesInitialValues[];
 
-  const result: Array<Record<string, string | boolean>> = addresses.map((address, index) => ({
-    [`country${index}`]: getCountryByCode(address.country),
-    [`streetName${index}`]: address.streetName ?? '',
-    [`postalCode${index}`]: address.postalCode ?? '',
-    [`city${index}`]: address.city ?? '',
+  const result = addresses.map((address, index) => ({
+    country: getCountryByCode(address.country),
+    streetName: address.streetName ?? '',
+    postalCode: address.postalCode ?? '',
+    city: address.city ?? '',
     shippingStateChecked: false,
     billingStateChecked: false,
     defaultShippingAddress: false,
