@@ -1,0 +1,254 @@
+import type { Customer } from '@commercetools/platform-sdk';
+import { getAddressesInitialValues } from '../components/forms/util/getInitialValuesFromCustomer';
+
+describe('getAddressInitialValues', () => {
+  const fakeCustomerData: Customer = {
+    id: '',
+    version: 0,
+    createdAt: '',
+    lastModifiedAt: '',
+    email: '',
+    isEmailVerified: false,
+    authenticationMode: '',
+    addresses: []
+  };
+
+  const fakeCustomerWithOnlyOneAddress: Customer = {
+    ...fakeCustomerData,
+    addresses: [
+      {
+        city: 'fd',
+        country: 'AX',
+        id: 'FZxT-eI3',
+        postalCode: 'df',
+        streetName: 'sd'
+      }
+    ]
+  };
+
+  const fakeCustomerWithOneAddressFullData: Customer = {
+    ...fakeCustomerData,
+    addresses: [
+      {
+        city: 'fd',
+        country: 'AX',
+        id: 'FZxT-eI3',
+        postalCode: 'df',
+        streetName: 'sd'
+      }
+    ],
+    defaultShippingAddressId: 'FZxT-eI3',
+    defaultBillingAddressId: 'FZxT-eI3',
+    shippingAddressIds: ['FZxT-eI3'],
+    billingAddressIds: ['FZxT-eI3']
+  };
+
+  const fakeCustomerWithTwoAddresses: Customer = {
+    ...fakeCustomerData,
+    addresses: [
+      {
+        city: 'fd',
+        country: 'AX',
+        id: 'FZxT-eI3',
+        postalCode: '12345',
+        streetName: 'sd'
+      },
+      {
+        city: 'test',
+        country: 'AX',
+        id: 'TeST-eI3',
+        postalCode: 'df',
+        streetName: 'sdsfd'
+      }
+    ]
+  };
+
+  const fakeCustomerWithShippingAddressIds: Customer = {
+    ...fakeCustomerWithOnlyOneAddress,
+    shippingAddressIds: ['FZxT-eI3']
+  };
+
+  const fakeCustomerWithBillingAddressIds: Customer = {
+    ...fakeCustomerWithTwoAddresses,
+    billingAddressIds: ['TeST-eI3']
+  };
+
+  const fakeCustomerWithDefaultShippingAddress: Customer = {
+    ...fakeCustomerWithShippingAddressIds,
+    defaultShippingAddressId: 'FZxT-eI3'
+  };
+
+  const fakeCustomerWithDefaultBillingAddress: Customer = {
+    ...fakeCustomerWithBillingAddressIds,
+    defaultBillingAddressId: 'TeST-eI3'
+  };
+
+  const fakeCustomerwithFullData: Customer = {
+    ...fakeCustomerWithShippingAddressIds,
+    ...fakeCustomerWithBillingAddressIds,
+    ...fakeCustomerWithDefaultShippingAddress,
+    ...fakeCustomerWithDefaultBillingAddress
+  };
+
+  it('should return initial values for customer with no addresses', () => {
+    expect(getAddressesInitialValues(fakeCustomerData)).toEqual([]);
+  });
+
+  it('should return initial values for customer with only 1 address', () => {
+    expect(getAddressesInitialValues(fakeCustomerWithOnlyOneAddress)).toEqual([
+      {
+        city0: 'fd',
+        country0: 'Aland Islands',
+        postalCode0: 'df',
+        streetName0: 'sd',
+        shippingStateChecked: false,
+        billingStateChecked: false,
+        defaultShippingAddress: false,
+        defaultBillingAddress: false
+      }
+    ]);
+  });
+  it('should return initial values for customer with 2 addresses', () => {
+    expect(getAddressesInitialValues(fakeCustomerWithTwoAddresses)).toEqual([
+      {
+        city0: 'fd',
+        country0: 'Aland Islands',
+        postalCode0: '12345',
+        streetName0: 'sd',
+        shippingStateChecked: false,
+        billingStateChecked: false,
+        defaultShippingAddress: false,
+        defaultBillingAddress: false
+      },
+      {
+        city1: 'test',
+        country1: 'Aland Islands',
+        postalCode1: 'df',
+        streetName1: 'sdsfd',
+        shippingStateChecked: false,
+        billingStateChecked: false,
+        defaultShippingAddress: false,
+        defaultBillingAddress: false
+      }
+    ]);
+  });
+  it('should return initial values for customer with shippingAddressIds', () => {
+    expect(getAddressesInitialValues(fakeCustomerWithShippingAddressIds)).toEqual([
+      {
+        city0: 'fd',
+        country0: 'Aland Islands',
+        postalCode0: 'df',
+        streetName0: 'sd',
+        shippingStateChecked: true,
+        billingStateChecked: false,
+        defaultShippingAddress: false,
+        defaultBillingAddress: false
+      }
+    ]);
+  });
+
+  it('should return initial values for customer with billingAddressIds', () => {
+    expect(getAddressesInitialValues(fakeCustomerWithBillingAddressIds)).toEqual([
+      {
+        city0: 'fd',
+        country0: 'Aland Islands',
+        postalCode0: '12345',
+        streetName0: 'sd',
+        shippingStateChecked: false,
+        billingStateChecked: false,
+        defaultShippingAddress: false,
+        defaultBillingAddress: false
+      },
+      {
+        city1: 'test',
+        country1: 'Aland Islands',
+        postalCode1: 'df',
+        streetName1: 'sdsfd',
+        shippingStateChecked: false,
+        billingStateChecked: true,
+        defaultShippingAddress: false,
+        defaultBillingAddress: false
+      }
+    ]);
+  });
+
+  it('should return initial values for customer with defaultShippingAddressId', () => {
+    expect(getAddressesInitialValues(fakeCustomerWithDefaultShippingAddress)).toEqual([
+      {
+        city0: 'fd',
+        country0: 'Aland Islands',
+        postalCode0: 'df',
+        streetName0: 'sd',
+        shippingStateChecked: true,
+        billingStateChecked: false,
+        defaultShippingAddress: true,
+        defaultBillingAddress: false
+      }
+    ]);
+  });
+
+  it('should return initial values for customer with defaultBillingAddressId', () => {
+    expect(getAddressesInitialValues(fakeCustomerWithDefaultBillingAddress)).toEqual([
+      {
+        city0: 'fd',
+        country0: 'Aland Islands',
+        postalCode0: '12345',
+        streetName0: 'sd',
+        shippingStateChecked: false,
+        billingStateChecked: false,
+        defaultBillingAddress: false,
+        defaultShippingAddress: false
+      },
+      {
+        city1: 'test',
+        country1: 'Aland Islands',
+        postalCode1: 'df',
+        streetName1: 'sdsfd',
+        shippingStateChecked: false,
+        billingStateChecked: true,
+        defaultBillingAddress: true,
+        defaultShippingAddress: false
+      }
+    ]);
+  });
+
+  it('should return initial values for customer with full data & 2 address', () => {
+    expect(getAddressesInitialValues(fakeCustomerwithFullData)).toEqual([
+      {
+        city0: 'fd',
+        country0: 'Aland Islands',
+        postalCode0: '12345',
+        streetName0: 'sd',
+        shippingStateChecked: true,
+        billingStateChecked: false,
+        defaultShippingAddress: true,
+        defaultBillingAddress: false
+      },
+      {
+        city1: 'test',
+        country1: 'Aland Islands',
+        postalCode1: 'df',
+        streetName1: 'sdsfd',
+        shippingStateChecked: false,
+        billingStateChecked: true,
+        defaultBillingAddress: true,
+        defaultShippingAddress: false
+      }
+    ]);
+  });
+
+  it('should return initial values for customer with full data & 1 address', () => {
+    expect(getAddressesInitialValues(fakeCustomerWithOneAddressFullData)).toEqual([
+      {
+        city0: 'fd',
+        country0: 'Aland Islands',
+        postalCode0: 'df',
+        streetName0: 'sd',
+        shippingStateChecked: true,
+        billingStateChecked: true,
+        defaultShippingAddress: true,
+        defaultBillingAddress: true
+      }
+    ]);
+  });
+});
