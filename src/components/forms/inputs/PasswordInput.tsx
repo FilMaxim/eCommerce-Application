@@ -33,10 +33,10 @@ export const PasswordInput = ({
   };
 
   return (
-    <>
+    <div className="w-[18rem]">
       <label
         htmlFor={name}
-        className="text-sm font-bold text-gray-700"
+        className="text-sm text-gray-500"
       >
         {placeholder}
       </label>
@@ -66,6 +66,6 @@ export const PasswordInput = ({
         component="p"
         className="text-xs italic text-red-500"
       />
-    </>
+    </div>
   );
 };

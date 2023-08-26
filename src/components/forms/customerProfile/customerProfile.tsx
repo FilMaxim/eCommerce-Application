@@ -67,7 +67,7 @@ export const CustomerProfile = () => {
 
   const PasswordChange: FormInnerComponent = (editable: boolean, formik) => {
     return (
-      <div>
+      <div className="flex flex-col items-center justify-center gap-2">
         <PasswordInput
           placeholder="Current Password:"
           formik={formik}
