@@ -5,7 +5,7 @@ import { validationsSchemaLogin } from '../util/validationSchema';
 import * as yup from 'yup';
 import { links } from '../../../utils/links';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../../helpers/hooks';
+import { useAuth } from '../../../hooks/useAuth';
 import { Input } from '../inputs/Input';
 import { inputsData } from '../inputs/inputsData';
 

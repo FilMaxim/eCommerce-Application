@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useAuth } from '../../../helpers/hooks';
+import { useAuth } from '../../../hooks/useAuth';
 import type { ClickHandlerInterface, RootState } from '../../../utils/types';
 import { Logo } from '../../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';

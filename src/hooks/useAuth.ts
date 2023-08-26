@@ -1,13 +1,14 @@
 import type { AuthReturnInterface, HandleSubmitWithBoth, LoginInterface } from '../utils/types';
 import { useNavigate } from 'react-router-dom';
 import { NavRoutes } from '../utils/routes';
-import { createCustomer, customerLogIn } from './api/apiRoot';
-import { showToastMessage } from './showToastMessage';
+import { createCustomer, customerLogIn } from '../helpers/api/apiRoot';
+import { showToastMessage } from '../helpers/showToastMessage';
 import { addressAdapter } from '../components/forms/util/addressDataAdapter';
 import { AuthMessages } from '../components/forms/util/authMessages';
 import { setCustomer, setLogged } from '../slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { type Customer } from '@commercetools/platform-sdk';
+import { StatusCodes } from '../utils/statusCodes';
 
 export const useAuth = (): AuthReturnInterface => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export const useAuth = (): AuthReturnInterface => {
         body: { customer }
       } = await customerLogIn(email, password);
 
-      if (statusCode === 200) {
+      if (statusCode === StatusCodes.OK) {
         successfulAuth(customer, AuthMessages.successLoginMessage);
       }
     } catch (error) {
@@ -46,7 +47,7 @@ export const useAuth = (): AuthReturnInterface => {
       const normalizedData = addressAdapter(values);
       const { statusCode } = await createCustomer(normalizedData);
 
-      if (statusCode === 201) {
+      if (statusCode === StatusCodes.CREATED) {
         showToastMessage(AuthMessages.successRegistrationMessage, 'green');
         await login({ email: values.email, password: values.password });
       }
