@@ -85,15 +85,15 @@ export const useUpdateCustomer = () => {
     const actions = [];
 
     if (
-      currentAddress !== undefined &&
-      (streetName !== currentAddress.streetName ||
-        city !== currentAddress.city ||
-        country !== currentAddress.country ||
-        postalCode !== currentAddress.postalCode)
+      streetName !== currentAddress?.streetName ||
+      city !== currentAddress?.city ||
+      country !== currentAddress?.country ||
+      postalCode !== currentAddress?.postalCode
     ) {
-      const changeAddressAction = {
-        action: 'changeAddress' as const,
-        addressId: id,
+      const addressAction = {
+        ...(currentAddress === undefined
+          ? { action: 'addAddress' as const }
+          : { action: 'changeAddress' as const, addressId: id }),
         address: {
           streetName,
           city,
@@ -101,20 +101,7 @@ export const useUpdateCustomer = () => {
           postalCode
         }
       };
-      actions.push(changeAddressAction);
-    }
-
-    if (currentAddress === undefined) {
-      const newAddressAction = {
-        action: 'addAddress' as const,
-        address: {
-          streetName,
-          city,
-          country: getCountryCode(country),
-          postalCode
-        }
-      };
-      actions.push(newAddressAction);
+      actions.push(addressAction);
     }
 
     if (defaultBillingAddress && defaultBillingAddress !== currentAddress?.defaultBillingAddress) {
