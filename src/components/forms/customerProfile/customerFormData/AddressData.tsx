@@ -130,6 +130,7 @@ export const AddressComponent = ({
           validationSchema={validationSchema}
           formInner={AddressData}
           isNew={true}
+          unsetNewForm={setIsNewAddress}
         />
       )}
     </>

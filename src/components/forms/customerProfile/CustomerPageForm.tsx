@@ -11,7 +11,8 @@ export const CustomerPageForm = ({
   onSubmit,
   validationSchema,
   addressExtraControls,
-  isNew
+  isNew,
+  unsetNewForm
 }: CustomerPageFormProps) => {
   const [editable, setEditable] = useState<boolean>(isNew ?? false);
 
@@ -48,6 +49,7 @@ export const CustomerPageForm = ({
                   onClick={() => {
                     formik.resetForm();
                     setEditable(false);
+                    unsetNewForm?.(false);
                   }}
                   color="secondary"
                 >

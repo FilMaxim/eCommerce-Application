@@ -194,4 +194,5 @@ export interface CustomerPageFormProps {
   validationSchema: yup.Schema;
   addressExtraControls?: AddressExtraControls;
   isNew?: boolean;
+  unsetNewForm?: (value: boolean) => void;
 }
