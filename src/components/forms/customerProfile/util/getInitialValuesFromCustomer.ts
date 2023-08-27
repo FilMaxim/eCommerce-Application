@@ -1,6 +1,6 @@
 import type { Customer } from '@commercetools/platform-sdk';
-import type { AddressesInitialValues, PersonalDataInitialValues } from '../../../utils/types';
-import { getCountryByCode } from './getCountry';
+import type { AddressesInitialValues, PersonalDataInitialValues } from '../../../../utils/types';
+import { getCountryByCode } from '../../util/getCountry';
 
 export const getPersonalDataInitialValues = (customer: Customer): PersonalDataInitialValues => {
   return {

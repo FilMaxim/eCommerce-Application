@@ -1,9 +1,6 @@
 import type { RootState } from '../../../utils/types';
 import { TabsPanel } from '../../tabs/tabPanel';
-import {
-  getAddressesInitialValues,
-  getPersonalDataInitialValues
-} from '../util/getInitialValuesFromCustomer';
+import { getAddressesInitialValues, getPersonalDataInitialValues } from './util/getInitialValuesFromCustomer';
 import {
   customerAddressSchema,
   customerPersonalDataSchema,

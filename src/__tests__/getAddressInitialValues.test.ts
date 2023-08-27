@@ -1,5 +1,5 @@
 import type { Customer } from '@commercetools/platform-sdk';
-import { getAddressesInitialValues } from '../components/forms/util/getInitialValuesFromCustomer';
+import { getAddressesInitialValues } from '../components/forms/customerProfile/util/getInitialValuesFromCustomer';
 
 describe('getAddressInitialValues', () => {
   const fakeCustomerData: Customer = {

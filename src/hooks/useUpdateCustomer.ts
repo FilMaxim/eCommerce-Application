@@ -7,9 +7,10 @@ import type { CustomerUpdateAction, Customer } from '@commercetools/platform-sdk
 import {
   getAddressesInitialValues,
   getPersonalDataInitialValues
-} from '../components/forms/util/getInitialValuesFromCustomer';
+} from '../components/forms/customerProfile/util/getInitialValuesFromCustomer';
 import { StatusCodes } from '../utils/statusCodes';
 import { getCountryCode } from '../components/forms/util/getCountry';
+import { UpdateMessage } from '../components/forms/customerProfile/util/updateMessage';
 
 export const useUpdateCustomer = () => {
   const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
@@ -54,20 +55,19 @@ export const useUpdateCustomer = () => {
 
       if (response.statusCode === StatusCodes.OK) {
         const customer = response.body;
-        showToastMessage('Profile successfully updated', 'green');
+        showToastMessage(UpdateMessage.successPersonalData, 'green');
         localStorage.setItem('customer', JSON.stringify(customer));
         dispatch(setCustomer(customer));
         return;
       }
 
-      showToastMessage('Profile update failed, please try again later', 'red');
+      showToastMessage(UpdateMessage.errorPersonalData, 'red');
     } catch (error) {
-      showToastMessage('Profile update failed, please try again later', 'red');
+      showToastMessage(UpdateMessage.errorPersonalData, 'red');
     }
   };
 
   const onAddressChangeSubmit = async (value: InitialValuesCustomerPage): Promise<void> => {
-    console.log(value);
     if (!('streetName' in value)) return;
 
     const {
@@ -141,18 +141,18 @@ export const useUpdateCustomer = () => {
 
     try {
       const response = await updateCustomer(customer.id, customer.version, actions);
-      console.log(response);
+
       if (response.statusCode === StatusCodes.OK) {
         const customer = response.body;
-        showToastMessage('Address successfully updated', 'green');
+        showToastMessage(UpdateMessage.successAddress, 'green');
         localStorage.setItem('customer', JSON.stringify(customer));
         dispatch(setCustomer(customer));
         return;
       }
 
-      showToastMessage('Address update failed, please try again later', 'red');
+      showToastMessage(UpdateMessage.errorAddress, 'red');
     } catch (error) {
-      showToastMessage('Address update failed, please try again later', 'red');
+      showToastMessage(UpdateMessage.errorAddress, 'red');
     }
   };
 
@@ -170,12 +170,12 @@ export const useUpdateCustomer = () => {
       const response = await updateCustomerPassword(body);
       if (response.statusCode === StatusCodes.OK) {
         const customer = response.body;
-        showToastMessage('Password successfully updated', 'green');
+        showToastMessage(UpdateMessage.successPassword, 'green');
         localStorage.setItem('customer', JSON.stringify(customer));
         dispatch(setCustomer(customer));
       }
     } catch (error) {
-      showToastMessage('Password update failed, please try again later', 'red');
+      showToastMessage(UpdateMessage.errorPassword, 'red');
     }
   };
 
