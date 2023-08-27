@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: 'authSlice',
+  name: 'authData',
   initialState,
   reducers: {
     setLogged: (state, { payload }) => {

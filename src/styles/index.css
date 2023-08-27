@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+}
+
 .nav-list {
   display: flex;
   gap: 15px;
@@ -17,3 +21,96 @@
   margin-top: 35px;
 }
 
+.main-catalog {
+  display: grid;
+  grid-template-columns: 1170px;
+  gap: 80px;
+  grid-template-rows: auto;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 313px;
+  width: 1170px;
+}
+
+.container-header {
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: center;
+  height: 108px;
+
+}
+
+.container-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container-nav {
+  display: flex;
+  align-self: flex-end;
+}
+
+
+.container-content {
+  height: 145px;
+  display: grid;
+  grid-template-columns: repeat(6, 170px);
+  grid-template-rows: 145px;
+  justify-content: center;
+  gap: 30px
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.box:hover {
+  cursor: pointer;
+}
+
+.calalog-list {
+  display: grid;
+  grid-template-columns: repeat(4, 270px);
+  gap: 30px;
+}
+
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-name {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #DB4444;
+  font-weight: 600;
+}
+
+.title-name::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 40px;
+  background-color: #DB4444;
+}
+
+.title-description {
+  font-size: 32px;
+}

@@ -1,20 +1,9 @@
-/* eslint-enable */
+import { ContainerProps } from '../utils/types';
+import { CategoryCard } from './cards/CategoryCard';
 
-interface ButtonProps {}
-
-interface CardProps {}
-
-interface ContainerProps {
-  titleName: string;
-  titleDescription: string;
-  buttons: React.ComponentType<ButtonProps>[];
-  // cards: React.ComponentType<CardProps>[];
-  cards: string[];
-}
-
-export const Container = ({ titleName, titleDescription, buttons, cards }: ContainerProps) => {
+export const Container = ({ titleName, titleDescription, buttons, categoriesList }: ContainerProps) => {
   return (
-    <div className="catagoriesContainer container">
+    <div className="catagories-container container">
       <div className="container-header">
         <div className="container-title">
           <p className="title-name">{titleName}</p>
@@ -29,8 +18,13 @@ export const Container = ({ titleName, titleDescription, buttons, cards }: Conta
         </div>
       </div>
       <div className="container-content">
-        {cards.map((Card) => {
-          return <p>{Card}</p>;
+        {categoriesList.map((category, index) => {
+          return (
+            <CategoryCard
+              category={category}
+              key={`category-${index}`}
+            />
+          );
         })}
       </div>
     </div>

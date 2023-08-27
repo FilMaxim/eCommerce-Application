@@ -1,6 +1,8 @@
 import type { initialValues } from '../components/forms/inputs/inputsData';
 import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
+import type { ComponentType } from 'react';
+import type { ButtonProps } from '@mui/material';
 
 interface UserName {
   firstName: string;
@@ -83,6 +85,7 @@ export interface AuthReturnInterface {
 
 export interface RootState {
   isLogged: boolean;
+  cards: ProductsDataInterface[];
 }
 
 export interface AddressFieldComponent {
@@ -131,3 +134,29 @@ export interface PrivateNavGroupProps {
 }
 
 export type FakeOnSubmit = (values: HandleSubmitWithBoth) => Promise<void>;
+
+export interface ProductsDataInterface {
+  url: string;
+  name: string;
+  description: string;
+}
+
+export interface InitialProductsStateInterace {
+  cards: ProductsDataInterface[];
+}
+
+export interface ProductCardInterface {
+  imageUrl: string;
+  title: string;
+  titleName: string;
+  description: string;
+}
+
+export interface ContainerProps {
+  titleName: string;
+  titleDescription?: string;
+  buttons: Array<ComponentType<ButtonProps>>;
+  categoriesList: string[];
+}
+
+export type Mapping = Record<string, string>;

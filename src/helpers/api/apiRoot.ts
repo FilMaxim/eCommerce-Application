@@ -1,7 +1,11 @@
 import { ClientApiData } from '../../utils/clientApiData';
 import type { CustomerData } from '../../utils/types';
 import { buildClientWithClientCredentialsFlow, buildClientWithPasswordFlow } from './BuildClient';
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import {
+  type CategoryPagedQueryResponse,
+  type ProductProjectionPagedQueryResponse,
+  createApiBuilderFromCtpClient
+} from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
@@ -12,8 +16,14 @@ export const getCustomers = async () => {
   return await apiRoot.customers().get().execute();
 };
 
-export const getCategoris = async () => {
-  return await apiRoot.categories().get().execute();
+export const getCategories = async (): Promise<CategoryPagedQueryResponse> => {
+  const response = await apiRoot.categories().get().execute();
+  return response.body;
+};
+
+export const getProducts = async (): Promise<ProductProjectionPagedQueryResponse> => {
+  const response = await apiRoot.productProjections().get().execute();
+  return response.body;
 };
 
 export const createCustomer = async (data: CustomerData) => {

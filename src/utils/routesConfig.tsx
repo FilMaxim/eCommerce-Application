@@ -22,7 +22,8 @@ export const routesConfig = [
   },
   {
     path: NavRoutes.catalogPage,
-    element: <CatalogPage />
+    element: <CatalogPage />,
+    name: 'catalog'
   },
   {
     path: NavRoutes.loginPagePath,
