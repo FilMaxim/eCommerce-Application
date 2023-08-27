@@ -121,17 +121,29 @@ export const AddressComponent = ({
       ))}
       {!isNewAddress && <Button onClick={handleClick}>Add new address</Button>}
       {isNewAddress && (
-        <CustomerPageForm
-          initialValues={newAddressInitialValues}
-          onSubmit={(value) => {
-            onSubmit(value);
-            setIsNewAddress(false);
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setIsNewAddress(false);
+            }
           }}
-          validationSchema={validationSchema}
-          formInner={AddressData}
-          isNew={true}
-          unsetNewForm={setIsNewAddress}
-        />
+        >
+          <div className="mx-2 flex max-w-[42rem] flex-wrap items-center justify-center rounded bg-white p-6">
+            <h3 className="text-center">New address</h3>
+            <CustomerPageForm
+              initialValues={newAddressInitialValues}
+              onSubmit={(value) => {
+                onSubmit(value);
+                setIsNewAddress(false);
+              }}
+              validationSchema={validationSchema}
+              formInner={AddressData}
+              isNew={true}
+              unsetNewForm={setIsNewAddress}
+            />
+          </div>
+        </div>
       )}
     </>
   );
