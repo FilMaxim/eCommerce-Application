@@ -61,7 +61,7 @@ export const useUpdateCustomer = () => {
     }
   };
 
-  const onSubmit = (value: InitialValuesCustomerPage) => {
+  const onSubmit = async (value: InitialValuesCustomerPage) => {
     console.log(value);
   };
 
