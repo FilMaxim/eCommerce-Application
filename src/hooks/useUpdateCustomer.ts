@@ -85,14 +85,28 @@ export const useUpdateCustomer = () => {
     const actions = [];
 
     if (
-      streetName !== currentAddress?.streetName ||
-      city !== currentAddress?.city ||
-      country !== currentAddress?.country ||
-      postalCode !== currentAddress?.postalCode
+      currentAddress !== undefined &&
+      (streetName !== currentAddress.streetName ||
+        city !== currentAddress.city ||
+        country !== currentAddress.country ||
+        postalCode !== currentAddress.postalCode)
     ) {
-      const newAddressAction = {
+      const changeAddressAction = {
         action: 'changeAddress' as const,
         addressId: id,
+        address: {
+          streetName,
+          city,
+          country: getCountryCode(country),
+          postalCode
+        }
+      };
+      actions.push(changeAddressAction);
+    }
+
+    if (currentAddress === undefined) {
+      const newAddressAction = {
+        action: 'addAddress' as const,
         address: {
           streetName,
           city,
@@ -119,7 +133,7 @@ export const useUpdateCustomer = () => {
       actions.push(defaultShippingAddressAction);
     }
 
-    if (billingStateChecked !== currentAddress?.billingStateChecked) {
+    if (billingStateChecked && billingStateChecked !== currentAddress?.billingStateChecked) {
       const billingAddressAction = {
         action: billingStateChecked ? ('addBillingAddressId' as const) : ('removeBillingAddressId' as const),
         addressId: id
@@ -127,7 +141,7 @@ export const useUpdateCustomer = () => {
       actions.push(billingAddressAction);
     }
 
-    if (shippingStateChecked !== currentAddress?.shippingStateChecked) {
+    if (shippingStateChecked && shippingStateChecked !== currentAddress?.shippingStateChecked) {
       const shippingAddressAction = {
         action: shippingStateChecked
           ? ('addShippingAddressId' as const)

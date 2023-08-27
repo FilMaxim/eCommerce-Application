@@ -1,16 +1,27 @@
-import type { Customer } from '@commercetools/platform-sdk';
-import { useSelector } from 'react-redux';
 import type {
   AddressExtraControls,
   AddressesInitialValues,
   FormInnerComponent,
-  InitialValuesCustomerPage,
-  RootState
+  InitialValuesCustomerPage
 } from '../../../../utils/types';
 import { Input } from '../../inputs/Input';
 import { CustomerPageForm } from '../CustomerPageForm';
 import type * as yup from 'yup';
 import { Field } from 'formik';
+import { useState } from 'react';
+import { Button } from '@mui/material';
+
+const newAddressInitialValues = {
+  id: '',
+  country: '',
+  streetName: '',
+  postalCode: '',
+  city: '',
+  shippingStateChecked: false,
+  billingStateChecked: false,
+  defaultShippingAddress: false,
+  defaultBillingAddress: false
+};
 
 const AddressData: FormInnerComponent = (editable: boolean, formik) => {
   return (
@@ -68,17 +79,21 @@ export const AddressComponent = ({
   initialValues: AddressesInitialValues[];
   validationSchema: yup.Schema;
 }) => {
-  const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
+  const [isNewAddress, setIsNewAddress] = useState<boolean>(false);
+
+  const handleClick = () => {
+    setIsNewAddress(!isNewAddress);
+  };
 
   if (initialValues.length === 0) {
-    return <h3>No addresses</h3>;
+    return <h3>You have no addresses yet...</h3>;
   }
 
   return (
     <>
       {initialValues.map((address, index) => (
         <div
-          key={customer.addresses[index].id}
+          key={address.id}
           className="mb-4"
         >
           <div className="mb-[-2.5rem] pt-4">
@@ -104,6 +119,19 @@ export const AddressComponent = ({
           />
         </div>
       ))}
+      {!isNewAddress && <Button onClick={handleClick}>Add new address</Button>}
+      {isNewAddress && (
+        <CustomerPageForm
+          initialValues={newAddressInitialValues}
+          onSubmit={(value) => {
+            onSubmit(value);
+            setIsNewAddress(false);
+          }}
+          validationSchema={validationSchema}
+          formInner={AddressData}
+          isNew={true}
+        />
+      )}
     </>
   );
 };

@@ -10,9 +10,10 @@ export const CustomerPageForm = ({
   formInner,
   onSubmit,
   validationSchema,
-  addressExtraControls
+  addressExtraControls,
+  isNew
 }: CustomerPageFormProps) => {
-  const [editable, setEditable] = useState<boolean>(false);
+  const [editable, setEditable] = useState<boolean>(isNew ?? false);
 
   return (
     <Formik

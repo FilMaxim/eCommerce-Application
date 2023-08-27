@@ -193,4 +193,5 @@ export interface CustomerPageFormProps {
   onSubmit: (value: InitialValuesCustomerPage) => void;
   validationSchema: yup.Schema;
   addressExtraControls?: AddressExtraControls;
+  isNew?: boolean;
 }
