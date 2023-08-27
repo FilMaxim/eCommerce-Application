@@ -2,14 +2,15 @@ import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import IconButton from '@mui/material/IconButton';
-import type { CustomerPageFormProps } from '../../../utils/types';
+import type { AddressesInitialValues, CustomerPageFormProps } from '../../../utils/types';
 import { Button } from '@mui/material';
 
 export const CustomerPageForm = ({
   initialValues,
   formInner,
   onSubmit,
-  validationSchema
+  validationSchema,
+  addressExtraControls
 }: CustomerPageFormProps) => {
   const [editable, setEditable] = useState<boolean>(false);
 
@@ -36,6 +37,7 @@ export const CustomerPageForm = ({
               </IconButton>
             </div>
             {formInner(editable, formik)}
+            {addressExtraControls !== undefined ? addressExtraControls(editable, initialValues as AddressesInitialValues) : null}
             {editable && (
               <div className="flex w-full justify-center gap-2">
                 <Button
@@ -44,13 +46,12 @@ export const CustomerPageForm = ({
                     setEditable(false);
                   }}
                   color="secondary"
-                  disabled={formik.isSubmitting}
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
-                  disabled={formik.isSubmitting || !formik.isValid || !formik.dirty}
+                  disabled={!formik.isValid || !formik.dirty}
                   onClick={() => {
                     setEditable(false);
                     formik.submitForm().catch((err) => {

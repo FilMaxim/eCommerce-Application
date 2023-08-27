@@ -1,6 +1,7 @@
 import type { Customer } from '@commercetools/platform-sdk';
 import { useSelector } from 'react-redux';
 import type {
+  AddressExtraControls,
   AddressesInitialValues,
   FormInnerComponent,
   InitialValuesCustomerPage,
@@ -9,6 +10,7 @@ import type {
 import { Input } from '../../inputs/Input';
 import { CustomerPageForm } from '../CustomerPageForm';
 import type * as yup from 'yup';
+import { Field } from 'formik';
 
 const AddressData: FormInnerComponent = (editable: boolean, formik) => {
   return (
@@ -24,6 +26,25 @@ const AddressData: FormInnerComponent = (editable: boolean, formik) => {
         />
       ))}
     </div>
+  );
+};
+
+const AddressControls: AddressExtraControls = (editable: boolean, initialValues) => {
+  const stateList = Object.entries(initialValues).filter(([key, value]) => typeof value === 'boolean');
+
+  return (
+    <>
+      {editable &&
+        stateList.map(([name, value]) => (
+          <label key={name}>
+            <Field
+            type="checkbox"
+              name={name}
+            />
+            {name}
+          </label>
+        ))}
+    </>
   );
 };
 
@@ -46,18 +67,30 @@ export const AddressComponent = ({
   return (
     <>
       {initialValues.map((address, index) => (
-        <div key={customer.addresses[index].id}>
-          <div className="mb-[-2rem]">
-            {address.shippingStateChecked && <span>Shipping address</span>}
-            {address.billingStateChecked && <span>Billing address</span>}
-            {address.defaultShippingAddress && <span>Default shipping address</span>}
-            {address.defaultBillingAddress && <span>Default billing address</span>}
+        <div
+          key={customer.addresses[index].id}
+          className="mb-4"
+        >
+          <div className="mb-[-2.5rem]">
+            {address.shippingStateChecked && (
+              <span className="mr-1 rounded border bg-slate-200 text-xs">Shipping address</span>
+            )}
+            {address.billingStateChecked && (
+              <span className="mr-1 rounded border bg-slate-200 text-xs">Billing address</span>
+            )}
+            {address.defaultShippingAddress && (
+              <span className="mr-1 rounded border bg-slate-200 text-xs">Default shipping address</span>
+            )}
+            {address.defaultBillingAddress && (
+              <span className="mr-1 rounded border bg-slate-200 text-xs">Default billing address</span>
+            )}
           </div>
           <CustomerPageForm
             initialValues={address}
             onSubmit={onSubmit}
             validationSchema={validationSchema}
             formInner={AddressData}
+            addressExtraControls={AddressControls}
           />
         </div>
       ))}

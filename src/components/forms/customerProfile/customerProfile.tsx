@@ -44,7 +44,6 @@ export const CustomerProfile = () => {
           />
         }
         children2={
-          addressInitialValues.length > 0 && (
             <AddressComponent
               initialValues={addressInitialValues}
               validationSchema={customerAddressSchema}
@@ -54,7 +53,6 @@ export const CustomerProfile = () => {
                 });
               }}
             />
-          )
         }
         children3={
           <CustomerPageForm

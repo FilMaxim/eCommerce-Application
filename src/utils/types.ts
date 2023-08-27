@@ -171,6 +171,8 @@ export interface TabsPanelProps {
 
 export type FormInnerComponent = (editable: boolean, formik: FormikProps) => JSX.Element[] | JSX.Element;
 
+export type AddressExtraControls = (editable: boolean, initialValues: AddressesInitialValues) => JSX.Element[] | JSX.Element;
+
 export interface PasswordChangeInitialValues {
   currentPassword: string;
   newPassword: string;
@@ -186,4 +188,5 @@ export interface CustomerPageFormProps {
   formInner: FormInnerComponent;
   onSubmit: (value: InitialValuesCustomerPage) => void;
   validationSchema: yup.Schema;
+  addressExtraControls?: AddressExtraControls;
 }
