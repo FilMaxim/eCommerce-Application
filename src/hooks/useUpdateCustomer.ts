@@ -180,5 +180,30 @@ export const useUpdateCustomer = () => {
     }
   };
 
-  return { onPersonalDataSubmit, onAddressChangeSubmit, onPasswordChangeSubmit };
+  const onAddressDelete = async (id: string): Promise<void> => {
+    const actions = [
+      {
+        action: 'removeAddress' as const,
+        addressId: id
+      }
+    ];
+
+    try {
+      const response = await updateCustomer(customer.id, customer.version, actions);
+
+      if (response.statusCode === StatusCodes.OK) {
+        const customer = response.body;
+        showToastMessage(UpdateMessage.deleteAddress, 'green');
+        localStorage.setItem('customer', JSON.stringify(customer));
+        dispatch(setCustomer(customer));
+        return;
+      }
+
+      showToastMessage(UpdateMessage.errorDeleteAddress, 'red');
+    } catch (error) {
+      showToastMessage(UpdateMessage.errorDeleteAddress, 'red');
+    }
+  };
+
+  return { onPersonalDataSubmit, onAddressChangeSubmit, onPasswordChangeSubmit, onAddressDelete };
 };

@@ -16,7 +16,8 @@ import { AddressComponent } from './customerFormData/AddressData';
 
 export const CustomerProfile = () => {
   const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
-  const { onPersonalDataSubmit, onAddressChangeSubmit, onPasswordChangeSubmit } = useUpdateCustomer();
+  const { onPersonalDataSubmit, onAddressChangeSubmit, onPasswordChangeSubmit, onAddressDelete } =
+    useUpdateCustomer();
   const personalDataInitialValues = getPersonalDataInitialValues(customer);
   const passwordChangeInitialValues = {
     currentPassword: '',
@@ -49,6 +50,7 @@ export const CustomerProfile = () => {
                 console.error(err);
               });
             }}
+            onDelete={onAddressDelete}
           />
         }
         children3={

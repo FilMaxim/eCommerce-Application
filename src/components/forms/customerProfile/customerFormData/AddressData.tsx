@@ -72,12 +72,14 @@ const AddressControls: AddressExtraControls = (editable: boolean, initialValues)
 export const AddressComponent = ({
   onSubmit,
   initialValues,
-  validationSchema
+  validationSchema,
+  onDelete
 }: {
   // todo: add interface
   onSubmit: (values: InitialValuesCustomerPage) => void;
   initialValues: AddressesInitialValues[];
   validationSchema: yup.Schema;
+  onDelete?: (id: string) => Promise<void>;
 }) => {
   const [isNewAddress, setIsNewAddress] = useState<boolean>(false);
 
@@ -116,6 +118,7 @@ export const AddressComponent = ({
             validationSchema={validationSchema}
             formInner={AddressData}
             addressExtraControls={AddressControls}
+            onDelete={onDelete}
           />
         </div>
       ))}
@@ -139,7 +142,7 @@ export const AddressComponent = ({
               }}
               validationSchema={validationSchema}
               formInner={AddressData}
-              isNew={true}
+              isEditable={true}
               unsetNewForm={setIsNewAddress}
             />
           </div>

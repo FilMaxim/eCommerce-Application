@@ -12,10 +12,11 @@ export const CustomerPageForm = ({
   onSubmit,
   validationSchema,
   addressExtraControls,
-  isNew,
-  unsetNewForm
+  isEditable,
+  unsetNewForm,
+  onDelete
 }: CustomerPageFormProps) => {
-  const [editable, setEditable] = useState<boolean>(isNew ?? false);
+  const [editable, setEditable] = useState<boolean>(isEditable ?? false);
 
   return (
     <Formik
@@ -39,15 +40,19 @@ export const CustomerPageForm = ({
               >
                 <EditOutlinedIcon />
               </IconButton>
-              <IconButton
-                aria-label="delete"
-                color="secondary"
-                onClick={() => {
-                  setEditable(true);
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
+              {addressExtraControls !== undefined && (
+                <IconButton
+                  aria-label="delete"
+                  color="secondary"
+                  onClick={() => {
+                    onDelete?.((initialValues as AddressesInitialValues).id).catch((err) => {
+                      console.error(err);
+                    });
+                  }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
             </div>
             {formInner(editable, formik)}
             {addressExtraControls !== undefined

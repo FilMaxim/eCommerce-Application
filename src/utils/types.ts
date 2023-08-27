@@ -193,6 +193,7 @@ export interface CustomerPageFormProps {
   onSubmit: (value: InitialValuesCustomerPage) => void;
   validationSchema: yup.Schema;
   addressExtraControls?: AddressExtraControls;
-  isNew?: boolean;
+  isEditable?: boolean;
   unsetNewForm?: (value: boolean) => void;
+  onDelete?: (id: string) => Promise<void>;
 }
