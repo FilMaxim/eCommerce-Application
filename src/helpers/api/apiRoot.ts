@@ -4,6 +4,7 @@ import { buildClientWithClientCredentialsFlow, buildClientWithPasswordFlow } fro
 import {
   type CategoryPagedQueryResponse,
   type ProductProjectionPagedQueryResponse,
+  type CustomerUpdateAction,
   createApiBuilderFromCtpClient
 } from '@commercetools/platform-sdk';
 
@@ -61,12 +62,7 @@ export const getCustomerCarts = async (id: string) => {
     .execute();
 };
 
-export const updateCustomerFirstName = async (
-  id: string,
-  version: number,
-  newFirstName: string,
-  newLastName: string
-) => {
+export const updateCustomer = async (id: string, version: number, actions: CustomerUpdateAction[]) => {
   return await apiRoot
     .customers()
     .withId({
@@ -75,16 +71,7 @@ export const updateCustomerFirstName = async (
     .post({
       body: {
         version,
-        actions: [
-          {
-            action: 'setFirstName',
-            firstName: newFirstName
-          },
-          {
-            action: 'setLastName',
-            lastName: newLastName
-          }
-        ]
+        actions
       }
     })
     .execute();

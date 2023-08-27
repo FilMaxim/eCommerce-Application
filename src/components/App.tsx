@@ -6,7 +6,7 @@ export const App = () => {
   return (
     <Router>
       <Header />
-      <main className="w-full">
+      <main className="w-full px-2">
         <Routes>
           {routesConfig.map((route, index) => (
             <Route

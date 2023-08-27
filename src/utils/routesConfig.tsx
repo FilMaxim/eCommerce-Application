@@ -7,6 +7,9 @@ import { NavRoutes } from './routes';
 import { AboutPage } from '../pages/AboutPage';
 import { ContactsPage } from '../pages/ContactsPage';
 import { CatalogPage } from '../pages/CatalogPage';
+import { UserProfilePage } from '../pages/UserProfilePage';
+import { AnonymOutlet } from '../components/AnonymOutlet';
+
 export const routesConfig = [
   {
     path: NavRoutes.mainPagePath,
@@ -39,6 +42,14 @@ export const routesConfig = [
       <PrivateOutlet>
         <RegistrationPage />
       </PrivateOutlet>
+    )
+  },
+  {
+    path: NavRoutes.profilePagePath,
+    element: (
+      <AnonymOutlet>
+        <UserProfilePage />
+      </AnonymOutlet>
     )
   },
   {

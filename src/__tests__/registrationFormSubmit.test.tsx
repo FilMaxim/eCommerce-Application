@@ -3,9 +3,9 @@ import { submitDataWithBilling } from '../components/forms/util/submitFakeData';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RegistrationForm } from '../components/forms/RegistrationForm/RegistrationForm';
 import { getValidationSchema } from '../components/forms/util/validationSchema';
-import type { FakeOnSubmit, ImitialValues } from '../utils/types';
+import type { FakeOnSubmit, InitialValues } from '../utils/types';
 
-export const TestRegistrationForm = (fakeOnSubmit: FakeOnSubmit, initialValues: ImitialValues) => {
+export const TestRegistrationForm = (fakeOnSubmit: FakeOnSubmit, initialValues: InitialValues) => {
   return (
     <BrowserRouter>
       <Routes>

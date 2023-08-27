@@ -1,8 +1,9 @@
-import type { initialValues } from '../components/forms/inputs/inputsData';
+import type { initialValuesRegistration, inputsData } from '../components/forms/inputs/inputsData';
 import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
 import type { ComponentType } from 'react';
 import type { ButtonProps } from '@mui/material';
+import type { Customer } from '@commercetools/platform-sdk';
 
 interface UserName {
   firstName: string;
@@ -72,7 +73,7 @@ export interface VisibilityIconProps {
 
 export type AuthLogin = (userData: LoginInterface) => void;
 
-export interface PrivateOutletProps {
+export interface OutletProps {
   children: JSX.Element;
 }
 
@@ -80,12 +81,12 @@ export interface AuthReturnInterface {
   login: (userData: LoginInterface) => Promise<void>;
   logout: () => void;
   signUp: (userData: HandleSubmitWithBoth) => Promise<void>;
-  userId: string | null;
 }
 
 export interface RootState {
   isLogged: boolean;
   cards: ProductsDataInterface[];
+  customer: Customer | null;
 }
 
 export interface AddressFieldComponent {
@@ -108,22 +109,28 @@ export interface InputProps {
   name: string;
   type: string;
   placeholder: string;
-  formik: FormikProps;
+  formik?: FormikProps;
+  disabled?: boolean;
 }
 
 export interface AddressFieldSetProps {
   fieldSet: 'shipping' | 'billing';
-  formik: FormikProps;
+  formik?: FormikProps;
+  disabled?: boolean;
+}
+
+export interface CountryInputProps extends AddressFieldSetProps {
+  setPostalCodeDisabled: (editable: boolean) => void;
 }
 
 export interface PostalcodeInterface extends InputProps {
   fieldSet: 'shipping' | 'billing';
 }
 
-export type ImitialValues = typeof initialValues;
+export type InitialValues = typeof initialValuesRegistration;
 
 export interface RegistrationFormProps {
-  initialValues: ImitialValues;
+  initialValues: InitialValues;
   getValidationSchema: (isSameAddress: boolean) => yup.Schema;
   onSubmit: (values: HandleSubmitWithBoth) => Promise<void>;
 }
@@ -160,3 +167,46 @@ export interface ContainerProps {
 }
 
 export type Mapping = Record<string, string>;
+
+export interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+export interface ProfileInitialValues {
+  firstName: string;
+  lastName: string;
+  date: string;
+  email: string;
+  shippingCountry: string;
+  shippingStreetName: string;
+  shippingPostalCode: string;
+  shippingCity: string;
+  billingCountry: string;
+  billingStreetName: string;
+  billingPostalCode: string;
+  billingCity: string;
+}
+
+export interface UserProfileProps {
+  // validationSchema: ;
+  customer: Customer;
+  inputsData: typeof inputsData;
+  onSubmit: (value: ProfileInitialValues) => void;
+}
+
+export interface TabsPanelProps {
+  children1: React.ReactNode;
+  children2: React.ReactNode;
+  children3: React.ReactNode;
+}
+
+export type FormInnerComponent = (editable: boolean, formik: FormikProps) => JSX.Element[] | JSX.Element;
+
+export interface CustomerPageFormProps {
+  initialValues: ProfileInitialValues;
+  formInner: FormInnerComponent;
+  onSubmit: (value: ProfileInitialValues) => void;
+  validationSchema: yup.Schema;
+}

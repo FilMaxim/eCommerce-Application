@@ -3,8 +3,8 @@ import { Navigate } from 'react-router-dom';
 import type { OutletProps, RootState } from '../utils/types';
 import { useSelector } from 'react-redux';
 
-export const PrivateOutlet = ({ children }: OutletProps) => {
+export const AnonymOutlet = ({ children }: OutletProps) => {
   const isLogged = useSelector((state: RootState) => state.isLogged);
 
-  return isLogged ? <Navigate to={NavRoutes.mainPagePath} /> : children;
+  return isLogged ? children : <Navigate to={NavRoutes.loginPagePath} />;
 };
