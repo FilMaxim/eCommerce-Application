@@ -2,6 +2,7 @@ import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import type { AddressesInitialValues, CustomerPageFormProps } from '../../../utils/types';
 import { Button } from '@mui/material';
 
@@ -27,7 +28,7 @@ export const CustomerPageForm = ({
       {(formik) => (
         <div className="relative pb-3 pt-[3rem]">
           <Form className=" flex max-w-[42rem] flex-wrap items-center justify-center gap-2">
-            <div className="absolute right-2 top-2">
+            <div className="absolute right-2 top-2 flex gap-1">
               <IconButton
                 aria-label="edit"
                 color="primary"
@@ -37,6 +38,15 @@ export const CustomerPageForm = ({
                 disabled={editable}
               >
                 <EditOutlinedIcon />
+              </IconButton>
+              <IconButton
+                aria-label="delete"
+                color="secondary"
+                onClick={() => {
+                  setEditable(true);
+                }}
+              >
+                <DeleteIcon />
               </IconButton>
             </div>
             {formInner(editable, formik)}
