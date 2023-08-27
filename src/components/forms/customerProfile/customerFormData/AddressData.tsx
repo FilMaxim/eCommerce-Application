@@ -38,7 +38,7 @@ const AddressControls: AddressExtraControls = (editable: boolean, initialValues)
         stateList.map(([name, value]) => (
           <label key={name}>
             <Field
-            type="checkbox"
+              type="checkbox"
               name={name}
             />
             {name}

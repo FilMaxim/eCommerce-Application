@@ -44,15 +44,15 @@ export const CustomerProfile = () => {
           />
         }
         children2={
-            <AddressComponent
-              initialValues={addressInitialValues}
-              validationSchema={customerAddressSchema}
-              onSubmit={(values) => {
-                onSubmit(values).catch((err) => {
-                  console.error(err);
-                });
-              }}
-            />
+          <AddressComponent
+            initialValues={addressInitialValues}
+            validationSchema={customerAddressSchema}
+            onSubmit={(values) => {
+              onSubmit(values).catch((err) => {
+                console.error(err);
+              });
+            }}
+          />
         }
         children3={
           <CustomerPageForm

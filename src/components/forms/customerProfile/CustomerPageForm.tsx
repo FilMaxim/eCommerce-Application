@@ -37,7 +37,9 @@ export const CustomerPageForm = ({
               </IconButton>
             </div>
             {formInner(editable, formik)}
-            {addressExtraControls !== undefined ? addressExtraControls(editable, initialValues as AddressesInitialValues) : null}
+            {addressExtraControls !== undefined
+              ? addressExtraControls(editable, initialValues as AddressesInitialValues)
+              : null}
             {editable && (
               <div className="flex w-full justify-center gap-2">
                 <Button
