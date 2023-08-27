@@ -16,7 +16,8 @@ export const getAddressesInitialValues = (customer: Customer): AddressesInitialV
 
   if (addresses.length === 0) return [] as unknown as AddressesInitialValues[];
 
-  const result = addresses.map((address, index) => ({
+  const result = addresses.map((address) => ({
+    id: address.id ?? '',
     country: getCountryByCode(address.country),
     streetName: address.streetName ?? '',
     postalCode: address.postalCode ?? '',

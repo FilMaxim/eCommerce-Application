@@ -20,6 +20,7 @@ export const CustomerPageForm = ({
       onSubmit={onSubmit}
       validationSchema={validationSchema}
       validateOnMount
+      enableReinitialize
     >
       {(formik) => (
         <div className="relative pb-3 pt-[3rem]">

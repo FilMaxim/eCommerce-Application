@@ -1,7 +1,11 @@
 import { ClientApiData } from '../../utils/clientApiData';
 import type { CustomerData } from '../../utils/types';
 import { buildClientWithClientCredentialsFlow, buildClientWithPasswordFlow } from './BuildClient';
-import { type CustomerUpdateAction, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import {
+  type CustomerUpdateAction,
+  createApiBuilderFromCtpClient,
+  type CustomerChangeAddressAction
+} from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
@@ -47,7 +51,11 @@ export const getCustomerCarts = async (id: string) => {
     .execute();
 };
 
-export const updateCustomer = async (id: string, version: number, actions: CustomerUpdateAction[]) => {
+export const updateCustomer = async (
+  id: string,
+  version: number,
+  actions: CustomerUpdateAction[] | CustomerChangeAddressAction[]
+) => {
   return await apiRoot
     .customers()
     .withId({

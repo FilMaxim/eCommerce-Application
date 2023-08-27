@@ -30,12 +30,22 @@ const AddressData: FormInnerComponent = (editable: boolean, formik) => {
 };
 
 const AddressControls: AddressExtraControls = (editable: boolean, initialValues) => {
-  const stateList = Object.entries(initialValues).filter(([key, value]) => typeof value === 'boolean');
+  const checkboxes = Object.entries(initialValues)
+    .filter(([key, value]) => typeof value === 'boolean')
+    .filter(([key, value]) => {
+      if (
+        (key === 'defaultShippingAddress' && value === true) ||
+        (key === 'defaultBillingAddress' && value === true)
+      ) {
+        return false;
+      }
+      return true;
+    });
 
   return (
     <>
       {editable &&
-        stateList.map(([name, value]) => (
+        checkboxes.map(([name, value]) => (
           <label key={name}>
             <Field
               type="checkbox"
@@ -71,7 +81,7 @@ export const AddressComponent = ({
           key={customer.addresses[index].id}
           className="mb-4"
         >
-          <div className="mb-[-2.5rem]">
+          <div className="mb-[-2.5rem] pt-4">
             {address.shippingStateChecked && (
               <span className="mr-1 rounded border bg-slate-200 text-xs">Shipping address</span>
             )}

@@ -97,6 +97,7 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with only 1 address', () => {
     expect(getAddressesInitialValues(fakeCustomerWithOnlyOneAddress)).toEqual([
       {
+        id: 'FZxT-eI3',
         city: 'fd',
         country: 'Aland Islands',
         postalCode: 'df',
@@ -111,6 +112,7 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with 2 addresses', () => {
     expect(getAddressesInitialValues(fakeCustomerWithTwoAddresses)).toEqual([
       {
+        id: 'FZxT-eI3',
         city: 'fd',
         country: 'Aland Islands',
         postalCode: '12345',
@@ -121,6 +123,7 @@ describe('getAddressInitialValues', () => {
         defaultBillingAddress: false
       },
       {
+        id: 'TeST-eI3',
         city: 'test',
         country: 'Aland Islands',
         postalCode: 'df',
@@ -135,6 +138,7 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with shippingAddressIds', () => {
     expect(getAddressesInitialValues(fakeCustomerWithShippingAddressIds)).toEqual([
       {
+        id: 'FZxT-eI3',
         city: 'fd',
         country: 'Aland Islands',
         postalCode: 'df',
@@ -150,6 +154,7 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with billingAddressIds', () => {
     expect(getAddressesInitialValues(fakeCustomerWithBillingAddressIds)).toEqual([
       {
+        id: 'FZxT-eI3',
         city: 'fd',
         country: 'Aland Islands',
         postalCode: '12345',
@@ -160,6 +165,7 @@ describe('getAddressInitialValues', () => {
         defaultBillingAddress: false
       },
       {
+        id: 'TeST-eI3',
         city: 'test',
         country: 'Aland Islands',
         postalCode: 'df',
@@ -175,6 +181,7 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with defaultShippingAddressId', () => {
     expect(getAddressesInitialValues(fakeCustomerWithDefaultShippingAddress)).toEqual([
       {
+        id: 'FZxT-eI3',
         city: 'fd',
         country: 'Aland Islands',
         postalCode: 'df',
@@ -190,6 +197,7 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with defaultBillingAddressId', () => {
     expect(getAddressesInitialValues(fakeCustomerWithDefaultBillingAddress)).toEqual([
       {
+        id: 'FZxT-eI3',
         city: 'fd',
         country: 'Aland Islands',
         postalCode: '12345',
@@ -200,6 +208,7 @@ describe('getAddressInitialValues', () => {
         defaultShippingAddress: false
       },
       {
+        id: 'TeST-eI3',
         city: 'test',
         country: 'Aland Islands',
         postalCode: 'df',
@@ -215,6 +224,7 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with full data & 2 address', () => {
     expect(getAddressesInitialValues(fakeCustomerwithFullData)).toEqual([
       {
+        id: 'FZxT-eI3',
         city: 'fd',
         country: 'Aland Islands',
         postalCode: '12345',
@@ -225,6 +235,7 @@ describe('getAddressInitialValues', () => {
         defaultBillingAddress: false
       },
       {
+        id: 'TeST-eI3',
         city: 'test',
         country: 'Aland Islands',
         postalCode: 'df',
@@ -240,6 +251,7 @@ describe('getAddressInitialValues', () => {
   it('should return initial values for customer with full data & 1 address', () => {
     expect(getAddressesInitialValues(fakeCustomerWithOneAddressFullData)).toEqual([
       {
+        id: 'FZxT-eI3',
         city: 'fd',
         country: 'Aland Islands',
         postalCode: 'df',

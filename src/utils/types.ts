@@ -153,6 +153,7 @@ export interface PersonalDataInitialValues {
 }
 
 export interface AddressesInitialValues {
+  id: string;
   streetName: string;
   city: string;
   country: string;
