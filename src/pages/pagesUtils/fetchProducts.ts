@@ -8,7 +8,9 @@ export const fetchProducts = async (dispatch: Dispatch): Promise<void> => {
   const normalisedData = productsData.results.flatMap((product) => {
     const isVariants = product.variants.length > 0;
 
-    const productParams = isVariants ? product.variants.map((variant) => getProductParams(product, variant)) : [];
+    const productParams = isVariants
+      ? product.variants.map((variant) => getProductParams(product, variant))
+      : [];
 
     const masterVariantParams = getProductParams(product, product.masterVariant);
 

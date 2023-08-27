@@ -17,6 +17,10 @@ export const links = {
     text: 'Contacts',
     path: NavRoutes.contactsPage
   },
+  catalog: {
+    text: 'Catalog',
+    path: NavRoutes.catalogPage
+  },
   login: {
     text: 'LogIn',
     path: NavRoutes.loginPagePath,
@@ -35,11 +39,6 @@ export const links = {
   registration: {
     text: 'Registration',
     path: NavRoutes.registrationPagePath,
-    icon: UserPlusIcon
-  },
-  catalog: {
-    text: 'Catalog',
-    path: NavRoutes.catalogPage
     icon: HowToRegOutlinedIcon
   }
 };
