@@ -133,7 +133,7 @@ export const useUpdateCustomer = () => {
       actions.push(defaultShippingAddressAction);
     }
 
-    if (billingStateChecked && billingStateChecked !== currentAddress?.billingStateChecked) {
+    if (currentAddress !== undefined && billingStateChecked !== currentAddress?.billingStateChecked) {
       const billingAddressAction = {
         action: billingStateChecked ? ('addBillingAddressId' as const) : ('removeBillingAddressId' as const),
         addressId: id
@@ -141,7 +141,7 @@ export const useUpdateCustomer = () => {
       actions.push(billingAddressAction);
     }
 
-    if (shippingStateChecked && shippingStateChecked !== currentAddress?.shippingStateChecked) {
+    if (currentAddress !== undefined && shippingStateChecked !== currentAddress?.shippingStateChecked) {
       const shippingAddressAction = {
         action: shippingStateChecked
           ? ('addShippingAddressId' as const)
