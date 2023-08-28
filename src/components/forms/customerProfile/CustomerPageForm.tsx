@@ -18,6 +18,7 @@ export const CustomerPageForm = ({
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={validationSchema}
+      validateOnMount
     >
       {(formik) => (
         <div className="relative pb-3 pt-[3rem]">
@@ -49,7 +50,7 @@ export const CustomerPageForm = ({
                 </Button>
                 <Button
                   type="submit"
-                  disabled={formik.isSubmitting || !formik.isValid}
+                  disabled={formik.isSubmitting || !formik.isValid || !formik.dirty}
                   onClick={() => {
                     setEditable(false);
                     formik.submitForm().catch((err) => {

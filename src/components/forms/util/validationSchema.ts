@@ -135,3 +135,8 @@ export const customerAddressSchemaBoth = yup.object({
   billingCountry,
   billingPostalCode
 });
+
+export const passwordChangeSchema = yup.object({
+  currentPassword: password,
+  newPassword: password
+});

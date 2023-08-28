@@ -1,4 +1,4 @@
-import type { initialValuesRegistration, inputsData } from '../components/forms/inputs/inputsData';
+import type { initialValuesRegistration } from '../components/forms/inputs/inputsData';
 import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
 import type { Customer } from '@commercetools/platform-sdk';
@@ -124,10 +124,10 @@ export interface PostalcodeInterface extends InputProps {
   fieldSet: 'shipping' | 'billing';
 }
 
-export type InitialValues = typeof initialValuesRegistration;
+export type InitialValuesRegistration = typeof initialValuesRegistration;
 
 export interface RegistrationFormProps {
-  initialValues: InitialValues;
+  initialValues: InitialValuesRegistration;
   getValidationSchema: (isSameAddress: boolean) => yup.Schema;
   onSubmit: (values: HandleSubmitWithBoth) => Promise<void>;
 }
@@ -145,26 +145,11 @@ export interface TabPanelProps {
   value: number;
 }
 
-export interface ProfileInitialValues {
+export interface PersonalDataInitialValues {
   firstName: string;
   lastName: string;
   date: string;
   email: string;
-  shippingCountry: string;
-  shippingStreetName: string;
-  shippingPostalCode: string;
-  shippingCity: string;
-  billingCountry: string;
-  billingStreetName: string;
-  billingPostalCode: string;
-  billingCity: string;
-}
-
-export interface UserProfileProps {
-  // validationSchema: ;
-  customer: Customer;
-  inputsData: typeof inputsData;
-  onSubmit: (value: ProfileInitialValues) => void;
 }
 
 export interface TabsPanelProps {
@@ -175,9 +160,16 @@ export interface TabsPanelProps {
 
 export type FormInnerComponent = (editable: boolean, formik: FormikProps) => JSX.Element[] | JSX.Element;
 
+export interface PasswordChangeInitialValues {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export type InitialValuesCustomerPage = PersonalDataInitialValues | PasswordChangeInitialValues;
+
 export interface CustomerPageFormProps {
-  initialValues: ProfileInitialValues;
+  initialValues: InitialValuesCustomerPage;
   formInner: FormInnerComponent;
-  onSubmit: (value: ProfileInitialValues) => void;
+  onSubmit: (value: InitialValuesCustomerPage) => void;
   validationSchema: yup.Schema;
 }

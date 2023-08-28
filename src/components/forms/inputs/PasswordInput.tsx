@@ -2,7 +2,7 @@ import { Field, ErrorMessage } from 'formik';
 import view from '../../../assets/view.svg';
 import noView from '../../../assets/no-view.svg';
 import { useState } from 'react';
-import type { VisibilityIconProps, FormikProps } from '../../../utils/types';
+import type { InputProps, VisibilityIconProps } from '../../../utils/types';
 
 const VisibilityIcon = ({ handleVisibility, passwordVisibility }: VisibilityIconProps) => {
   return (
@@ -19,7 +19,12 @@ const VisibilityIcon = ({ handleVisibility, passwordVisibility }: VisibilityIcon
   );
 };
 
-export const PasswordInput = ({ formik }: { formik: FormikProps }) => {
+export const PasswordInput = ({
+  formik,
+  disabled,
+  placeholder,
+  name
+}: Pick<InputProps, 'formik' | 'disabled' | 'placeholder' | 'name'>) => {
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
 
   const handleVisibility = () => {
@@ -28,23 +33,28 @@ export const PasswordInput = ({ formik }: { formik: FormikProps }) => {
   };
 
   return (
-    <>
+    <div className="w-[18rem]">
       <label
-        htmlFor="password"
-        className="text-sm font-bold text-gray-700"
+        htmlFor={name}
+        className="text-sm text-gray-500"
       >
-        Password:
+        {placeholder}
       </label>
       <div className="relative">
         <Field
-          className="focus:shadow-outline w-full appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+          className="focus:shadow-outline w-full appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none  disabled:border-slate-500 disabled:bg-slate-200"
           type={passwordVisibility ? 'text' : 'password'}
-          name="password"
-          placeholder="Password"
-          onChange={(e: Event) => {
-            formik.handleChange(e);
-            formik.setFieldTouched('password', true, false);
-          }}
+          name={name}
+          placeholder={placeholder}
+          {...(formik !== undefined
+            ? {
+                onChange: (e: Event) => {
+                  formik.handleChange(e);
+                  formik.setFieldTouched(name, true, false);
+                }
+              }
+            : {})}
+          disabled={disabled}
         />
         <VisibilityIcon
           handleVisibility={handleVisibility}
@@ -52,10 +62,10 @@ export const PasswordInput = ({ formik }: { formik: FormikProps }) => {
         />
       </div>
       <ErrorMessage
-        name="password"
+        name={name}
         component="p"
         className="text-xs italic text-red-500"
       />
-    </>
+    </div>
   );
 };

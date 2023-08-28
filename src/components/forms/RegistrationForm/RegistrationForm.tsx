@@ -36,7 +36,11 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
                 formik={formik}
               />
             ))}
-            <PasswordInput formik={formik} />
+            <PasswordInput
+              formik={formik}
+              placeholder="Password:"
+              name="password"
+            />
             <AdressFieldSet
               fieldSet={FieldSetName.Shipping}
               formik={formik}

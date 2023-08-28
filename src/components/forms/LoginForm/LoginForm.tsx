@@ -33,7 +33,11 @@ export const LoginForm = () => {
               type={type}
               formik={formik}
             />
-            <PasswordInput formik={formik} />
+            <PasswordInput
+              formik={formik}
+              placeholder="Password:"
+              name="password"
+            />
             <SubmitBtn />
             <p className="mt-3 text-center text-[14px]">
               Don&#x27;t have an account?
