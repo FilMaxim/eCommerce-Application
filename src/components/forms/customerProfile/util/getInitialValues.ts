@@ -2,6 +2,18 @@ import type { Customer } from '@commercetools/platform-sdk';
 import type { AddressesInitialValues, PersonalDataInitialValues } from '../../../../utils/types';
 import { getCountryByCode } from '../../util/getCountry';
 
+export const newAddressInitialValues = {
+  id: '',
+  country: '',
+  streetName: '',
+  postalCode: '',
+  city: '',
+  shippingStateChecked: false,
+  billingStateChecked: false,
+  defaultShippingAddress: false,
+  defaultBillingAddress: false
+};
+
 export const getPersonalDataInitialValues = (customer: Customer): PersonalDataInitialValues => {
   return {
     firstName: customer.firstName ?? '',

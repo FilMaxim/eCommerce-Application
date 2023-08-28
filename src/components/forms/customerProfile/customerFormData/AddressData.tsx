@@ -1,27 +1,14 @@
 import type {
+  AddressComponentProps,
   AddressExtraControls,
-  AddressesInitialValues,
-  FormInnerComponent,
-  InitialValuesCustomerPage
+  FormInnerComponent
 } from '../../../../utils/types';
 import { Input } from '../../inputs/Input';
 import { CustomerPageForm } from '../CustomerPageForm';
-import type * as yup from 'yup';
 import { Field } from 'formik';
 import { useState } from 'react';
 import { Button } from '@mui/material';
-
-const newAddressInitialValues = {
-  id: '',
-  country: '',
-  streetName: '',
-  postalCode: '',
-  city: '',
-  shippingStateChecked: false,
-  billingStateChecked: false,
-  defaultShippingAddress: false,
-  defaultBillingAddress: false
-};
+import { newAddressInitialValues } from '../util/getInitialValues';
 
 const AddressData: FormInnerComponent = (editable: boolean, formik) => {
   return (
@@ -41,17 +28,15 @@ const AddressData: FormInnerComponent = (editable: boolean, formik) => {
 };
 
 const AddressControls: AddressExtraControls = (editable: boolean, initialValues) => {
-  const checkboxes = Object.entries(initialValues)
-    .filter(([key, value]) => typeof value === 'boolean')
-    .filter(([key, value]) => {
-      if (
-        (key === 'defaultShippingAddress' && value === true) ||
-        (key === 'defaultBillingAddress' && value === true)
-      ) {
-        return false;
-      }
+  const checkboxes = Object.entries(initialValues).filter(([key, value]) => {
+    if (
+      typeof value === 'boolean' &&
+      !((key === 'defaultShippingAddress' && value) || (key === 'defaultBillingAddress' && value))
+    ) {
       return true;
-    });
+    }
+    return false;
+  });
 
   return (
     <>
@@ -74,26 +59,58 @@ export const AddressComponent = ({
   initialValues,
   validationSchema,
   onDelete
-}: {
-  // todo: add interface
-  onSubmit: (values: InitialValuesCustomerPage) => void;
-  initialValues: AddressesInitialValues[];
-  validationSchema: yup.Schema;
-  onDelete?: (id: string) => Promise<void>;
-}) => {
+}: AddressComponentProps) => {
   const [isNewAddress, setIsNewAddress] = useState<boolean>(false);
 
   const handleClick = () => {
     setIsNewAddress(!isNewAddress);
   };
 
+  const NewAddressModal = () => {
+    return (
+      <>
+        {!isNewAddress && <Button onClick={handleClick}>Add new address</Button>}
+        {isNewAddress && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setIsNewAddress(false);
+              }
+            }}
+          >
+            <div className="mx-2 flex max-w-[42rem] flex-wrap items-center justify-center rounded bg-white p-6">
+              <h3 className="text-center">New address</h3>
+              <CustomerPageForm
+                initialValues={newAddressInitialValues}
+                onSubmit={(value) => {
+                  onSubmit(value);
+                  setIsNewAddress(false);
+                }}
+                validationSchema={validationSchema}
+                formInner={AddressData}
+                isEditable={true}
+                unsetNewForm={setIsNewAddress}
+              />
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
   if (initialValues.length === 0) {
-    return <h3>You have no addresses yet...</h3>;
+    return (
+      <>
+        <h3>You have no addresses yet...</h3>
+        <NewAddressModal />
+      </>
+    );
   }
 
   return (
     <>
-      {initialValues.map((address, index) => (
+      {initialValues.map((address) => (
         <div
           key={address.id}
           className="mb-4"
@@ -122,32 +139,7 @@ export const AddressComponent = ({
           />
         </div>
       ))}
-      {!isNewAddress && <Button onClick={handleClick}>Add new address</Button>}
-      {isNewAddress && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setIsNewAddress(false);
-            }
-          }}
-        >
-          <div className="mx-2 flex max-w-[42rem] flex-wrap items-center justify-center rounded bg-white p-6">
-            <h3 className="text-center">New address</h3>
-            <CustomerPageForm
-              initialValues={newAddressInitialValues}
-              onSubmit={(value) => {
-                onSubmit(value);
-                setIsNewAddress(false);
-              }}
-              validationSchema={validationSchema}
-              formInner={AddressData}
-              isEditable={true}
-              unsetNewForm={setIsNewAddress}
-            />
-          </div>
-        </div>
-      )}
+      <NewAddressModal />
     </>
   );
 };

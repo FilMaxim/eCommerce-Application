@@ -7,7 +7,7 @@ import type { CustomerUpdateAction, Customer, ClientResponse } from '@commerceto
 import {
   getAddressesInitialValues,
   getPersonalDataInitialValues
-} from '../components/forms/customerProfile/util/getInitialValuesFromCustomer';
+} from '../components/forms/customerProfile/util/getInitialValues';
 import { StatusCodes } from '../utils/statusCodes';
 import { getCountryCode } from '../components/forms/util/getCountry';
 import { UpdateMessage } from '../components/forms/customerProfile/util/updateMessage';

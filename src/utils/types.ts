@@ -197,3 +197,10 @@ export interface CustomerPageFormProps {
   unsetNewForm?: (value: boolean) => void;
   onDelete?: (id: string) => Promise<void>;
 }
+
+export interface AddressComponentProps {
+  onSubmit: (values: InitialValuesCustomerPage) => void;
+  initialValues: AddressesInitialValues[];
+  validationSchema: yup.Schema;
+  onDelete?: (id: string) => Promise<void>;
+}
