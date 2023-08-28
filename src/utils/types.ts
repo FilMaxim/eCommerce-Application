@@ -165,9 +165,8 @@ export interface AddressesInitialValues {
 }
 
 export interface TabsPanelProps {
-  children1: React.ReactNode;
-  children2: React.ReactNode;
-  children3: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
+  titles: string[];
 }
 
 export type FormInnerComponent = (editable: boolean, formik: FormikProps) => JSX.Element[] | JSX.Element;
