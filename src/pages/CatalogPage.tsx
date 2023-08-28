@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container } from '../components/Container';
 import { ProductCard } from '../components/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../utils/types';
+import type { RootState } from '../utils/types';
 import { ArrowButtonGroup } from '../components/buttons/ArrowButtonsGroup';
 import { fetchProducts } from './pagesUtils/fetchProducts';
 import { fetchCategories } from './pagesUtils/fetchCategories';
@@ -12,9 +12,13 @@ export const CatalogPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCategories(setCategoryList);
-    fetchProducts(dispatch);
-  }, []);
+    fetchCategories(setCategoryList).catch((error) => {
+      console.error(error);
+    });
+    fetchProducts(dispatch).catch((error) => {
+      console.error(error);
+    });
+  }, [dispatch]);
 
   const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
 
@@ -35,7 +39,7 @@ export const CatalogPage = () => {
               title={name}
               titleName={name}
               description={description}
-              key={`${item}-${index}`}
+              key={`cardId}-${index}`}
             />
           );
         })}

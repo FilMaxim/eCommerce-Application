@@ -3,9 +3,9 @@ import type { ProductsDataInterface } from '../../utils/types';
 
 export const getProductParams = (product: ProductDraft, variant: ProductVariant): ProductsDataInterface => {
   const imagesData = variant.images ?? [];
-  const [imageData] = imagesData.filter((item) => item.label) ?? [];
+  const [imageData] = imagesData.filter((item) => item.label === 'card-logo') ?? [];
 
-  const { url } = imageData;
+  const { url } = imageData ?? { url: '' };
 
   const [productName] = Object.values(product.name);
   const { sku } = variant;

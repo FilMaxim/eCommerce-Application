@@ -1,4 +1,4 @@
-import { ContainerProps } from '../utils/types';
+import type { ContainerProps } from '../utils/types';
 import { CategoryCard } from './cards/CategoryCard';
 
 export const Container = ({ titleName, titleDescription, buttons, categoriesList }: ContainerProps) => {
