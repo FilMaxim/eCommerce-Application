@@ -26,7 +26,7 @@ export const getPersonalDataInitialValues = (customer: Customer): PersonalDataIn
 export const getAddressesInitialValues = (customer: Customer): AddressesInitialValues[] => {
   const { addresses } = customer;
 
-  if (addresses.length === 0) return [] as unknown as AddressesInitialValues[];
+  if (addresses.length === 0) return [] as AddressesInitialValues[];
 
   const result = addresses.map((address) => ({
     id: address.id ?? '',
