@@ -71,6 +71,6 @@ export const addressAdapter = (formData: HandleSubmitWithBoth): CustomerData => 
     const resultWithBilling = applyBillingAddress(formData, result);
     return resultWithBilling;
   }
-
+  console.log(result);
   return result;
 };

@@ -17,8 +17,11 @@ export const MainPage = () => {
         className="text-link-color hover:text-hover-link"
       >
         <button
-          onClick={() => { void getProduct('e996ba5d-4c7d-4a2e-8635-1d68bdfb21df'); }}
-        >Enter
+          onClick={() => {
+            void getProduct('e996ba5d-4c7d-4a2e-8635-1d68bdfb21df');
+          }}
+        >
+          Enter
         </button>
       </Link>
     </>
