@@ -6,6 +6,7 @@ import { NotFoundPage } from '../pages/NotFoundPage';
 import { NavRoutes } from './routes';
 import { AboutPage } from '../pages/AboutPage';
 import { ContactsPage } from '../pages/ContactsPage';
+import { Product } from '../pages/ProductPage';
 export const routesConfig = [
   {
     path: NavRoutes.mainPagePath,
@@ -34,6 +35,10 @@ export const routesConfig = [
         <RegistrationPage />
       </PrivateOutlet>
     )
+  },
+  {
+    path: NavRoutes.productPage,
+    element: <Product />
   },
   {
     path: NavRoutes.notFoundPagePath,

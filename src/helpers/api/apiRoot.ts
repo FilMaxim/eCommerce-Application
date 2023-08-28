@@ -67,3 +67,14 @@ export const updateCustomerFirstName = async (
     })
     .execute();
 };
+
+export const getProduct = async (id: string) => {
+  try {
+    const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
+    console.log(response.body);
+
+    return response.body;
+  } catch (error) {
+    console.log(error);
+  }
+};

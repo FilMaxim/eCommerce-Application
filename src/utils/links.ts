@@ -11,5 +11,6 @@ export const links = {
     text: 'Registration',
     path: NavRoutes.registrationPagePath,
     icon: UserPlusIcon
-  }
+  },
+  product: { text: 'Product', path: NavRoutes.productPage }
 };
