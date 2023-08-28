@@ -11,7 +11,7 @@ import { newAddressInitialValues } from '../util/getInitialValues';
 import { getCheckboxLabel } from '../util/getCheckboxLabel';
 import { AddressFieldSet } from '../../inputs/AddressFieldSet';
 
-const AddressData: FormInnerComponent = (editable: boolean, formik) => {
+const AddressInner: FormInnerComponent = (editable: boolean, formik) => {
   return (
     <AddressFieldSet
       formik={formik}
@@ -81,7 +81,7 @@ export const AddressComponent = ({
                   setIsNewAddress(false);
                 }}
                 validationSchema={validationSchema}
-                formInner={AddressData}
+                formInner={AddressInner}
                 isEditable={true}
                 unsetNewForm={setIsNewAddress}
               />
@@ -126,7 +126,7 @@ export const AddressComponent = ({
             initialValues={address}
             onSubmit={onSubmit}
             validationSchema={validationSchema}
-            formInner={AddressData}
+            formInner={AddressInner}
             addressExtraControls={AddressControls}
             onDelete={onDelete}
           />

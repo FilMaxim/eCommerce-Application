@@ -11,7 +11,7 @@ import type { Customer } from '@commercetools/platform-sdk';
 import { useSelector } from 'react-redux';
 import { useUpdateCustomer } from '../../../hooks/useUpdateCustomer';
 import { PersonalData } from './customerFormData/PersonalData';
-import { AddressComponent } from './customerFormData/AddressData';
+import { AddressComponent } from './customerFormData/Address';
 import { PasswordInput } from '../inputs/PasswordInput';
 
 export const CustomerProfile = () => {
