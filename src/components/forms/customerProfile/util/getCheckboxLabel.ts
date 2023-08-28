@@ -1,15 +1,14 @@
 export const getCheckboxLabel = (name: string): string => {
-  if (name === 'defaultShippingAddress') {
-    return 'default shipping';
+  switch (name) {
+    case 'defaultShippingAddress':
+      return 'default shipping';
+    case 'defaultBillingAddress':
+      return 'default billing';
+    case 'shippingStateChecked':
+      return 'shipping';
+    case 'billingStateChecked':
+      return 'billing';
+    default:
+      return name;
   }
-  if (name === 'defaultBillingAddress') {
-    return 'default billing';
-  }
-  if (name === 'shippingStateChecked') {
-    return 'shipping';
-  }
-  if (name === 'billingStateChecked') {
-    return 'billing';
-  }
-  return name;
 };
