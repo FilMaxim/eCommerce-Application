@@ -55,14 +55,18 @@ export const AddressComponent = ({
 }: AddressComponentProps) => {
   const [isNewAddress, setIsNewAddress] = useState<boolean>(false);
 
-  const handleClick = () => {
-    setIsNewAddress(!isNewAddress);
-  };
-
   const NewAddressModal = () => {
     return (
       <>
-        {!isNewAddress && <Button onClick={handleClick}>Add new address</Button>}
+        {!isNewAddress && (
+          <Button
+            onClick={() => {
+              setIsNewAddress(!isNewAddress);
+            }}
+          >
+            Add new address
+          </Button>
+        )}
         {isNewAddress && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
