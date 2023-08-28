@@ -52,7 +52,7 @@ export const CustomerProfile = () => {
           // todo: how to implement without catch
           onSubmit={(value) => {
             onPersonalDataSubmit(value).catch((e) => {
-              console.error(e);
+              Error(e);
             });
           }}
           validationSchema={customerPersonalDataSchema}
@@ -63,7 +63,7 @@ export const CustomerProfile = () => {
           validationSchema={customerAddressSchema}
           onSubmit={(values) => {
             onAddressChangeSubmit(values).catch((err) => {
-              console.error(err);
+              Error(err);
             });
           }}
           onDelete={onAddressDelete}
@@ -72,7 +72,7 @@ export const CustomerProfile = () => {
           initialValues={passwordChangeInitialValues}
           onSubmit={(value) => {
             onPasswordChangeSubmit(value).catch((e) => {
-              console.error(e);
+              Error(e);
             });
           }}
           validationSchema={passwordChangeSchema}
