@@ -83,6 +83,13 @@ export interface AuthReturnInterface {
   signUp: (userData: HandleSubmitWithBoth) => Promise<void>;
 }
 
+export interface UseUpdateCustomer {
+  onPersonalDataSubmit: (value: InitialValuesCustomerPage) => Promise<void>;
+  onPasswordChangeSubmit: (value: InitialValuesCustomerPage) => Promise<void>;
+  onAddressDelete: (id: string) => Promise<void>;
+  onAddressChangeSubmit: (value: InitialValuesCustomerPage) => Promise<void>;
+}
+
 export interface RootState {
   isLogged: boolean;
   cards: ProductsDataInterface[];

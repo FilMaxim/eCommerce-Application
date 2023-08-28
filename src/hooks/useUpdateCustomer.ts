@@ -1,4 +1,4 @@
-import type { InitialValuesCustomerPage, RootState } from '../utils/types';
+import type { InitialValuesCustomerPage, RootState, UseUpdateCustomer } from '../utils/types';
 import { updateCustomer, updateCustomerPassword } from '../helpers/api/apiRoot';
 import { showToastMessage } from '../helpers/showToastMessage';
 import { setCustomer } from '../slices/authSlice';
@@ -12,13 +12,13 @@ import { StatusCodes } from '../utils/statusCodes';
 import { getCountryCode } from '../components/forms/util/getCountry';
 import { UpdateMessage } from '../components/forms/customerProfile/util/updateMessage';
 
-export const useUpdateCustomer = () => {
+export const useUpdateCustomer = (): UseUpdateCustomer => {
   const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
   const dispatch = useDispatch();
   const personalDataInitialValues = getPersonalDataInitialValues(customer);
   const addressInitialValues = getAddressesInitialValues(customer);
 
-  const saveCustomer = (response: ClientResponse<Customer>) => {
+  const saveCustomer = (response: ClientResponse<Customer>): void => {
     const customer = response.body;
     localStorage.setItem('customer', JSON.stringify(customer));
     dispatch(setCustomer(customer));
