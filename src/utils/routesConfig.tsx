@@ -6,6 +6,7 @@ import { NotFoundPage } from '../pages/NotFoundPage';
 import { NavRoutes } from './routes';
 import { AboutPage } from '../pages/AboutPage';
 import { ContactsPage } from '../pages/ContactsPage';
+import { CatalogPage } from '../pages/catalogPage/CatalogPage';
 import { UserProfilePage } from '../pages/UserProfilePage';
 import { AnonymOutlet } from '../components/AnonymOutlet';
 
@@ -21,6 +22,11 @@ export const routesConfig = [
   {
     path: NavRoutes.contactsPage,
     element: <ContactsPage />
+  },
+  {
+    path: NavRoutes.catalogPage,
+    element: <CatalogPage />,
+    name: 'catalog'
   },
   {
     path: NavRoutes.loginPagePath,

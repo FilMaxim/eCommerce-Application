@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../utils/types';
 
 export const MainPage = () => {
-  const isLogged = useSelector((state: RootState) => state.isLogged);
+  const isLogged = useSelector((state: { authData: RootState }) => state.authData.isLogged);
   const content = isLogged ? 'Welcome to main page' : 'You are not authorized!';
   return (
     <>

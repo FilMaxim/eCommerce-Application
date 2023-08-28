@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 313px;
+  width: 1170px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    height: 108px;
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .name {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: #DB4444;
+        font-weight: 600;
+      }
+
+      .name::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 40px;
+        background-color: #DB4444;
+        border-radius: 4px;
+      }
+
+      .description {
+        font-size: 32px;
+      }
+    }
+
+    .nav {
+      display: flex;
+      align-self: flex-end;
+    }
+  }
+
+  .content {
+    height: 145px;
+    display: grid;
+    grid-template-columns: repeat(6, 170px);
+    grid-template-rows: 145px;
+    justify-content: center;
+    gap: 30px
+  }
+}

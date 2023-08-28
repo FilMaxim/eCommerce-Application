@@ -1,0 +1,14 @@
+.catalog {
+  display: grid;
+  grid-template-columns: 1170px;
+  gap: 80px;
+  grid-template-rows: auto;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(4, 270px);
+  gap: 30px;
+}
