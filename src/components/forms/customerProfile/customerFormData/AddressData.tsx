@@ -3,28 +3,20 @@ import type {
   AddressExtraControls,
   FormInnerComponent
 } from '../../../../utils/types';
-import { Input } from '../../inputs/Input';
 import { CustomerPageForm } from '../CustomerPageForm';
 import { Field } from 'formik';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { newAddressInitialValues } from '../util/getInitialValues';
 import { getCheckboxLabel } from '../util/getCheckboxLabel';
+import { AddressFieldSet } from '../../inputs/AddressFieldSet';
 
 const AddressData: FormInnerComponent = (editable: boolean, formik) => {
   return (
-    <div className="flex flex-wrap justify-center gap-2">
-      {['country', 'streetName', 'postalCode', 'city'].map((name, index) => (
-        <Input
-          key={`${name}${index}`}
-          name={name}
-          placeholder={name[0].toUpperCase() + name.slice(1)}
-          type="text"
-          disabled={!editable}
-          formik={formik}
-        />
-      ))}
-    </div>
+    <AddressFieldSet
+      formik={formik}
+      disabled={!editable}
+    />
   );
 };
 

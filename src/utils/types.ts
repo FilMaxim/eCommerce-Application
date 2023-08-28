@@ -111,8 +111,8 @@ export interface InputProps {
 }
 
 export interface AddressFieldSetProps {
-  fieldSet: 'shipping' | 'billing';
-  formik?: FormikProps;
+  fieldSet?: 'shipping' | 'billing';
+  formik: FormikProps;
   disabled?: boolean;
 }
 
