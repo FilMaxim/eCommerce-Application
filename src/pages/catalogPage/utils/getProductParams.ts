@@ -1,5 +1,5 @@
 import type { ProductDraft, ProductVariant } from '@commercetools/platform-sdk';
-import type { ProductsDataInterface } from '../../utils/types';
+import type { ProductsDataInterface } from '../../../utils/types';
 
 export const getProductParams = (product: ProductDraft, variant: ProductVariant): ProductsDataInterface => {
   const imagesData = variant.images ?? [];

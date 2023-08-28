@@ -1,11 +1,12 @@
+import styles from './CatalogPage.module.scss';
 import { useEffect, useState } from 'react';
-import { Container } from '../components/Container';
-import { ProductCard } from '../components/ProductCard';
+import { Container } from '../../components/container/Container';
+import { ProductCard } from '../../components/cards/productCard/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../utils/types';
-import { ArrowButtonGroup } from '../components/buttons/ArrowButtonsGroup';
-import { fetchProducts } from './pagesUtils/fetchProducts';
-import { fetchCategories } from './pagesUtils/fetchCategories';
+import type { RootState } from '../../utils/types';
+import { ArrowButtonGroup } from '../../components/buttons/ArrowButtonsGroup';
+import { fetchProducts } from './utils/fetchProducts';
+import { fetchCategories } from './utils/fetchCategories';
 
 export const CatalogPage = () => {
   const [categoryList, setCategoryList] = useState<string[]>([]);
@@ -23,14 +24,14 @@ export const CatalogPage = () => {
   const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
 
   return (
-    <div className="main-catalog">
+    <div className={styles.catalog}>
       <Container
         titleName="Categories"
         titleDescription="Browse By Category"
         buttons={[ArrowButtonGroup]}
         categoriesList={categoryList}
       />
-      <div className="calalog-list">
+      <div className={styles.list}>
         {cardsData.map((item, index) => {
           const { url, name, description } = item;
           return (

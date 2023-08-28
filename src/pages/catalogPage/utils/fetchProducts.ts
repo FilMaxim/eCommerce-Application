@@ -1,6 +1,6 @@
 import type { Dispatch } from '@reduxjs/toolkit';
-import { getProducts } from '../../helpers/api/apiRoot';
-import { setProductCard } from '../../slices/ProductCardsSlice';
+import { getProducts } from '../../../helpers/api/apiRoot';
+import { setProductCard } from '../../../slices/ProductCardsSlice';
 import { getProductParams } from './getProductParams';
 
 export const fetchProducts = async (dispatch: Dispatch): Promise<void> => {

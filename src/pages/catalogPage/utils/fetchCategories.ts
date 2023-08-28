@@ -1,5 +1,5 @@
 import type { Dispatch } from 'react';
-import { getCategories } from '../../helpers/api/apiRoot';
+import { getCategories } from '../../../helpers/api/apiRoot';
 
 export const fetchCategories = async (setCategoryList: Dispatch<React.SetStateAction<string[]>>) => {
   const categoriesData = await getCategories();

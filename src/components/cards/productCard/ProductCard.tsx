@@ -1,10 +1,11 @@
+import styles from './ProductCard.module.scss';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { BlackButton } from './buttons/BlackButton';
-import type { ProductCardInterface } from '../utils/types';
+import { BlackButton } from '../../buttons/BlackButton';
+import type { ProductCardInterface } from '../../../utils/types';
 
 export const ProductCard = ({ imageUrl, title, titleName, description }: ProductCardInterface) => {
   return (
@@ -18,7 +19,7 @@ export const ProductCard = ({ imageUrl, title, titleName, description }: Product
         gridTemplateRows: '270px 200px 41px'
       }}
     >
-      <div className="image-wrapper">
+      <div className={styles.wrapper}>
         <CardMedia
           sx={{ height: 190, width: 190 }}
           image={imageUrl}
