@@ -24,26 +24,30 @@ export const getPersonalDataInitialValues = (customer: Customer): PersonalDataIn
 };
 
 export const getAddressesInitialValues = (customer: Customer): AddressesInitialValues[] => {
-  const { addresses } = customer;
+  const {
+    addresses,
+    shippingAddressIds,
+    billingAddressIds,
+    defaultShippingAddressId,
+    defaultBillingAddressId
+  } = customer;
 
   if (addresses.length === 0) return [] as AddressesInitialValues[];
 
-  const result = addresses.map((address) => ({
-    id: address.id ?? '',
-    country: getCountryByCode(address.country),
-    streetName: address.streetName ?? '',
-    postalCode: address.postalCode ?? '',
-    city: address.city ?? '',
+  const result = addresses.map(({ id, country, streetName, postalCode, city }) => ({
+    id: id ?? '',
+    country: getCountryByCode(country),
+    streetName: streetName ?? '',
+    postalCode: postalCode ?? '',
+    city: city ?? '',
     shippingStateChecked: false,
     billingStateChecked: false,
     defaultShippingAddress: false,
     defaultBillingAddress: false
   }));
 
-  if (customer.shippingAddressIds !== undefined) {
-    const indexes = customer.shippingAddressIds.map((id) =>
-      addresses.findIndex((address) => address.id === id)
-    );
+  if (shippingAddressIds !== undefined) {
+    const indexes = shippingAddressIds.map((id) => addresses.findIndex((address) => address.id === id));
     result.forEach((address, index) => {
       if (indexes.includes(index)) {
         address.shippingStateChecked = true;
@@ -51,10 +55,8 @@ export const getAddressesInitialValues = (customer: Customer): AddressesInitialV
     });
   }
 
-  if (customer.billingAddressIds !== undefined) {
-    const indexes = customer.billingAddressIds.map((id) =>
-      addresses.findIndex((address) => address.id === id)
-    );
+  if (billingAddressIds !== undefined) {
+    const indexes = billingAddressIds.map((id) => addresses.findIndex((address) => address.id === id));
     result.forEach((address, index) => {
       if (indexes.includes(index)) {
         address.billingStateChecked = true;
@@ -62,13 +64,13 @@ export const getAddressesInitialValues = (customer: Customer): AddressesInitialV
     });
   }
 
-  if (customer.defaultShippingAddressId !== undefined) {
-    const index = addresses.findIndex((address) => address.id === customer.defaultShippingAddressId);
+  if (defaultShippingAddressId !== undefined) {
+    const index = addresses.findIndex((address) => address.id === defaultShippingAddressId);
     result[index].defaultShippingAddress = true;
   }
 
-  if (customer.defaultBillingAddressId !== undefined) {
-    const index = addresses.findIndex((address) => address.id === customer.defaultBillingAddressId);
+  if (defaultBillingAddressId !== undefined) {
+    const index = addresses.findIndex((address) => address.id === defaultBillingAddressId);
     result[index].defaultBillingAddress = true;
   }
 
