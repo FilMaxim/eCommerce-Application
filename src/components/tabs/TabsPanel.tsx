@@ -22,7 +22,7 @@ export const TabsPanel = (props: TabsPanelProps) => {
   const { children, titles } = props;
   if (children === undefined || !Array.isArray(children) || children.length === 0) return null;
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setTabValue(newValue);
   };
 
