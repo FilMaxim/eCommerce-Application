@@ -46,7 +46,7 @@ export const AddressFieldSet = ({ fieldSet, formik, disabled }: AddressFieldSetP
         type={postalCode.type}
         placeholder={postalCode.placeholder}
         formik={formik}
-        disabled={hasFieldSetName ? postalCodeDisabled || disabled : disabled}
+        disabled={postalCodeDisabled || disabled}
       />
       {/* <FormControlLabel // todo: doesn't work since not connected to formik, formik always return initial true
         control={
