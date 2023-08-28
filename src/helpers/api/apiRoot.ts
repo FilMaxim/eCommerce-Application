@@ -6,7 +6,12 @@ import {
   type CustomerChangeAddressAction,
   type CategoryPagedQueryResponse,
   type ProductProjectionPagedQueryResponse,
-  type CustomerUpdateAction
+  type CustomerUpdateAction,
+  type CustomerPagedQueryResponse,
+  type ClientResponse,
+  type CustomerSignInResult,
+  type Cart,
+  type Customer
 } from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
@@ -14,7 +19,7 @@ const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
   projectKey: ClientApiData.projectKey
 });
 
-export const getCustomers = async () => {
+export const getCustomers = async (): Promise<ClientResponse<CustomerPagedQueryResponse>> => {
   return await apiRoot.customers().get().execute();
 };
 
@@ -28,7 +33,7 @@ export const getProducts = async (): Promise<ProductProjectionPagedQueryResponse
   return response.body;
 };
 
-export const createCustomer = async (data: CustomerData) => {
+export const createCustomer = async (data: CustomerData): Promise<ClientResponse<CustomerSignInResult>> => {
   return await apiRoot
     .customers()
     .post({
@@ -37,7 +42,10 @@ export const createCustomer = async (data: CustomerData) => {
     .execute();
 };
 
-export const customerLogIn = async (email: string, password: string) => {
+export const customerLogIn = async (
+  email: string,
+  password: string
+): Promise<ClientResponse<CustomerSignInResult>> => {
   const authClient = buildClientWithPasswordFlow(email, password);
   const authApiRoot = createApiBuilderFromCtpClient(authClient).withProjectKey({
     projectKey: ClientApiData.projectKey
@@ -53,7 +61,7 @@ export const customerLogIn = async (email: string, password: string) => {
     .execute();
 };
 
-export const getCustomerCarts = async (id: string) => {
+export const getCustomerCarts = async (id: string): Promise<ClientResponse<Cart>> => {
   return await apiRoot
     .carts()
     .withCustomerId({
@@ -67,7 +75,7 @@ export const updateCustomer = async (
   id: string,
   version: number,
   actions: CustomerUpdateAction[] | CustomerChangeAddressAction[]
-) => {
+): Promise<ClientResponse<Customer>> => {
   return await apiRoot
     .customers()
     .withId({
@@ -87,7 +95,7 @@ export const updateCustomerPassword = async (body: {
   version: number;
   currentPassword: string;
   newPassword: string;
-}) => {
+}): Promise<ClientResponse<Customer>> => {
   return await apiRoot
     .customers()
     .password()
