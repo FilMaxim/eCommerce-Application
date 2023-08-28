@@ -17,6 +17,10 @@ export const links = {
     text: 'Contacts',
     path: NavRoutes.contactsPage
   },
+  catalog: {
+    text: 'Catalog',
+    path: NavRoutes.catalogPage
+  },
   login: {
     text: 'LogIn',
     path: NavRoutes.loginPagePath,
