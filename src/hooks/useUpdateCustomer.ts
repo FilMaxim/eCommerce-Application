@@ -3,7 +3,7 @@ import { updateCustomer, updateCustomerPassword } from '../helpers/api/apiRoot';
 import { showToastMessage } from '../helpers/showToastMessage';
 import { setCustomer } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import type { CustomerUpdateAction, Customer } from '@commercetools/platform-sdk';
+import type { CustomerUpdateAction, Customer, ClientResponse } from '@commercetools/platform-sdk';
 import {
   getAddressesInitialValues,
   getPersonalDataInitialValues
@@ -17,6 +17,34 @@ export const useUpdateCustomer = () => {
   const dispatch = useDispatch();
   const personalDataInitialValues = getPersonalDataInitialValues(customer);
   const addressInitialValues = getAddressesInitialValues(customer);
+
+  const saveCustomer = (response: ClientResponse<Customer>) => {
+    const customer = response.body;
+    localStorage.setItem('customer', JSON.stringify(customer));
+    dispatch(setCustomer(customer));
+    showToastMessage(UpdateMessage.success, 'green');
+  };
+
+  const requestUpdateCustomer = async (
+    id: string,
+    version: number,
+    actions: CustomerUpdateAction[]
+  ): Promise<void> => {
+    if (actions.length === 0) return;
+
+    try {
+      const response = await updateCustomer(id, version, actions);
+
+      if (response.statusCode === StatusCodes.OK) {
+        saveCustomer(response);
+        return;
+      }
+
+      showToastMessage(UpdateMessage.error, 'red');
+    } catch (error) {
+      showToastMessage(UpdateMessage.error, 'red');
+    }
+  };
 
   const onPersonalDataSubmit = async (value: InitialValuesCustomerPage): Promise<void> => {
     if (!('firstName' in value)) return;
@@ -48,28 +76,11 @@ export const useUpdateCustomer = () => {
       });
     }
 
-    if (actions.length === 0) return;
-
-    try {
-      const response = await updateCustomer(customer.id, customer.version, actions);
-
-      if (response.statusCode === StatusCodes.OK) {
-        const customer = response.body;
-        showToastMessage(UpdateMessage.successPersonalData, 'green');
-        localStorage.setItem('customer', JSON.stringify(customer));
-        dispatch(setCustomer(customer));
-        return;
-      }
-
-      showToastMessage(UpdateMessage.errorPersonalData, 'red');
-    } catch (error) {
-      showToastMessage(UpdateMessage.errorPersonalData, 'red');
-    }
+    await requestUpdateCustomer(customer.id, customer.version, actions);
   };
 
   const onAddressChangeSubmit = async (value: InitialValuesCustomerPage): Promise<void> => {
     if (!('streetName' in value)) return;
-
     const {
       streetName,
       city,
@@ -82,7 +93,8 @@ export const useUpdateCustomer = () => {
       defaultBillingAddress
     } = value;
     const currentAddress = addressInitialValues.find((address) => address.id === id);
-    const actions = [];
+    const actions = [] as CustomerUpdateAction[];
+    const isNewAddress = currentAddress === undefined;
 
     if (
       streetName !== currentAddress?.streetName ||
@@ -91,7 +103,7 @@ export const useUpdateCustomer = () => {
       postalCode !== currentAddress?.postalCode
     ) {
       const addressAction = {
-        ...(currentAddress === undefined
+        ...(isNewAddress
           ? { action: 'addAddress' as const }
           : { action: 'changeAddress' as const, addressId: id }),
         address: {
@@ -105,56 +117,36 @@ export const useUpdateCustomer = () => {
     }
 
     if (defaultBillingAddress && defaultBillingAddress !== currentAddress?.defaultBillingAddress) {
-      const defaultBillingAddressAction = {
+      actions.push({
         action: 'setDefaultBillingAddress' as const,
         addressId: id
-      };
-      actions.push(defaultBillingAddressAction);
+      });
     }
 
     if (defaultShippingAddress && defaultShippingAddress !== currentAddress?.defaultShippingAddress) {
-      const defaultShippingAddressAction = {
+      actions.push({
         action: 'setDefaultShippingAddress' as const,
         addressId: id
-      };
-      actions.push(defaultShippingAddressAction);
+      });
     }
 
-    if (currentAddress !== undefined && billingStateChecked !== currentAddress?.billingStateChecked) {
-      const billingAddressAction = {
+    if (!isNewAddress && billingStateChecked !== currentAddress?.billingStateChecked) {
+      actions.push({
         action: billingStateChecked ? ('addBillingAddressId' as const) : ('removeBillingAddressId' as const),
         addressId: id
-      };
-      actions.push(billingAddressAction);
+      });
     }
 
-    if (currentAddress !== undefined && shippingStateChecked !== currentAddress?.shippingStateChecked) {
-      const shippingAddressAction = {
+    if (!isNewAddress && shippingStateChecked !== currentAddress?.shippingStateChecked) {
+      actions.push({
         action: shippingStateChecked
           ? ('addShippingAddressId' as const)
           : ('removeShippingAddressId' as const),
         addressId: id
-      };
-      actions.push(shippingAddressAction);
+      });
     }
 
-    if (actions.length === 0) return;
-
-    try {
-      const response = await updateCustomer(customer.id, customer.version, actions);
-
-      if (response.statusCode === StatusCodes.OK) {
-        const customer = response.body;
-        showToastMessage(UpdateMessage.successAddress, 'green');
-        localStorage.setItem('customer', JSON.stringify(customer));
-        dispatch(setCustomer(customer));
-        return;
-      }
-
-      showToastMessage(UpdateMessage.errorAddress, 'red');
-    } catch (error) {
-      showToastMessage(UpdateMessage.errorAddress, 'red');
-    }
+    await requestUpdateCustomer(customer.id, customer.version, actions);
   };
 
   const onPasswordChangeSubmit = async (value: InitialValuesCustomerPage): Promise<void> => {
@@ -170,13 +162,13 @@ export const useUpdateCustomer = () => {
     try {
       const response = await updateCustomerPassword(body);
       if (response.statusCode === StatusCodes.OK) {
-        const customer = response.body;
-        showToastMessage(UpdateMessage.successPassword, 'green');
-        localStorage.setItem('customer', JSON.stringify(customer));
-        dispatch(setCustomer(customer));
+        saveCustomer(response);
+        return;
       }
+
+      showToastMessage(UpdateMessage.error, 'red');
     } catch (error) {
-      showToastMessage(UpdateMessage.errorPassword, 'red');
+      showToastMessage(UpdateMessage.error, 'red');
     }
   };
 
@@ -188,21 +180,7 @@ export const useUpdateCustomer = () => {
       }
     ];
 
-    try {
-      const response = await updateCustomer(customer.id, customer.version, actions);
-
-      if (response.statusCode === StatusCodes.OK) {
-        const customer = response.body;
-        showToastMessage(UpdateMessage.deleteAddress, 'green');
-        localStorage.setItem('customer', JSON.stringify(customer));
-        dispatch(setCustomer(customer));
-        return;
-      }
-
-      showToastMessage(UpdateMessage.errorDeleteAddress, 'red');
-    } catch (error) {
-      showToastMessage(UpdateMessage.errorDeleteAddress, 'red');
-    }
+    await requestUpdateCustomer(customer.id, customer.version, actions);
   };
 
   return { onPersonalDataSubmit, onAddressChangeSubmit, onPasswordChangeSubmit, onAddressDelete };
