@@ -6,12 +6,12 @@ import { CountryInput } from './CountryInput';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
 
-const formatName = (name: string) => {
+const formatName = (name: string): string => {
   return name[0].toLowerCase() + name.slice(1);
 };
 
 export const AddressFieldSet = ({ fieldSet, formik, disabled }: AddressFieldSetProps) => {
-  const [postalCodeDisabled, setPostalCodeDisabled] = useState(true);
+  const [postalCodeDisabled, setPostalCodeDisabled] = useState<boolean>(true);
   const { streetName, city, postalCode } = inputsData.addressFieldSet;
   const hasFieldSetName = fieldSet !== undefined;
 
