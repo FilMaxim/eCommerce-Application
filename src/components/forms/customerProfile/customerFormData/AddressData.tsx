@@ -9,6 +9,7 @@ import { Field } from 'formik';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { newAddressInitialValues } from '../util/getInitialValues';
+import { getCheckboxLabel } from '../util/getCheckboxLabel';
 
 const AddressData: FormInnerComponent = (editable: boolean, formik) => {
   return (
@@ -47,7 +48,7 @@ const AddressControls: AddressExtraControls = (editable: boolean, initialValues)
               type="checkbox"
               name={name}
             />
-            {name}
+            {getCheckboxLabel(name)}
           </label>
         ))}
     </>
