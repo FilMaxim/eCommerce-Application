@@ -158,7 +158,7 @@ export interface ProductCardInterface {
   title: string;
   titleName: string;
   description: string;
-  id: string
+  id: string;
 }
 
 export interface ContainerProps {

@@ -1,7 +1,10 @@
 import type { ProductProjection, ProductVariant } from '@commercetools/platform-sdk';
 import type { ProductsDataInterface } from '../../../utils/types';
 
-export const getProductParams = (product: ProductProjection, variant: ProductVariant): ProductsDataInterface => {
+export const getProductParams = (
+  product: ProductProjection,
+  variant: ProductVariant
+): ProductsDataInterface => {
   const imagesData = variant.images ?? [];
   const [imageData] = imagesData.filter((item) => item.label === 'card-logo') ?? [];
 
