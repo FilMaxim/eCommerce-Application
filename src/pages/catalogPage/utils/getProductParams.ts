@@ -1,10 +1,6 @@
 import type { ProductDraft, ProductVariant } from '@commercetools/platform-sdk';
 import type { ProductsDataInterface } from '../../../utils/types';
-
-const getNormalizedNumber = (number: number, devider: number): number => {
-  const normalizedNumber = number / devider;
-  return normalizedNumber;
-};
+import { getNormalizedNumber } from './getNormalizedNumber';
 
 export const getProductParams = (product: ProductDraft, variant: ProductVariant): ProductsDataInterface => {
   const imagesData = variant.images ?? [];
