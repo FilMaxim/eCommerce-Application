@@ -149,18 +149,24 @@ export interface PrivateNavGroupProps {
 
 export type FakeOnSubmit = (values: HandleSubmitWithBoth) => Promise<void>;
 
+export interface PriceTagInterface {
+  price: number;
+  discount: number;
+}
+
 export interface ProductsDataInterface {
   url: string;
   name: string;
   description: string;
   id: string;
+  priceTag: PriceTagInterface;
 }
 
 export interface InitialProductsStateInterace {
   cards: ProductsDataInterface[];
 }
 
-export interface ProductCardInterface {
+export interface ProductCardInterface extends PriceTagInterface {
   imageUrl: string;
   title: string;
   titleName: string;

@@ -7,7 +7,7 @@ import { PrivateNavGroup } from './PrivateNavGroup';
 import { NavGroup } from './NavGroup';
 
 export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
-  const isLogged = useSelector((state: RootState) => state.isLogged);
+  const isLogged = useSelector((state: { authData: RootState }) => state.authData.isLogged);
   const { logout } = useAuth();
 
   return (

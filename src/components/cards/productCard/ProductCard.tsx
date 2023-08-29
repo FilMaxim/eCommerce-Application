@@ -6,12 +6,24 @@ import Typography from '@mui/material/Typography';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { BlackButton } from '../../buttons/BlackButton';
 import type { ProductCardInterface } from '../../../utils/types';
+import { PriceTag } from './PriceTag';
 
-export const ProductCard = ({ imageUrl, title, titleName, description, id }: ProductCardInterface) => {
+export const ProductCard = ({
+  imageUrl,
+  title,
+  titleName,
+  description,
+  price,
+  discount,
+  id
+}: ProductCardInterface) => {
+  const priceTagPadding = discount > 0 ? '0' : '0 16px';
+
   const handleCardClick = (id: string) => {
     // Перенаправление на страницу продукта с передачей идентификатора
     window.location.href = `/product/${id}`;
   };
+
   return (
     <Card
       onClick={() => {
@@ -19,11 +31,10 @@ export const ProductCard = ({ imageUrl, title, titleName, description, id }: Pro
       }}
       sx={{
         width: 270,
-        height: 570,
         display: 'grid',
         gap: '10px',
         gridTemplateColumns: '270px',
-        gridTemplateRows: '270px 200px 41px'
+        gridTemplateRows: '270px 200px 41px 41px'
       }}
     >
       <div className={styles.wrapper}>
@@ -58,6 +69,18 @@ export const ProductCard = ({ imageUrl, title, titleName, description, id }: Pro
         >
           {description}
         </Typography>
+      </CardContent>
+      <CardContent
+        sx={{
+          display: 'flex',
+          padding: priceTagPadding,
+          gap: '12px'
+        }}
+      >
+        <PriceTag
+          price={price}
+          discount={discount}
+        />
       </CardContent>
       <BlackButton
         size="medium"

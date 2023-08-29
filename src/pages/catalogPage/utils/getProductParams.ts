@@ -1,5 +1,6 @@
 import type { ProductProjection, ProductVariant } from '@commercetools/platform-sdk';
 import type { ProductsDataInterface } from '../../../utils/types';
+import { getNormalizedNumber } from './getNormalizedNumber';
 
 export const getProductParams = (
   product: ProductProjection,
@@ -17,6 +18,16 @@ export const getProductParams = (
   const rawDescription = product.description ?? '';
   const [description] = Object.values(rawDescription);
   const id = product.id;
+  const [prices] = variant.prices ?? [];
+  const centsPerEur = 100;
 
-  return { url, name, description, id };
+  const rawPrice = prices?.value.centAmount ?? 0;
+  const rawDiscount = prices?.discounted?.value.centAmount ?? 0;
+
+  const normalizedPrice = getNormalizedNumber(rawPrice, centsPerEur);
+  const normalizedDiscount = getNormalizedNumber(rawDiscount, centsPerEur);
+
+  const priceTag = { price: normalizedPrice, discount: normalizedDiscount };
+
+  return { url, name, description, priceTag, id };
 };
