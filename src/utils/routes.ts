@@ -6,6 +6,6 @@ export enum NavRoutes {
   registrationPagePath = '/signup',
   productPage = '/product',
   notFoundPagePath = '*',
-  catalogPage = 'catalogPage',
-  profilePagePath = 'profilePagePath'
+  catalogPage = '/catalog',
+  profilePagePath = '/profile'
 }
