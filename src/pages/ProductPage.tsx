@@ -67,8 +67,12 @@ export const Product = () => {
           setModalPreviewOpen(false);
         }}
       >
-        <button className="relative float-right mx-5 my-5  bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full"
-          onClick={() => { setModalPreviewOpen(false); }}>
+        <button
+          className="relative float-right mx-5 my-5  rounded-full bg-gray-200 px-4 py-2 font-bold text-gray-700 hover:bg-gray-300"
+          onClick={() => {
+            setModalPreviewOpen(false);
+          }}
+        >
           X
         </button>
         <Carousel
