@@ -1,24 +1,27 @@
-import { render, screen } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import { PrivateNavGroup } from '../components/header/NavBar/PrivateNavGroup';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+export const renderPrivateNavGroup = (isLogged: boolean) =>
+  render(
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={''}
+          element={
+            <PrivateNavGroup
+              isLogged={isLogged}
+              logout={() => {}}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+
 describe('PrivateNavGroup', () => {
   it('displays login & registration link while logout state', () => {
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={''}
-            element={
-              <PrivateNavGroup
-                isLogged={false}
-                logout={() => {}}
-              />
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    );
+    renderPrivateNavGroup(false);
 
     const LogInLink = screen.getByText(/LogIn/i);
     expect(LogInLink).toBeInTheDocument();
@@ -28,42 +31,14 @@ describe('PrivateNavGroup', () => {
   });
 
   it('not display logout link while logout state', () => {
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={''}
-            element={
-              <PrivateNavGroup
-                isLogged={false}
-                logout={() => {}}
-              />
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    );
+    renderPrivateNavGroup(false);
 
     const logout = screen.queryByText(/Logout/i);
     expect(logout).toBeFalsy();
   });
 
   it('does not display login & registration link while logIn state', () => {
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={''}
-            element={
-              <PrivateNavGroup
-                isLogged={true}
-                logout={() => {}}
-              />
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    );
+    renderPrivateNavGroup(true);
 
     const LogInLink = screen.queryByText(/LogIn/i);
     expect(LogInLink).toBeFalsy();
@@ -73,21 +48,7 @@ describe('PrivateNavGroup', () => {
   });
 
   it('display logout link while logIn state', () => {
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={''}
-            element={
-              <PrivateNavGroup
-                isLogged={true}
-                logout={() => {}}
-              />
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    );
+    renderPrivateNavGroup(true);
 
     const logout = screen.getByText(/Logout/i);
     expect(logout).toBeInTheDocument();

@@ -1,7 +1,12 @@
 import { ClientApiData } from '../../utils/clientApiData';
 import type { CustomerData } from '../../utils/types';
 import { buildClientWithClientCredentialsFlow, buildClientWithPasswordFlow } from './BuildClient';
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import {
+  type CategoryPagedQueryResponse,
+  type ProductProjectionPagedQueryResponse,
+  type CustomerUpdateAction,
+  createApiBuilderFromCtpClient
+} from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
@@ -10,6 +15,16 @@ const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
 
 export const getCustomers = async () => {
   return await apiRoot.customers().get().execute();
+};
+
+export const getCategories = async (): Promise<CategoryPagedQueryResponse> => {
+  const response = await apiRoot.categories().get().execute();
+  return response.body;
+};
+
+export const getProducts = async (): Promise<ProductProjectionPagedQueryResponse> => {
+  const response = await apiRoot.productProjections().get().execute();
+  return response.body;
 };
 
 export const createCustomer = async (data: CustomerData) => {
@@ -38,31 +53,25 @@ export const customerLogIn = async (email: string, password: string) => {
 };
 
 export const getCustomerCarts = async (id: string) => {
-  return await apiRoot.carts().withCustomerId({ customerId: id }).get().execute();
+  return await apiRoot
+    .carts()
+    .withCustomerId({
+      customerId: id
+    })
+    .get()
+    .execute();
 };
 
-export const updateCustomerFirstName = async (
-  id: string,
-  version: number,
-  newFirstName: string,
-  newLastName: string
-) => {
+export const updateCustomer = async (id: string, version: number, actions: CustomerUpdateAction[]) => {
   return await apiRoot
     .customers()
-    .withId({ ID: id })
+    .withId({
+      ID: id
+    })
     .post({
       body: {
         version,
-        actions: [
-          {
-            action: 'setFirstName',
-            firstName: newFirstName
-          },
-          {
-            action: 'setLastName',
-            lastName: newLastName
-          }
-        ]
+        actions
       }
     })
     .execute();
@@ -71,10 +80,23 @@ export const updateCustomerFirstName = async (
 export const getProduct = async (id: string) => {
   try {
     const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
-    console.log(response.body);
-
     return response.body;
   } catch (error) {
     console.log(error);
   }
+};
+
+export const updateCustomerPassword = async (body: {
+  id: string;
+  version: number;
+  currentPassword: string;
+  newPassword: string;
+}) => {
+  return await apiRoot
+    .customers()
+    .password()
+    .post({
+      body
+    })
+    .execute();
 };

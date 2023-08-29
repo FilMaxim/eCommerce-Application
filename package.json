@@ -9,6 +9,7 @@
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
+    "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.5",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.14.1",
@@ -74,7 +75,8 @@
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/member-delimiter-style": "off",
       "react/react-in-jsx-scope": "off",
-      "react/jsx-uses-react": "off"
+      "react/jsx-uses-react": "off",
+      "no-console": "warn"
     }
   },
   "browserslist": {
