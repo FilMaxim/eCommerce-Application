@@ -7,6 +7,7 @@ import type { RootState } from '../../utils/types';
 import { ArrowButtonGroup } from '../../components/buttons/ArrowButtonsGroup';
 import { fetchProducts } from './utils/fetchProducts';
 import { fetchCategories } from './utils/fetchCategories';
+import { FilterBar } from '../../components/filter/FilterBar';
 
 export const CatalogPage = () => {
   const [categoryList, setCategoryList] = useState<string[]>([]);
@@ -48,6 +49,7 @@ export const CatalogPage = () => {
           );
         })}
       </div>
+      <FilterBar />
     </div>
   );
 };
