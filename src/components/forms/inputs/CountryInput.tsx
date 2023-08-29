@@ -3,32 +3,26 @@ import type { CountryInputProps } from '../../../utils/types';
 import { countries } from '../util/countriesList';
 
 export const CountryInput = ({ fieldSet, setPostalCodeDisabled, formik, disabled }: CountryInputProps) => {
+  const hasFieldSetName = fieldSet !== undefined;
+
   return (
-    <>
+    <div className="w-[18rem]">
       <label
-        htmlFor={`${fieldSet}Country`}
+        htmlFor={hasFieldSetName ? `${fieldSet}Country` : 'country'}
         className="text-sm font-bold text-gray-700"
       >
         Country:
       </label>
       <Field
         as="select"
-        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none  disabled:border-slate-500 disabled:bg-slate-200"
+        className="focus:shadow-outline w-full appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none  disabled:border-slate-500 disabled:bg-slate-200"
         type="text"
-        name={`${fieldSet}Country`}
+        name={hasFieldSetName ? `${fieldSet}Country` : 'country'}
         placeholder="Country"
-        {...(formik !== undefined
-          ? {
-              onChange: (e: Event) => {
-                formik.handleChange(e);
-                setPostalCodeDisabled(false);
-              }
-            }
-          : {
-              onClick: () => {
-                setPostalCodeDisabled(false);
-              }
-            })}
+        onChange={(e: Event) => {
+          formik.handleChange(e);
+          setPostalCodeDisabled(false);
+        }}
         disabled={disabled}
       >
         <option
@@ -47,10 +41,10 @@ export const CountryInput = ({ fieldSet, setPostalCodeDisabled, formik, disabled
         ))}
       </Field>
       <ErrorMessage
-        name={`${fieldSet}Country`}
+        name={hasFieldSetName ? `${fieldSet}Country` : 'country'}
         component="p"
         className="text-xs italic text-red-500"
       />
-    </>
+    </div>
   );
 };
