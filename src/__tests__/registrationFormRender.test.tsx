@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import renderer from 'react-test-renderer';
-import { initialValues } from '../components/forms/inputs/inputsData';
+import { initialValuesRegistration } from '../components/forms/inputs/inputsData';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RegistrationForm } from '../components/forms/RegistrationForm/RegistrationForm';
 import { getValidationSchema } from '../components/forms/util/validationSchema';
@@ -13,7 +13,7 @@ export const TestRegistrationForm = () => {
           path={''}
           element={
             <RegistrationForm
-              initialValues={initialValues}
+              initialValues={initialValuesRegistration}
               onSubmit={jest.fn()}
               getValidationSchema={getValidationSchema}
             />

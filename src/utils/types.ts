@@ -83,6 +83,13 @@ export interface AuthReturnInterface {
   signUp: (userData: HandleSubmitWithBoth) => Promise<void>;
 }
 
+export interface UseUpdateCustomer {
+  onPersonalDataSubmit: (value: InitialValuesCustomerPage) => Promise<void>;
+  onPasswordChangeSubmit: (value: InitialValuesCustomerPage) => Promise<void>;
+  onAddressDelete: (id: string) => Promise<void>;
+  onAddressChangeSubmit: (value: InitialValuesCustomerPage) => Promise<void>;
+}
+
 export interface RootState {
   isLogged: boolean;
   cards: ProductsDataInterface[];
@@ -114,8 +121,8 @@ export interface InputProps {
 }
 
 export interface AddressFieldSetProps {
-  fieldSet: 'shipping' | 'billing';
-  formik?: FormikProps;
+  fieldSet?: 'shipping' | 'billing';
+  formik: FormikProps;
   disabled?: boolean;
 }
 
@@ -183,24 +190,54 @@ export interface PersonalDataInitialValues {
   email: string;
 }
 
+export interface AddressesInitialValues {
+  id: string;
+  streetName: string;
+  city: string;
+  country: string;
+  postalCode: string;
+  shippingStateChecked: boolean;
+  billingStateChecked: boolean;
+  defaultShippingAddress: boolean;
+  defaultBillingAddress: boolean;
+}
+
 export interface TabsPanelProps {
-  children1: React.ReactNode;
-  children2: React.ReactNode;
-  children3: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
+  titles: string[];
 }
 
 export type FormInnerComponent = (editable: boolean, formik: FormikProps) => JSX.Element[] | JSX.Element;
+
+export type AddressExtraControls = (
+  editable: boolean,
+  initialValues: AddressesInitialValues
+) => JSX.Element[] | JSX.Element;
 
 export interface PasswordChangeInitialValues {
   currentPassword: string;
   newPassword: string;
 }
 
-export type InitialValuesCustomerPage = PersonalDataInitialValues | PasswordChangeInitialValues;
+export type InitialValuesCustomerPage =
+  | PersonalDataInitialValues
+  | PasswordChangeInitialValues
+  | AddressesInitialValues;
 
 export interface CustomerPageFormProps {
   initialValues: InitialValuesCustomerPage;
   formInner: FormInnerComponent;
   onSubmit: (value: InitialValuesCustomerPage) => void;
   validationSchema: yup.Schema;
+  addressExtraControls?: AddressExtraControls;
+  isEditable?: boolean;
+  unsetNewForm?: (value: boolean) => void;
+  onDelete?: (id: string) => Promise<void>;
+}
+
+export interface AddressComponentProps {
+  onSubmit: (values: InitialValuesCustomerPage) => void;
+  initialValues: AddressesInitialValues[];
+  validationSchema: yup.Schema;
+  onDelete?: (id: string) => Promise<void>;
 }

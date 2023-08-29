@@ -1,16 +1,50 @@
-import type { InitialValuesCustomerPage, RootState } from '../utils/types';
+import type { InitialValuesCustomerPage, RootState, UseUpdateCustomer } from '../utils/types';
 import { updateCustomer, updateCustomerPassword } from '../helpers/api/apiRoot';
 import { showToastMessage } from '../helpers/showToastMessage';
 import { setCustomer } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { type CustomerUpdateAction, type Customer } from '@commercetools/platform-sdk';
-import { getPersonalDataInitialValues } from '../components/forms/util/getInitialValuesFromCustomer';
+import type { CustomerUpdateAction, Customer, ClientResponse } from '@commercetools/platform-sdk';
+import {
+  getAddressesInitialValues,
+  getPersonalDataInitialValues
+} from '../components/forms/customerProfile/util/getInitialValues';
 import { StatusCodes } from '../utils/statusCodes';
+import { getCountryCode } from '../components/forms/util/getCountry';
+import { UpdateMessage } from '../components/forms/customerProfile/util/updateMessage';
 
-export const useUpdateCustomer = () => {
+export const useUpdateCustomer = (): UseUpdateCustomer => {
   const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
   const dispatch = useDispatch();
   const personalDataInitialValues = getPersonalDataInitialValues(customer);
+  const addressInitialValues = getAddressesInitialValues(customer);
+
+  const saveCustomer = (response: ClientResponse<Customer>): void => {
+    const customer = response.body;
+    localStorage.setItem('customer', JSON.stringify(customer));
+    dispatch(setCustomer(customer));
+    showToastMessage(UpdateMessage.success, 'green');
+  };
+
+  const requestUpdateCustomer = async (
+    id: string,
+    version: number,
+    actions: CustomerUpdateAction[]
+  ): Promise<void> => {
+    if (actions.length === 0) return;
+
+    try {
+      const response = await updateCustomer(id, version, actions);
+
+      if (response.statusCode === StatusCodes.OK) {
+        saveCustomer(response);
+        return;
+      }
+
+      showToastMessage(UpdateMessage.error, 'red');
+    } catch (error) {
+      showToastMessage(UpdateMessage.error, 'red');
+    }
+  };
 
   const onPersonalDataSubmit = async (value: InitialValuesCustomerPage): Promise<void> => {
     if (!('firstName' in value)) return;
@@ -42,27 +76,77 @@ export const useUpdateCustomer = () => {
       });
     }
 
-    if (actions.length === 0) return;
-
-    try {
-      const response = await updateCustomer(customer.id, customer.version, actions);
-
-      if (response.statusCode === StatusCodes.OK) {
-        const customer = response.body;
-        showToastMessage('Profile successfully updated', 'green');
-        localStorage.setItem('customer', JSON.stringify(customer));
-        dispatch(setCustomer(customer));
-        return;
-      }
-
-      showToastMessage('Profile update failed, please try again later', 'red');
-    } catch (error) {
-      showToastMessage('Profile update failed, please try again later', 'red');
-    }
+    await requestUpdateCustomer(customer.id, customer.version, actions);
   };
 
-  const onSubmit = (value: InitialValuesCustomerPage) => {
-    console.log(value);
+  const onAddressChangeSubmit = async (value: InitialValuesCustomerPage): Promise<void> => {
+    if (!('streetName' in value)) return;
+    const {
+      streetName,
+      city,
+      country,
+      postalCode,
+      id,
+      billingStateChecked,
+      shippingStateChecked,
+      defaultShippingAddress,
+      defaultBillingAddress
+    } = value;
+    const currentAddress = addressInitialValues.find((address) => address.id === id);
+    const actions = [] as CustomerUpdateAction[];
+    const isNewAddress = currentAddress === undefined;
+
+    if (
+      streetName !== currentAddress?.streetName ||
+      city !== currentAddress?.city ||
+      country !== currentAddress?.country ||
+      postalCode !== currentAddress?.postalCode
+    ) {
+      const addressAction = {
+        ...(isNewAddress
+          ? { action: 'addAddress' as const }
+          : { action: 'changeAddress' as const, addressId: id }),
+        address: {
+          streetName,
+          city,
+          country: getCountryCode(country),
+          postalCode
+        }
+      };
+      actions.push(addressAction);
+    }
+
+    if (defaultBillingAddress && defaultBillingAddress !== currentAddress?.defaultBillingAddress) {
+      actions.push({
+        action: 'setDefaultBillingAddress' as const,
+        addressId: id
+      });
+    }
+
+    if (defaultShippingAddress && defaultShippingAddress !== currentAddress?.defaultShippingAddress) {
+      actions.push({
+        action: 'setDefaultShippingAddress' as const,
+        addressId: id
+      });
+    }
+
+    if (!isNewAddress && billingStateChecked !== currentAddress?.billingStateChecked) {
+      actions.push({
+        action: billingStateChecked ? ('addBillingAddressId' as const) : ('removeBillingAddressId' as const),
+        addressId: id
+      });
+    }
+
+    if (!isNewAddress && shippingStateChecked !== currentAddress?.shippingStateChecked) {
+      actions.push({
+        action: shippingStateChecked
+          ? ('addShippingAddressId' as const)
+          : ('removeShippingAddressId' as const),
+        addressId: id
+      });
+    }
+
+    await requestUpdateCustomer(customer.id, customer.version, actions);
   };
 
   const onPasswordChangeSubmit = async (value: InitialValuesCustomerPage): Promise<void> => {
@@ -78,15 +162,26 @@ export const useUpdateCustomer = () => {
     try {
       const response = await updateCustomerPassword(body);
       if (response.statusCode === StatusCodes.OK) {
-        const customer = response.body;
-        showToastMessage('Password successfully updated', 'green');
-        localStorage.setItem('customer', JSON.stringify(customer));
-        dispatch(setCustomer(customer));
+        saveCustomer(response);
+        return;
       }
+
+      showToastMessage(UpdateMessage.error, 'red');
     } catch (error) {
-      showToastMessage('Password update failed, please try again later', 'red');
+      showToastMessage(UpdateMessage.error, 'red');
     }
   };
 
-  return { onPersonalDataSubmit, onSubmit, onPasswordChangeSubmit };
+  const onAddressDelete = async (id: string): Promise<void> => {
+    const actions = [
+      {
+        action: 'removeAddress' as const,
+        addressId: id
+      }
+    ];
+
+    await requestUpdateCustomer(customer.id, customer.version, actions);
+  };
+
+  return { onPersonalDataSubmit, onAddressChangeSubmit, onPasswordChangeSubmit, onAddressDelete };
 };

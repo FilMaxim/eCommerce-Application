@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import { PasswordInput } from '../inputs/PasswordInput';
 import { SubmitBtn } from '../inputs/SubmitBtn';
-import { AdressFieldSet } from '../inputs/AdressFieldSet';
+import { AddressFieldSet } from '../inputs/AddressFieldSet';
 import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';
 import { useState } from 'react';
@@ -41,7 +41,7 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
               placeholder="Password:"
               name="password"
             />
-            <AdressFieldSet
+            <AddressFieldSet
               fieldSet={FieldSetName.Shipping}
               formik={formik}
             />
@@ -56,7 +56,7 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
               label="same as billing address"
             />
             {!isSameAddress && (
-              <AdressFieldSet
+              <AddressFieldSet
                 fieldSet={FieldSetName.Billing}
                 formik={formik}
               />
