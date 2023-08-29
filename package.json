@@ -33,7 +33,9 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
     "sass": "^1.64.2",
+    "slick-carousel": "^1.8.1",
     "toastify-js": "^1.12.0",
     "typescript": "^4.4.2",
     "yup": "^1.2.0"
@@ -89,6 +91,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.4",
+    "@types/react-slick": "^0.23.10",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "eslint": "^8.0.1",

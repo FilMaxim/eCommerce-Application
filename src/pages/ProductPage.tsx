@@ -1,7 +1,7 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import 'react-responsive-carousel/lib/styles/carousel.css';
+import '../styles/product.css';
 import { getProduct } from '../helpers/api/apiRoot';
 import { type ProductProjection } from '@commercetools/platform-sdk';
 import { Carousel } from 'react-responsive-carousel';
@@ -30,7 +30,7 @@ export const Product = () => {
             selectedItem={currentImageIndex}
             onChange={setCurrentImageIndex}
             infiniteLoop={true}
-            showArrows={false}
+            showArrows={true}
             showIndicators={false}
             showStatus={false}
           >
@@ -52,13 +52,14 @@ export const Product = () => {
       {product?.description != null && product.masterVariant.prices !== undefined && (
         <div className="product__card">
           <h1 className="product__title">{product.name['en-US']}</h1>
-          <p className='product__price'>${(product.masterVariant.prices[0].value.centAmount) / 100}</p>
+          <p className="product__price">${product.masterVariant.prices[0].value.centAmount / 100}</p>
           <p>{product.description['en-US']}</p>
           <Button>Buy</Button>
         </div>
       )}
 
       <Modal
+        className={'modal'}
         isOpen={modalPreviewOpen}
         shouldCloseOnEsc
         shouldCloseOnOverlayClick
@@ -66,12 +67,16 @@ export const Product = () => {
           setModalPreviewOpen(false);
         }}
       >
+        <button className="relative float-right mx-5 my-5  bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full"
+          onClick={() => { setModalPreviewOpen(false); }}>
+          X
+        </button>
         <Carousel
           className="slider"
           selectedItem={currentImageIndex}
           onChange={setCurrentImageIndex}
           infiniteLoop={true}
-          showArrows={false}
+          showArrows={true}
           showIndicators={false}
           showStatus={false}
         >
