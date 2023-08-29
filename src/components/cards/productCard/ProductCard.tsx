@@ -24,7 +24,7 @@ export const ProductCard = ({
         display: 'grid',
         gap: '10px',
         gridTemplateColumns: '270px',
-        gridTemplateRows: '270px 200px 41px 31px'
+        gridTemplateRows: '270px 200px 41px 41px'
       }}
     >
       <div className={styles.wrapper}>
