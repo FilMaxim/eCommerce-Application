@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { NavGroup } from '../NavBar/NavGroup';
 
 export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProps) => {
-  const isLogged = useSelector((state: RootState) => state.isLogged);
+  const isLogged = useSelector((state: { authData: RootState }) => state.authData.isLogged);
   const { logout } = useAuth();
 
   return (
