@@ -7,20 +7,22 @@ import { getProduct } from '../helpers/api/apiRoot';
 import { type ProductProjection } from '@commercetools/platform-sdk';
 import { Carousel } from 'react-responsive-carousel';
 import { Button } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 export const Product = () => {
+  const { id } = useParams();
   const [product, setProduct] = useState<ProductProjection | undefined>(undefined);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [modalPreviewOpen, setModalPreviewOpen] = useState(false);
 
-  const fetchProduct = async () => {
-    const newProduct = await getProduct('e996ba5d-4c7d-4a2e-8635-1d68bdfb21df');
+  const fetchProduct = async (id: string) => {
+    const newProduct = await getProduct(id);
     setProduct(newProduct);
   };
 
   useEffect(() => {
-    void fetchProduct();
-  }, []);
+    if (id != null) void fetchProduct(id);
+  }, [id]);
 
   return (
     <div className="product">

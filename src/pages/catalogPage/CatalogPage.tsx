@@ -33,7 +33,7 @@ export const CatalogPage = () => {
       />
       <div className={styles.list}>
         {cardsData.map((item, index) => {
-          const { url, name, description } = item;
+          const { url, name, description, id } = item;
           return (
             <ProductCard
               imageUrl={url}
@@ -41,6 +41,7 @@ export const CatalogPage = () => {
               titleName={name}
               description={description}
               key={`cardId}-${index}`}
+              id={id}
             />
           );
         })}

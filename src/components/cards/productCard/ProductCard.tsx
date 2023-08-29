@@ -7,9 +7,16 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { BlackButton } from '../../buttons/BlackButton';
 import type { ProductCardInterface } from '../../../utils/types';
 
-export const ProductCard = ({ imageUrl, title, titleName, description }: ProductCardInterface) => {
+export const ProductCard = ({ imageUrl, title, titleName, description, id }: ProductCardInterface) => {
+  const handleCardClick = (id: string) => {
+    // Перенаправление на страницу продукта с передачей идентификатора
+    window.location.href = `/product/${id}`;
+  };
   return (
     <Card
+      onClick={() => {
+        handleCardClick(id);
+      }}
       sx={{
         width: 270,
         height: 570,

@@ -146,6 +146,7 @@ export interface ProductsDataInterface {
   url: string;
   name: string;
   description: string;
+  id: string;
 }
 
 export interface InitialProductsStateInterace {
@@ -157,6 +158,7 @@ export interface ProductCardInterface {
   title: string;
   titleName: string;
   description: string;
+  id: string
 }
 
 export interface ContainerProps {
