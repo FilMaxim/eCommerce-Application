@@ -1,5 +1,6 @@
 import type { ProductDraft, ProductVariant } from '@commercetools/platform-sdk';
 import type { ProductsDataInterface } from '../../../utils/types';
+import { getNormalizedNumber } from './getNormalizedNumber';
 
 export const getProductParams = (product: ProductDraft, variant: ProductVariant): ProductsDataInterface => {
   const imagesData = variant.images ?? [];
@@ -14,5 +15,16 @@ export const getProductParams = (product: ProductDraft, variant: ProductVariant)
   const rawDescription = product.description ?? '';
   const [description] = Object.values(rawDescription);
 
-  return { url, name, description };
+  const [prices] = variant.prices ?? [];
+  const centsPerEur = 100;
+
+  const rawPrice = prices?.value.centAmount ?? 0;
+  const rawDiscount = prices?.discounted?.value.centAmount ?? 0;
+
+  const normalizedPrice = getNormalizedNumber(rawPrice, centsPerEur);
+  const normalizedDiscount = getNormalizedNumber(rawDiscount, centsPerEur);
+
+  const priceTag = { price: normalizedPrice, discount: normalizedDiscount };
+
+  return { url, name, description, priceTag };
 };
