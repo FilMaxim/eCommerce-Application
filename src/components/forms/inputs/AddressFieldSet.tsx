@@ -18,7 +18,7 @@ export const AddressFieldSet = ({ fieldSet, formik, disabled }: AddressFieldSetP
   return (
     <div>
       {hasFieldSetName && (
-        <h3 className="mb-4 inline-block rounded-full border bg-slate-200 p-1 text-sm text-gray-700">
+        <h3 className="mb-4 inline-block rounded-full border border-secondary bg-secondary-light p-1 text-sm text-gray-700">
           {fieldSet === FieldSetName.Billing ? 'Billing address:' : 'Shipping address:'}
         </h3>
       )}

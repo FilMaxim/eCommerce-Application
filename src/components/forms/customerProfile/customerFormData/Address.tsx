@@ -31,24 +31,24 @@ const AddressControls: AddressExtraControls = (editable: boolean, initialValues,
   });
 
   return (
-    <div className="flex flex-wrap gap-1 px-8 justify-center">
+    <div className="flex flex-wrap justify-center gap-1 px-8">
       {editable &&
         checkboxes.map(([name, value]) => (
-            <FormControlLabel
+          <FormControlLabel
             key={name}
-              control={
-                <Checkbox
-                  name={name}
-                  color="secondary"
-                  onChange={(e) => {
-                    formik.handleChange(e.nativeEvent);
-                  }}
-                  defaultChecked={value}
-                />
-              }
-              label={getCheckboxLabel(name)}
-              labelPlacement="end"
-            />
+            control={
+              <Checkbox
+                name={name}
+                color="secondary"
+                onChange={(e) => {
+                  formik.handleChange(e.nativeEvent);
+                }}
+                defaultChecked={value}
+              />
+            }
+            label={getCheckboxLabel(name)}
+            labelPlacement="end"
+          />
         ))}
     </div>
   );
@@ -124,16 +124,24 @@ export const AddressComponent = ({
           >
             <div className="m-1 mb-[-2rem] flex max-w-[calc(100%-100px)] flex-wrap gap-1">
               {address.shippingStateChecked && (
-                <span className="rounded border bg-secondary-light text-xs">Shipping address</span>
+                <span className="rounded border border-secondary bg-secondary-light text-xs">
+                  Shipping address
+                </span>
               )}
               {address.billingStateChecked && (
-                <span className="rounded border bg-secondary-light text-xs">Billing address</span>
+                <span className="rounded border border-secondary bg-secondary-light text-xs">
+                  Billing address
+                </span>
               )}
               {address.defaultShippingAddress && (
-                <span className="rounded border bg-secondary-light text-xs">Default shipping address</span>
+                <span className="rounded border border-secondary bg-secondary-light text-xs">
+                  Default shipping address
+                </span>
               )}
               {address.defaultBillingAddress && (
-                <span className="rounded border bg-secondary-light text-xs">Default billing address</span>
+                <span className="rounded border border-secondary bg-secondary-light text-xs">
+                  Default billing address
+                </span>
               )}
               <div className="h-6 w-1"></div> {/* filler */}
             </div>

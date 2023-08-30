@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik';
 import { PasswordInput } from '../inputs/PasswordInput';
-import { SubmitBtn } from '../inputs/SubmitBtn';
+import { SubmitBtn } from '../../buttons/SubmitBtn';
 import { validationsSchemaLogin } from '../util/validationSchema';
 import * as yup from 'yup';
 import { links } from '../../../utils/links';

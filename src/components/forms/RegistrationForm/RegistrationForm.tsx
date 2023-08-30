@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik';
 import { PasswordInput } from '../inputs/PasswordInput';
-import { SubmitBtn } from '../inputs/SubmitBtn';
+import { SubmitBtn } from '../../buttons/SubmitBtn';
 import { AddressFieldSet } from '../inputs/AddressFieldSet';
 import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';

@@ -4,8 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { BlackButton } from '../../buttons/BlackButton';
 import type { ProductCardInterface } from '../../../utils/types';
+import { Button } from '@mui/material';
 
 export const ProductCard = ({ imageUrl, title, titleName, description }: ProductCardInterface) => {
   return (
@@ -52,7 +52,7 @@ export const ProductCard = ({ imageUrl, title, titleName, description }: Product
           {description}
         </Typography>
       </CardContent>
-      <BlackButton
+      <Button
         size="medium"
         variant="contained"
         sx={{
@@ -62,7 +62,7 @@ export const ProductCard = ({ imageUrl, title, titleName, description }: Product
         }}
       >
         <ShoppingCartOutlinedIcon fontSize="large" />
-      </BlackButton>
+      </Button>
     </Card>
   );
 };
