@@ -63,4 +63,24 @@ describe('registrationForm submit correctly', () => {
 
     expect(fakeOnSubmit.mock.calls).toHaveLength(0);
   });
+
+  it('no default address fields if checkbox unchecked', async () => {
+    const fakeOnSubmit = jest.fn();
+    render(TestRegistrationForm(fakeOnSubmit, submitDataWithBilling));
+    // defaultShippingAddress;
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-wait-for-side-effects
+      fireEvent.click(screen.getByText(/as default/i));
+    });
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-wait-for-side-effects
+      fireEvent.click(screen.getByText(/Create Account/i));
+    });
+
+    expect(fakeOnSubmit.mock.calls[0][0]).toStrictEqual({
+      ...submitDataWithBilling,
+      shippingStateChecked: false
+    });
+  });
 });
