@@ -5,9 +5,10 @@ import { ProductCard } from '../../components/cards/productCard/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../utils/types';
 import { ArrowButtonGroup } from '../../components/buttons/ArrowButtonsGroup';
-import { fetchProducts } from './utils/fetchProducts';
+import { updateExtremums, updateProductsData } from './utils/updateProductsData';
 import { fetchCategories } from './utils/fetchCategories';
 import { FilterBar } from '../../components/filter/FilterBar';
+import { fetchProducts } from '../../helpers/api/apiRoot';
 
 export const CatalogPage = () => {
   const [categoryList, setCategoryList] = useState<string[]>([]);
@@ -17,7 +18,11 @@ export const CatalogPage = () => {
     fetchCategories(setCategoryList).catch((error) => {
       console.error(error);
     });
-    fetchProducts(dispatch).catch((error) => {
+    updateProductsData(dispatch, fetchProducts).catch((error) => {
+      console.error(error);
+    });
+
+    updateExtremums(dispatch).catch((error) => {
       console.error(error);
     });
   }, [dispatch]);

@@ -94,6 +94,7 @@ export interface RootState {
   isLogged: boolean;
   cards: ProductsDataInterface[];
   customer: Customer | null;
+  extremums: number[];
 }
 
 export interface AddressFieldComponent {
@@ -163,6 +164,7 @@ export interface ProductsDataInterface {
 
 export interface InitialProductsStateInterace {
   cards: ProductsDataInterface[];
+  extremums: number[];
 }
 
 export interface ProductCardInterface extends PriceTagInterface {

@@ -2,18 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { InitialProductsStateInterace } from '../utils/types';
 
 const initialState: InitialProductsStateInterace = {
-  cards: []
+  cards: [],
+  extremums: []
 };
 
 const productCardsSlice = createSlice({
   name: 'productsData',
   initialState,
   reducers: {
-    setProductCard: (state, { payload }) => {
+    setProductsData: (state, { payload }) => {
       state.cards = payload;
+    },
+    setExtremums: (state, { payload }) => {
+      state.extremums = payload;
     }
   }
 });
 
-export const { setProductCard } = productCardsSlice.actions;
+export const { setProductsData, setExtremums } = productCardsSlice.actions;
 export const productCardsReducer = productCardsSlice.reducer;
