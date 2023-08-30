@@ -70,7 +70,7 @@ export const initialValuesRegistration = {
 
 export enum InputClasses {
   wrapper = 'relative w-[16rem] mb-6',
-  error = 'absolute bottom-[-1rem] left-0 text-xs italic text-red-500',
+  error = 'absolute bottom-[-1rem] left-0 text-xs italic text-red-600',
   labelWrapper = 'absolute left-3 top-0 text-xs text-gray-500',
-  input = 'leading-tight text-gray-700 transition-all focus:border-red-500 focus:outline-none disabled:border-slate-500 disabled:bg-slate-200 w-full appearance-none border-0 border-b-[1px] border-gray-500 px-3'
+  input = 'leading-tight text-gray-700 transition-all focus:border-red-600 focus:outline-none disabled:border-slate-500 disabled:bg-slate-200 w-full appearance-none border-0 border-b-[1px] border-gray-500 px-3'
 }

@@ -61,7 +61,7 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
                 formik={formik}
               />
             )}
-            <SubmitBtn />
+            <SubmitBtn title="Create Account" />
             <p className="mt-3 text-center text-[14px]">
               Have an account?
               <Link

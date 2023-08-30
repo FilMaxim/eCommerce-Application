@@ -38,7 +38,7 @@ export const LoginForm = () => {
               placeholder="Password:"
               name="password"
             />
-            <SubmitBtn />
+            <SubmitBtn title="Log In" />
             <p className="mt-3 text-center text-[14px]">
               Don&#x27;t have an account?
               <Link

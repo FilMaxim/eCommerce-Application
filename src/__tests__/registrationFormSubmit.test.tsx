@@ -34,7 +34,7 @@ describe('registrationForm submit correctly', () => {
 
     await waitFor(() => {
       // eslint-disable-next-line testing-library/no-wait-for-side-effects
-      fireEvent.click(screen.getByText(/Submit/i));
+      fireEvent.click(screen.getByText(/Create Account/i));
     });
 
     expect(fakeOnSubmit.mock.calls).toHaveLength(1);
@@ -58,7 +58,7 @@ describe('registrationForm submit correctly', () => {
 
     await waitFor(() => {
       // eslint-disable-next-line testing-library/no-wait-for-side-effects
-      fireEvent.click(screen.getByText(/Submit/i));
+      fireEvent.click(screen.getByText(/Create Account/i));
     });
 
     expect(fakeOnSubmit.mock.calls).toHaveLength(0);
