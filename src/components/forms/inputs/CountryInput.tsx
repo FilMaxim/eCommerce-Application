@@ -1,21 +1,32 @@
 import { ErrorMessage, Field } from 'formik';
 import type { CountryInputProps } from '../../../utils/types';
 import { countries } from '../util/countriesList';
+import { useState } from 'react';
+import { InputClasses } from './inputsData';
 
 export const CountryInput = ({ fieldSet, setPostalCodeDisabled, formik, disabled }: CountryInputProps) => {
   const hasFieldSetName = fieldSet !== undefined;
+  const [isFoucus, setIsFoucus] = useState<boolean>(false);
 
   return (
-    <div className="w-[18rem]">
+    <div
+      className={InputClasses.wrapper}
+      onFocus={() => {
+        setIsFoucus(true);
+      }}
+      onBlur={() => {
+        setIsFoucus(false);
+      }}
+    >
       <label
         htmlFor={hasFieldSetName ? `${fieldSet}Country` : 'country'}
-        className="text-sm font-bold text-gray-700"
+        className={`${InputClasses.labelWrapper} ${isFoucus ? 'block' : 'hidden'}`}
       >
         Country:
       </label>
       <Field
         as="select"
-        className="focus:shadow-outline w-full appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none  disabled:border-slate-500 disabled:bg-slate-200"
+        className={`${InputClasses.input} ${isFoucus ? 'pt-4' : ''}`}
         type="text"
         name={hasFieldSetName ? `${fieldSet}Country` : 'country'}
         placeholder="Country"
@@ -43,7 +54,7 @@ export const CountryInput = ({ fieldSet, setPostalCodeDisabled, formik, disabled
       <ErrorMessage
         name={hasFieldSetName ? `${fieldSet}Country` : 'country'}
         component="p"
-        className="text-xs italic text-red-500"
+        className={InputClasses.error}
       />
     </div>
   );
