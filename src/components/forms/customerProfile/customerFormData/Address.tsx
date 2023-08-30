@@ -109,35 +109,37 @@ export const AddressComponent = ({
 
   return (
     <>
-      {initialValues.map((address) => (
-        <div
-          key={address.id}
-          className="mb-4"
-        >
-          <div className="mb-[-2.5rem] pt-4">
-            {address.shippingStateChecked && (
-              <span className="mr-1 rounded border bg-slate-200 text-xs">Shipping address</span>
-            )}
-            {address.billingStateChecked && (
-              <span className="mr-1 rounded border bg-slate-200 text-xs">Billing address</span>
-            )}
-            {address.defaultShippingAddress && (
-              <span className="mr-1 rounded border bg-slate-200 text-xs">Default shipping address</span>
-            )}
-            {address.defaultBillingAddress && (
-              <span className="mr-1 rounded border bg-slate-200 text-xs">Default billing address</span>
-            )}
+      <div className="rounded border mb-2">
+        {initialValues.map((address) => (
+          <div
+            key={address.id}
+            className="mb-4"
+          >
+            <div className="m-1 mb-[-2rem] flex max-w-[calc(100%-100px)] flex-wrap gap-1">
+              {address.shippingStateChecked && (
+                <span className="rounded border bg-secondary-light text-xs">Shipping address</span>
+              )}
+              {address.billingStateChecked && (
+                <span className="rounded border bg-secondary-light text-xs">Billing address</span>
+              )}
+              {address.defaultShippingAddress && (
+                <span className="rounded border bg-secondary-light text-xs">Default shipping address</span>
+              )}
+              {address.defaultBillingAddress && (
+                <span className="rounded border bg-secondary-light text-xs">Default billing address</span>
+              )}
+            </div>
+            <CustomerPageForm
+              initialValues={address}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}
+              formInner={AddressInner}
+              addressExtraControls={AddressControls}
+              onDelete={onDelete}
+            />
           </div>
-          <CustomerPageForm
-            initialValues={address}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}
-            formInner={AddressInner}
-            addressExtraControls={AddressControls}
-            onDelete={onDelete}
-          />
-        </div>
-      ))}
+        ))}
+      </div>
       <NewAddressModal />
     </>
   );

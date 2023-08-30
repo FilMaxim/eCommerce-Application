@@ -18,9 +18,9 @@
 }
 
 input[type]:focus {
-  --tw-ring-inset: none
+  --tw-ring-inset: none;
 }
 
 select[name]:focus {
-  --tw-ring-inset: none
+  --tw-ring-inset: none;
 }
