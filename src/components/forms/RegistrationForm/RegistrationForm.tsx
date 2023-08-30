@@ -66,7 +66,7 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
               Have an account?
               <Link
                 to={links.login.path}
-                className="text-link-color"
+                className="text-red-600 hover:text-red-700"
               >
                 {' '}
                 Log In
