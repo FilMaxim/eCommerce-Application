@@ -31,26 +31,26 @@ const AddressControls: AddressExtraControls = (editable: boolean, initialValues,
   });
 
   return (
-    <>
+    <div className="flex flex-wrap gap-1 px-8 justify-center">
       {editable &&
         checkboxes.map(([name, value]) => (
-          <FormControlLabel
+            <FormControlLabel
             key={name}
-            control={
-              <Checkbox
-                name={name}
-                color="secondary"
-                onChange={(e) => {
-                  formik.handleChange(e.nativeEvent);
-                }}
-                defaultChecked={value}
-              />
-            }
-            label={getCheckboxLabel(name)}
-            labelPlacement="end"
-          />
+              control={
+                <Checkbox
+                  name={name}
+                  color="secondary"
+                  onChange={(e) => {
+                    formik.handleChange(e.nativeEvent);
+                  }}
+                  defaultChecked={value}
+                />
+              }
+              label={getCheckboxLabel(name)}
+              labelPlacement="end"
+            />
         ))}
-    </>
+    </div>
   );
 };
 
