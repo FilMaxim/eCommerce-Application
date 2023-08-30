@@ -26,21 +26,23 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
     >
       {(formik) => {
         return (
-          <Form className="flex w-96 flex-col justify-center gap-1 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)] max-sm:w-56">
-            {[firstName, lastName, date, email].map(({ name, placeholder, type }) => (
-              <Input
-                key={name}
-                name={name}
-                placeholder={placeholder}
-                type={type}
+          <Form className="flex max-w-2xl flex-col items-center justify-center gap-2 rounded p-6">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {[firstName, lastName, date, email].map(({ name, placeholder, type }) => (
+                <Input
+                  key={name}
+                  name={name}
+                  placeholder={placeholder}
+                  type={type}
+                  formik={formik}
+                />
+              ))}
+              <PasswordInput
                 formik={formik}
+                placeholder="Password:"
+                name="password"
               />
-            ))}
-            <PasswordInput
-              formik={formik}
-              placeholder="Password:"
-              name="password"
-            />
+            </div>
             <AddressFieldSet
               fieldSet={FieldSetName.Shipping}
               formik={formik}
@@ -51,6 +53,7 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
                   name={'toggle'}
                   checked={isSameAddress}
                   onChange={handleCheckboxChange}
+                  color="error"
                 />
               }
               label="same as billing address"
