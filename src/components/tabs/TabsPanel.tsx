@@ -33,6 +33,7 @@ export const TabsPanel = (props: TabsPanelProps) => {
           value={tabValue}
           onChange={handleChange}
           aria-label="customer profile tabs"
+          centered
         >
           {titles.map((title) => (
             <Tab
