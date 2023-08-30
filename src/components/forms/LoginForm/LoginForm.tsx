@@ -26,7 +26,7 @@ export const LoginForm = () => {
         const { name, placeholder, type } = email;
         const { path } = links.registration;
         return (
-          <Form className="flex w-96 flex-col justify-center gap-2 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)] max-sm:w-56">
+          <Form className="flex max-w-sm flex-wrap items-center  justify-center rounded p-6">
             <Input
               name={name}
               placeholder={placeholder}

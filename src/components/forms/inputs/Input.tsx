@@ -22,7 +22,7 @@ export const Input = ({ name, type, placeholder, formik, disabled }: InputProps)
         {placeholder}
       </label>
       <Field
-        className={`${InputClasses.input} ${isFoucus ? 'pt-4' : ''}`}
+        className={InputClasses.input}
         type={type}
         name={name}
         placeholder={isFoucus ? '' : placeholder}
