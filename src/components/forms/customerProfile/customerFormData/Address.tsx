@@ -4,9 +4,8 @@ import type {
   FormInnerComponent
 } from '../../../../utils/types';
 import { CustomerPageForm } from '../CustomerPageForm';
-import { Field } from 'formik';
 import { useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Checkbox, FormControlLabel } from '@mui/material';
 import { newAddressInitialValues } from '../util/getInitialValues';
 import { getCheckboxLabel } from '../util/getCheckboxLabel';
 import { AddressFieldSet } from '../../inputs/AddressFieldSet';
@@ -20,7 +19,7 @@ const AddressInner: FormInnerComponent = (editable: boolean, formik) => {
   );
 };
 
-const AddressControls: AddressExtraControls = (editable: boolean, initialValues) => {
+const AddressControls: AddressExtraControls = (editable: boolean, initialValues, formik) => {
   const checkboxes = Object.entries(initialValues).filter(([key, value]) => {
     if (
       typeof value === 'boolean' &&
@@ -35,13 +34,21 @@ const AddressControls: AddressExtraControls = (editable: boolean, initialValues)
     <>
       {editable &&
         checkboxes.map(([name, value]) => (
-          <label key={name}>
-            <Field
-              type="checkbox"
-              name={name}
-            />
-            {getCheckboxLabel(name)}
-          </label>
+          <FormControlLabel
+            key={name}
+            control={
+              <Checkbox
+                name={name}
+                color="secondary"
+                onChange={(e) => {
+                  formik.handleChange(e.nativeEvent);
+                }}
+                defaultChecked={value}
+              />
+            }
+            label={getCheckboxLabel(name)}
+            labelPlacement="end"
+          />
         ))}
     </>
   );

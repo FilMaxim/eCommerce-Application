@@ -48,7 +48,7 @@ export const AddressFieldSet = ({ fieldSet, formik, disabled }: AddressFieldSetP
         />
       </div>
       {hasFieldSetName && (
-        <FormControlLabel // todo: doesn't work since not connected to formik, formik always return initial true
+        <FormControlLabel
           control={
             <Checkbox
               name={`${fieldSet}StateChecked`}

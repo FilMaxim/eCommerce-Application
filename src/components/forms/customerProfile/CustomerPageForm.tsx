@@ -54,7 +54,7 @@ export const CustomerPageForm = ({
             </div>
             {formInner(editable, formik)}
             {addressExtraControls !== undefined
-              ? addressExtraControls(editable, initialValues as AddressesInitialValues)
+              ? addressExtraControls(editable, initialValues as AddressesInitialValues, formik)
               : null}
             {editable && (
               <div className="flex w-full justify-center gap-2">
