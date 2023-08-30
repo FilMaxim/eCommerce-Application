@@ -22,7 +22,6 @@ export const CatalogPage = () => {
   }, [dispatch]);
 
   const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
-
   return (
     <div className={styles.catalog}>
       <Container

@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import 'react-responsive-carousel/lib/styles/carousel.css';
-import '../styles/product.css';
-import { getProduct } from '../helpers/api/apiRoot';
+import './productPage.scss';
+import { getProduct } from '../../helpers/api/apiRoot';
 import { type ProductProjection } from '@commercetools/platform-sdk';
 import { Carousel } from 'react-responsive-carousel';
-import { Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { PriceTag } from '../../components/cards/productCard/PriceTag';
+import { BlackButton } from '../../components/buttons/BlackButton';
 
 export const Product = () => {
   const { id } = useParams();
@@ -55,9 +56,22 @@ export const Product = () => {
       {product?.description != null && product.masterVariant.prices !== undefined && (
         <div className="product__card">
           <h1 className="product__title">{product.name['en-US']}</h1>
-          <p className="product__price">${product.masterVariant.prices[0].value.centAmount / 100}</p>
-          <p>{product.description['en-US']}</p>
-          <Button>Buy</Button>
+          <p className='product__desc'>{product.description['en-US']}</p>
+          <PriceTag
+            price={product.masterVariant.prices[0].value.centAmount / 100}
+            discount={Number(product.masterVariant.prices[0].discounted?.value?.centAmount) / 100}
+          />
+          <BlackButton
+            size="medium"
+            variant="contained"
+            sx={{
+              padding: 0,
+              height: 41,
+              width: 270
+            }}
+          >
+            Buy Now
+          </BlackButton>
         </div>
       )}
 
