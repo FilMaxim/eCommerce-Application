@@ -53,7 +53,7 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
                   name={'toggle'}
                   checked={isSameAddress}
                   onChange={handleCheckboxChange}
-                  color="error"
+                  color="secondary"
                 />
               }
               label="same as billing address"
@@ -69,7 +69,7 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
               Have an account?
               <Link
                 to={links.login.path}
-                className="text-red-600 hover:text-red-700"
+                className="text-secondary hover:text-red-600"
               >
                 {' '}
                 Log In

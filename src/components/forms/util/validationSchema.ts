@@ -19,7 +19,7 @@ const password = yup
   .matches(/[0-9]/, 'Should contain one digit')
   .matches(/[!@#$%^&*]/, 'Should contain one special character')
   .required('Required field')
-  .test('no-leading-or-trailing-whitespace', 'Must not contain leading or trailing whitespace', (value) => {
+  .test('no-leading-or-trailing-whitespace', 'Leading or trailing whitespace not allowed', (value) => {
     return value === value.trim();
   });
 

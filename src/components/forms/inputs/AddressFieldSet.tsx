@@ -54,7 +54,7 @@ export const AddressFieldSet = ({ fieldSet, formik, disabled }: AddressFieldSetP
               name={`${fieldSet}StateChecked`}
               defaultChecked
               disabled={disabled}
-              color="error"
+              color="secondary"
               onChange={(e) => {
                 formik.handleChange(e.nativeEvent);
               }}

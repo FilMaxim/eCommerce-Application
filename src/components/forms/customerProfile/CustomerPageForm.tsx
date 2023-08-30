@@ -32,7 +32,6 @@ export const CustomerPageForm = ({
             <div className="absolute right-2 top-2 flex gap-1">
               <IconButton
                 aria-label="edit"
-                color="primary"
                 onClick={() => {
                   setEditable(true);
                 }}
@@ -43,10 +42,9 @@ export const CustomerPageForm = ({
               {addressExtraControls !== undefined && (
                 <IconButton
                   aria-label="delete"
-                  color="secondary"
                   onClick={() => {
                     onDelete?.((initialValues as AddressesInitialValues).id).catch((err) => {
-                      console.error(err);
+                      Error(err);
                     });
                   }}
                 >
@@ -67,6 +65,7 @@ export const CustomerPageForm = ({
                     unsetNewForm?.(false);
                   }}
                   color="secondary"
+                  variant="outlined"
                 >
                   Cancel
                 </Button>
@@ -76,9 +75,11 @@ export const CustomerPageForm = ({
                   onClick={() => {
                     setEditable(false);
                     formik.submitForm().catch((err) => {
-                      console.error(err);
+                      Error(err);
                     });
                   }}
+                  color="secondary"
+                  variant="contained"
                 >
                   Save
                 </Button>

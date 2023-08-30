@@ -43,7 +43,7 @@ export const LoginForm = () => {
               Don&#x27;t have an account?
               <Link
                 to={path}
-                className="text-red-600 hover:text-red-700"
+                className="text-secondary hover:text-red-600"
               >
                 {' '}
                 Create one

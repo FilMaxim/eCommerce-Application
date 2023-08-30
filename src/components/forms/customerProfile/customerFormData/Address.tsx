@@ -63,6 +63,8 @@ export const AddressComponent = ({
             onClick={() => {
               setIsNewAddress(!isNewAddress);
             }}
+            variant="contained"
+            color="secondary"
           >
             Add new address
           </Button>
