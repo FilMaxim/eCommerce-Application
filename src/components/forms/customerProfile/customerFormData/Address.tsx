@@ -109,7 +109,7 @@ export const AddressComponent = ({
 
   return (
     <>
-      <div className="rounded border mb-2">
+      <div className="mb-2 rounded border">
         {initialValues.map((address) => (
           <div
             key={address.id}
@@ -128,6 +128,7 @@ export const AddressComponent = ({
               {address.defaultBillingAddress && (
                 <span className="rounded border bg-secondary-light text-xs">Default billing address</span>
               )}
+              <div className="h-6 w-1"></div> {/* filler */}
             </div>
             <CustomerPageForm
               initialValues={address}
