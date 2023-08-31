@@ -4,9 +4,8 @@ import type {
   FormInnerComponent
 } from '../../../../utils/types';
 import { CustomerPageForm } from '../CustomerPageForm';
-import { Field } from 'formik';
 import { useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Checkbox, FormControlLabel } from '@mui/material';
 import { newAddressInitialValues } from '../util/getInitialValues';
 import { getCheckboxLabel } from '../util/getCheckboxLabel';
 import { AddressFieldSet } from '../../inputs/AddressFieldSet';
@@ -20,7 +19,7 @@ const AddressInner: FormInnerComponent = (editable: boolean, formik) => {
   );
 };
 
-const AddressControls: AddressExtraControls = (editable: boolean, initialValues) => {
+const AddressControls: AddressExtraControls = (editable: boolean, initialValues, formik) => {
   const checkboxes = Object.entries(initialValues).filter(([key, value]) => {
     if (
       typeof value === 'boolean' &&
@@ -32,18 +31,26 @@ const AddressControls: AddressExtraControls = (editable: boolean, initialValues)
   });
 
   return (
-    <>
+    <div className="flex flex-wrap justify-center gap-1 px-8">
       {editable &&
         checkboxes.map(([name, value]) => (
-          <label key={name}>
-            <Field
-              type="checkbox"
-              name={name}
-            />
-            {getCheckboxLabel(name)}
-          </label>
+          <FormControlLabel
+            key={name}
+            control={
+              <Checkbox
+                name={name}
+                color="secondary"
+                onChange={(e) => {
+                  formik.handleChange(e.nativeEvent);
+                }}
+                defaultChecked={value}
+              />
+            }
+            label={getCheckboxLabel(name)}
+            labelPlacement="end"
+          />
         ))}
-    </>
+    </div>
   );
 };
 
@@ -63,6 +70,8 @@ export const AddressComponent = ({
             onClick={() => {
               setIsNewAddress(!isNewAddress);
             }}
+            variant="contained"
+            color="secondary"
           >
             Add new address
           </Button>
@@ -107,35 +116,46 @@ export const AddressComponent = ({
 
   return (
     <>
-      {initialValues.map((address) => (
-        <div
-          key={address.id}
-          className="mb-4"
-        >
-          <div className="mb-[-2.5rem] pt-4">
-            {address.shippingStateChecked && (
-              <span className="mr-1 rounded border bg-slate-200 text-xs">Shipping address</span>
-            )}
-            {address.billingStateChecked && (
-              <span className="mr-1 rounded border bg-slate-200 text-xs">Billing address</span>
-            )}
-            {address.defaultShippingAddress && (
-              <span className="mr-1 rounded border bg-slate-200 text-xs">Default shipping address</span>
-            )}
-            {address.defaultBillingAddress && (
-              <span className="mr-1 rounded border bg-slate-200 text-xs">Default billing address</span>
-            )}
+      <div className="mb-2 rounded border">
+        {initialValues.map((address) => (
+          <div
+            key={address.id}
+            className="mb-4"
+          >
+            <div className="m-1 mb-[-2rem] flex max-w-[calc(100%-100px)] flex-wrap gap-1">
+              {address.shippingStateChecked && (
+                <span className="rounded border border-secondary bg-secondary-light text-xs">
+                  Shipping address
+                </span>
+              )}
+              {address.billingStateChecked && (
+                <span className="rounded border border-secondary bg-secondary-light text-xs">
+                  Billing address
+                </span>
+              )}
+              {address.defaultShippingAddress && (
+                <span className="rounded border border-secondary bg-secondary-light text-xs">
+                  Default shipping address
+                </span>
+              )}
+              {address.defaultBillingAddress && (
+                <span className="rounded border border-secondary bg-secondary-light text-xs">
+                  Default billing address
+                </span>
+              )}
+              <div className="h-6 w-1"></div> {/* filler */}
+            </div>
+            <CustomerPageForm
+              initialValues={address}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}
+              formInner={AddressInner}
+              addressExtraControls={AddressControls}
+              onDelete={onDelete}
+            />
           </div>
-          <CustomerPageForm
-            initialValues={address}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}
-            formInner={AddressInner}
-            addressExtraControls={AddressControls}
-            onDelete={onDelete}
-          />
-        </div>
-      ))}
+        ))}
+      </div>
       <NewAddressModal />
     </>
   );

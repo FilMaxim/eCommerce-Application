@@ -1439,7 +1439,6 @@ exports[`RegistrationForm renders correctly renders correctly 1`] = `
   >
     Have an account?
     <a
-      className="text-link-color"
       href="/login"
       onClick={[Function]}
     >

@@ -217,7 +217,8 @@ export type FormInnerComponent = (editable: boolean, formik: FormikProps) => JSX
 
 export type AddressExtraControls = (
   editable: boolean,
-  initialValues: AddressesInitialValues
+  initialValues: AddressesInitialValues,
+  formik: FormikProps
 ) => JSX.Element[] | JSX.Element;
 
 export interface PasswordChangeInitialValues {

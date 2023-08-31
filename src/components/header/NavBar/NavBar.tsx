@@ -16,11 +16,11 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
       aria-label="Global"
     >
       <Logo className="block" />
-      <ul className="hidden gap-4 text-xl lg:flex">
+      <ul className="hidden gap-4 text-xl sm:flex">
         <NavGroup />
       </ul>
       <BurgerBtn clickHandler={clickHandler} />
-      <ul className="hidden gap-3 lg:flex">
+      <ul className="hidden gap-3 sm:flex">
         <PrivateNavGroup
           isLogged={isLogged}
           logout={logout}

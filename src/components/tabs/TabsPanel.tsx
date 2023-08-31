@@ -12,7 +12,7 @@ const CustomTabPanel = (props: TabPanelProps) => {
       id={`simple-tabpanel-${String(index)}`}
       aria-labelledby={`simple-tab-${String(index)}`}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
     </div>
   );
 };
@@ -33,6 +33,8 @@ export const TabsPanel = (props: TabsPanelProps) => {
           value={tabValue}
           onChange={handleChange}
           aria-label="customer profile tabs"
+          centered
+          variant="fullWidth"
         >
           {titles.map((title) => (
             <Tab
