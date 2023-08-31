@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import 'react-responsive-carousel/lib/styles/carousel.css';
@@ -8,7 +7,7 @@ import { type ProductProjection } from '@commercetools/platform-sdk';
 import { Carousel } from 'react-responsive-carousel';
 import { useParams } from 'react-router-dom';
 import { PriceTag } from '../../components/cards/productCard/PriceTag';
-import { BlackButton } from '../../components/buttons/BlackButton';
+import { Button } from '@mui/material';
 
 export const Product = () => {
   const { id } = useParams();
@@ -40,8 +39,9 @@ export const Product = () => {
   if (product === null) return <div className="text-center text-2xl">Can&apos;t find product</div>;
 
   return (
-    <div className={style.product}>
+    <div className="flex flex-wrap justify-center gap-8 p-1 sm:p-4">
       <Carousel
+        className="w-[30rem] max-w-[90%] object-contain"
         selectedItem={currentImageIndex}
         onChange={setCurrentImageIndex}
         infiniteLoop={true}
@@ -67,26 +67,30 @@ export const Product = () => {
           </div>
         ))}
       </Carousel>
-      <div className={style.product__card}>
-        <h1 className={style.product__title}>{product.name['en-US']}</h1>
-        <p className={style.product__desc}>{product.description?.['en-US']}</p>
-        {product.masterVariant.prices !== undefined && (
-          <PriceTag
-            price={product.masterVariant.prices[0].value.centAmount / 100}
-            discount={Number(product.masterVariant.prices[0].discounted?.value?.centAmount) / 100}
-          />
-        )}
-        <BlackButton
-          size="medium"
+      <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:w-[30rem] lg:w-[270px]">
+        <div className="flex flex-col gap-2">
+          <h1 className="bold text-2xl">{product.name['en-US']}</h1>
+          <p>Rating: *****</p>
+          {product.masterVariant.prices !== undefined && (
+            <div className="flex justify-between">
+              <PriceTag
+                price={product.masterVariant.prices[0].value.centAmount / 100}
+                discount={Number(product.masterVariant.prices[0].discounted?.value?.centAmount) / 100}
+              />
+            </div>
+          )}
+          <p className="">{product.description?.['en-US']}</p>
+          <hr />
+        </div>
+        <p>colors</p>
+        <p>sizes</p>
+        <Button
+          color="error"
+          className="self-center w-full"
           variant="contained"
-          sx={{
-            padding: 0,
-            height: 41,
-            width: 270
-          }}
         >
           Buy Now
-        </BlackButton>
+        </Button>
       </div>
       <Modal
         className={style.modal}
