@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import 'react-responsive-carousel/lib/styles/carousel.css';
-import './productPage.scss';
+import style from './productPage.module.scss';
 import { getProduct } from '../../helpers/api/apiRoot';
 import { type ProductProjection } from '@commercetools/platform-sdk';
 import { Carousel } from 'react-responsive-carousel';
@@ -12,25 +12,31 @@ import { BlackButton } from '../../components/buttons/BlackButton';
 
 export const Product = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState<ProductProjection | undefined>(undefined);
+  const [product, setProduct] = useState<ProductProjection | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const [modalPreviewOpen, setModalPreviewOpen] = useState(false);
+  const [modalPreviewOpen, setModalPreviewOpen] = useState<boolean>(false);
 
   const fetchProduct = async (id: string) => {
     const newProduct = await getProduct(id);
+    if (newProduct === undefined) return;
+
     setProduct(newProduct);
   };
 
   useEffect(() => {
-    if (id != null) void fetchProduct(id);
+    if (id !== undefined) {
+      fetchProduct(id).catch((error) => {
+        Error(error);
+      });
+    }
   }, [id]);
 
   return (
-    <div className="product">
-      <div className="product__slider">
-        {product != null && (
+    <div className={style.product}>
+      <div className={style.product__slider}>
+        {product !== null && (
           <Carousel
-            className="slider"
+            className={style.slider}
             selectedItem={currentImageIndex}
             onChange={setCurrentImageIndex}
             infiniteLoop={true}
@@ -40,7 +46,7 @@ export const Product = () => {
           >
             {product.masterVariant.images?.map((image, index) => (
               <div
-                className="foto"
+                className={style.foto}
                 key={index}
                 onClick={() => {
                   setModalPreviewOpen(true);
@@ -54,9 +60,9 @@ export const Product = () => {
         {product == null && <div>Нет доступных изображений</div>}
       </div>
       {product?.description != null && product.masterVariant.prices !== undefined && (
-        <div className="product__card">
-          <h1 className="product__title">{product.name['en-US']}</h1>
-          <p className='product__desc'>{product.description['en-US']}</p>
+        <div className={style.product__card}>
+          <h1 className={style.product__title}>{product.name['en-US']}</h1>
+          <p className={style.product__desc}>{product.description['en-US']}</p>
           <PriceTag
             price={product.masterVariant.prices[0].value.centAmount / 100}
             discount={Number(product.masterVariant.prices[0].discounted?.value?.centAmount) / 100}
@@ -76,7 +82,7 @@ export const Product = () => {
       )}
 
       <Modal
-        className={'modal'}
+        className={style.modal}
         isOpen={modalPreviewOpen}
         shouldCloseOnEsc
         shouldCloseOnOverlayClick
@@ -93,7 +99,7 @@ export const Product = () => {
           X
         </button>
         <Carousel
-          className="slider"
+          className={style.slider}
           selectedItem={currentImageIndex}
           onChange={setCurrentImageIndex}
           infiniteLoop={true}
@@ -104,7 +110,7 @@ export const Product = () => {
           {product?.masterVariant.images?.map(
             (foto: { url: string | undefined }, index: React.Key | null | undefined) => (
               <div
-                className="foto"
+                className={style.foto}
                 key={index}
                 onClick={() => {
                   setModalPreviewOpen(true);
