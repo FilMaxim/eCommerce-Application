@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
 import 'react-responsive-carousel/lib/styles/carousel.css';
-import style from './productPage.module.scss';
 import { getProduct } from '../../helpers/api/apiRoot';
 import { type ProductProjection } from '@commercetools/platform-sdk';
 import { Carousel } from 'react-responsive-carousel';
@@ -67,7 +65,7 @@ export const Product = () => {
           </div>
         ))}
       </Carousel>
-      <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:w-[30rem] lg:w-[270px]">
+      <div className="flex max-w-[90%] sm:max-w-[70%] flex-col justify-between gap-4 lg:w-[270px]">
         <div className="flex flex-col gap-2">
           <h1 className="bold text-2xl">{product.name['en-US']}</h1>
           <p>Rating: *****</p>
@@ -92,48 +90,54 @@ export const Product = () => {
           Buy Now
         </Button>
       </div>
-      <Modal
-        className={style.modal}
-        isOpen={modalPreviewOpen}
-        shouldCloseOnEsc
-        shouldCloseOnOverlayClick
-        onRequestClose={() => {
-          setModalPreviewOpen(false);
-        }}
-      >
-        <button
-          className="relative float-right mx-5 my-5  rounded-full bg-gray-200 px-4 py-2 font-bold text-gray-700 hover:bg-gray-300"
-          onClick={() => {
-            setModalPreviewOpen(false);
+      {modalPreviewOpen && (
+        <div
+          className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50 p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setModalPreviewOpen(false);
+            }
           }}
         >
-          X
-        </button>
-        <Carousel
-          className={style.slider}
-          selectedItem={currentImageIndex}
-          onChange={setCurrentImageIndex}
-          infiniteLoop={true}
-          showArrows={true}
-          showIndicators={false}
-          showStatus={false}
-        >
-          {product.masterVariant.images?.map((img, index: React.Key | null | undefined) => (
-            <div
-              className="max-w-[50%] object-contain"
-              key={index}
-              onClick={() => {
-                setModalPreviewOpen(false);
-              }}
-            >
-              <img
-                src={img.url}
-                alt={img.label}
-              />
-            </div>
-          ))}
-        </Carousel>
-      </Modal>
+          <div className='relative bg-white flex items-center justify-center rounded max-w-[90%] lg:max-w-[60rem]'>
+          <button
+            className="absolute right-1 top-1  cursor-pointer z-20 rounded-full py-2 px-4 font-bold text-gray-700 hover:text-red-600"
+            onClick={() => {
+              setModalPreviewOpen(false);
+            }}
+          >
+            X
+          </button>
+          <Carousel
+            className="max-w-[90%] sm:max-w-[60%]"
+            selectedItem={currentImageIndex}
+            onChange={setCurrentImageIndex}
+            infiniteLoop={true}
+            showArrows={true}
+            showIndicators={false}
+            showStatus={false}
+            interval={5000}
+            autoPlay={true}
+            stopOnHover
+          >
+            {product.masterVariant.images?.map((img, index: React.Key | null | undefined) => (
+              <div
+                key={index}
+                onClick={() => {
+                  setModalPreviewOpen(false);
+                }}
+              >
+                <img
+                className=' lg:max-h-[30rem] object-contain'
+                  src={img.url}
+                  alt={img.label}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </div>
+        </div>
+      )}
     </div>
   );
 };
