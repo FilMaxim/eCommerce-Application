@@ -10,14 +10,14 @@ export const PriceTag = ({ price, discount }: PriceTagInterface) => {
     // prettier-ignore
     // prettier-config have a conflicts with eslint-config
     <>
-      {hasDiscount
-        ? (
-          <>
             <Typography variant="h6" sx={{
               borderRadius: '0 4px 4px 0',
               backgroundColor: discountColor,
               width: '20px'
             }} />
+      {hasDiscount
+        ? (
+            <div className="flex gap-2 pr-2">
             <Typography variant="h6" sx={{
               color: discountColor,
               fontWeight: 'bold'
@@ -35,7 +35,7 @@ export const PriceTag = ({ price, discount }: PriceTagInterface) => {
             >
               €{price}
             </Typography>
-          </>)
+          </div>)
         : (
           <Typography variant="h6" sx={{
             color: discountColor,
