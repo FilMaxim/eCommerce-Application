@@ -3,13 +3,14 @@ import view from '../../../assets/view.svg';
 import noView from '../../../assets/no-view.svg';
 import { useState } from 'react';
 import type { InputProps, VisibilityIconProps } from '../../../utils/types';
+import { InputClasses } from './inputsData';
 
 const VisibilityIcon = ({ handleVisibility, passwordVisibility }: VisibilityIconProps) => {
   return (
     <button
       type="button"
       onClick={handleVisibility}
-      className="absolute right-2 top-2 w-5"
+      className="absolute right-2 top-[30%] w-5"
     >
       <img
         src={passwordVisibility ? view : noView}
@@ -26,26 +27,34 @@ export const PasswordInput = ({
   name
 }: Pick<InputProps, 'formik' | 'disabled' | 'placeholder' | 'name'>) => {
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false);
+  const [isFoucus, setIsFoucus] = useState<boolean>(false);
 
   const handleVisibility = () => {
     setPasswordVisibility((prev: boolean) => !prev);
-    return false;
   };
 
   return (
-    <div className="w-[18rem]">
-      <label
-        htmlFor={name}
-        className="text-sm text-gray-500"
-      >
-        {placeholder}
-      </label>
+    <div
+      className={InputClasses.wrapper}
+      onFocus={() => {
+        setIsFoucus(true);
+      }}
+      onBlur={() => {
+        setIsFoucus(false);
+      }}
+    >
       <div className="relative">
+        <label
+          htmlFor={name}
+          className={`${InputClasses.labelWrapper} ${isFoucus ? 'block' : 'hidden'}`}
+        >
+          {placeholder}
+        </label>
         <Field
-          className="focus:shadow-outline w-full appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none  disabled:border-slate-500 disabled:bg-slate-200"
+          className={`${InputClasses.input} ${isFoucus ? 'pt-4' : ''}`}
           type={passwordVisibility ? 'text' : 'password'}
           name={name}
-          placeholder={placeholder}
+          placeholder={isFoucus ? '' : placeholder}
           {...(formik !== undefined
             ? {
                 onChange: (e: Event) => {
@@ -64,7 +73,7 @@ export const PasswordInput = ({
       <ErrorMessage
         name={name}
         component="p"
-        className="text-xs italic text-red-500"
+        className={InputClasses.error}
       />
     </div>
   );

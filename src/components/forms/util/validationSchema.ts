@@ -7,25 +7,21 @@ export const minAge = dayjs().subtract(18, 'year').format('YYYY-MM-DD');
 
 const email = yup
   .string()
-  .email('Email should be correctly formatted')
-  .matches(/\.[A-Z]{2,4}$/i, 'Email should be correctly formatted')
+  .email('Should be correctly formatted')
+  .matches(/\.[A-Z]{2,4}$/i, 'Should be correctly formatted')
   .required('Required field');
 
 const password = yup
   .string()
-  .min(8, 'Password should contain at least 8 characters')
-  .matches(/[A-Z]/, 'Password should contain at least one uppercase letter')
-  .matches(/[a-z]/, 'Password should contain at least one lowercase letter')
-  .matches(/[0-9]/, 'Password should contain at least one digit')
-  .matches(/[!@#$%^&*]/, 'Password should contain at least one special character')
+  .min(8, 'Should contain 8 characters')
+  .matches(/[A-Z]/, 'Should contain one uppercase letter')
+  .matches(/[a-z]/, 'Should contain one lowercase letter')
+  .matches(/[0-9]/, 'Should contain one digit')
+  .matches(/[!@#$%^&*]/, 'Should contain one special character')
   .required('Required field')
-  .test(
-    'no-leading-or-trailing-whitespace',
-    'Password must not contain leading or trailing whitespace',
-    (value) => {
-      return value === value.trim();
-    }
-  );
+  .test('no-leading-or-trailing-whitespace', 'Leading or trailing whitespace not allowed', (value) => {
+    return value === value.trim();
+  });
 
 export const validationsSchemaLogin = {
   email,
@@ -34,8 +30,8 @@ export const validationsSchemaLogin = {
 
 const firstName = yup
   .string()
-  .min(1, 'Name should contain at least 1 character')
-  .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
+  .min(1, 'Should contain at least 1 character')
+  .matches(/^[A-Za-z]+$/, 'Numbers and symbols not allowed')
   .trim()
   .required('Required field');
 
@@ -45,14 +41,14 @@ const date = yup.date().max(minAge, 'You should be older than 18 years').require
 
 const shippingStreetName = yup
   .string()
-  .min(1, 'Street should contain at least 1 character')
+  .min(1, 'Should contain at least 1 character')
   .trim()
   .required('Required field');
 
 const shippingCity = yup
   .string()
-  .min(1, 'City should contain at least 1 character')
-  .matches(/^[A-Za-z]+$/, 'Numbers and symbols in the name not allowed')
+  .min(1, 'Should contain at least 1 character')
+  .matches(/^[A-Za-z]+$/, 'Numbers and symbols not allowed')
   .trim()
   .required('Required field');
 
