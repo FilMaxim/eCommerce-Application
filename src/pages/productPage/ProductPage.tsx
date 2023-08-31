@@ -86,7 +86,7 @@ export const Product = () => {
         <p>sizes</p>
         <Button
           color="error"
-          className="self-center w-full"
+          className="w-full self-center"
           variant="contained"
         >
           Buy Now
