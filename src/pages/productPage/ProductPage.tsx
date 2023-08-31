@@ -65,7 +65,7 @@ export const Product = () => {
           </div>
         ))}
       </Carousel>
-      <div className="flex max-w-[90%] sm:max-w-[70%] flex-col justify-between gap-4 lg:w-[270px]">
+      <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:max-w-[70%] lg:w-[270px]">
         <div className="flex flex-col gap-2">
           <h1 className="bold text-2xl">{product.name['en-US']}</h1>
           <p>Rating: *****</p>
@@ -99,43 +99,43 @@ export const Product = () => {
             }
           }}
         >
-          <div className='relative bg-white flex items-center justify-center rounded max-w-[90%] lg:max-w-[60rem]'>
-          <button
-            className="absolute right-1 top-1  cursor-pointer z-20 rounded-full py-2 px-4 font-bold text-gray-700 hover:text-red-600"
-            onClick={() => {
-              setModalPreviewOpen(false);
-            }}
-          >
-            X
-          </button>
-          <Carousel
-            className="max-w-[90%] sm:max-w-[60%]"
-            selectedItem={currentImageIndex}
-            onChange={setCurrentImageIndex}
-            infiniteLoop={true}
-            showArrows={true}
-            showIndicators={false}
-            showStatus={false}
-            interval={5000}
-            autoPlay={true}
-            stopOnHover
-          >
-            {product.masterVariant.images?.map((img, index: React.Key | null | undefined) => (
-              <div
-                key={index}
-                onClick={() => {
-                  setModalPreviewOpen(false);
-                }}
-              >
-                <img
-                className=' lg:max-h-[30rem] object-contain'
-                  src={img.url}
-                  alt={img.label}
-                />
-              </div>
-            ))}
-          </Carousel>
-        </div>
+          <div className="relative flex max-w-[90%] items-center justify-center rounded bg-white lg:max-w-[60rem]">
+            <button
+              className="absolute right-1 top-1  z-20 cursor-pointer rounded-full px-4 py-2 font-bold text-gray-700 hover:text-red-600"
+              onClick={() => {
+                setModalPreviewOpen(false);
+              }}
+            >
+              X
+            </button>
+            <Carousel
+              className="max-w-[90%] sm:max-w-[60%]"
+              selectedItem={currentImageIndex}
+              onChange={setCurrentImageIndex}
+              infiniteLoop={true}
+              showArrows={true}
+              showIndicators={false}
+              showStatus={false}
+              interval={5000}
+              autoPlay={true}
+              stopOnHover
+            >
+              {product.masterVariant.images?.map((img, index: React.Key | null | undefined) => (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setModalPreviewOpen(false);
+                  }}
+                >
+                  <img
+                    className=" object-contain lg:max-h-[30rem]"
+                    src={img.url}
+                    alt={img.label}
+                  />
+                </div>
+              ))}
+            </Carousel>
+          </div>
         </div>
       )}
     </div>
