@@ -17,7 +17,7 @@ export const getProductParams = (
 
   const rawDescription = product.description ?? '';
   const [description] = Object.values(rawDescription);
-  const id = product.id;
+  const { id } = product;
   const [prices] = variant.prices ?? [];
   const centsPerEur = 100;
 

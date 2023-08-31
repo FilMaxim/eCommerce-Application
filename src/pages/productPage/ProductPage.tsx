@@ -16,6 +16,7 @@ export const Product = () => {
 
   const fetchProduct = async (id: string) => {
     setIsLoading(true);
+    
     const newProduct = await getProduct(id);
     if (newProduct === undefined) return;
 
