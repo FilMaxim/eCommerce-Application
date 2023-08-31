@@ -26,7 +26,8 @@ export const Product = () => {
   useEffect(() => {
     if (id !== undefined) {
       fetchProduct(id).catch((error) => {
-        Error(error);
+        if (!(error instanceof Error)) return;
+        throw new Error(error.message);
       });
     }
   }, [id]);
@@ -57,7 +58,7 @@ export const Product = () => {
             ))}
           </Carousel>
         )}
-        {product == null && <div>Нет доступных изображений</div>}
+        {product === null && <div>Нет доступных изображений</div>}
       </div>
       {product?.description != null && product.masterVariant.prices !== undefined && (
         <div className={style.product__card}>
