@@ -5,7 +5,7 @@ import { type ProductProjection } from '@commercetools/platform-sdk';
 import { Carousel } from 'react-responsive-carousel';
 import { useParams } from 'react-router-dom';
 import { PriceTag } from '../../components/cards/productCard/PriceTag';
-import { Button } from '@mui/material';
+import { Button, Rating, Typography } from '@mui/material';
 
 export const Product = () => {
   const { id } = useParams();
@@ -16,7 +16,6 @@ export const Product = () => {
 
   const fetchProduct = async (id: string) => {
     setIsLoading(true);
-    
     const newProduct = await getProduct(id);
     if (newProduct === undefined) return;
 
@@ -69,7 +68,10 @@ export const Product = () => {
       <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:max-w-[70%] lg:w-[270px]">
         <div className="flex flex-col gap-2">
           <h1 className="bold text-2xl">{product.name['en-US']}</h1>
-          <p>Rating: *****</p>
+          <p className='flex gap-2 bold'>
+            <Typography component="legend">Rating:</Typography>
+            <Rating name="read-only" defaultValue={5} readOnly />
+          </p>
           {product.masterVariant.prices !== undefined && (
             <div className="flex justify-between">
               <PriceTag
@@ -84,7 +86,7 @@ export const Product = () => {
         <p>colors</p>
         <p>sizes</p>
         <Button
-          color="error"
+          color="secondary"
           className="w-full self-center"
           variant="contained"
         >
