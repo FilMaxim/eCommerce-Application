@@ -1,8 +1,7 @@
 /* eslint-disable */
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../utils/types';
-import { Box, Typography, Button } from '@mui/material';
-import Slider from '@mui/material/Slider';
+import { Box, Typography, Button, Slider, Stack, Input, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
@@ -115,6 +114,33 @@ export const FilterBar = () => {
               >
                 set a price
               </Typography>
+              <Stack
+                component="form"
+                direction="row"
+                spacing={2}
+                noValidate
+                autoComplete="off"
+              >
+                <TextField
+                  id="standard-number"
+                  label="From"
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  variant="standard"
+                />
+                <TextField
+                  color="error"
+                  id="standard-number"
+                  label="To"
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  variant="standard"
+                />
+              </Stack>
               <Field
                 component={PrettoSlider}
                 name="testSlider"
