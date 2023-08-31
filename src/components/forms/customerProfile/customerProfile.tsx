@@ -15,7 +15,7 @@ import { AddressComponent } from './customerFormData/Address';
 import { PasswordInput } from '../inputs/PasswordInput';
 
 export const CustomerProfile = () => {
-  const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
+  const customer = useSelector((state: { authData: RootState }) => state.authData.customer) as Customer;
   const { onPersonalDataSubmit, onAddressChangeSubmit, onPasswordChangeSubmit, onAddressDelete } =
     useUpdateCustomer();
   const personalDataInitialValues = getPersonalDataInitialValues(customer);

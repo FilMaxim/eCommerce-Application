@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik';
 import { PasswordInput } from '../inputs/PasswordInput';
-import { SubmitBtn } from '../inputs/SubmitBtn';
+import { SubmitBtn } from '../../buttons/SubmitBtn';
 import { validationsSchemaLogin } from '../util/validationSchema';
 import * as yup from 'yup';
 import { links } from '../../../utils/links';
@@ -26,7 +26,7 @@ export const LoginForm = () => {
         const { name, placeholder, type } = email;
         const { path } = links.registration;
         return (
-          <Form className="flex w-96 flex-col justify-center gap-2 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)] max-sm:w-56">
+          <Form className="flex max-w-sm flex-wrap items-center  justify-center rounded p-6">
             <Input
               name={name}
               placeholder={placeholder}
@@ -38,12 +38,12 @@ export const LoginForm = () => {
               placeholder="Password:"
               name="password"
             />
-            <SubmitBtn />
+            <SubmitBtn title="Log In" />
             <p className="mt-3 text-center text-[14px]">
               Don&#x27;t have an account?
               <Link
                 to={path}
-                className="text-link-color hover:text-hover-link"
+                className="text-secondary hover:text-red-600"
               >
                 {' '}
                 Create one
