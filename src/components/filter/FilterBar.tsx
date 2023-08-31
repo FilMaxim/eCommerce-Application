@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../utils/types';
 import { Box, Typography, Button, Slider, Stack, Input, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ChangeEvent } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
 import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
@@ -60,11 +60,20 @@ export const FilterBar = () => {
   const dispatch = useDispatch();
   const extremums = useSelector((state: { productsData: RootState }) => state.productsData.extremums);
 
+
   const proudctsData = useSelector((state: { productsData: RootState }) => state.productsData);
-  const values = proudctsData.cards.map(({ priceTag }) => {
-    const { discount, price } = priceTag;
-    return discount > 0 ? discount : price;
+  const attributes = proudctsData.cards.flatMap(({ attributes }) => {
+    return attributes;
   });
+
+  const CheckBoxes = () => {
+    return (
+      <>
+        {}
+      </>
+    )
+  }
+  console.log(attributes);
 
   const [startValue, endValue] = extremums;
 
@@ -75,7 +84,7 @@ export const FilterBar = () => {
   }, [startValue, endValue]);
 
   // console.log([startValue, endValue], sliderValue);
-  const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+  const handleChange1 = (event: Event, newValue: number | number[], activeThumb: number) => {
     event.preventDefault();
     const [newValue1, newValue2] = Array.isArray(newValue) ? newValue : [newValue, newValue];
 
@@ -87,7 +96,6 @@ export const FilterBar = () => {
 
   const handleRelease = async () => {
     const [from, to] = sliderValue;
-    console.log(from, to);
     const filter = `variants.price.centAmount:range(${from * 100} to ${to * 100})`;
     await updateProductsData(dispatch, fetchFilteredProducts, filter);
     await fetchFilteredProducts(filter);
@@ -104,15 +112,15 @@ export const FilterBar = () => {
           setSubmitting(false);
         }}
       >
-        {({ submitForm, isSubmitting, touched, errors, values }) => (
-          <Form>
+        {({ submitForm, isSubmitting, touched, errors, values, handleChange }) => (
+          <div> {/* Используйте <div> вместо <form> */}
             <Box sx={{ width: 300 }}>
               <Typography
                 id="discrete-slider-small-steps"
                 variant="h2"
                 gutterBottom
               >
-                set a price
+                Установите цену
               </Typography>
               <Stack
                 component="form"
@@ -129,9 +137,13 @@ export const FilterBar = () => {
                     shrink: true
                   }}
                   variant="standard"
+                  onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                    const { value } = e.target;
+                    setSliderValue([Number(value), endValue]);
+                  }}
                 />
                 <TextField
-                  color="error"
                   id="standard-number"
                   label="To"
                   type="number"
@@ -139,13 +151,18 @@ export const FilterBar = () => {
                     shrink: true
                   }}
                   variant="standard"
+                  onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                    const { value } = e.target;
+                    setSliderValue([startValue, Number(value)]);
+                  }}
                 />
               </Stack>
               <Field
                 component={PrettoSlider}
                 name="testSlider"
                 value={sliderValue}
-                onChange={handleChange}
+                onChange={handleChange1}
                 valueLabelDisplay="auto"
                 getAriaValueText={valuetext}
                 aria-labelledby="discrete-slider-restrict"
@@ -159,14 +176,14 @@ export const FilterBar = () => {
               variant="contained"
               color="primary"
               disabled={isSubmitting}
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={submitForm}
             >
-              Submit
+              {`show (${proudctsData.cards.length})`}
             </Button>
-          </Form>
+          </div>
         )}
       </Formik>
+
     </div>
   );
 };

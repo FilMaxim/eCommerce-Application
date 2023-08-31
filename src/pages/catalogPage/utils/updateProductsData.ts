@@ -13,7 +13,6 @@ const normalizeData = (productsData: ProductProjectionPagedQueryResponse) => {
       : [];
 
     const masterVariantParams = getProductParams(product, product.masterVariant);
-
     return [...productParams, masterVariantParams];
   });
 };
@@ -27,7 +26,6 @@ export const updateProductsData = async (
 ): Promise<void> => {
   const productsData = await fetchData(quertString);
   const normalisedData = normalizeData(productsData);
-  console.log(normalisedData);
 
   dispatch(setProductsData(normalisedData));
 };

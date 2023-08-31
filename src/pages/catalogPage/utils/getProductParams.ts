@@ -26,5 +26,6 @@ export const getProductParams = (product: ProductDraft, variant: ProductVariant)
 
   const priceTag = { price: normalizedPrice, discount: normalizedDiscount };
 
-  return { url, name, description, priceTag };
+  const attributes = variant.attributes;
+  return { url, name, description, priceTag, attributes };
 };
