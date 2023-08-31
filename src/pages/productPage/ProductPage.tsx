@@ -44,16 +44,19 @@ export const Product = () => {
             showArrows={true}
             showIndicators={false}
             showStatus={false}
+            interval={5000}
+            autoPlay={true}
+            stopOnHover
           >
-            {product.masterVariant.images?.map((image, index) => (
+            {product.masterVariant.images?.map((image) => (
               <div
                 className={style.foto}
-                key={index}
+                key={id}
                 onClick={() => {
                   setModalPreviewOpen(true);
                 }}
               >
-                <img src={image.url} />
+                <img src={image.url} alt={image.label} />
               </div>
             ))}
           </Carousel>
