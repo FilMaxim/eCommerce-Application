@@ -14,9 +14,9 @@ export const Product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductProjection | undefined>(undefined);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const [modalPreviewOpen, setModalPreviewOpen] = useState(false);
+  const [modalPreviewOpen, setModalPreviewOpen] = useState<boolean>(false);
 
-  const fetchProduct = async (id: string) => {
+  const fetchProduct = async (id: string): Promise<void> => {
     const newProduct = await getProduct(id);
     setProduct(newProduct);
   };
@@ -51,12 +51,12 @@ export const Product = () => {
             ))}
           </Carousel>
         )}
-        {product == null && <div>Нет доступных изображений</div>}
+        {product == null && <div>No images available</div>}
       </div>
       {product?.description != null && product.masterVariant.prices !== undefined && (
         <div className="product__card">
           <h1 className="product__title">{product.name['en-US']}</h1>
-          <p className='product__desc'>{product.description['en-US']}</p>
+          <p className="product__desc">{product.description['en-US']}</p>
           <PriceTag
             price={product.masterVariant.prices[0].value.centAmount / 100}
             discount={Number(product.masterVariant.prices[0].discounted?.value?.centAmount) / 100}
