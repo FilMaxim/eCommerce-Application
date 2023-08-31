@@ -15,12 +15,15 @@ export const Product = () => {
   const [product, setProduct] = useState<ProductProjection | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [modalPreviewOpen, setModalPreviewOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchProduct = async (id: string) => {
+    setIsLoading(true);
     const newProduct = await getProduct(id);
     if (newProduct === undefined) return;
 
     setProduct(newProduct);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -31,6 +34,8 @@ export const Product = () => {
       });
     }
   }, [id]);
+
+  if (isLoading) return <div className="text-center text-2xl">Loading...</div>; // todo: add cool loader component
 
   if (product === null) return <div className="text-center text-2xl">Can&apos;t find product</div>;
 
