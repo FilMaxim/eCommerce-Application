@@ -10,7 +10,7 @@ export const PrivateNavGroup = ({ isLogged, logout }: PrivateNavGroupProps) => {
       {linksData.map((item) => (
         <li
           key={item.text}
-          className="hover:opacity-70 p-1"
+          className="p-1 hover:opacity-70"
         >
           <Link
             to={item.path}

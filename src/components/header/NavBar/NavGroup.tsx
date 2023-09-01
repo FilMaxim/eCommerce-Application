@@ -2,7 +2,7 @@ import { links } from '../../../utils/links';
 import { Link } from 'react-router-dom';
 
 export const NavGroup = () => {
-  const linksData = [links.main, links.about, links.contacts, links.catalog];
+  const linksData = [links.main, links.catalog, links.about, links.contacts];
   return (
     <>
       {linksData.map((item) => (
