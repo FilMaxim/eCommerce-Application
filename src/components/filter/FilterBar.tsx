@@ -8,6 +8,10 @@ import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
 import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import styled from '@emotion/styled';
 import { updateProductsData } from '../../pages/catalogPage/utils/updateProductsData';
+import _ from 'lodash';
+import { CheckboxWithLabel } from 'formik-material-ui';
+
+import { FormLabel, FormControl, FormGroup } from '@material-ui/core';
 
 // const fetchData = async (filter: string): Promise<void> => {
 //   const data = await getFilteredProducts(filter)
@@ -60,20 +64,29 @@ export const FilterBar = () => {
   const dispatch = useDispatch();
   const extremums = useSelector((state: { productsData: RootState }) => state.productsData.extremums);
 
-
   const proudctsData = useSelector((state: { productsData: RootState }) => state.productsData);
-  const attributes = proudctsData.cards.flatMap(({ attributes }) => {
+
+  const attributesCollection = proudctsData.cards.flatMap(({ attributes }) => {
     return attributes;
   });
 
+  const uniqueKeys = attributesCollection
+    .map((item) => item?.name)
+    .filter((item, index, arr) => index === arr.indexOf(item));
+
+  const attributesList = uniqueKeys.map((key) => {
+    const values = attributesCollection
+      .filter((item) => item?.name === key)
+      .flatMap((item) => item?.value)
+      .filter((item, index, arr) => index === arr.indexOf(item));
+    return { ['name']: key, ['attributes']: values };
+  }, []);
+
+  console.log(attributesList);
+
   const CheckBoxes = () => {
-    return (
-      <>
-        {}
-      </>
-    )
-  }
-  console.log(attributes);
+    return <>{}</>;
+  };
 
   const [startValue, endValue] = extremums;
 
@@ -113,77 +126,98 @@ export const FilterBar = () => {
         }}
       >
         {({ submitForm, isSubmitting, touched, errors, values, handleChange }) => (
-          <div> {/* Используйте <div> вместо <form> */}
-            <Box sx={{ width: 300 }}>
-              <Typography
-                id="discrete-slider-small-steps"
-                variant="h2"
-                gutterBottom
-              >
-                Установите цену
-              </Typography>
-              <Stack
-                component="form"
-                direction="row"
-                spacing={2}
-                noValidate
-                autoComplete="off"
-              >
-                <TextField
-                  id="standard-number"
-                  label="From"
-                  type="number"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  variant="standard"
-                  onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-                    const { value } = e.target;
-                    setSliderValue([Number(value), endValue]);
-                  }}
-                />
-                <TextField
-                  id="standard-number"
-                  label="To"
-                  type="number"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  variant="standard"
-                  onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-                  onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-                    const { value } = e.target;
-                    setSliderValue([startValue, Number(value)]);
-                  }}
-                />
-              </Stack>
-              <Field
-                component={PrettoSlider}
-                name="testSlider"
-                value={sliderValue}
-                onChange={handleChange1}
-                valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
-                aria-labelledby="discrete-slider-restrict"
-                onChangeCommitted={handleRelease}
-                min={startValue}
-                max={endValue}
-                disableSwap
-              />
-            </Box>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={isSubmitting}
-              onClick={submitForm}
-            >
-              {`show (${proudctsData.cards.length})`}
-            </Button>
-          </div>
+          <FormControl
+            component="fieldset"
+            style={{ display: 'flex' }}
+          >
+            {attributesList.map((attributes) => (
+              <>
+                <FormLabel component="legend">{attributes.name}</FormLabel>
+                <FormGroup>
+                  {attributes.attributes.map((attr) => (
+                    <Field
+                      type="checkbox"
+                      component={CheckboxWithLabel}
+                      name="numbers"
+                      key={attr}
+                      value={`${attr}`}
+                      Label={{ label: `${attr}` }}
+                    />
+                  ))}
+                </FormGroup>
+              </>
+            ))}
+          </FormControl>
+          // <div> {/* Используйте <div> вместо <form> */}
+          //   <Box sx={{ width: 300 }}>
+          //     <Typography
+          //       id="discrete-slider-small-steps"
+          //       variant="h2"
+          //       gutterBottom
+          //     >
+          //       Установите цену
+          //     </Typography>
+          //     <Stack
+          //       component="form"
+          //       direction="row"
+          //       spacing={2}
+          //       noValidate
+          //       autoComplete="off"
+          //     >
+          //       <TextField
+          //         id="standard-number"
+          //         label="From"
+          //         type="number"
+          //         InputLabelProps={{
+          //           shrink: true
+          //         }}
+          //         variant="standard"
+          //         onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+          //         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+          //           const { value } = e.target;
+          //           setSliderValue([Number(value), endValue]);
+          //         }}
+          //       />
+          //       <TextField
+          //         id="standard-number"
+          //         label="To"
+          //         type="number"
+          //         InputLabelProps={{
+          //           shrink: true
+          //         }}
+          //         variant="standard"
+          //         onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+          //         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+          //           const { value } = e.target;
+          //           setSliderValue([startValue, Number(value)]);
+          //         }}
+          //       />
+          //     </Stack>
+          //     <Field
+          //       component={PrettoSlider}
+          //       name="testSlider"
+          //       value={sliderValue}
+          //       onChange={handleChange1}
+          //       valueLabelDisplay="auto"
+          //       getAriaValueText={valuetext}
+          //       aria-labelledby="discrete-slider-restrict"
+          //       onChangeCommitted={handleRelease}
+          //       min={startValue}
+          //       max={endValue}
+          //       disableSwap
+          //     />
+          //   </Box>
+          //   <Button
+          //     variant="contained"
+          //     color="primary"
+          //     disabled={isSubmitting}
+          //     onClick={submitForm}
+          //   >
+          //     {`show (${proudctsData.cards.length})`}
+          //   </Button>
+          // </div>
         )}
       </Formik>
-
     </div>
   );
 };
