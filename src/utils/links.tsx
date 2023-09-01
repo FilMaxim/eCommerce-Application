@@ -24,21 +24,21 @@ export const links = {
   login: {
     text: 'LogIn',
     path: NavRoutes.loginPagePath,
-    icon: LoginOutlinedIcon
+    icon: <LoginOutlinedIcon color='secondary'/>
   },
   logout: {
     text: 'Logout',
     path: NavRoutes.mainPagePath,
-    icon: LogoutOutlinedIcon
+    icon: <LogoutOutlinedIcon color='secondary'/>
   },
   profile: {
     text: 'Profile',
     path: NavRoutes.profilePagePath,
-    icon: PermIdentityOutlinedIcon
+    icon: <PermIdentityOutlinedIcon color='secondary'/>
   },
   registration: {
     text: 'Registration',
     path: NavRoutes.registrationPagePath,
-    icon: HowToRegOutlinedIcon
+    icon: <HowToRegOutlinedIcon color='secondary'/>
   }
 };

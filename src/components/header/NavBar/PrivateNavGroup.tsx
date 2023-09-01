@@ -10,15 +10,13 @@ export const PrivateNavGroup = ({ isLogged, logout }: PrivateNavGroupProps) => {
       {linksData.map((item) => (
         <li
           key={item.text}
-          className="rounded-lg border border-black hover:bg-slate-200"
+          className="hover:opacity-70 p-1"
         >
           <Link
             to={item.path}
-            className="flex items-center gap-1 px-2 py-1 text-sm font-semibold leading-6 text-gray-900"
             onClick={item.text === 'Logout' ? logout : undefined}
           >
-            <item.icon className="h-6 w-6" />
-            {item.text}
+            {item.icon}
           </Link>
         </li>
       ))}
