@@ -14,11 +14,11 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
   return (
     <Dialog
       as="div"
-      className="text-secondary sm:hidden"
+      className="text-secondary sm:hidden overflow-hidden"
       open={mobileMenuOpen}
       onClose={setMobileMenuOpen}
     >
-      <Dialog.Panel className="fixed inset-y-0 right-0 z-10 flex w-full flex-col overflow-y-auto bg-black px-6 py-6 sm:max-w-sm">
+      <Dialog.Panel className="fixed inset-0 z-10 flex flex-col overflow-y-auto bg-black p-6 bg-burger-bender bg-[length:200px_400px] bg-right-bottom bg-no-repeat">
         <div className="mx-[-8px] mt-[-8px] flex items-center justify-between">
           <Logo />
           <BurgerCloseBtn clickHandler={setMobileMenuOpen} />
@@ -26,7 +26,7 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
         <ul className="nav-burger">
           <NavGroup />
         </ul>
-        <ul className="mt-auto flex flex-col items-center gap-2">
+        <ul className="mt-auto flex items-center gap-2">
           <PrivateNavGroup
             isLogged={isLogged}
             logout={logout}
