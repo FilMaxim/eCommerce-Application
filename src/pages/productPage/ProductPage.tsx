@@ -37,8 +37,8 @@ export const Product = () => {
   if (isLoading) return <div className="text-center text-2xl">Loading...</div>; // todo: add cool loader component
 
   if (product === null) return <div className="text-center text-2xl">Can&apos;t find product</div>;
-  const rating = product.attributes?.find(obj => obj.name === 'rating');
-  const color = product.attributes?.find(obj => obj.name === 'color');
+  const rating = product.attributes?.find((obj) => obj.name === 'rating');
+  const color = product.attributes?.find((obj) => obj.name === 'color');
   return (
     <div className="flex flex-wrap justify-center gap-8 p-1 sm:p-4">
       <Carousel
@@ -61,7 +61,7 @@ export const Product = () => {
             }}
           >
             <img
-              className="max-h-[20rem] object-contain h-full"
+              className="h-full max-h-[20rem] object-contain"
               src={image.url}
               alt={image.label}
             />
@@ -70,18 +70,17 @@ export const Product = () => {
       </Carousel>
       <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:max-w-[70%] lg:w-[350px]">
         <div className="flex flex-col gap-2">
-          <h1 className="font-bold text-2xl">{product.name}</h1>
-          {
-            rating !== undefined && (
-              <p>
-                <Rating
-                  name="read-only"
-                  precision={0.1}
-                  defaultValue={rating.value}
-                  readOnly />
-              </p>
-            )
-          }
+          <h1 className="text-2xl font-bold">{product.name}</h1>
+          {rating !== undefined && (
+            <p>
+              <Rating
+                name="read-only"
+                precision={0.1}
+                defaultValue={rating.value}
+                readOnly
+              />
+            </p>
+          )}
           {product.priceTag !== undefined && (
             <div className="flex justify-between">
               <PriceTag
@@ -94,8 +93,8 @@ export const Product = () => {
           <hr />
         </div>
         {color !== undefined && (
-          <p className='flex gap-3 items-center bold '>
-            <span className='font-bold'>Colours:</span>
+          <p className="bold flex items-center gap-3 ">
+            <span className="font-bold">Colours:</span>
             {color.value.map((colorName: string) => {
               return (
                 <Box
@@ -107,10 +106,10 @@ export const Product = () => {
                     height: 20,
                     borderRadius: '50%',
                     border: 2
-                  }} />
+                  }}
+                />
               );
-            })
-            }
+            })}
           </p>
         )}
         <Button
