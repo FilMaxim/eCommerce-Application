@@ -14,12 +14,12 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
   return (
     <Dialog
       as="div"
-      className="lg:hidden"
+      className="sm:hidden text-secondary"
       open={mobileMenuOpen}
       onClose={setMobileMenuOpen}
     >
-      <Dialog.Panel className=" fixed inset-y-0 right-0 z-10 flex w-full flex-col overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-        <div className="flex items-center justify-between">
+      <Dialog.Panel className="fixed inset-y-0 right-0 z-10 flex w-full flex-col overflow-y-auto bg-black px-6 py-6 sm:max-w-sm">
+        <div className="flex items-center justify-between mt-[-8px] mx-[-8px]">
           <Logo />
           <BurgerCloseBtn clickHandler={setMobileMenuOpen} />
         </div>
