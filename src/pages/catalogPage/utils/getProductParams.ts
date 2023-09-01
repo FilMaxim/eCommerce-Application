@@ -29,5 +29,9 @@ export const getProductParams = (
 
   const priceTag = { price: normalizedPrice, discount: normalizedDiscount };
 
-  return { url, name, description, priceTag, id };
+  const images = variant.images;
+
+  const attributes = variant.attributes;
+
+  return { url, name, description, priceTag, id, images, attributes };
 };

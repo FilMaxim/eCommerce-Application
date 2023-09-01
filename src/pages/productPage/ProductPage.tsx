@@ -1,15 +1,18 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
+import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.css';
 import { getProduct } from '../../helpers/api/apiRoot';
-import { type ProductProjection } from '@commercetools/platform-sdk';
-import { Carousel } from 'react-responsive-carousel';
 import { useParams } from 'react-router-dom';
+import { Button, Rating } from '@mui/material';
+import { getProductParams } from '../catalogPage/utils/getProductParams';
+import { type ProductsDataInterface } from '../../utils/types';
 import { PriceTag } from '../../components/cards/productCard/PriceTag';
-import { Button, Rating, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
 
 export const Product = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState<ProductProjection | null>(null);
+  const [product, setProduct] = useState<ProductsDataInterface | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [modalPreviewOpen, setModalPreviewOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -18,8 +21,7 @@ export const Product = () => {
     setIsLoading(true);
     const newProduct = await getProduct(id);
     if (newProduct === undefined) return;
-
-    setProduct(newProduct);
+    setProduct(getProductParams(newProduct, newProduct.masterVariant));
     setIsLoading(false);
   };
 
@@ -35,7 +37,8 @@ export const Product = () => {
   if (isLoading) return <div className="text-center text-2xl">Loading...</div>; // todo: add cool loader component
 
   if (product === null) return <div className="text-center text-2xl">Can&apos;t find product</div>;
-
+  const rating = product.attributes?.find(obj => obj.name === 'rating');
+  const color = product.attributes?.find(obj => obj.name === 'color');
   return (
     <div className="flex flex-wrap justify-center gap-8 p-1 sm:p-4">
       <Carousel
@@ -50,7 +53,7 @@ export const Product = () => {
         autoPlay={true}
         stopOnHover
       >
-        {product.masterVariant.images?.map((image) => (
+        {product.images?.map((image) => (
           <div
             key={id}
             onClick={() => {
@@ -58,33 +61,58 @@ export const Product = () => {
             }}
           >
             <img
-              className="max-h-[20rem] object-contain"
+              className="max-h-[20rem] object-contain h-full"
               src={image.url}
               alt={image.label}
             />
           </div>
         ))}
       </Carousel>
-      <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:max-w-[70%] lg:w-[270px]">
+      <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:max-w-[70%] lg:w-[350px]">
         <div className="flex flex-col gap-2">
-          <h1 className="bold text-2xl">{product.name['en-US']}</h1>
-          <p className='flex gap-2 bold'>
-            <Typography component="legend">Rating:</Typography>
-            <Rating name="read-only" defaultValue={5} readOnly />
-          </p>
-          {product.masterVariant.prices !== undefined && (
+          <h1 className="font-bold text-2xl">{product.name}</h1>
+          {
+            rating !== undefined && (
+              <p>
+                <Rating
+                  name="read-only"
+                  precision={0.1}
+                  defaultValue={rating.value}
+                  readOnly />
+              </p>
+            )
+          }
+          {product.priceTag !== undefined && (
             <div className="flex justify-between">
               <PriceTag
-                price={product.masterVariant.prices[0].value.centAmount / 100}
-                discount={Number(product.masterVariant.prices[0].discounted?.value?.centAmount) / 100}
+                price={product.priceTag.price}
+                discount={product.priceTag.discount}
               />
             </div>
           )}
-          <p className="">{product.description?.['en-US']}</p>
+          <p className="">{product.description}</p>
           <hr />
         </div>
-        <p>colors</p>
-        <p>sizes</p>
+        {color !== undefined && (
+          <p className='flex gap-3 items-center bold '>
+            <span className='font-bold'>Colours:</span>
+            {color.value.map((colorName: string) => {
+              return (
+                <Box
+                  key={colorName}
+                  component="span"
+                  sx={{
+                    bgcolor: colorName,
+                    width: 20,
+                    height: 20,
+                    borderRadius: '50%',
+                    border: 2
+                  }} />
+              );
+            })
+            }
+          </p>
+        )}
         <Button
           color="secondary"
           className="w-full self-center"
@@ -123,7 +151,7 @@ export const Product = () => {
               autoPlay={true}
               stopOnHover
             >
-              {product.masterVariant.images?.map((img, index: React.Key | null | undefined) => (
+              {product.images?.map((img, index: React.Key | null | undefined) => (
                 <div
                   key={index}
                   onClick={() => {

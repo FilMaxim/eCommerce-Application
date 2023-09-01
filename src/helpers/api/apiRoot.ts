@@ -94,7 +94,6 @@ export const updateCustomer = async (
 export const getProduct = async (id: string): Promise<ProductProjection | undefined> => {
   try {
     const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
-    console.log(response.body);
     return response.body;
   } catch (error) {
     console.log(error);
