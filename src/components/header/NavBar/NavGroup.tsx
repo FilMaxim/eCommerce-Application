@@ -6,7 +6,10 @@ export const NavGroup = () => {
   return (
     <>
       {linksData.map((item) => (
-        <li key={item.text}>
+        <li
+          key={item.text}
+          className="hover:opacity-70"
+        >
           <Link to={item.path}>{item.text}</Link>
         </li>
       ))}
