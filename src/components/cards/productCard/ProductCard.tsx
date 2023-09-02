@@ -74,7 +74,7 @@ export const ProductCard = ({
         sx={{
           display: 'flex',
           padding: priceTagPadding,
-          // gap: '12px'
+          gap: '12px',
           justifyContent: 'space-between'
         }}
       >

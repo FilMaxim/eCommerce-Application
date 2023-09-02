@@ -55,7 +55,7 @@ export const Product = () => {
       >
         {product.images?.map((image) => (
           <div
-            key={id}
+            key={image.url}
             onClick={() => {
               setModalPreviewOpen(true);
             }}
@@ -150,9 +150,9 @@ export const Product = () => {
               autoPlay={true}
               stopOnHover
             >
-              {product.images?.map((img, index: React.Key | null | undefined) => (
+              {product.images?.map((img) => (
                 <div
-                  key={index}
+                  key={img.url}
                   onClick={() => {
                     setModalPreviewOpen(false);
                   }}
