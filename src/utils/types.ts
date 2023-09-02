@@ -3,7 +3,7 @@ import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
 import type { ComponentType } from 'react';
 import type { ButtonProps } from '@mui/material';
-import type { Attribute, Customer } from '@commercetools/platform-sdk';
+import type { Attribute, Customer, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 
 interface UserName {
   firstName: string;
@@ -175,11 +175,16 @@ export interface ProductCardInterface extends PriceTagInterface {
   description: string;
 }
 
+export interface CategoiesList {
+  name: string;
+  id: string;
+}
+
 export interface ContainerProps {
   titleName: string;
   titleDescription?: string;
   buttons: Array<ComponentType<ButtonProps>>;
-  categoriesList: string[];
+  categoriesList: CategoiesList[];
 }
 
 export type Mapping = Record<string, string>;
@@ -248,4 +253,25 @@ export interface AddressComponentProps {
   initialValues: AddressesInitialValues[];
   validationSchema: yup.Schema;
   onDelete?: (id: string) => Promise<void>;
+}
+
+export interface CategoriesContextInterface {
+  categoryId: string;
+  setCategoryId: (newString: string) => void;
+}
+
+export type FetcDataType = (
+  quertString?: string | string[] | undefined
+) => Promise<ProductProjectionPagedQueryResponse>;
+
+export type NormolizeDataType = (productData: ProductProjectionPagedQueryResponse) => void;
+
+export interface AttributesList {
+  name: string;
+  attributes: Attribute[];
+}
+
+export interface SelectedAttribute {
+  name: string;
+  value: string;
 }

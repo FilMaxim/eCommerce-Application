@@ -1,221 +1,169 @@
 /* eslint-disable */
+import '../../i18n';
+
+import styles from './FilterBar.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../utils/types';
-import { Box, Typography, Button, Slider, Stack, Input, TextField } from '@mui/material';
-import { useEffect, useState, type ChangeEvent } from 'react';
-import { Formik, Form, Field } from 'formik';
+import type { RootState, SelectedAttribute } from '../../utils/types';
+import { Typography, Button, Stack } from '@mui/material';
+import { useEffect, useState, useMemo, type ChangeEvent } from 'react';
+import { Formik, Field } from 'formik';
 import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
-import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
-import styled from '@emotion/styled';
-import { updateProductsData } from '../../pages/catalogPage/utils/updateProductsData';
-import _ from 'lodash';
+
 import { CheckboxWithLabel } from 'formik-material-ui';
 
 import { FormLabel, FormControl, FormGroup } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
-// const fetchData = async (filter: string): Promise<void> => {
-//   const data = await getFilteredProducts(filter)
-//   // console.log(data.results)
-// }
+import { useCategoryId } from '../../hooks/useCategoryId';
+import { updateProductsData } from '../../pages/catalogPage/utils/updateData';
+import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
+import { PrettoSlider } from './utils/PrettoSlider';
 
-const PrettoSlider = styled(Slider)({
-  color: '#DB4444',
-  height: 8,
-  '& .MuiSlider-track': {
-    border: 'none'
-  },
-  '& .MuiSlider-thumb': {
-    height: 24,
-    width: 24,
-    backgroundColor: '#000',
-    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-      boxShadow: 'inherit'
-    },
-    '&:before': {
-      display: 'none'
-    }
-  },
-  '& .MuiSlider-valueLabel': {
-    lineHeight: 1.2,
-    fontSize: 12,
-    background: 'unset',
-    padding: 0,
-    width: 32,
-    height: 32,
-    borderRadius: '50% 50% 50% 0',
-    backgroundColor: '#DB4444',
-    transformOrigin: 'bottom left',
-    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
-    '&:before': { display: 'none' },
-    '&.MuiSlider-valueLabelOpen': {
-      transform: 'translate(50%, -100%) rotate(-45deg) scale(1)'
-    },
-    '& > *': {
-      transform: 'rotate(45deg)'
-    }
-  }
-});
-
+import { getAttributesList } from './utils/getAttributesList';
+import { handleCheckboxChange } from './utils/handleCheckboxChange';
+import { handleSliderChange } from './utils/handleSliderChange';
+import { buildQueryString } from './utils/buildQueryString';
+import { CustomTextField } from './CustomTextfield';
 export const FilterBar = () => {
-  const valuetext = (value: number) => {
-    return `${value}°C`;
-  };
-
   const dispatch = useDispatch();
+
   const extremums = useSelector((state: { productsData: RootState }) => state.productsData.extremums);
+  const productsData = useSelector((state: { productsData: RootState }) => state.productsData);
 
-  const proudctsData = useSelector((state: { productsData: RootState }) => state.productsData);
+  const [selectedAttributes, setSelectedAttributes] = useState<SelectedAttribute[]>([
+    { name: '', value: '' }
+  ]);
+  const [prouctsCount, setCount] = useState(productsData.cards.length);
+  const [sliderValue, setSliderValue] = useState<number[]>([0, 0]);
 
-  const attributesCollection = proudctsData.cards.flatMap(({ attributes }) => {
-    return attributes;
-  });
-
-  const uniqueKeys = attributesCollection
-    .map((item) => item?.name)
-    .filter((item, index, arr) => index === arr.indexOf(item));
-
-  const attributesList = uniqueKeys.map((key) => {
-    const values = attributesCollection
-      .filter((item) => item?.name === key)
-      .flatMap((item) => item?.value)
-      .filter((item, index, arr) => index === arr.indexOf(item));
-    return { ['name']: key, ['attributes']: values };
-  }, []);
-
-  console.log(attributesList);
-
-  const CheckBoxes = () => {
-    return <>{}</>;
-  };
+  const { categoryId } = useCategoryId();
 
   const [startValue, endValue] = extremums;
-
-  const [sliderValue, setSliderValue] = useState<number[]>([0, 0]);
 
   useEffect(() => {
     setSliderValue([startValue, endValue]);
   }, [startValue, endValue]);
 
-  // console.log([startValue, endValue], sliderValue);
-  const handleChange1 = (event: Event, newValue: number | number[], activeThumb: number) => {
-    event.preventDefault();
-    const [newValue1, newValue2] = Array.isArray(newValue) ? newValue : [newValue, newValue];
+  const [minValue, maxValue] = sliderValue;
 
-    setSliderValue([
-      activeThumb === 0 ? Math.min(newValue1, sliderValue[1]) : sliderValue[0],
-      activeThumb === 1 ? Math.max(newValue2, sliderValue[0]) : sliderValue[1]
-    ]);
-  };
+  const priceFilter = `variants.price.centAmount:range(${minValue * 100} to ${maxValue * 100})`;
+  const attributesFilter = buildQueryString(selectedAttributes);
+  const catecoryFilter = categoryId.length > 0 ? `categories.id:"${categoryId}"` : '';
+  const filter = useMemo(
+    () => [catecoryFilter, priceFilter, ...attributesFilter],
+    [priceFilter, attributesFilter, catecoryFilter]
+  );
 
-  const handleRelease = async () => {
-    const [from, to] = sliderValue;
-    const filter = `variants.price.centAmount:range(${from * 100} to ${to * 100})`;
-    await updateProductsData(dispatch, fetchFilteredProducts, filter);
-    await fetchFilteredProducts(filter);
-    // console.log(data, 'data');
-  };
+  useEffect(() => {
+    const handleRelease = async () => {
+      const data = (await fetchFilteredProducts(filter)).results;
+      setCount(data.length);
+    };
+
+    handleRelease().catch((error) => {
+      throw error;
+    });
+  }, [filter]);
+
+  const { t } = useTranslation();
+  const attributesList = getAttributesList(productsData);
 
   return (
     <div>
       <Formik
         initialValues={{
-          minValue: 1
+          minValue: 1,
+          numbers: []
         }}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (_values, { setSubmitting }): Promise<void> => {
           setSubmitting(false);
+          await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter);
         }}
       >
-        {({ submitForm, isSubmitting, touched, errors, values, handleChange }) => (
+        {({ submitForm, handleChange }) => (
           <FormControl
             component="fieldset"
-            style={{ display: 'flex' }}
+            style={{
+              gap: '2rem',
+              padding: '20px',
+              borderLeft: '1px solid rgba(0, 0, 0, 0.1)'
+            }}
           >
-            {attributesList.map((attributes) => (
-              <>
-                <FormLabel component="legend">{attributes.name}</FormLabel>
+            <Typography
+              id="discrete-slider-small-steps"
+              variant="h2"
+              gutterBottom
+            >
+              Set a price
+            </Typography>
+            <Stack
+              component="form"
+              direction="row"
+              spacing={2}
+              noValidate
+              autoComplete="off"
+            >
+              <CustomTextField
+                value={`${minValue}`}
+                currentValue={endValue}
+                initValue="startValue"
+                setSliderValue={setSliderValue}
+              />
+              <CustomTextField
+                value={`${maxValue}`}
+                currentValue={startValue}
+                initValue="endValue"
+                setSliderValue={setSliderValue}
+              />
+            </Stack>
+            <Field
+              component={PrettoSlider}
+              name="testSlider"
+              value={sliderValue}
+              onChange={(event: Event, newValue: number | number[], activeThumb: number): void => {
+                handleSliderChange(event, newValue, activeThumb, sliderValue, setSliderValue);
+              }}
+              valueLabelDisplay="auto"
+              aria-labelledby="discrete-slider-restrict"
+              min={startValue}
+              max={endValue}
+              disableSwap
+            />
+            {attributesList.map(({ name, attributes }, i) => (
+              <div
+                className={styles.group}
+                key={`attributes-${i}`}
+              >
+                <FormLabel component="legend">{t(`attributes.${name}.title`)}</FormLabel>
                 <FormGroup>
-                  {attributes.attributes.map((attr) => (
+                  {attributes.map((attr, index) => (
                     <Field
                       type="checkbox"
                       component={CheckboxWithLabel}
                       name="numbers"
-                      key={attr}
-                      value={`${attr}`}
-                      Label={{ label: `${attr}` }}
+                      key={`${attr.name}-${index}`}
+                      value={`${attr.name}`}
+                      Label={{ label: `${t(`attributes.${name}.${attr}`)}` }}
+                      onChange={(e: ChangeEvent) => {
+                        handleChange(e);
+                        handleCheckboxChange(
+                          { name: `${name}`, value: `${attr}` },
+                          selectedAttributes,
+                          setSelectedAttributes
+                        );
+                      }}
                     />
                   ))}
                 </FormGroup>
-              </>
+              </div>
             ))}
+            <Button
+              variant="contained"
+              onClick={submitForm}
+            >
+              {`show (${prouctsCount})`}
+            </Button>
           </FormControl>
-          // <div> {/* Используйте <div> вместо <form> */}
-          //   <Box sx={{ width: 300 }}>
-          //     <Typography
-          //       id="discrete-slider-small-steps"
-          //       variant="h2"
-          //       gutterBottom
-          //     >
-          //       Установите цену
-          //     </Typography>
-          //     <Stack
-          //       component="form"
-          //       direction="row"
-          //       spacing={2}
-          //       noValidate
-          //       autoComplete="off"
-          //     >
-          //       <TextField
-          //         id="standard-number"
-          //         label="From"
-          //         type="number"
-          //         InputLabelProps={{
-          //           shrink: true
-          //         }}
-          //         variant="standard"
-          //         onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-          //         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-          //           const { value } = e.target;
-          //           setSliderValue([Number(value), endValue]);
-          //         }}
-          //       />
-          //       <TextField
-          //         id="standard-number"
-          //         label="To"
-          //         type="number"
-          //         InputLabelProps={{
-          //           shrink: true
-          //         }}
-          //         variant="standard"
-          //         onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-          //         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-          //           const { value } = e.target;
-          //           setSliderValue([startValue, Number(value)]);
-          //         }}
-          //       />
-          //     </Stack>
-          //     <Field
-          //       component={PrettoSlider}
-          //       name="testSlider"
-          //       value={sliderValue}
-          //       onChange={handleChange1}
-          //       valueLabelDisplay="auto"
-          //       getAriaValueText={valuetext}
-          //       aria-labelledby="discrete-slider-restrict"
-          //       onChangeCommitted={handleRelease}
-          //       min={startValue}
-          //       max={endValue}
-          //       disableSwap
-          //     />
-          //   </Box>
-          //   <Button
-          //     variant="contained"
-          //     color="primary"
-          //     disabled={isSubmitting}
-          //     onClick={submitForm}
-          //   >
-          //     {`show (${proudctsData.cards.length})`}
-          //   </Button>
-          // </div>
         )}
       </Formik>
     </div>

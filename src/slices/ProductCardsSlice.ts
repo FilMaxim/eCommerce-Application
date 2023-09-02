@@ -3,14 +3,14 @@ import type { InitialProductsStateInterace } from '../utils/types';
 
 const initialState: InitialProductsStateInterace = {
   cards: [],
-  extremums: []
+  extremums: [0, 0]
 };
 
 const productCardsSlice = createSlice({
   name: 'productsData',
   initialState,
   reducers: {
-    setProductsData: (state, { payload }) => {
+    setProducts: (state, { payload }) => {
       state.cards = payload;
     },
     setExtremums: (state, { payload }) => {
@@ -19,5 +19,5 @@ const productCardsSlice = createSlice({
   }
 });
 
-export const { setProductsData, setExtremums } = productCardsSlice.actions;
+export const { setProducts, setExtremums } = productCardsSlice.actions;
 export const productCardsReducer = productCardsSlice.reducer;

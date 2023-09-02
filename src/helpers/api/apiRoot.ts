@@ -34,7 +34,7 @@ export const fetchProducts = async (): Promise<ProductProjectionPagedQueryRespon
 };
 
 export const fetchFilteredProducts = async (
-  filter?: string
+  filter?: string | string[] | undefined
 ): Promise<ProductProjectionPagedQueryResponse> => {
   const response = await apiRoot
     .productProjections()
@@ -48,6 +48,7 @@ export const fetchFilteredProducts = async (
       }
     })
     .execute();
+
   return response.body;
 };
 
