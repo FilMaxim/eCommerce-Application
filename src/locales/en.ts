@@ -39,6 +39,9 @@ export const en = {
         bee: 'Bee',
         dog: 'Dog'
       }
+    },
+    button: {
+      reset: 'RESET'
     }
   }
 };
