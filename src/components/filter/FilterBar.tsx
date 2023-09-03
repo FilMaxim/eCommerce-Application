@@ -1,5 +1,4 @@
 import '../../i18n';
-import styles from './FilterBar.module.scss';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, useMemo, type ChangeEvent } from 'react';
@@ -81,29 +80,21 @@ export const FilterBar = () => {
       {({ submitForm, handleChange }) => (
         <Stack
           component="form"
-          spacing={2}
+          spacing={1}
           noValidate
           autoComplete="off"
-          style={{
-            gap: '2rem',
-            padding: '20px',
-            borderLeft: '1px solid rgba(0, 0, 0, 0.1)'
-          }}
+          className="p-4"
         >
-          <div className={styles.slider}>
+          <div className="grid grid-cols-filters">
             <Typography
-              sx={{
-                gridColumn: '1 / span 2',
-                color: 'text.secondary'
-              }}
+              variant="h6"
               id="discrete-slider-small-steps"
+              className="col-span-2 text-3xl font-bold"
             >
-              Set a price
+              Filter
+              <hr className="my-2" />
             </Typography>
             <TextField
-              sx={{
-                gridColumn: '1/2'
-              }}
               id="standard-number"
               label="From"
               type="number"
@@ -119,9 +110,6 @@ export const FilterBar = () => {
               }}
             />
             <TextField
-              sx={{
-                gridColumn: '2/2'
-              }}
               id="standard-number"
               label="To"
               type="number"
@@ -160,7 +148,7 @@ export const FilterBar = () => {
           </div>
           {attributesList.map(({ name, attributes }, i) => (
             <div
-              className={styles.group}
+              className="border-b pb-4"
               key={`attributes-${i}`}
             >
               <Typography
@@ -170,13 +158,14 @@ export const FilterBar = () => {
               >
                 {t(`attributes.${name}.title`)}
               </Typography>
-              <div className={styles.checkboxes}>
+              <div className="grid grid-cols-filters">
                 {attributes.map((attr, index) => {
                   return (
                     <Field
                       type="checkbox"
                       component={CheckboxWithLabel}
                       name="numbers"
+                      color="secondary"
                       key={`${String(attr)}-${index}`}
                       value={String(attr)}
                       Label={{ label: t(`attributes.${name}.${String(attr)}`) }}
@@ -195,6 +184,7 @@ export const FilterBar = () => {
             </div>
           ))}
           <Button
+            className="hover:opacity-80"
             variant="contained"
             onClick={() => {
               submitForm().catch((error) => {

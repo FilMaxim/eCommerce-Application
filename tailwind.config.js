@@ -12,7 +12,10 @@ module.exports = {
           'burger-bender': "url('/src/assets/burger-bender.png')",
         },
         gridTemplateRows: {
-          'catalog-cards': '14rem 6rem 2.5rem 2.5rem'
+          'catalog-cards': '14rem 6rem 2.5rem 2.5rem',
+        },
+        gridTemplateColumns: {
+          'filters': 'auto auto'
         }
     }
   },
