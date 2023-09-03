@@ -1,29 +1,27 @@
-/* eslint-disable */
 import '../../i18n';
-
 import styles from './FilterBar.module.scss';
+
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState, SelectedAttribute } from '../../utils/types';
-import { Typography, Button, Stack } from '@mui/material';
 import { useEffect, useState, useMemo, type ChangeEvent } from 'react';
-import { Formik, Field } from 'formik';
-import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
 
-import { CheckboxWithLabel } from 'formik-material-ui';
+import type { RootState, SelectedAttribute } from '../../utils/types';
 
-import { FormLabel, FormControl, FormGroup } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-
 import { useCategoryId } from '../../hooks/useCategoryId';
 import { updateProductsData } from '../../pages/catalogPage/utils/updateData';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
 import { PrettoSlider } from './utils/PrettoSlider';
-
 import { getAttributesList } from './utils/getAttributesList';
 import { handleCheckboxChange } from './utils/handleCheckboxChange';
 import { handleSliderChange } from './utils/handleSliderChange';
 import { buildQueryString } from './utils/buildQueryString';
-import { CustomTextField } from './CustomTextfield';
+import { handleKeyDawn } from './utils/handleKeydown';
+import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
+
+import { Formik, Field } from 'formik';
+import { CheckboxWithLabel } from 'formik-material-ui';
+import { Typography, Button, Stack, TextField } from '@mui/material';
+
 export const FilterBar = () => {
   const dispatch = useDispatch();
 
@@ -69,56 +67,78 @@ export const FilterBar = () => {
   const attributesList = getAttributesList(productsData);
 
   return (
-    <div>
-      <Formik
-        initialValues={{
-          minValue: 1,
-          numbers: []
-        }}
-        onSubmit={async (_values, { setSubmitting }): Promise<void> => {
-          setSubmitting(false);
-          await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter);
-        }}
-      >
-        {({ submitForm, handleChange }) => (
-          <FormControl
-            component="fieldset"
-            style={{
-              gap: '2rem',
-              padding: '20px',
-              borderLeft: '1px solid rgba(0, 0, 0, 0.1)'
-            }}
-          >
+    <Formik
+      initialValues={{
+        minValue: 1,
+        numbers: []
+      }}
+      onSubmit={async (_values, { setSubmitting }): Promise<void> => {
+        setSubmitting(false);
+        console.log('lfl');
+        await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter);
+      }}
+    >
+      {({ submitForm, handleChange }) => (
+        <Stack
+          component="form"
+          spacing={2}
+          noValidate
+          autoComplete="off"
+          style={{
+            gap: '2rem',
+            padding: '20px',
+            borderLeft: '1px solid rgba(0, 0, 0, 0.1)'
+          }}
+        >
+          <div className={styles.slider}>
             <Typography
+              sx={{
+                gridColumn: '1 / span 2',
+                color: 'text.secondary'
+              }}
               id="discrete-slider-small-steps"
-              variant="h2"
-              gutterBottom
             >
               Set a price
             </Typography>
-            <Stack
-              component="form"
-              direction="row"
-              spacing={2}
-              noValidate
-              autoComplete="off"
-            >
-              <CustomTextField
-                value={`${minValue}`}
-                currentValue={endValue}
-                initValue="startValue"
-                setSliderValue={setSliderValue}
-              />
-              <CustomTextField
-                value={`${maxValue}`}
-                currentValue={startValue}
-                initValue="endValue"
-                setSliderValue={setSliderValue}
-              />
-            </Stack>
+            <TextField
+              sx={{
+                gridColumn: '1/2'
+              }}
+              id="standard-number"
+              label="From"
+              type="number"
+              InputLabelProps={{
+                shrink: true
+              }}
+              placeholder={`${startValue}`}
+              variant="standard"
+              onKeyDown={handleKeyDawn}
+              onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                const { value } = e.target;
+                setSliderValue([Number(value), endValue]);
+              }}
+            />
+            <TextField
+              sx={{
+                gridColumn: '2/2'
+              }}
+              id="standard-number"
+              label="To"
+              type="number"
+              InputLabelProps={{
+                shrink: true
+              }}
+              placeholder={`${endValue}`}
+              variant="standard"
+              onKeyDown={handleKeyDawn}
+              onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                const { value } = e.target;
+                setSliderValue([startValue, Number(value)]);
+              }}
+            />
             <Field
               component={PrettoSlider}
-              name="testSlider"
+              name="slider"
               value={sliderValue}
               onChange={(event: Event, newValue: number | number[], activeThumb: number): void => {
                 handleSliderChange(event, newValue, activeThumb, sliderValue, setSliderValue);
@@ -129,43 +149,64 @@ export const FilterBar = () => {
               max={endValue}
               disableSwap
             />
-            {attributesList.map(({ name, attributes }, i) => (
-              <div
-                className={styles.group}
-                key={`attributes-${i}`}
+            <Button
+              color='error'
+              sx={{
+                gridColumn: '1 / span 2'
+              }}
+
+            >
+              {t('button.reset')}
+            </Button>
+          </div>
+          {attributesList.map(({ name, attributes }, i) => (
+            <div
+              className={styles.group}
+              key={`attributes-${i}`}
+            >
+              <Typography
+                sx={{
+                  color: 'text.secondary'
+                }}
               >
-                <FormLabel component="legend">{t(`attributes.${name}.title`)}</FormLabel>
-                <FormGroup>
-                  {attributes.map((attr, index) => (
+                {t(`attributes.${name}.title`)}
+              </Typography>
+              <div className={styles.checkboxes}>
+                {attributes.map((attr, index) => {
+                  return (
                     <Field
                       type="checkbox"
                       component={CheckboxWithLabel}
                       name="numbers"
-                      key={`${attr}-${index}`}
-                      value={`${attr}`}
-                      Label={{ label: `${t(`attributes.${name}.${attr}`)}` }}
+                      key={`${String(attr)}-${index}`}
+                      value={String(attr)}
+                      Label={{ label: t(`attributes.${name}.${String(attr)}`) }}
                       onChange={(e: ChangeEvent) => {
                         handleChange(e);
                         handleCheckboxChange(
-                          { name: `${name}`, value: `${attr}` },
+                          { name: `${name}`, value: `${String(attr)}` },
                           selectedAttributes,
                           setSelectedAttributes
                         );
                       }}
                     />
-                  ))}
-                </FormGroup>
+                  );
+                })}
               </div>
-            ))}
-            <Button
-              variant="contained"
-              onClick={submitForm}
-            >
-              {`show (${prouctsCount})`}
-            </Button>
-          </FormControl>
-        )}
-      </Formik>
-    </div>
+            </div>
+          ))}
+          <Button
+            variant="contained"
+            onClick={() => {
+              submitForm().catch((error) => {
+                throw error;
+              });
+            }}
+          >
+            {`show (${prouctsCount})`}
+          </Button>
+        </Stack>
+      )}
+    </Formik>
   );
 };
