@@ -42,7 +42,7 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
     <div className="flex flex-col gap-2 py-4">
       <p className={styles.name}>{titleName}</p>
       <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
-      <div className="flex gap-2 max-w-[90%] overflow-auto justify-center border-b border-t sm:border-none p-1">
+      <div className="flex max-w-[90%] justify-center gap-2 overflow-auto border-b border-t p-1 sm:border-none">
         {/* <Swiper
           spaceBetween={30}
           slidesPerView={3}

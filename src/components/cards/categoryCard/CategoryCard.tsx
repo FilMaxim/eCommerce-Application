@@ -17,15 +17,15 @@ export const CategoryCard = ({ category, callback }: { category: string; callbac
   };
   return (
     <div
-      className='border rounded border-secondary sm:w-[7rem] sm:h-[7rem] w-[5.5rem] h-[5.5rem] flex flex-col items-center justify-center gap-2 cursor-pointer shrink-0'
+      className="flex h-[5.5rem] w-[5.5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2 rounded border border-secondary sm:h-[7rem] sm:w-[7rem]"
       onClick={callback}
     >
-        <img
-        className='w-[2.5rem] h-[2.5rem] sm:w-[3.5rem] sm:h-[3.5rem]'
-          src={mapping[category]}
-          alt={category}
-        />
-        <p className='text-sm sm:text-lg'>{category}</p>
+      <img
+        className="h-[2.5rem] w-[2.5rem] sm:h-[3.5rem] sm:w-[3.5rem]"
+        src={mapping[category]}
+        alt={category}
+      />
+      <p className="text-sm sm:text-lg">{category}</p>
     </div>
   );
 };

@@ -34,32 +34,32 @@ export const CatalogPage = () => {
   const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
   return (
     <CategoriesProveder>
-        <Container
-          titleName="Categories"
-          titleDescription="Browse By Category"
-          buttons={[ArrowButtonGroup]}
-          categoriesList={categoryList}
-        />
-        <div className='flex flex-wrap gap-4'>
-          {cardsData.map((item, index) => {
-            const { url, name, description, priceTag, id } = item;
-            const { price, discount } = priceTag;
-            const formattedDescription = trimText(description);
-            return (
-              <ProductCard
-                imageUrl={url}
-                title={name}
-                titleName={name}
-                description={formattedDescription}
-                key={`cardId}-${index}`}
-                id={id}
-                price={price}
-                discount={discount}
-              />
-            );
-          })}
-        </div>
-        <FilterBar />
+      <Container
+        titleName="Categories"
+        titleDescription="Browse By Category"
+        buttons={[ArrowButtonGroup]}
+        categoriesList={categoryList}
+      />
+      <div className="flex flex-wrap gap-4">
+        {cardsData.map((item, index) => {
+          const { url, name, description, priceTag, id } = item;
+          const { price, discount } = priceTag;
+          const formattedDescription = trimText(description);
+          return (
+            <ProductCard
+              imageUrl={url}
+              title={name}
+              titleName={name}
+              description={formattedDescription}
+              key={`cardId}-${index}`}
+              id={id}
+              price={price}
+              discount={discount}
+            />
+          );
+        })}
+      </div>
+      <FilterBar />
     </CategoriesProveder>
   );
 };
