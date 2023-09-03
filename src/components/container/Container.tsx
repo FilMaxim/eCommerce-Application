@@ -1,4 +1,3 @@
-import styles from './Container.module.scss';
 import type { ContainerProps } from '../../utils/types';
 import { CategoryCard } from '../cards/categoryCard/CategoryCard';
 import { useEffect, useState } from 'react';
@@ -35,8 +34,11 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
   }, [currentId, categoryId, dispatch]);
 
   return (
-    <div className="flex flex-col gap-2 p-4 lg:px-8 max-w-7xl m-auto">
-      <p className={styles.name}>{titleName}</p>
+    <div className="m-auto flex max-w-7xl flex-col gap-2 p-4 lg:px-8">
+      <div className="flex items-center gap-4">
+        <div className="h-10 w-5 rounded bg-secondary"></div>
+        <p className="text-lg font-bold text-secondary">{titleName}</p>
+      </div>
       <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
       <div className="flex max-w-[90%] gap-2 self-center overflow-auto rounded border p-1 md:border-none">
         {categoriesList.map((category) => {

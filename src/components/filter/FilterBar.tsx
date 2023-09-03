@@ -150,11 +150,10 @@ export const FilterBar = () => {
               disableSwap
             />
             <Button
-              color='error'
+              color="error"
               sx={{
                 gridColumn: '1 / span 2'
               }}
-
             >
               {t('button.reset')}
             </Button>
