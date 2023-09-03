@@ -41,7 +41,7 @@ export const CatalogPage = () => {
         categoriesList={categoryList}
       />
       <div className="flex flex-wrap gap-4">
-        {cardsData.map((item, index) => {
+        {cardsData.map((item) => {
           const { url, name, description, priceTag, id } = item;
           const { price, discount } = priceTag;
           const formattedDescription = trimText(description);
@@ -51,7 +51,7 @@ export const CatalogPage = () => {
               title={name}
               titleName={name}
               description={formattedDescription}
-              key={`cardId}-${index}`}
+              key={id}
               id={id}
               price={price}
               discount={discount}
