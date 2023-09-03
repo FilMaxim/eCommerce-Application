@@ -14,11 +14,21 @@ export const ProductCard = ({
   titleName,
   description,
   price,
-  discount
+  discount,
+  id
 }: ProductCardInterface) => {
   const priceTagPadding = discount > 0 ? '0' : '0 16px';
+
+  const handleCardClick = (id: string) => {
+    // Перенаправление на страницу продукта с передачей идентификатора
+    window.location.href = `/product/${id}`;
+  };
+
   return (
     <Card
+      onClick={() => {
+        handleCardClick(id);
+      }}
       sx={{
         width: 270,
         display: 'grid',
@@ -64,7 +74,8 @@ export const ProductCard = ({
         sx={{
           display: 'flex',
           padding: priceTagPadding,
-          gap: '12px'
+          gap: '12px',
+          justifyContent: 'space-between'
         }}
       >
         <PriceTag

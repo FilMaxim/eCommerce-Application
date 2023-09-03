@@ -22,7 +22,6 @@ export const CatalogPage = () => {
   }, [dispatch]);
 
   const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
-
   return (
     <div className={styles.catalog}>
       <Container
@@ -33,7 +32,7 @@ export const CatalogPage = () => {
       />
       <div className={styles.list}>
         {cardsData.map((item, index) => {
-          const { url, name, description, priceTag } = item;
+          const { url, name, description, priceTag, id } = item;
           const { price, discount } = priceTag;
           return (
             <ProductCard
@@ -42,6 +41,7 @@ export const CatalogPage = () => {
               titleName={name}
               description={description}
               key={`cardId}-${index}`}
+              id={id}
               price={price}
               discount={discount}
             />

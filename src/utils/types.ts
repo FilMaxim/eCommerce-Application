@@ -3,7 +3,7 @@ import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
 import type { ComponentType } from 'react';
 import type { ButtonProps } from '@mui/material';
-import type { Customer } from '@commercetools/platform-sdk';
+import type { Image, Customer, Attribute } from '@commercetools/platform-sdk';
 
 interface UserName {
   firstName: string;
@@ -159,7 +159,10 @@ export interface ProductsDataInterface {
   url: string;
   name: string;
   description: string;
+  id: string;
   priceTag: PriceTagInterface;
+  attributes: Attribute[] | undefined;
+  images: Image[] | undefined;
 }
 
 export interface InitialProductsStateInterace {
@@ -171,6 +174,7 @@ export interface ProductCardInterface extends PriceTagInterface {
   title: string;
   titleName: string;
   description: string;
+  id: string;
 }
 
 export interface ContainerProps {

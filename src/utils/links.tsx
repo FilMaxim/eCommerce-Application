@@ -40,5 +40,6 @@ export const links = {
     text: 'Registration',
     path: NavRoutes.registrationPagePath,
     icon: <HowToRegOutlinedIcon color="secondary" />
-  }
+  },
+  product: { text: 'Product', path: NavRoutes.productPage }
 };

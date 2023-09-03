@@ -1,8 +1,11 @@
-import type { ProductDraft, ProductVariant } from '@commercetools/platform-sdk';
+import type { ProductProjection, ProductVariant } from '@commercetools/platform-sdk';
 import type { ProductsDataInterface } from '../../../utils/types';
 import { getNormalizedNumber } from './getNormalizedNumber';
 
-export const getProductParams = (product: ProductDraft, variant: ProductVariant): ProductsDataInterface => {
+export const getProductParams = (
+  product: ProductProjection,
+  variant: ProductVariant
+): ProductsDataInterface => {
   const imagesData = variant.images ?? [];
   const [imageData] = imagesData.filter((item) => item.label === 'card-logo') ?? [];
 
@@ -14,7 +17,7 @@ export const getProductParams = (product: ProductDraft, variant: ProductVariant)
 
   const rawDescription = product.description ?? '';
   const [description] = Object.values(rawDescription);
-
+  const { id } = product;
   const [prices] = variant.prices ?? [];
   const centsPerEur = 100;
 
@@ -26,5 +29,9 @@ export const getProductParams = (product: ProductDraft, variant: ProductVariant)
 
   const priceTag = { price: normalizedPrice, discount: normalizedDiscount };
 
-  return { url, name, description, priceTag };
+  const images = variant.images;
+
+  const attributes = variant.attributes;
+
+  return { url, name, description, priceTag, id, images, attributes };
 };

@@ -9,3 +9,10 @@ input[type]:focus {
 select[name]:focus {
   --tw-ring-inset: none;
 }
+
+/* слайдер */
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
