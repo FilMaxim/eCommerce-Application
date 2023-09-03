@@ -16,3 +16,18 @@
   gap: 20px;
   margin-top: 35px;
 }
+
+input[type]:focus {
+  --tw-ring-inset: none;
+}
+
+select[name]:focus {
+  --tw-ring-inset: none;
+}
+
+/* слайдер */
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

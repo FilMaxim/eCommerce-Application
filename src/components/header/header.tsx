@@ -6,7 +6,7 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="shadow-lg shadow-blue-500/50">
+    <header className="h-[5rem] border-b">
       <NavBar clickHandler={setMobileMenuOpen} />
       <BurgerMenu
         mobileMenuOpen={mobileMenuOpen}

@@ -3,7 +3,7 @@ import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
 import type { ComponentType } from 'react';
 import type { ButtonProps } from '@mui/material';
-import type { Customer } from '@commercetools/platform-sdk';
+import type { Image, Customer, Attribute } from '@commercetools/platform-sdk';
 
 interface UserName {
   firstName: string;
@@ -160,6 +160,8 @@ export interface ProductsDataInterface {
   description: string;
   id: string;
   priceTag: PriceTagInterface;
+  attributes: Attribute[] | undefined;
+  images: Image[] | undefined;
 }
 
 export interface InitialProductsStateInterace {
@@ -217,7 +219,8 @@ export type FormInnerComponent = (editable: boolean, formik: FormikProps) => JSX
 
 export type AddressExtraControls = (
   editable: boolean,
-  initialValues: AddressesInitialValues
+  initialValues: AddressesInitialValues,
+  formik: FormikProps
 ) => JSX.Element[] | JSX.Element;
 
 export interface PasswordChangeInitialValues {

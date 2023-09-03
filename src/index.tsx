@@ -1,5 +1,4 @@
 import React from 'react';
-import Modal from 'react-modal';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import { Init } from './Init';
@@ -11,5 +10,3 @@ root.render(
     <Init />
   </React.StrictMode>
 );
-
-Modal.setAppElement(rootElement);

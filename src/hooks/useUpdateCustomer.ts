@@ -13,7 +13,7 @@ import { getCountryCode } from '../components/forms/util/getCountry';
 import { UpdateMessage } from '../components/forms/customerProfile/util/updateMessage';
 
 export const useUpdateCustomer = (): UseUpdateCustomer => {
-  const customer = useSelector<RootState>((state: RootState) => state.customer) as Customer;
+  const customer = useSelector((state: { authData: RootState }) => state.authData.customer) as Customer;
   const dispatch = useDispatch();
   const personalDataInitialValues = getPersonalDataInitialValues(customer);
   const addressInitialValues = getAddressesInitialValues(customer);

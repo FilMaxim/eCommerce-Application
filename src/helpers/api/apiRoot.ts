@@ -11,7 +11,8 @@ import {
   type ClientResponse,
   type CustomerSignInResult,
   type Cart,
-  type Customer
+  type Customer,
+  type ProductProjection
 } from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
@@ -90,10 +91,9 @@ export const updateCustomer = async (
     .execute();
 };
 
-export const getProduct = async (id: string) => {
+export const getProduct = async (id: string): Promise<ProductProjection | undefined> => {
   try {
     const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
-    console.log(response.body);
     return response.body;
   } catch (error) {
     console.log(error);

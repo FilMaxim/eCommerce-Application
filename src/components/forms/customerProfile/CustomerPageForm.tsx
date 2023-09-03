@@ -27,12 +27,11 @@ export const CustomerPageForm = ({
       enableReinitialize
     >
       {(formik) => (
-        <div className="relative pb-3 pt-[3rem]">
+        <div className="relative mb-3 pt-[3rem]">
           <Form className=" flex max-w-[42rem] flex-wrap items-center justify-center gap-2">
             <div className="absolute right-2 top-2 flex gap-1">
               <IconButton
                 aria-label="edit"
-                color="primary"
                 onClick={() => {
                   setEditable(true);
                 }}
@@ -43,10 +42,9 @@ export const CustomerPageForm = ({
               {addressExtraControls !== undefined && (
                 <IconButton
                   aria-label="delete"
-                  color="secondary"
                   onClick={() => {
                     onDelete?.((initialValues as AddressesInitialValues).id).catch((err) => {
-                      console.error(err);
+                      Error(err);
                     });
                   }}
                 >
@@ -56,7 +54,7 @@ export const CustomerPageForm = ({
             </div>
             {formInner(editable, formik)}
             {addressExtraControls !== undefined
-              ? addressExtraControls(editable, initialValues as AddressesInitialValues)
+              ? addressExtraControls(editable, initialValues as AddressesInitialValues, formik)
               : null}
             {editable && (
               <div className="flex w-full justify-center gap-2">
@@ -67,6 +65,7 @@ export const CustomerPageForm = ({
                     unsetNewForm?.(false);
                   }}
                   color="secondary"
+                  variant="outlined"
                 >
                   Cancel
                 </Button>
@@ -76,9 +75,11 @@ export const CustomerPageForm = ({
                   onClick={() => {
                     setEditable(false);
                     formik.submitForm().catch((err) => {
-                      console.error(err);
+                      Error(err);
                     });
                   }}
+                  color="secondary"
+                  variant="contained"
                 >
                   Save
                 </Button>

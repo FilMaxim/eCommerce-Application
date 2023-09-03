@@ -17,7 +17,7 @@ export const getProductParams = (
 
   const rawDescription = product.description ?? '';
   const [description] = Object.values(rawDescription);
-  const id = product.id;
+  const { id } = product;
   const [prices] = variant.prices ?? [];
   const centsPerEur = 100;
 
@@ -29,5 +29,9 @@ export const getProductParams = (
 
   const priceTag = { price: normalizedPrice, discount: normalizedDiscount };
 
-  return { url, name, description, priceTag, id };
+  const images = variant.images;
+
+  const attributes = variant.attributes;
+
+  return { url, name, description, priceTag, id, images, attributes };
 };
