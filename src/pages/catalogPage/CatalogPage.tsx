@@ -13,6 +13,7 @@ import { CategoriesProveder } from '../../components/CategoriesProvider';
 import { trimText } from './utils/trimText';
 import { normalizeData } from './utils/normalizeData';
 import { getExtremums } from './utils/getExtremums';
+import { TemporaryDrawer } from '../../components/drawer/Drawer';
 
 export const CatalogPage = () => {
   const [categoryList, setCategoryList] = useState<CategoriesList[]>([]);
@@ -40,26 +41,35 @@ export const CatalogPage = () => {
         buttons={[ArrowButtonGroup]}
         categoriesList={categoryList}
       />
-      <div className="flex flex-wrap gap-4">
-        {cardsData.map((item, index) => {
-          const { url, name, description, priceTag, id } = item;
-          const { price, discount } = priceTag;
-          const formattedDescription = trimText(description);
-          return (
-            <ProductCard
-              imageUrl={url}
-              title={name}
-              titleName={name}
-              description={formattedDescription}
-              key={`cardId}-${index}`}
-              id={id}
-              price={price}
-              discount={discount}
-            />
-          );
-        })}
+      <div className="pl-4 sm:hidden">
+        <TemporaryDrawer>
+          <FilterBar />
+        </TemporaryDrawer>
       </div>
-      <FilterBar />
+      <div className="flex">
+        <div className="hidden sm:block">
+          <FilterBar />
+        </div>
+        <div className="m-auto flex flex-wrap justify-center gap-4">
+          {cardsData.map((item) => {
+            const { url, name, description, priceTag, id } = item;
+            const { price, discount } = priceTag;
+            const formattedDescription = trimText(description);
+            return (
+              <ProductCard
+                imageUrl={url}
+                title={name}
+                titleName={name}
+                description={formattedDescription}
+                key={id}
+                id={id}
+                price={price}
+                discount={discount}
+              />
+            );
+          })}
+        </div>
+      </div>
     </CategoriesProveder>
   );
 };
