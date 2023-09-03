@@ -32,7 +32,7 @@ const AddressControls: AddressExtraControls = (editable: boolean, initialValues,
   if (!editable || checkboxes.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap justify-center gap-1 px-8">
+    <div className="flex min-w-[70%] flex-wrap justify-center gap-1 px-4">
       {checkboxes.map(([name, value]) => (
         <FormControlLabel
           key={name}
@@ -108,7 +108,7 @@ export const AddressComponent = ({
   if (initialValues.length === 0) {
     return (
       <>
-        <h3 className='text-xl text-center mb-10'>You have no addresses yet...</h3>
+        <h3 className="mb-10 text-center text-xl">You have no addresses yet...</h3>
         <NewAddressModal />
       </>
     );
