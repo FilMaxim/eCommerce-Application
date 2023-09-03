@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Container } from '../../components/container/Container';
 import { ProductCard } from '../../components/cards/productCard/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
-import type { CategoiesList, RootState } from '../../utils/types';
+import type { CategoriesList, RootState } from '../../utils/types';
 import { ArrowButtonGroup } from '../../components/buttons/ArrowButtonsGroup';
 import { updateExtremumsData, updateProductsData } from './utils/updateData';
 import { fetchCategories } from './utils/fetchCategories';
@@ -15,7 +15,7 @@ import { normalizeData } from './utils/normalizeData';
 import { getExtremums } from './utils/getExtremums';
 
 export const CatalogPage = () => {
-  const [categoryList, setCategoryList] = useState<CategoiesList[]>([]);
+  const [categoryList, setCategoryList] = useState<CategoriesList[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,8 +32,6 @@ export const CatalogPage = () => {
     });
   }, [dispatch]);
   const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
-  console.log(cardsData);
-
   return (
     <CategoriesProveder>
       <div className={styles.catalog}>
@@ -45,7 +43,7 @@ export const CatalogPage = () => {
         />
         <div className={styles.list}>
           {cardsData.map((item, index) => {
-            const { url, name, description, priceTag } = item;
+            const { url, name, description, priceTag, id } = item;
             const { price, discount } = priceTag;
             const formattedDescription = trimText(description);
             return (
@@ -55,6 +53,7 @@ export const CatalogPage = () => {
                 titleName={name}
                 description={formattedDescription}
                 key={`cardId}-${index}`}
+                id={id}
                 price={price}
                 discount={discount}
               />

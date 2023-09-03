@@ -17,11 +17,12 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
     >
       <Logo className="block" />
       <ul className="hidden gap-4 text-xl sm:flex">
-        <NavGroup />
+        <NavGroup clickHandler={clickHandler} />
       </ul>
       <BurgerBtn clickHandler={clickHandler} />
       <ul className="hidden gap-3 sm:flex">
         <PrivateNavGroup
+          clickHandler={clickHandler}
           isLogged={isLogged}
           logout={logout}
         />

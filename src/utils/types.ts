@@ -3,7 +3,12 @@ import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
 import type { ComponentType } from 'react';
 import type { ButtonProps } from '@mui/material';
-import type { Attribute, Customer, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import type {
+  Image,
+  Customer,
+  Attribute,
+  ProductProjectionPagedQueryResponse
+} from '@commercetools/platform-sdk';
 
 interface UserName {
   firstName: string;
@@ -146,6 +151,7 @@ export interface RegistrationFormProps {
 export interface PrivateNavGroupProps {
   isLogged: boolean;
   logout: () => void;
+  clickHandler: (open: boolean) => void;
 }
 
 export type FakeOnSubmit = (values: HandleSubmitWithBoth) => Promise<void>;
@@ -159,8 +165,10 @@ export interface ProductsDataInterface {
   url: string;
   name: string;
   description: string;
+  id: string;
   priceTag: PriceTagInterface;
   attributes: Attribute[] | undefined;
+  images: Image[] | undefined;
 }
 
 export interface InitialProductsStateInterace {
@@ -173,9 +181,10 @@ export interface ProductCardInterface extends PriceTagInterface {
   title: string;
   titleName: string;
   description: string;
+  id: string;
 }
 
-export interface CategoiesList {
+export interface CategoriesList {
   name: string;
   id: string;
 }
@@ -184,7 +193,7 @@ export interface ContainerProps {
   titleName: string;
   titleDescription?: string;
   buttons: Array<ComponentType<ButtonProps>>;
-  categoriesList: CategoiesList[];
+  categoriesList: CategoriesList[];
 }
 
 export type Mapping = Record<string, string>;
