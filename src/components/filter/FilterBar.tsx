@@ -149,6 +149,15 @@ export const FilterBar = () => {
               max={endValue}
               disableSwap
             />
+            <Button
+              color='error'
+              sx={{
+                gridColumn: '1 / span 2'
+              }}
+
+            >
+              {t('button.reset')}
+            </Button>
           </div>
           {attributesList.map(({ name, attributes }, i) => (
             <div
