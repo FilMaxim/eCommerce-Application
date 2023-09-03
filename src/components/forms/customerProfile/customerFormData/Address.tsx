@@ -108,7 +108,7 @@ export const AddressComponent = ({
   if (initialValues.length === 0) {
     return (
       <>
-        <h3>You have no addresses yet...</h3>
+        <h3 className='text-xl text-center mb-10'>You have no addresses yet...</h3>
         <NewAddressModal />
       </>
     );
