@@ -7,7 +7,7 @@ import pet from './assets/pet.png';
 import vacuum from './assets/vacuum.png';
 import type { Mapping } from '../../../utils/types';
 
-export const CategoryCard = ({ category }: { category: string }) => {
+export const CategoryCard = ({ category, callback }: { category: string; callback: () => void }) => {
   const mapping: Mapping = {
     Сompanions: droid,
     Cleaners: vacuum,
@@ -17,7 +17,10 @@ export const CategoryCard = ({ category }: { category: string }) => {
     Deliveries: delivery
   };
   return (
-    <div className={styles.box}>
+    <div
+      className={styles.box}
+      onClick={callback}
+    >
       <div>
         <img
           src={mapping[category]}

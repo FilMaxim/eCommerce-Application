@@ -38,7 +38,7 @@ export const PriceTag = ({ price, discount }: PriceTagInterface) => {
           </div>)
         : (
           <Typography variant="h6" sx={{
-            color: discountColor,
+            color: priceColor,
             fontWeight: 'bold'
           }}>
             €{price}

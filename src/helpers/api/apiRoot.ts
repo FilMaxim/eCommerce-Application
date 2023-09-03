@@ -29,8 +29,27 @@ export const getCategories = async (): Promise<CategoryPagedQueryResponse> => {
   return response.body;
 };
 
-export const getProducts = async (): Promise<ProductProjectionPagedQueryResponse> => {
+export const fetchProducts = async (): Promise<ProductProjectionPagedQueryResponse> => {
   const response = await apiRoot.productProjections().get().execute();
+  return response.body;
+};
+
+export const fetchFilteredProducts = async (
+  filter?: string | string[] | undefined
+): Promise<ProductProjectionPagedQueryResponse> => {
+  const response = await apiRoot
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: {
+        limit: 30,
+        offset: 0,
+        filter,
+        markMatchingVariants: true
+      }
+    })
+    .execute();
+
   return response.body;
 };
 

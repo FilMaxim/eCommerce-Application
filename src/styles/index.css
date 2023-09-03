@@ -10,6 +10,12 @@ select[name]:focus {
   --tw-ring-inset: none;
 }
 
+.MuiInputBase-input[type="number"]::-webkit-inner-spin-button,
+.MuiInputBase-input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* слайдер */
 .slide {
   display: flex;
