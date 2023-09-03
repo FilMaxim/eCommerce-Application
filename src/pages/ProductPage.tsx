@@ -1,13 +1,12 @@
-/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.css';
-import { getProduct } from '../../helpers/api/apiRoot';
+import { getProduct } from '../helpers/api/apiRoot';
 import { useParams } from 'react-router-dom';
 import { Button, Rating } from '@mui/material';
-import { getProductParams } from '../catalogPage/utils/getProductParams';
-import { type ProductsDataInterface } from '../../utils/types';
-import { PriceTag } from '../../components/cards/productCard/PriceTag';
+import { getProductParams } from './catalogPage/utils/getProductParams';
+import { type ProductsDataInterface } from '../utils/types';
+import { PriceTag } from '../components/cards/productCard/PriceTag';
 import Box from '@mui/material/Box';
 
 export const Product = () => {
