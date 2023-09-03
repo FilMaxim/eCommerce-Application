@@ -83,7 +83,7 @@ export const FilterBar = () => {
           spacing={1}
           noValidate
           autoComplete="off"
-          className="p-4"
+          className="max-w-[15rem] p-4"
         >
           <div className="grid grid-cols-filters">
             <Typography
