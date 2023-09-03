@@ -35,7 +35,7 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
   }, [currentId, categoryId, dispatch]);
 
   return (
-    <div className="flex flex-col gap-2 py-4">
+    <div className="flex flex-col gap-2 p-4 lg:px-8 max-w-7xl m-auto">
       <p className={styles.name}>{titleName}</p>
       <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
       <div className="flex max-w-[90%] gap-2 self-center overflow-auto rounded border p-1 md:border-none">

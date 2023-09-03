@@ -40,7 +40,7 @@ export const CatalogPage = () => {
         buttons={[ArrowButtonGroup]}
         categoriesList={categoryList}
       />
-      <div className="m-auto flex max-w-[75rem] flex-wrap justify-center gap-4">
+      <div className="m-auto flex max-w-7xl flex-wrap justify-center gap-4">
         {cardsData.map((item) => {
           const { url, name, description, priceTag, id } = item;
           const { price, discount } = priceTag;
