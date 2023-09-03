@@ -145,6 +145,7 @@ export interface RegistrationFormProps {
 export interface PrivateNavGroupProps {
   isLogged: boolean;
   logout: () => void;
+  clickHandler: (open: boolean) => void;
 }
 
 export type FakeOnSubmit = (values: HandleSubmitWithBoth) => Promise<void>;

@@ -12,7 +12,7 @@ export const Logo = ({ className }: LogoParams) => {
       <span className="sr-only">Our shop name should be there</span>
 
       <img
-        className="h-14 w-auto"
+        className="h-10 w-auto"
         src={logo}
         alt="logo"
       />

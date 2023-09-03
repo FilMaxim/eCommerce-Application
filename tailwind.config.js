@@ -7,6 +7,9 @@ module.exports = {
           'primary': '#000000',
           'secondary': '#DB4444',
           'secondary-light': '#f8cece'
+        },
+        backgroundImage: {
+          'burger-bender': "url('/src/assets/burger-bender.png')",
         }
     }
   },
