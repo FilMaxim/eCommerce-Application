@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import type { PriceTagInterface } from '../../../utils/types';
+import DiscountOutlinedIcon from '@mui/icons-material/DiscountOutlined';
 
 export const PriceTag = ({ price, discount }: PriceTagInterface) => {
   const hasDiscount = discount > 0;
@@ -13,17 +14,20 @@ export const PriceTag = ({ price, discount }: PriceTagInterface) => {
             <Typography variant="h6" sx={{
               borderRadius: '0 4px 4px 0',
               backgroundColor: discountColor,
-              width: '20px'
+              width: '20px'/* ,
+              marginLeft: '-1rem' */
             }} />
       {hasDiscount
         ? (
-            <div className="flex gap-2 pr-2">
+            <div className="flex gap-2 items-start">
             <Typography variant="h6" sx={{
               color: discountColor,
               fontWeight: 'bold'
             }}>
               €{discount}
             </Typography>
+            <div className='flex items-center'>
+            <DiscountOutlinedIcon color='warning' fontSize='small'/>
             <Typography
               variant="body1"
               sx={{
@@ -35,6 +39,7 @@ export const PriceTag = ({ price, discount }: PriceTagInterface) => {
             >
               €{price}
             </Typography>
+            </div>
           </div>)
         : (
           <Typography variant="h6" sx={{

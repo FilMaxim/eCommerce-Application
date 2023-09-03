@@ -1,4 +1,3 @@
-import styles from './Container.module.scss';
 import type { ContainerProps } from '../../utils/types';
 import { CategoryCard } from '../cards/categoryCard/CategoryCard';
 import { useEffect, useState } from 'react';
@@ -8,10 +7,6 @@ import { useCategoryId } from '../../hooks/useCategoryId';
 import { updateProductsData, updateExtremumsData } from '../../pages/catalogPage/utils/updateData';
 import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import { Scrollbar, A11y } from 'swiper/modules';
-// import 'swiper/css';
-// import 'swiper/css/scrollbar';
 
 export const Container = ({ titleName, titleDescription, buttons, categoriesList }: ContainerProps) => {
   // const [categoryId, setCategoryId] = useState<string>('');
@@ -39,22 +34,16 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
   }, [currentId, categoryId, dispatch]);
 
   return (
-    <div className="flex flex-col gap-2 py-4">
-      <p className={styles.name}>{titleName}</p>
+    <div className="m-auto flex max-w-7xl flex-col gap-2 p-4 lg:px-8">
+      <div className="flex items-center gap-4">
+        <div className="h-10 w-5 rounded bg-secondary"></div>
+        <p className="text-lg font-bold text-secondary">{titleName}</p>
+      </div>
       <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
-      <div className="flex max-w-[90%] justify-center gap-2 overflow-auto border-b border-t p-1 sm:border-none">
-        {/* <Swiper
-          spaceBetween={30}
-          slidesPerView={3}
-          modules={[Scrollbar, A11y]}
-          scrollbar={{ draggable: true }}
-          // onSlideChange={() => console.log('slide change')}
-          // onSwiper={(swiper) => console.log(swiper)}
-        > */}
+      <div className="flex max-w-[90%] gap-2 self-center overflow-auto rounded border p-1 md:border-none">
         {categoriesList.map((category) => {
           const { name, id } = category;
           return (
-            // <SwiperSlide key={id}>
             <CategoryCard
               key={id}
               category={name}
@@ -63,10 +52,8 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
                 setCategoryId(id);
               }}
             />
-            // </SwiperSlide>
           );
         })}
-        {/* </Swiper> */}
       </div>
     </div>
   );

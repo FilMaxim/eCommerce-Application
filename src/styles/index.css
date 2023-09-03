@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@media only screen and (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
 input[type]:focus {
   --tw-ring-inset: none;
 }
@@ -16,7 +22,6 @@ select[name]:focus {
   margin: 0;
 }
 
-/* слайдер */
 .slide {
   display: flex;
   align-items: center;

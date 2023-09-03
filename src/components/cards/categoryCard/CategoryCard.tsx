@@ -17,7 +17,7 @@ export const CategoryCard = ({ category, callback }: { category: string; callbac
   };
   return (
     <div
-      className="flex h-[5.5rem] w-[5.5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2 rounded border border-secondary sm:h-[7rem] sm:w-[7rem]"
+      className="flex h-[5.5rem] w-[5.5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2 rounded border border-gray-300 sm:h-[7rem] sm:w-[7rem]"
       onClick={callback}
     >
       <img
