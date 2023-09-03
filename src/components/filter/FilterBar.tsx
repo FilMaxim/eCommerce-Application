@@ -90,18 +90,19 @@ export const FilterBar = () => {
             borderLeft: '1px solid rgba(0, 0, 0, 0.1)'
           }}
         >
-          <Typography
-            id="discrete-slider-small-steps"
-            variant="h2"
-            gutterBottom
-          >
-            Set a price
-          </Typography>
           <div className={styles.slider}>
+            <Typography
+              sx={{
+                gridColumn: '1 / span 2',
+                color: 'text.secondary'
+              }}
+              id="discrete-slider-small-steps"
+            >
+              Set a price
+            </Typography>
             <TextField
               sx={{
-                gridColumn: '1/2',
-                gridRow: '1/1'
+                gridColumn: '1/2'
               }}
               id="standard-number"
               label="From"
@@ -119,8 +120,7 @@ export const FilterBar = () => {
             />
             <TextField
               sx={{
-                gridColumn: '2/2',
-                gridRow: '1/1'
+                gridColumn: '2/2'
               }}
               id="standard-number"
               label="To"
@@ -138,7 +138,7 @@ export const FilterBar = () => {
             />
             <Field
               component={PrettoSlider}
-              name="testSlider"
+              name="slider"
               value={sliderValue}
               onChange={(event: Event, newValue: number | number[], activeThumb: number): void => {
                 handleSliderChange(event, newValue, activeThumb, sliderValue, setSliderValue);

@@ -4,7 +4,6 @@ import { Slider } from '@mui/material';
 export const PrettoSlider = styled(Slider)({
   color: '#DB4444',
   gridColumn: '1 / span 2',
-  gridRow: '2 / 2',
   height: 8,
   '& .MuiSlider-track': {
     border: 'none'
