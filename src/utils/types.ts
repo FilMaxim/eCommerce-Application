@@ -273,7 +273,9 @@ export type FetcDataType = (
   quertString?: string | string[] | undefined
 ) => Promise<ProductProjectionPagedQueryResponse>;
 
-export type NormolizeDataType = (productData: ProductProjectionPagedQueryResponse) => void;
+export type NormolizeDataType = (
+  productData: ProductProjectionPagedQueryResponse
+) => number[] | ProductsDataInterface[];
 
 export interface AttributesList {
   name: string;

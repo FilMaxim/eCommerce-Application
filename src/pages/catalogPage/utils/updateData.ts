@@ -1,7 +1,6 @@
-/* eslint-disable */
 import type { Dispatch } from '@reduxjs/toolkit';
 import { setExtremums, setProducts } from '../../../slices/ProductCardsSlice';
-import type { FetcDataType, NormolizeDataType } from '../../../utils/types';
+import type { NormolizeDataType, FetcDataType } from '../../../utils/types';
 
 export const updateProductsData = async (
   dispatch: Dispatch,

@@ -5,17 +5,19 @@ export const CustomTextField = ({
   value,
   currentValue,
   initValue,
+  label,
   setSliderValue
 }: {
   value: string;
   currentValue: number;
   initValue: string;
+  label: string;
   setSliderValue: (arr: number[]) => void;
 }) => {
   return (
     <TextField
       id="standard-number"
-      label="From"
+      label={label}
       type="number"
       InputLabelProps={{
         shrink: true
