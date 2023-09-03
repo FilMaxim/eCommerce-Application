@@ -8,6 +8,10 @@ import { useCategoryId } from '../../hooks/useCategoryId';
 import { updateProductsData, updateExtremumsData } from '../../pages/catalogPage/utils/updateData';
 import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Scrollbar, A11y } from 'swiper/modules';
+import 'swiper/css';
+// import 'swiper/css/scrollbar';
 
 export const Container = ({ titleName, titleDescription, buttons, categoriesList }: ContainerProps) => {
   // const [categoryId, setCategoryId] = useState<string>('');
@@ -35,32 +39,34 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
   }, [currentId, categoryId, dispatch]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.title}>
-          <p className={styles.name}>{titleName}</p>
-          <p className={styles.description}>{titleDescription}</p>
-        </div>
-        <div className={styles.nav}>
-          {buttons.map((Button, index) => {
-            return <Button key={`button-${index}`} />;
-          })}
-        </div>
-      </div>
-      <div className={styles.content}>
-        {categoriesList.map((category, index) => {
+    <div className="flex flex-col gap-2 py-4">
+      <p className={styles.name}>{titleName}</p>
+      <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
+      <div className="flex gap-2 max-w-[90%] overflow-auto justify-center border-b border-t sm:border-none p-1">
+        {/* <Swiper
+          spaceBetween={30}
+          slidesPerView={3}
+          modules={[Scrollbar, A11y]}
+          scrollbar={{ draggable: true }}
+          // onSlideChange={() => console.log('slide change')}
+          // onSwiper={(swiper) => console.log(swiper)}
+        > */}
+        {categoriesList.map((category) => {
           const { name, id } = category;
           return (
+            // <SwiperSlide key={id}>
             <CategoryCard
+              key={id}
               category={name}
-              key={`category-${index}`}
               callback={() => {
                 setId(id);
                 setCategoryId(id);
               }}
             />
+            // </SwiperSlide>
           );
         })}
+        {/* </Swiper> */}
       </div>
     </div>
   );

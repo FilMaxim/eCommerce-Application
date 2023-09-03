@@ -1,4 +1,4 @@
-import styles from './CatalogPage.module.scss';
+// import styles from './CatalogPage.module.scss';
 import { useEffect, useState } from 'react';
 import { Container } from '../../components/container/Container';
 import { ProductCard } from '../../components/cards/productCard/ProductCard';
@@ -34,14 +34,13 @@ export const CatalogPage = () => {
   const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
   return (
     <CategoriesProveder>
-      <div className={styles.catalog}>
         <Container
           titleName="Categories"
           titleDescription="Browse By Category"
           buttons={[ArrowButtonGroup]}
           categoriesList={categoryList}
         />
-        <div className={styles.list}>
+        <div className='flex flex-wrap gap-4'>
           {cardsData.map((item, index) => {
             const { url, name, description, priceTag, id } = item;
             const { price, discount } = priceTag;
@@ -61,7 +60,6 @@ export const CatalogPage = () => {
           })}
         </div>
         <FilterBar />
-      </div>
     </CategoriesProveder>
   );
 };
