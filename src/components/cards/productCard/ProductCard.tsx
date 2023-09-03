@@ -25,7 +25,7 @@ export const ProductCard = ({
       onClick={() => {
         handleCardClick(id);
       }}
-      className="grid-rows-[14rem 5.5rem 2.5rem 2.5rem]  group grid cursor-pointer grid-cols-[14rem] items-center justify-items-start gap-[0.3rem] hover:shadow-xl"
+      className="group grid cursor-pointer grid-cols-[14rem] grid-rows-catalog-cards items-center justify-items-start gap-[0.3rem] hover:shadow-xl"
     >
       <CardMedia
         sx={{ height: '14rem', width: '14rem' }}
@@ -42,7 +42,7 @@ export const ProductCard = ({
           sx={{
             fontSize: '1.25rem',
             lineHeight: '1.5rem',
-            height: '1.25rem',
+            height: '1.5rem',
             overflow: 'hidden'
           }}
         >
