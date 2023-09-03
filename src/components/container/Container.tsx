@@ -10,7 +10,7 @@ import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 // import { Scrollbar, A11y } from 'swiper/modules';
-import 'swiper/css';
+// import 'swiper/css';
 // import 'swiper/css/scrollbar';
 
 export const Container = ({ titleName, titleDescription, buttons, categoriesList }: ContainerProps) => {

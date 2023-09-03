@@ -269,7 +269,7 @@ export interface CategoriesContextInterface {
   setCategoryId: (newString: string) => void;
 }
 
-export type FetcDataType = (
+export type FetchDataType = (
   quertString?: string | string[] | undefined
 ) => Promise<ProductProjectionPagedQueryResponse>;
 
