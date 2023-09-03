@@ -1,4 +1,4 @@
-import type { FormInnerComponent, RootState } from '../../../utils/types';
+import type { RootState } from '../../../utils/types';
 import { TabsPanel } from '../../tabs/TabsPanel';
 import { getAddressesInitialValues, getPersonalDataInitialValues } from './util/getInitialValues';
 import {
@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { useUpdateCustomer } from '../../../hooks/useUpdateCustomer';
 import { PersonalData } from './customerFormData/PersonalData';
 import { AddressComponent } from './customerFormData/Address';
-import { PasswordInput } from '../inputs/PasswordInput';
+import { PasswordChange } from './customerFormData/PasswordChange';
 
 export const CustomerProfile = () => {
   const customer = useSelector((state: { authData: RootState }) => state.authData.customer) as Customer;
@@ -24,25 +24,6 @@ export const CustomerProfile = () => {
     newPassword: ''
   };
   const addressInitialValues = getAddressesInitialValues(customer);
-
-  const PasswordChange: FormInnerComponent = (editable: boolean, formik) => {
-    return (
-      <div className="flex flex-col items-center justify-center gap-2">
-        <PasswordInput
-          placeholder="Current Password:"
-          formik={formik}
-          disabled={!editable}
-          name="currentPassword"
-        />
-        <PasswordInput
-          placeholder="New Password:"
-          formik={formik}
-          disabled={!editable}
-          name="newPassword"
-        />
-      </div>
-    );
-  };
 
   return (
     <div className="m-auto mt-4 max-w-[42rem] rounded border p-2">
