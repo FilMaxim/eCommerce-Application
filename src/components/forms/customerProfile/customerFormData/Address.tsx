@@ -116,11 +116,10 @@ export const AddressComponent = ({
 
   return (
     <>
-      <div className="mb-2 rounded border">
         {initialValues.map((address) => (
           <div
             key={address.id}
-            className="mb-4"
+            className="mb-4 rounded border"
           >
             <div className="m-1 mb-[-2rem] flex max-w-[calc(100%-100px)] flex-wrap gap-1">
               {address.shippingStateChecked && (
@@ -155,7 +154,6 @@ export const AddressComponent = ({
             />
           </div>
         ))}
-      </div>
       <NewAddressModal />
     </>
   );
