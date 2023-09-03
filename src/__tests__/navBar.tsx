@@ -23,34 +23,34 @@ describe('PrivateNavGroup', () => {
   it('displays login & registration link while logout state', () => {
     renderPrivateNavGroup(false);
 
-    const LogInLink = screen.getByText(/LogIn/i);
+    const LogInLink = screen.queryByTestId(/LoginOutlinedIcon/i);
     expect(LogInLink).toBeInTheDocument();
 
-    const RegistrationLink = screen.getByText(/Registration/i);
+    const RegistrationLink = screen.queryByTestId(/HowToRegOutlinedIcon/i);
     expect(RegistrationLink).toBeInTheDocument();
   });
 
   it('not display logout link while logout state', () => {
     renderPrivateNavGroup(false);
 
-    const logout = screen.queryByText(/Logout/i);
+    const logout = screen.queryByTestId(/LogoutOutlinedIcon/i);
     expect(logout).toBeFalsy();
   });
 
   it('does not display login & registration link while logIn state', () => {
     renderPrivateNavGroup(true);
 
-    const LogInLink = screen.queryByText(/LogIn/i);
+    const LogInLink = screen.queryByTestId(/LoginOutlinedIcon/i);
     expect(LogInLink).toBeFalsy();
 
-    const RegistrationLink = screen.queryByText(/Registration/i);
+    const RegistrationLink = screen.queryByTestId(/HowToRegOutlinedIcon/i);
     expect(RegistrationLink).toBeFalsy();
   });
 
   it('display logout link while logIn state', () => {
     renderPrivateNavGroup(true);
 
-    const logout = screen.getByText(/Logout/i);
+    const logout = screen.queryByTestId(/LogoutOutlinedIcon/i);
     expect(logout).toBeInTheDocument();
   });
 });
