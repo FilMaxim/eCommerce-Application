@@ -141,7 +141,7 @@ export const FilterBar = () => {
                       type="checkbox"
                       component={CheckboxWithLabel}
                       name="numbers"
-                      key={`${attr.name}-${index}`}
+                      key={`${attr}-${index}`}
                       value={`${attr.name}`}
                       Label={{ label: `${t(`attributes.${name}.${attr}`)}` }}
                       onChange={(e: ChangeEvent) => {
