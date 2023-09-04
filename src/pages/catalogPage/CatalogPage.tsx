@@ -4,7 +4,7 @@ import { ProductCard } from '../../components/cards/productCard/ProductCard';
 import { useDispatch } from 'react-redux';
 import type { CategoriesList, ProductsDataInterface } from '../../utils/types';
 import { ArrowButtonGroup } from '../../components/buttons/ArrowButtonsGroup';
-import { updateExtremumsData, updateProductsData } from './utils/updateData';
+import { /* updateExtremumsData, */ updateProductsData } from './utils/updateData';
 import { fetchCategories } from './utils/fetchCategories';
 import { FilterBar } from '../../components/filter/FilterBar';
 import { fetchProducts, fetchFilteredProducts } from '../../helpers/api/apiRoot';
@@ -14,21 +14,24 @@ import { getExtremums } from './utils/getExtremums';
 import { TemporaryDrawer } from '../../components/drawer/Drawer';
 import { setCategoriesData } from '../../slices/categoriesSlice';
 import { useCategoryId } from '../../hooks/useCategoryId';
+import { setExtremums } from '../../slices/ProductCardsSlice';
 
 export const Catalog = ({ category }: { category: CategoriesList | null }) => {
   const [categoryList, setCategoryList] = useState<CategoriesList[]>([]);
   const dispatch = useDispatch();
   const [cards, setCards] = useState<ProductsDataInterface[]>([]);
-  // const { category } = useCategoryId();
-  // const catecoryFilter = category !== null ? `categories.id:"${category.id}"` : '';
-
-  const handleRelease = async (catecoryFilter: string) => {
-    const data = await fetchFilteredProducts(catecoryFilter);
-    const cards = normalizeData(data);
-    setCards(cards);
-  };
 
   useEffect(() => {
+    const handleRelease = async (catecoryFilter: string) => {
+      const data = await fetchFilteredProducts(catecoryFilter);
+      const cards = normalizeData(data);
+      setCards(cards);
+
+      const extremums = getExtremums(data);
+      const setExtremumsData = setExtremums(extremums);
+      dispatch(setExtremumsData);
+    };
+
     fetchCategories(setCategoryList, setCategoriesData).catch((error) => {
       throw error;
     });
@@ -38,14 +41,14 @@ export const Catalog = ({ category }: { category: CategoriesList | null }) => {
         throw error;
       });
     } else {
-      updateProductsData(dispatch, fetchProducts, normalizeData, setCards).catch((error) => {
+      updateProductsData(dispatch, fetchProducts, setCards).catch((error) => {
         throw error;
       });
     }
 
-    updateExtremumsData(dispatch, fetchProducts, getExtremums).catch((error) => {
-      throw error;
-    });
+    // updateExtremumsData(dispatch, fetchProducts, getExtremums).catch((error) => {
+    //   throw error;
+    // });
   }, [dispatch, setCards, category]);
 
   return (

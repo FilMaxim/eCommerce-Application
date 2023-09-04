@@ -4,9 +4,7 @@ import { useEffect, useState } from 'react';
 import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
 import { useDispatch } from 'react-redux';
 import { useCategoryId } from '../../hooks/useCategoryId';
-import { updateProductsData, updateExtremumsData } from '../../pages/catalogPage/utils/updateData';
-import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
-import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
+import { updateProductsData } from '../../pages/catalogPage/utils/updateData';
 import { BreadcrumbsNav } from '../breadcrumbs/Breadcrumbs';
 
 export const Container = ({ titleName, titleDescription, categoriesList }: ContainerProps) => {
@@ -18,8 +16,8 @@ export const Container = ({ titleName, titleDescription, categoriesList }: Conta
   useEffect(() => {
     const handleCategoryCardClick = async (id: string) => {
       setId(category?.id ?? '');
-      await updateExtremumsData(dispatch, fetchFilteredProducts, getExtremums, `categories.id:"${id}"`);
-      await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, null, `categories.id:"${id}"`);
+      // await updateExtremumsData(dispatch, fetchFilteredProducts, getExtremums, `categories.id:"${id}"`);
+      await updateProductsData(dispatch, fetchFilteredProducts, null, `categories.id:"${id}"`);
     };
 
     if (currentId !== '') {

@@ -6,7 +6,6 @@ import { useEffect, useState, useMemo, type ChangeEvent } from 'react';
 import type { CategoriesList, ProductsDataInterface, RootState, SelectedAttribute } from '../../utils/types';
 
 import { useTranslation } from 'react-i18next';
-// import { useCategoryId } from '../../hooks/useCategoryId';
 import { updateProductsData } from '../../pages/catalogPage/utils/updateData';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
 import { PrettoSlider } from './utils/PrettoSlider';
@@ -33,22 +32,18 @@ export const FilterBar = ({
   const dispatch = useDispatch();
 
   const extremums = useSelector((state: { productsData: RootState }) => state.productsData.extremums);
-  // const productsData = useSelector((state: { productsData: RootState }) => state.productsData);
 
   const [selectedAttributes, setSelectedAttributes] = useState<SelectedAttribute[]>([
     { name: '', value: '' }
   ]);
 
-  const [prouctsCount, setCount] = useState(productsData.length);
-  const [sliderValue, setSliderValue] = useState<number[]>([0, 0]);
-
-  // const { category } = useCategoryId();
-
   const [startValue, endValue] = extremums;
+  const [prouctsCount, setCount] = useState(productsData.length);
+  const [sliderValue, setSliderValue] = useState<number[]>(extremums);
 
   useEffect(() => {
-    setSliderValue([startValue, endValue]);
-  }, [startValue, endValue]);
+    setSliderValue(extremums);
+  }, [extremums]);
 
   const [minValue, maxValue] = sliderValue;
 
@@ -88,7 +83,7 @@ export const FilterBar = ({
       onSubmit={async (_values, { setSubmitting }): Promise<void> => {
         setSubmitting(false);
         console.log('lfl');
-        await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, null, filter);
+        await updateProductsData(dispatch, fetchFilteredProducts, null, filter);
       }}
     >
       {({ submitForm, handleChange }) => (
