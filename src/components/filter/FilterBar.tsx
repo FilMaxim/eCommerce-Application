@@ -146,6 +146,9 @@ export const FilterBar = () => {
                 resetForm();
                 setSelectedAttributes([]);
                 setSliderValue([startValue, endValue]);
+                submitForm().catch((error) => {
+                  throw error;
+                });
               }}
             >
               {t('button.reset')}
