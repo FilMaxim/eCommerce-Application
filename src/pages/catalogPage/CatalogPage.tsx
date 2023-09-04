@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Container } from '../../components/container/Container';
 import { ProductCard } from '../../components/cards/productCard/ProductCard';
-import { useDispatch, useSelector } from 'react-redux';
-import type { CategoriesList, RootState } from '../../utils/types';
+import { useDispatch } from 'react-redux';
+import type { CategoriesList, ProductsDataInterface } from '../../utils/types';
 import { ArrowButtonGroup } from '../../components/buttons/ArrowButtonsGroup';
 import { updateExtremumsData, updateProductsData } from './utils/updateData';
 import { fetchCategories } from './utils/fetchCategories';
 import { FilterBar } from '../../components/filter/FilterBar';
-import { fetchProducts } from '../../helpers/api/apiRoot';
+import { fetchProducts, fetchFilteredProducts } from '../../helpers/api/apiRoot';
 import { trimText } from './utils/trimText';
 import { normalizeData } from './utils/normalizeData';
 import { getExtremums } from './utils/getExtremums';
@@ -18,22 +18,37 @@ import { useCategoryId } from '../../hooks/useCategoryId';
 export const Catalog = () => {
   const [categoryList, setCategoryList] = useState<CategoriesList[]>([]);
   const dispatch = useDispatch();
+  const [cards, setCards] = useState<ProductsDataInterface[]>([]);
+  const { category } = useCategoryId();
+  const catecoryFilter = category !== null ? `categories.id:"${category.id}"` : '';
 
   useEffect(() => {
+    const handleRelease = async (catecoryFilter: string) => {
+      const data = await fetchFilteredProducts(catecoryFilter);
+      const cards = normalizeData(data);
+      setCards(cards);
+    };
+
     fetchCategories(setCategoryList, setCategoriesData).catch((error) => {
       throw error;
     });
 
-    updateProductsData(dispatch, fetchProducts, normalizeData).catch((error) => {
-      throw error;
-    });
+    updateProductsData(dispatch, fetchProducts, normalizeData, setCards)
+      .then(() => {
+        if (category !== null) {
+          handleRelease(catecoryFilter).catch((error) => {
+            throw error;
+          });
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
 
     updateExtremumsData(dispatch, fetchProducts, getExtremums).catch((error) => {
       throw error;
     });
-  }, [dispatch]);
-
-  const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
+  }, [dispatch, setCards, catecoryFilter, category]);
 
   return (
     <>
@@ -53,7 +68,7 @@ export const Catalog = () => {
           <FilterBar />
         </div>
         <div className="m-auto flex flex-wrap justify-center gap-4">
-          {cardsData.map((item) => {
+          {cards.map((item) => {
             const { url, name, description, priceTag, id } = item;
             const { price, discount } = priceTag;
             const formattedDescription = trimText(description);

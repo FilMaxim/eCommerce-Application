@@ -19,7 +19,7 @@ export const Container = ({ titleName, titleDescription, categoriesList }: Conta
     const handleCategoryCardClick = async (id: string) => {
       setId(category?.id ?? '');
       await updateExtremumsData(dispatch, fetchFilteredProducts, getExtremums, `categories.id:"${id}"`);
-      await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, `categories.id:"${id}"`);
+      await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, null, `categories.id:"${id}"`);
     };
 
     if (currentId !== '') {

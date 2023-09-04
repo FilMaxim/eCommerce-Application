@@ -74,7 +74,7 @@ export const FilterBar = () => {
       onSubmit={async (_values, { setSubmitting }): Promise<void> => {
         setSubmitting(false);
         console.log('lfl');
-        await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter);
+        await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, null, filter);
       }}
     >
       {({ submitForm, handleChange }) => (
