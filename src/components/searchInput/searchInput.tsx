@@ -8,12 +8,17 @@ export const SearchInput = () => {
   const labels = cards.map((card) => card.name);
   return (
     <Autocomplete
-    size='small'
+      size="small"
       disablePortal
       id="combo-box-demo"
       options={labels}
-      renderInput={(props) => <TextField {...props} label="Search" />}
-      className='sm:w-[10rem] w-[8rem]'
+      renderInput={(props) => (
+        <TextField
+          {...props}
+          label="Search"
+        />
+      )}
+      className="w-[8rem] sm:w-[10rem]"
     />
   );
 };

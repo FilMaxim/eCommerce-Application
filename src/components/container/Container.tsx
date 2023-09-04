@@ -34,10 +34,10 @@ export const Container = ({ titleName, titleDescription, categoriesList }: Conta
 
   return (
     <div className="m-auto flex max-w-7xl flex-col gap-2 p-4 lg:px-8">
-      <div className='flex justify-between'>
+      <div className="flex justify-between">
         <div className="flex items-center gap-4">
-        <div className="h-10 w-5 rounded bg-secondary"></div>
-        <p className="text-lg font-bold text-secondary">{titleName}</p>
+          <div className="h-10 w-5 rounded bg-secondary"></div>
+          <p className="text-lg font-bold text-secondary">{titleName}</p>
         </div>
         <SearchInput />
       </div>
