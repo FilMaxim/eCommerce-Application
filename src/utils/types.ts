@@ -182,6 +182,7 @@ export interface ProductCardInterface extends PriceTagInterface {
   titleName: string;
   description: string;
   id: string;
+  rating: number;
 }
 
 export interface CategoriesList {
@@ -266,11 +267,14 @@ export interface AddressComponentProps {
 
 export interface CategoriesContextInterface {
   categoryId: string;
-  setCategoryId: (newString: string) => void;
+  setCategoryId: (id: string) => void;
+  currentFilter: string[];
+  setCurrentFilter: (filter: string[]) => void;
 }
 
 export type FetchDataType = (
-  quertString?: string | string[] | undefined
+  quertString?: string | string[] | undefined,
+  sort?: string
 ) => Promise<ProductProjectionPagedQueryResponse>;
 
 export type NormolizeDataType = (

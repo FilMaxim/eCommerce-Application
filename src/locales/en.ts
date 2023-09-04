@@ -42,6 +42,15 @@ export const en = {
     },
     button: {
       reset: 'RESET'
+    },
+    dropDown: {
+      sort: {
+        name: 'Sort by:',
+        price: 'price',
+        rating: 'rating',
+        asc: 'Ascending',
+        desc: 'Descending'
+      }
     }
   }
 };
