@@ -1,5 +1,5 @@
 import '../../../i18n';
-import { MenuItem, Select, type SelectChangeEvent, Typography, FormControl } from '@mui/material';
+import { MenuItem, Select, type SelectChangeEvent, FormControl } from '@mui/material';
 import { useState } from 'react';
 import { updateProductsData } from './updateData';
 import { useDispatch } from 'react-redux';
