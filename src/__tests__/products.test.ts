@@ -1,4 +1,7 @@
-import { type ProductProjection, type ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import {
+  type ProductProjection,
+  type ProductProjectionPagedQueryResponse
+} from '@commercetools/platform-sdk';
 import { getExtremums } from '../pages/catalogPage/utils/getExtremums';
 import { getProductParams } from '../pages/catalogPage/utils/getProductParams';
 
@@ -125,11 +128,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'white',
-              'gray',
-              'black'
-            ]
+            value: ['white', 'gray', 'black']
           }
         ],
         assets: []
@@ -160,7 +159,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
       },
       description: {
         'en-US': 'Versatile robot cleaner with vacuuming and mopping functions for efficient home cleaning',
-        'ru-BY': 'Mi Robot Vacuum-Mop 2 Pro+ входит в экосистему Mi Home. Модель развивает инновационные идеи, робота-пылесоса Xiaomi Mijia 1С, продолжая удивлять пользователей своими возможностями:\nусовершенствованная система навигации с двумя камерами, одна из которых распознает препятствия на полу.\nмощный двигатель, благодаря которому пылесос развивает силу всасывания до 3000 Па.\nширокое всасывающее отверстие; усовершенствованная щетка из плотного волокна, обеспечивающая высокую эффективность очистки пола; улучшенная влажная уборка.'
+        'ru-BY':
+          'Mi Robot Vacuum-Mop 2 Pro+ входит в экосистему Mi Home. Модель развивает инновационные идеи, робота-пылесоса Xiaomi Mijia 1С, продолжая удивлять пользователей своими возможностями:\nусовершенствованная система навигации с двумя камерами, одна из которых распознает препятствия на полу.\nмощный двигатель, благодаря которому пылесос развивает силу всасывания до 3000 Па.\nширокое всасывающее отверстие; усовершенствованная щетка из плотного волокна, обеспечивающая высокую эффективность очистки пола; улучшенная влажная уборка.'
       },
       categories: [
         {
@@ -254,11 +254,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'blue',
-              'white',
-              'black'
-            ]
+            value: ['blue', 'white', 'black']
           }
         ],
         assets: []
@@ -289,7 +285,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
       },
       description: {
         'en-US': 'High-performance robot vacuum cleaner for thorough cleaning',
-        'ru-BY': 'Робот-пылесос Roborock Vacuum Cleaner S8 Pro Ultra White выполняет сухую и влажную уборку. Сила всасывания 6000 Па обеспечивает высокую эффективность. В конструкции предусмотрена многофункциональная база самоочистки. Она автоматически удаляет собранную пыль и прочий мусор из пылесборника (400 мл) после каждой уборки и перегружает в мешок, рассчитанный примерно на 7 недель, заливает воду в соответствующий резервуар (200 мл)'
+        'ru-BY':
+          'Робот-пылесос Roborock Vacuum Cleaner S8 Pro Ultra White выполняет сухую и влажную уборку. Сила всасывания 6000 Па обеспечивает высокую эффективность. В конструкции предусмотрена многофункциональная база самоочистки. Она автоматически удаляет собранную пыль и прочий мусор из пылесборника (400 мл) после каждой уборки и перегружает в мешок, рассчитанный примерно на 7 недель, заливает воду в соответствующий резервуар (200 мл)'
       },
       categories: [
         {
@@ -377,11 +374,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         attributes: [
           {
             name: 'color',
-            value: [
-              'green',
-              'white',
-              'black'
-            ]
+            value: ['green', 'white', 'black']
           },
           {
             name: 'rating',
@@ -482,11 +475,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         attributes: [
           {
             name: 'color',
-            value: [
-              'yellow',
-              'red',
-              'blue'
-            ]
+            value: ['yellow', 'red', 'blue']
           },
           {
             name: 'rating',
@@ -629,9 +618,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'white'
-            ]
+            value: ['white']
           }
         ],
         assets: []
@@ -765,9 +752,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'white'
-            ]
+            value: ['white']
           }
         ],
         assets: []
@@ -887,9 +872,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'white'
-            ]
+            value: ['white']
           }
         ],
         assets: []
@@ -1009,10 +992,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'red',
-              'black'
-            ]
+            value: ['red', 'black']
           },
           {
             name: 'type',
@@ -1045,7 +1025,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         'en-US': 'Courier Delivery robot 5th generation'
       },
       description: {
-        'en-US': 'A small all-terrain vehicle with six wheels. Parcels weighing up to 20 kg are packed inside the robot. The robot is equipped with many sensors, lidar and is completely autonomous. It weighs 70 kg and has a top speed of up to 8 km/h.'
+        'en-US':
+          'A small all-terrain vehicle with six wheels. Parcels weighing up to 20 kg are packed inside the robot. The robot is equipped with many sensors, lidar and is completely autonomous. It weighs 70 kg and has a top speed of up to 8 km/h.'
       },
       categories: [
         {
@@ -1116,10 +1097,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'white',
-              'black'
-            ]
+            value: ['white', 'black']
           },
           {
             name: 'type',
@@ -1148,7 +1126,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         'en-US': 'Сolony of robot ants Type-W'
       },
       description: {
-        'en-US': 'Robotic ants are able to communicate with each other, for example, by joint efforts to move large objects, the weight and size of which exceeds their own.\nArtificial ants demonstrate how autonomous individual elements cope with the task, working together, like a single networked system.\nThey communicate with each other, coordinate actions and movements, focusing on all members of the group.'
+        'en-US':
+          'Robotic ants are able to communicate with each other, for example, by joint efforts to move large objects, the weight and size of which exceeds their own.\nArtificial ants demonstrate how autonomous individual elements cope with the task, working together, like a single networked system.\nThey communicate with each other, coordinate actions and movements, focusing on all members of the group.'
       },
       categories: [
         {
@@ -1242,10 +1221,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'black',
-              'yellow'
-            ]
+            value: ['black', 'yellow']
           }
         ],
         assets: []
@@ -1270,7 +1246,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         'en-US': 'RoboBee X-Wing+ universal'
       },
       description: {
-        'en-US': 'Pizza delivery bee. She has four wings, allowing the robot to fly long enough distances. The mass is 259 mg, the height is about 5 cm, and the wingspan is 3.5 cm.'
+        'en-US':
+          'Pizza delivery bee. She has four wings, allowing the robot to fly long enough distances. The mass is 259 mg, the height is about 5 cm, and the wingspan is 3.5 cm.'
       },
       categories: [
         {
@@ -1339,10 +1316,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'black',
-              'yellow'
-            ]
+            value: ['black', 'yellow']
           }
         ],
         assets: []
@@ -1367,7 +1341,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         'en-US': 'Moley Robotics'
       },
       description: {
-        'en-US': 'British start-up Moley Robotics has developed a prototype of a fully robotic kitchen that independently controls the cooking process. The team has been working on improving the project for six years and is now ready to install automated kitchen systems in ordinary residential buildings.\nRobotic arms that move around the kitchen thanks to a rail system built into the ceiling. They are able to control a touch-sensitive induction cooker, pour and mix ingredients, operate custom-made pots, pans and Moley Robotics smart appliances, as well as serve dishes and clean up. Optical cameras and sensors help robotic arms to understand exactly which food or utensils to use.'
+        'en-US':
+          'British start-up Moley Robotics has developed a prototype of a fully robotic kitchen that independently controls the cooking process. The team has been working on improving the project for six years and is now ready to install automated kitchen systems in ordinary residential buildings.\nRobotic arms that move around the kitchen thanks to a rail system built into the ceiling. They are able to control a touch-sensitive induction cooker, pour and mix ingredients, operate custom-made pots, pans and Moley Robotics smart appliances, as well as serve dishes and clean up. Optical cameras and sensors help robotic arms to understand exactly which food or utensils to use.'
       },
       categories: [
         {
@@ -1452,11 +1427,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'blue',
-              'gray',
-              'black'
-            ]
+            value: ['blue', 'gray', 'black']
           }
         ],
         assets: []
@@ -1481,7 +1452,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         'en-US': 'Kitchen robot 19 in 1 KitchenBot M1'
       },
       description: {
-        'en-US': 'The Atvel KitchenBot M1 kitchen robot is an innovative multi-cooker that combines 19 different appliances for preparing delicious dishes, such as a food processor, steamer, soup cooker, meat grinder, blender, mixer, slow cooker, sous-vide, coffee grinder, scales, yogurt maker and others . It is equipped with a self-cleaning function and a step-by-step recipe book to help you create a variety of dishes. Thanks to the latest electronic algorithm, the KitchenBot M1 automatically calculates the cooking time and temperature, saving you time and money.'
+        'en-US':
+          'The Atvel KitchenBot M1 kitchen robot is an innovative multi-cooker that combines 19 different appliances for preparing delicious dishes, such as a food processor, steamer, soup cooker, meat grinder, blender, mixer, slow cooker, sous-vide, coffee grinder, scales, yogurt maker and others . It is equipped with a self-cleaning function and a step-by-step recipe book to help you create a variety of dishes. Thanks to the latest electronic algorithm, the KitchenBot M1 automatically calculates the cooking time and temperature, saving you time and money.'
       },
       categories: [
         {
@@ -1545,10 +1517,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'blue',
-              'white'
-            ]
+            value: ['blue', 'white']
           }
         ],
         assets: []
@@ -1573,7 +1542,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         'en-US': 'Robot lawnmower Robomow'
       },
       description: {
-        'en-US': 'The robotic lawn mower Robomow RS630 PRD6000A is an independent machine that mows the lawn and, if necessary, returns to the base to recharge the battery. The device is equipped with ultra-sharp knives, the length of which reaches the edges of the body. The scope of delivery includes a wire-limiter, which indicates the mowing area. You can start and control the machine using Bluetooth and a mobile phone, you only need to download the application from the network. Low noise level will not cause discomfort to others.'
+        'en-US':
+          'The robotic lawn mower Robomow RS630 PRD6000A is an independent machine that mows the lawn and, if necessary, returns to the base to recharge the battery. The device is equipped with ultra-sharp knives, the length of which reaches the edges of the body. The scope of delivery includes a wire-limiter, which indicates the mowing area. You can start and control the machine using Bluetooth and a mobile phone, you only need to download the application from the network. Low noise level will not cause discomfort to others.'
       },
       categories: [
         {
@@ -1651,11 +1621,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'green',
-              'red',
-              'black'
-            ]
+            value: ['green', 'red', 'black']
           }
         ],
         assets: []
@@ -1680,7 +1646,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         'en-US': 'Transformer-Dog protector Walter'
       },
       description: {
-        'en-US': 'This is indeed a very smart and talented dog. She can carry out a whole list of commands: lie down, stand up, voice. The dog has two modes:\n1) cute gentle pet dog\n2) angry dog protector\nThe modes are switched using the remote control or on the phone. The second mode transforms the dog from a kind and sweet dog into an evil protector dog.'
+        'en-US':
+          'This is indeed a very smart and talented dog. She can carry out a whole list of commands: lie down, stand up, voice. The dog has two modes:\n1) cute gentle pet dog\n2) angry dog protector\nThe modes are switched using the remote control or on the phone. The second mode transforms the dog from a kind and sweet dog into an evil protector dog.'
       },
       categories: [
         {
@@ -1764,11 +1731,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'white',
-              'gray',
-              'black'
-            ]
+            value: ['white', 'gray', 'black']
           },
           {
             name: 'type',
@@ -1797,7 +1760,8 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
         'en-US': 'Grasshopper YAMAHA'
       },
       description: {
-        'en-US': 'A grasshopper robot is useful for scaring away insects in a summer cottage. Moving around your garden, it gives off smoke that repels small insects: mosquitoes, flies, etc. It is absolutely safe for humans.'
+        'en-US':
+          'A grasshopper robot is useful for scaring away insects in a summer cottage. Moving around your garden, it gives off smoke that repels small insects: mosquitoes, flies, etc. It is absolutely safe for humans.'
       },
       categories: [
         {
@@ -1847,10 +1811,7 @@ export const productsDataTest: ProductProjectionPagedQueryResponse = {
           },
           {
             name: 'color',
-            value: [
-              'black',
-              'green'
-            ]
+            value: ['black', 'green']
           }
         ],
         assets: []
@@ -1942,11 +1903,7 @@ export const productDataTest: ProductProjection = {
       },
       {
         name: 'color',
-        value: [
-          'white',
-          'gray',
-          'black'
-        ]
+        value: ['white', 'gray', 'black']
       }
     ],
     assets: []
@@ -2006,11 +1963,7 @@ describe('getProductParams', () => {
         },
         {
           name: 'color',
-          value: [
-            'white',
-            'gray',
-            'black'
-          ]
+          value: ['white', 'gray', 'black']
         }
       ]
     });
