@@ -26,6 +26,5 @@ export const getExtremums = (productsData: ProductProjectionPagedQueryResponse):
 
   const minValue = isFinite(min) ? Math.floor(Math.min(...values)) : 0;
   const maxValue = isFinite(max) ? Math.ceil(Math.max(...values)) : 0;
-
   return [minValue, maxValue];
 };
