@@ -3,10 +3,10 @@ import '../../i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, useMemo, type ChangeEvent } from 'react';
 
-import type { RootState, SelectedAttribute } from '../../utils/types';
+import type { CategoriesList, ProductsDataInterface, RootState, SelectedAttribute } from '../../utils/types';
 
 import { useTranslation } from 'react-i18next';
-import { useCategoryId } from '../../hooks/useCategoryId';
+// import { useCategoryId } from '../../hooks/useCategoryId';
 import { updateProductsData } from '../../pages/catalogPage/utils/updateData';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
 import { PrettoSlider } from './utils/PrettoSlider';
@@ -21,19 +21,28 @@ import { Formik, Field } from 'formik';
 import { CheckboxWithLabel } from 'formik-material-ui';
 import { Typography, Button, Stack, TextField } from '@mui/material';
 
-export const FilterBar = () => {
+export const FilterBar = ({
+  productsData,
+  category,
+  setCards
+}: {
+  productsData: ProductsDataInterface[];
+  category: CategoriesList | null;
+  setCards: (data: ProductsDataInterface[]) => void;
+}) => {
   const dispatch = useDispatch();
 
   const extremums = useSelector((state: { productsData: RootState }) => state.productsData.extremums);
-  const productsData = useSelector((state: { productsData: RootState }) => state.productsData);
+  // const productsData = useSelector((state: { productsData: RootState }) => state.productsData);
 
   const [selectedAttributes, setSelectedAttributes] = useState<SelectedAttribute[]>([
     { name: '', value: '' }
   ]);
-  const [prouctsCount, setCount] = useState(productsData.cards.length);
+
+  const [prouctsCount, setCount] = useState(productsData.length);
   const [sliderValue, setSliderValue] = useState<number[]>([0, 0]);
 
-  const { category } = useCategoryId();
+  // const { category } = useCategoryId();
 
   const [startValue, endValue] = extremums;
 
@@ -53,14 +62,19 @@ export const FilterBar = () => {
 
   useEffect(() => {
     const handleRelease = async () => {
-      const data = (await fetchFilteredProducts(filter)).results;
-      setCount(data.length);
+      return await fetchFilteredProducts(filter);
     };
 
-    handleRelease().catch((error) => {
-      throw error;
-    });
-  }, [filter]);
+    handleRelease()
+      .then((data) => {
+        const cards = normalizeData(data);
+        setCards(cards);
+        setCount(data.results.length);
+      })
+      .catch((error) => {
+        throw error;
+      });
+  }, [filter, setCards]);
 
   const { t } = useTranslation();
   const attributesList = getAttributesList(productsData);

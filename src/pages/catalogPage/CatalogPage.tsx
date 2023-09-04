@@ -15,40 +15,38 @@ import { TemporaryDrawer } from '../../components/drawer/Drawer';
 import { setCategoriesData } from '../../slices/categoriesSlice';
 import { useCategoryId } from '../../hooks/useCategoryId';
 
-export const Catalog = () => {
+export const Catalog = ({ category }: { category: CategoriesList | null }) => {
   const [categoryList, setCategoryList] = useState<CategoriesList[]>([]);
   const dispatch = useDispatch();
   const [cards, setCards] = useState<ProductsDataInterface[]>([]);
-  const { category } = useCategoryId();
-  const catecoryFilter = category !== null ? `categories.id:"${category.id}"` : '';
+  // const { category } = useCategoryId();
+  // const catecoryFilter = category !== null ? `categories.id:"${category.id}"` : '';
+
+  const handleRelease = async (catecoryFilter: string) => {
+    const data = await fetchFilteredProducts(catecoryFilter);
+    const cards = normalizeData(data);
+    setCards(cards);
+  };
 
   useEffect(() => {
-    const handleRelease = async (catecoryFilter: string) => {
-      const data = await fetchFilteredProducts(catecoryFilter);
-      const cards = normalizeData(data);
-      setCards(cards);
-    };
-
     fetchCategories(setCategoryList, setCategoriesData).catch((error) => {
       throw error;
     });
 
-    updateProductsData(dispatch, fetchProducts, normalizeData, setCards)
-      .then(() => {
-        if (category !== null) {
-          handleRelease(catecoryFilter).catch((error) => {
-            throw error;
-          });
-        }
-      })
-      .catch((error) => {
+    if (category !== null) {
+      handleRelease(`categories.id:"${category.id}"`).catch((error) => {
         throw error;
       });
+    } else {
+      updateProductsData(dispatch, fetchProducts, normalizeData, setCards).catch((error) => {
+        throw error;
+      });
+    }
 
     updateExtremumsData(dispatch, fetchProducts, getExtremums).catch((error) => {
       throw error;
     });
-  }, [dispatch, setCards, catecoryFilter, category]);
+  }, [dispatch, setCards, category]);
 
   return (
     <>
@@ -60,14 +58,22 @@ export const Catalog = () => {
       />
       <div className="pl-4 sm:hidden">
         <TemporaryDrawer>
-          <FilterBar />
+          <FilterBar
+            productsData={cards}
+            category={category}
+            setCards={setCards}
+          />
         </TemporaryDrawer>
       </div>
-      <div className="flex">
+      <div className="flex items-start">
         <div className="hidden sm:block">
-          <FilterBar />
+          <FilterBar
+            productsData={cards}
+            category={category}
+            setCards={setCards}
+          />
         </div>
-        <div className="m-auto flex flex-wrap justify-center gap-4">
+        <div className="mx-auto flex flex-wrap justify-center gap-4 sm:mt-6">
           {cards.map((item) => {
             const { url, name, description, priceTag, id } = item;
             const { price, discount } = priceTag;
@@ -94,13 +100,11 @@ export const Catalog = () => {
 export const CatalogPage = () => {
   const { setCategory } = useCategoryId();
 
-  useEffect(() => {
-    setCategory(null);
-  });
+  setCategory(null);
 
   return (
     <>
-      <Catalog />;
+      <Catalog category={null} />;
     </>
   );
 };

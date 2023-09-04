@@ -1,3 +1,7 @@
+import { useCategoryId } from '../../../hooks/useCategoryId';
 import { Catalog } from '../CatalogPage';
 
-export const Pets = () => <Catalog />;
+export const Pets = () => {
+  const { category } = useCategoryId();
+  return <Catalog category={category} />;
+};
