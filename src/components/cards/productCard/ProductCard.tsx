@@ -53,8 +53,8 @@ export const ProductCard = ({
           variant="body2"
           color="text.secondary"
         >
-          <div className="inline-block max-h-10 overflow-hidden text-gray-500">{description}</div>
-          <div className="mt-[-0.5rem] text-secondary">...more</div>
+          <span className="inline-block max-h-10 overflow-hidden text-gray-500">{description}</span>
+          <span className="mt-[-0.5rem] block text-secondary">...more</span>
         </Typography>
       </CardContent>
       <CardContent
