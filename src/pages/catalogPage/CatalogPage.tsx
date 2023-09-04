@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Container } from '../../components/container/Container';
 import { ProductCard } from '../../components/cards/productCard/ProductCard';
-import { useDispatch } from 'react-redux';
-import type { CategoriesList, ProductsDataInterface } from '../../utils/types';
+import { useDispatch, useSelector } from 'react-redux';
+import type { CategoriesList, RootState } from '../../utils/types';
 import { ArrowButtonGroup } from '../../components/buttons/ArrowButtonsGroup';
 import { updateExtremumsData, updateProductsData } from './utils/updateData';
 import { fetchCategories } from './utils/fetchCategories';
@@ -14,26 +14,27 @@ import { getExtremums } from './utils/getExtremums';
 import { TemporaryDrawer } from '../../components/drawer/Drawer';
 import { setCategoriesData } from '../../slices/categoriesSlice';
 import { useCategoryId } from '../../hooks/useCategoryId';
+import { setProducts } from '../../slices/ProductCardsSlice';
 
 export const Catalog = () => {
   const [categoryList, setCategoryList] = useState<CategoriesList[]>([]);
   const dispatch = useDispatch();
-  const [cards, setCards] = useState<ProductsDataInterface[]>([]);
-  const { category } = useCategoryId();
+  // const [cards, setCards] = useState<ProductsDataInterface[]>([]);
+  const { category, setCategory } = useCategoryId();
   const catecoryFilter = category !== null ? `categories.id:"${category.id}"` : '';
 
   useEffect(() => {
     const handleRelease = async (catecoryFilter: string) => {
       const data = await fetchFilteredProducts(catecoryFilter);
       const cards = normalizeData(data);
-      setCards(cards);
+      setProducts(cards);
     };
 
     fetchCategories(setCategoryList, setCategoriesData).catch((error) => {
       throw error;
     });
 
-    updateProductsData(dispatch, fetchProducts, normalizeData, setCards)
+    updateProductsData(dispatch, fetchProducts, normalizeData, setProducts)
       .then(() => {
         if (category !== null) {
           handleRelease(catecoryFilter).catch((error) => {
@@ -48,7 +49,9 @@ export const Catalog = () => {
     updateExtremumsData(dispatch, fetchProducts, getExtremums).catch((error) => {
       throw error;
     });
-  }, [dispatch, setCards, catecoryFilter, category]);
+  }, [dispatch, catecoryFilter, setCategory, category]);
+
+  const { cards } = useSelector((state: { productsData: RootState }) => state.productsData);
 
   return (
     <>
