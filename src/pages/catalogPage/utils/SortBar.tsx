@@ -1,5 +1,5 @@
 import '../../../i18n';
-import { Box, MenuItem, Select, type SelectChangeEvent, Typography } from '@mui/material';
+import { MenuItem, Select, type SelectChangeEvent, Typography, FormControl } from '@mui/material';
 import { useState } from 'react';
 import { updateProductsData } from './updateData';
 import { useDispatch } from 'react-redux';
@@ -28,27 +28,19 @@ export const SortBar = () => {
   };
   const { t } = useTranslation();
   return (
-    <>
-      <Box
+    <div className="flex">
+      <Typography
         sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, auto)',
-          gridTemplateRows: 'auto',
-          gap: '12px',
-          m: 1,
-          margin: 0,
-          padding: '0 16px',
-          overflow: 'visible'
+          display: 'flex',
+          alignItems: 'center'
         }}
       >
-        <Typography
-          sx={{
-            textAlign: 'center',
-            width: '60px'
-          }}
-        >
-          {t('dropDown.sort.name')}
-        </Typography>
+        {t('dropDown.sort.name')}
+      </Typography>
+      <FormControl
+        sx={{ m: 1, minWidth: 120 }}
+        size="small"
+      >
         <Select
           displayEmpty
           id="asc-sort"
@@ -72,6 +64,11 @@ export const SortBar = () => {
           <MenuItem value="asc">{t('dropDown.sort.asc')}</MenuItem>
           <MenuItem value="desc">{t('dropDown.sort.desc')} </MenuItem>
         </Select>
+      </FormControl>
+      <FormControl
+        sx={{ m: 1, minWidth: 120 }}
+        size="small"
+      >
         <Select
           displayEmpty
           id="desc-sort"
@@ -95,7 +92,7 @@ export const SortBar = () => {
           <MenuItem value="asc">{t('dropDown.sort.asc')}</MenuItem>
           <MenuItem value="desc">{t('dropDown.sort.desc')} </MenuItem>
         </Select>
-      </Box>
-    </>
+      </FormControl>
+    </div>
   );
 };

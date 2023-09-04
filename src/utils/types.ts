@@ -272,7 +272,7 @@ export interface CategoriesContextInterface {
   setCurrentFilter: (filter: string[]) => void;
 }
 
-export type FetcDataType = (
+export type FetchDataType = (
   quertString?: string | string[] | undefined,
   sort?: string
 ) => Promise<ProductProjectionPagedQueryResponse>;
