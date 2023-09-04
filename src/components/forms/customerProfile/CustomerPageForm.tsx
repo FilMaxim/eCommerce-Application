@@ -29,7 +29,7 @@ export const CustomerPageForm = ({
       {(formik) => (
         <div className="relative mb-3 pt-[3rem]">
           <Form className=" flex max-w-[42rem] flex-wrap items-center justify-center gap-2">
-            <div className="absolute right-2 top-2 flex gap-1">
+            <div className="absolute right-2 top-2">
               <IconButton
                 aria-label="edit"
                 onClick={() => {
