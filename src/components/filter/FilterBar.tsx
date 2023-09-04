@@ -33,7 +33,7 @@ export const FilterBar = () => {
   const [prouctsCount, setCount] = useState(productsData.cards.length);
   const [sliderValue, setSliderValue] = useState<number[]>([0, 0]);
 
-  const { categoryId } = useCategoryId();
+  const { category } = useCategoryId();
 
   const [startValue, endValue] = extremums;
 
@@ -45,7 +45,7 @@ export const FilterBar = () => {
 
   const priceFilter = `variants.price.centAmount:range(${minValue * 100} to ${maxValue * 100})`;
   const attributesFilter = buildQueryString(selectedAttributes);
-  const catecoryFilter = categoryId.length > 0 ? `categories.id:"${categoryId}"` : '';
+  const catecoryFilter = category !== null ? `categories.id:"${category.id}"` : '';
   const filter = useMemo(
     () => [catecoryFilter, priceFilter, ...attributesFilter],
     [priceFilter, attributesFilter, catecoryFilter]

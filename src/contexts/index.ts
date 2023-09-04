@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import type { CategoriesContextInterface } from '../utils/types';
+import type { CategoriesContextInterface, Category } from '../utils/types';
 
 export const CategoriesContext = createContext<CategoriesContextInterface>({
-  categoryId: '',
-  setCategoryId: (): void => {}
+  category: null,
+  setCategory: (category: Category | null): void => {}
 });

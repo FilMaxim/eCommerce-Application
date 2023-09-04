@@ -100,6 +100,7 @@ export interface RootState {
   cards: ProductsDataInterface[];
   customer: Customer | null;
   extremums: number[];
+  categories: CategoriesList[];
 }
 
 export interface AddressFieldComponent {
@@ -264,9 +265,14 @@ export interface AddressComponentProps {
   onDelete?: (id: string) => Promise<void>;
 }
 
+export interface Category {
+  id: string;
+  name: string;
+}
+
 export interface CategoriesContextInterface {
-  categoryId: string;
-  setCategoryId: (newString: string) => void;
+  category: Category | null;
+  setCategory: (newCategory: Category | null) => void;
 }
 
 export type FetcDataType = (

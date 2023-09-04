@@ -1,4 +1,4 @@
-import type { ContainerProps } from '../../utils/types';
+import type { CategoriesList, ContainerProps } from '../../utils/types';
 import { CategoryCard } from '../cards/categoryCard/CategoryCard';
 import { useEffect, useState } from 'react';
 import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
@@ -7,18 +7,17 @@ import { useCategoryId } from '../../hooks/useCategoryId';
 import { updateProductsData, updateExtremumsData } from '../../pages/catalogPage/utils/updateData';
 import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
+import { BreadcrumbsNav } from '../breadcrumbs/Breadcrumbs';
 
-export const Container = ({ titleName, titleDescription, buttons, categoriesList }: ContainerProps) => {
-  // const [categoryId, setCategoryId] = useState<string>('');
+export const Container = ({ titleName, titleDescription, categoriesList }: ContainerProps) => {
   const [currentId, setId] = useState<string>('');
-  const { categoryId, setCategoryId } = useCategoryId();
+  const { category, setCategory } = useCategoryId();
   const dispatch = useDispatch();
-
-  console.log(categoryId);
+  const isSelectedCategory = Boolean(category);
 
   useEffect(() => {
     const handleCategoryCardClick = async (id: string) => {
-      setId(categoryId);
+      setId(category?.id ?? '');
       await updateExtremumsData(dispatch, fetchFilteredProducts, getExtremums, `categories.id:"${id}"`);
       await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, `categories.id:"${id}"`);
     };
@@ -31,9 +30,9 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
     return (): void => {
       setId('');
     };
-  }, [currentId, categoryId, dispatch]);
+  }, [currentId, category, dispatch]);
 
-  return (
+  const Categories = ({ categoriesList }: { categoriesList: CategoriesList[] }) => (
     <div className="m-auto flex max-w-7xl flex-col gap-2 p-4 lg:px-8">
       <div className="flex items-center gap-4">
         <div className="h-10 w-5 rounded bg-secondary"></div>
@@ -49,7 +48,7 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
               category={name}
               callback={() => {
                 setId(id);
-                setCategoryId(id);
+                setCategory(category);
               }}
             />
           );
@@ -57,4 +56,6 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
       </div>
     </div>
   );
+
+  return isSelectedCategory ? <BreadcrumbsNav /> : <Categories categoriesList={categoriesList} />;
 };

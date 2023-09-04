@@ -2,6 +2,7 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { routesConfig } from '../utils/routesConfig';
 import { Header } from './header/header';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CategoriesProveder } from './CategoriesProvider';
 
 const theme = createTheme({
   palette: {
@@ -20,15 +21,17 @@ export const App = () => {
       <Router>
         <Header />
         <main className="m-auto w-full max-w-7xl px-2">
-          <Routes>
-            {routesConfig.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                element={route.element}
-              />
-            ))}
-          </Routes>
+          <CategoriesProveder>
+            <Routes>
+              {routesConfig.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={route.element}
+                />
+              ))}
+            </Routes>
+          </CategoriesProveder>
         </main>
       </Router>
     </ThemeProvider>

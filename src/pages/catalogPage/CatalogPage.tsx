@@ -8,18 +8,19 @@ import { updateExtremumsData, updateProductsData } from './utils/updateData';
 import { fetchCategories } from './utils/fetchCategories';
 import { FilterBar } from '../../components/filter/FilterBar';
 import { fetchProducts } from '../../helpers/api/apiRoot';
-import { CategoriesProveder } from '../../components/CategoriesProvider';
 import { trimText } from './utils/trimText';
 import { normalizeData } from './utils/normalizeData';
 import { getExtremums } from './utils/getExtremums';
 import { TemporaryDrawer } from '../../components/drawer/Drawer';
+import { setCategoriesData } from '../../slices/categoriesSlice';
+import { useCategoryId } from '../../hooks/useCategoryId';
 
-export const CatalogPage = () => {
+export const Catalog = () => {
   const [categoryList, setCategoryList] = useState<CategoriesList[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCategories(setCategoryList).catch((error) => {
+    fetchCategories(setCategoryList, setCategoriesData).catch((error) => {
       throw error;
     });
 
@@ -35,7 +36,7 @@ export const CatalogPage = () => {
   const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
 
   return (
-    <CategoriesProveder>
+    <>
       <Container
         titleName="Categories"
         titleDescription="Browse By Category"
@@ -71,6 +72,20 @@ export const CatalogPage = () => {
           })}
         </div>
       </div>
-    </CategoriesProveder>
+    </>
+  );
+};
+
+export const CatalogPage = () => {
+  const { setCategory } = useCategoryId();
+
+  useEffect(() => {
+    setCategory(null);
+  });
+
+  return (
+    <>
+      <Catalog />;
+    </>
   );
 };

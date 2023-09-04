@@ -1,17 +1,17 @@
 import { CategoriesContext } from '../contexts';
 import { useState, useMemo, type ReactNode } from 'react';
-import type { CategoriesContextInterface } from '../utils/types';
+import type { CategoriesContextInterface, Category } from '../utils/types';
 
 export const CategoriesProveder = ({ children }: { children: ReactNode }) => {
-  const [categoryId, setCategoryId] = useState<string>('');
+  const [category, setCategory] = useState<Category | null>(null);
 
-  const category: CategoriesContextInterface = useMemo(
+  const categoryContext: CategoriesContextInterface = useMemo(
     () => ({
-      categoryId,
-      setCategoryId
+      category,
+      setCategory
     }),
-    [categoryId]
+    [category]
   );
 
-  return <CategoriesContext.Provider value={category}>{children}</CategoriesContext.Provider>;
+  return <CategoriesContext.Provider value={categoryContext}>{children}</CategoriesContext.Provider>;
 };
