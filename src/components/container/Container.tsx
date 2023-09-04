@@ -7,8 +7,9 @@ import { useCategoryContext } from '../../hooks/useCategoryId';
 import { updateProductsData, updateExtremumsData } from '../../pages/catalogPage/utils/updateData';
 import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
+import { SearchInput } from '../searchInput/searchInput';
 
-export const Container = ({ titleName, titleDescription, buttons, categoriesList }: ContainerProps) => {
+export const Container = ({ titleName, titleDescription, categoriesList }: ContainerProps) => {
   // const [categoryId, setCategoryId] = useState<string>('');
   const [currentId, setId] = useState<string>('');
   const { categoryId, setCategoryId } = useCategoryContext();
@@ -33,9 +34,12 @@ export const Container = ({ titleName, titleDescription, buttons, categoriesList
 
   return (
     <div className="m-auto flex max-w-7xl flex-col gap-2 p-4 lg:px-8">
-      <div className="flex items-center gap-4">
+      <div className='flex justify-between'>
+        <div className="flex items-center gap-4">
         <div className="h-10 w-5 rounded bg-secondary"></div>
         <p className="text-lg font-bold text-secondary">{titleName}</p>
+        </div>
+        <SearchInput />
       </div>
       <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
       <div className="flex max-w-[90%] gap-2 self-center overflow-auto rounded border p-1 md:border-none">
