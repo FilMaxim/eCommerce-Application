@@ -1,4 +1,3 @@
-// import styles from './CatalogPage.module.scss';
 import { useEffect, useState } from 'react';
 import { Container } from '../../components/container/Container';
 import { ProductCard } from '../../components/cards/productCard/ProductCard';
@@ -21,18 +20,20 @@ export const CatalogPage = () => {
 
   useEffect(() => {
     fetchCategories(setCategoryList).catch((error) => {
-      console.error(error);
+      throw error;
     });
 
     updateProductsData(dispatch, fetchProducts, normalizeData).catch((error) => {
-      console.error(error);
+      throw error;
     });
 
     updateExtremumsData(dispatch, fetchProducts, getExtremums).catch((error) => {
-      console.error(error);
+      throw error;
     });
   }, [dispatch]);
+
   const cardsData = useSelector((state: { productsData: RootState }) => state.productsData.cards);
+
   return (
     <CategoriesProveder>
       <Container
