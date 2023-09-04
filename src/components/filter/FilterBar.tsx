@@ -65,6 +65,7 @@ export const FilterBar = () => {
   const { t } = useTranslation();
   const attributesList = getAttributesList(productsData);
 
+  const [currentMinValue, currentMaxValue] = sliderValue;
   return (
     <Formik
       initialValues={{
@@ -73,11 +74,10 @@ export const FilterBar = () => {
       }}
       onSubmit={async (_values, { setSubmitting }): Promise<void> => {
         setSubmitting(false);
-        console.log('lfl');
         await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter);
       }}
     >
-      {({ submitForm, handleChange }) => (
+      {({ submitForm, handleChange, resetForm }) => (
         <Stack
           component="form"
           spacing={1}
@@ -101,7 +101,7 @@ export const FilterBar = () => {
               InputLabelProps={{
                 shrink: true
               }}
-              placeholder={`${startValue}`}
+              placeholder={`${currentMinValue}`}
               variant="standard"
               onKeyDown={handleKeyDawn}
               onChange={(e: ChangeEvent<HTMLInputElement>): void => {
@@ -116,7 +116,7 @@ export const FilterBar = () => {
               InputLabelProps={{
                 shrink: true
               }}
-              placeholder={`${endValue}`}
+              placeholder={`${currentMaxValue}`}
               variant="standard"
               onKeyDown={handleKeyDawn}
               onChange={(e: ChangeEvent<HTMLInputElement>): void => {
@@ -141,6 +141,14 @@ export const FilterBar = () => {
               color="error"
               sx={{
                 gridColumn: '1 / span 2'
+              }}
+              onClick={() => {
+                resetForm();
+                setSelectedAttributes([]);
+                setSliderValue([startValue, endValue]);
+                submitForm().catch((error) => {
+                  throw error;
+                });
               }}
             >
               {t('button.reset')}

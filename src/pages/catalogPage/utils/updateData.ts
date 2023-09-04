@@ -1,10 +1,10 @@
 import type { Dispatch } from '@reduxjs/toolkit';
 import { setExtremums, setProducts } from '../../../slices/ProductCardsSlice';
-import type { NormolizeDataType, FetcDataType } from '../../../utils/types';
+import type { NormolizeDataType, FetchDataType } from '../../../utils/types';
 
 export const updateProductsData = async (
   dispatch: Dispatch,
-  fetchData: FetcDataType,
+  fetchData: FetchDataType,
   normalizeData: NormolizeDataType,
   quertString?: string | string[]
 ): Promise<void> => {
@@ -17,7 +17,7 @@ export const updateProductsData = async (
 
 export const updateExtremumsData = async (
   dispatch: Dispatch,
-  fetchData: FetcDataType,
+  fetchData: FetchDataType,
   normalizeData: NormolizeDataType,
   quertString?: string | string[]
 ): Promise<void> => {
