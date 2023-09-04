@@ -234,7 +234,7 @@ export type AddressExtraControls = (
   editable: boolean,
   initialValues: AddressesInitialValues,
   formik: FormikProps
-) => JSX.Element[] | JSX.Element;
+) => JSX.Element[] | JSX.Element | null;
 
 export interface PasswordChangeInitialValues {
   currentPassword: string;

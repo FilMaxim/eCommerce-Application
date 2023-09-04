@@ -29,27 +29,27 @@ const AddressControls: AddressExtraControls = (editable: boolean, initialValues,
     }
     return false;
   });
+  if (!editable || checkboxes.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap justify-center gap-1 px-8">
-      {editable &&
-        checkboxes.map(([name, value]) => (
-          <FormControlLabel
-            key={name}
-            control={
-              <Checkbox
-                name={name}
-                color="secondary"
-                onChange={(e) => {
-                  formik.handleChange(e.nativeEvent);
-                }}
-                defaultChecked={value}
-              />
-            }
-            label={getCheckboxLabel(name)}
-            labelPlacement="end"
-          />
-        ))}
+    <div className="flex min-w-[70%] flex-wrap justify-center gap-1 px-4">
+      {checkboxes.map(([name, value]) => (
+        <FormControlLabel
+          key={name}
+          control={
+            <Checkbox
+              name={name}
+              color="secondary"
+              onChange={(e) => {
+                formik.handleChange(e.nativeEvent);
+              }}
+              defaultChecked={value}
+            />
+          }
+          label={getCheckboxLabel(name)}
+          labelPlacement="end"
+        />
+      ))}
     </div>
   );
 };
@@ -108,7 +108,7 @@ export const AddressComponent = ({
   if (initialValues.length === 0) {
     return (
       <>
-        <h3>You have no addresses yet...</h3>
+        <h3 className="mb-10 text-center text-xl">You have no addresses yet...</h3>
         <NewAddressModal />
       </>
     );
@@ -116,46 +116,44 @@ export const AddressComponent = ({
 
   return (
     <>
-      <div className="mb-2 rounded border">
-        {initialValues.map((address) => (
-          <div
-            key={address.id}
-            className="mb-4"
-          >
-            <div className="m-1 mb-[-2rem] flex max-w-[calc(100%-100px)] flex-wrap gap-1">
-              {address.shippingStateChecked && (
-                <span className="rounded border border-secondary bg-secondary-light text-xs">
-                  Shipping address
-                </span>
-              )}
-              {address.billingStateChecked && (
-                <span className="rounded border border-secondary bg-secondary-light text-xs">
-                  Billing address
-                </span>
-              )}
-              {address.defaultShippingAddress && (
-                <span className="rounded border border-secondary bg-secondary-light text-xs">
-                  Default shipping address
-                </span>
-              )}
-              {address.defaultBillingAddress && (
-                <span className="rounded border border-secondary bg-secondary-light text-xs">
-                  Default billing address
-                </span>
-              )}
-              <div className="h-6 w-1"></div> {/* filler */}
-            </div>
-            <CustomerPageForm
-              initialValues={address}
-              onSubmit={onSubmit}
-              validationSchema={validationSchema}
-              formInner={AddressInner}
-              addressExtraControls={AddressControls}
-              onDelete={onDelete}
-            />
+      {initialValues.map((address) => (
+        <div
+          key={address.id}
+          className="mb-4 rounded border"
+        >
+          <div className="m-1 mb-[-2rem] flex max-w-[calc(100%-100px)] flex-wrap gap-1">
+            {address.shippingStateChecked && (
+              <span className="rounded border border-secondary bg-secondary-light text-xs">
+                Shipping address
+              </span>
+            )}
+            {address.billingStateChecked && (
+              <span className="rounded border border-secondary bg-secondary-light text-xs">
+                Billing address
+              </span>
+            )}
+            {address.defaultShippingAddress && (
+              <span className="rounded border border-secondary bg-secondary-light text-xs">
+                Default shipping address
+              </span>
+            )}
+            {address.defaultBillingAddress && (
+              <span className="rounded border border-secondary bg-secondary-light text-xs">
+                Default billing address
+              </span>
+            )}
+            <div className="h-6 w-1"></div> {/* filler */}
           </div>
-        ))}
-      </div>
+          <CustomerPageForm
+            initialValues={address}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}
+            formInner={AddressInner}
+            addressExtraControls={AddressControls}
+            onDelete={onDelete}
+          />
+        </div>
+      ))}
       <NewAddressModal />
     </>
   );
