@@ -10,6 +10,12 @@ import { Product } from '../pages/ProductPage';
 import { CatalogPage } from '../pages/catalogPage/CatalogPage';
 import { UserProfilePage } from '../pages/UserProfilePage';
 import { AnonymOutlet } from '../components/AnonymOutlet';
+import { Companions } from '../pages/catalogPage/categories/Companions';
+import { Cleaners } from '../pages/catalogPage/categories/Cleaners';
+import { Pets } from '../pages/catalogPage/categories/Pets';
+import { Kitchens } from '../pages/catalogPage/categories/Kitchens';
+import { Gardens } from '../pages/catalogPage/categories/Gardens';
+import { Deliveries } from '../pages/catalogPage/categories/Deliveries';
 
 export const routesConfig = [
   {
@@ -60,5 +66,29 @@ export const routesConfig = [
   {
     path: NavRoutes.notFoundPagePath,
     element: <NotFoundPage />
+  },
+  {
+    path: NavRoutes.companionsPagePath,
+    element: <Companions />
+  },
+  {
+    path: NavRoutes.cleanersPagePath,
+    element: <Cleaners />
+  },
+  {
+    path: NavRoutes.petsPagePath,
+    element: <Pets />
+  },
+  {
+    path: NavRoutes.kitchensPagePath,
+    element: <Kitchens />
+  },
+  {
+    path: NavRoutes.gardensPagePath,
+    element: <Gardens />
+  },
+  {
+    path: NavRoutes.deliveriesPagePath,
+    element: <Deliveries />
   }
 ];
