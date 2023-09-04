@@ -3,7 +3,7 @@ import { CategoryCard } from '../cards/categoryCard/CategoryCard';
 import { useEffect, useState } from 'react';
 import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
 import { useDispatch } from 'react-redux';
-import { useCategoryId } from '../../hooks/useCategoryId';
+import { useCategoryContext } from '../../hooks/useCategoryId';
 import { updateProductsData, updateExtremumsData } from '../../pages/catalogPage/utils/updateData';
 import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
@@ -11,10 +11,8 @@ import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
 export const Container = ({ titleName, titleDescription, buttons, categoriesList }: ContainerProps) => {
   // const [categoryId, setCategoryId] = useState<string>('');
   const [currentId, setId] = useState<string>('');
-  const { categoryId, setCategoryId } = useCategoryId();
+  const { categoryId, setCategoryId } = useCategoryContext();
   const dispatch = useDispatch();
-
-  console.log(categoryId);
 
   useEffect(() => {
     const handleCategoryCardClick = async (id: string) => {

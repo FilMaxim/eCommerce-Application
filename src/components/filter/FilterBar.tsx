@@ -6,7 +6,7 @@ import { useEffect, useState, useMemo, type ChangeEvent } from 'react';
 import type { RootState, SelectedAttribute } from '../../utils/types';
 
 import { useTranslation } from 'react-i18next';
-import { useCategoryId } from '../../hooks/useCategoryId';
+import { useCategoryContext } from '../../hooks/useCategoryId';
 import { updateProductsData } from '../../pages/catalogPage/utils/updateData';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
 import { PrettoSlider } from './utils/PrettoSlider';
@@ -33,7 +33,7 @@ export const FilterBar = () => {
   const [prouctsCount, setCount] = useState(productsData.cards.length);
   const [sliderValue, setSliderValue] = useState<number[]>([0, 0]);
 
-  const { categoryId } = useCategoryId();
+  const { categoryId, setCurrentFilter } = useCategoryContext();
 
   const [startValue, endValue] = extremums;
 
@@ -73,7 +73,7 @@ export const FilterBar = () => {
       }}
       onSubmit={async (_values, { setSubmitting }): Promise<void> => {
         setSubmitting(false);
-        console.log('lfl');
+        setCurrentFilter(filter);
         await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter);
       }}
     >
@@ -83,9 +83,9 @@ export const FilterBar = () => {
           spacing={1}
           noValidate
           autoComplete="off"
-          className="max-w-[15rem] p-4"
+          className="w-[15rem] p-4"
         >
-          <div className="grid grid-cols-filters">
+          <div className="grid grid-cols-filters gap-3">
             <Typography
               variant="h6"
               id="discrete-slider-small-steps"

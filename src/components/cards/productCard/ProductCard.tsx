@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import type { ProductCardInterface } from '../../../utils/types';
-import { Button } from '@mui/material';
+import { Button, Rating } from '@mui/material';
 import { PriceTag } from './PriceTag';
 
 export const ProductCard = ({
@@ -14,7 +14,8 @@ export const ProductCard = ({
   description,
   price,
   discount,
-  id
+  id,
+  rating
 }: ProductCardInterface) => {
   const handleCardClick = (id: string) => {
     window.location.href = `/product/${id}`;
@@ -68,6 +69,14 @@ export const ProductCard = ({
           discount={discount}
         />
       </CardContent>
+      <p>
+        <Rating
+          name="read-only"
+          precision={0.1}
+          defaultValue={rating}
+          readOnly
+        />
+      </p>
       <Button
         size="medium"
         variant="contained"
