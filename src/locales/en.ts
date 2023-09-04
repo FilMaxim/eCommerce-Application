@@ -45,11 +45,11 @@ export const en = {
     },
     dropDown: {
       sort: {
-        name: 'Sort by:',
-        price: 'price',
-        rating: 'rating',
-        asc: 'Ascending',
-        desc: 'Descending'
+        name: 'Sort',
+        price: 'Price',
+        rating: 'Rating',
+        asc: 'Lower',
+        desc: 'Higher'
       }
     }
   }

@@ -28,17 +28,10 @@ export const SortBar = () => {
   };
   const { t } = useTranslation();
   return (
-    <div className="flex">
-      <Typography
-        sx={{
-          display: 'flex',
-          alignItems: 'center'
-        }}
-      >
-        {t('dropDown.sort.name')}
-      </Typography>
+    <div className="m-2 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:items-center sm:justify-items-end">
+      <span className="col-span-2 my-[-1rem] p-2 sm:col-span-1">Sort by:</span>
       <FormControl
-        sx={{ m: 1, minWidth: 120 }}
+        sx={{ minWidth: 100 }}
         size="small"
       >
         <Select
@@ -52,7 +45,7 @@ export const SortBar = () => {
             });
           }}
           sx={{
-            width: '120px'
+            width: '100px'
           }}
         >
           <MenuItem
@@ -66,7 +59,7 @@ export const SortBar = () => {
         </Select>
       </FormControl>
       <FormControl
-        sx={{ m: 1, minWidth: 120 }}
+        sx={{ minWidth: 100 }}
         size="small"
       >
         <Select
@@ -80,7 +73,7 @@ export const SortBar = () => {
             });
           }}
           sx={{
-            width: '120px'
+            width: '100px'
           }}
         >
           <MenuItem
