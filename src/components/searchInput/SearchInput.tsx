@@ -1,46 +1,45 @@
-import { IconButton, InputAdornment, TextField } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { useDispatch } from 'react-redux';
-import { Field, Form, Formik } from 'formik';
+import { Autocomplete, TextField } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, Formik } from 'formik';
+import type { RootState } from '../../utils/types';
 import { handleSearch } from './handleSearch';
+import { useState } from 'react';
 
 export const SearchInput = () => {
-  const dispathc = useDispatch();
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState('');
+
+  const { cards } = useSelector((state: { productsData: RootState }) => state.productsData);
+  const labels = cards.map((card) => card.name);
 
   return (
     <Formik
       initialValues={{ searchQuery: '' }}
-      onSubmit={async ({ searchQuery }, { resetForm }) => {
-        await handleSearch(searchQuery, dispathc);
+      onSubmit={async (_values, { resetForm }) => {
+        await handleSearch(query, dispatch);
         resetForm();
       }}
     >
       {({ submitForm, handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
-          <Field
-            name="searchQuery"
-            as={TextField}
-            label="Search"
-            variant="outlined"
+          <Autocomplete
             size="small"
-            className="w-[10rem] sm:w-[12rem]"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    type="button"
-                    aria-label="search"
-                    onClick={() => {
-                      submitForm().catch((error) => {
-                        throw error;
-                      });
-                    }}
-                  >
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
+            disablePortal
+            id="combo-box-demo"
+            options={labels}
+            renderInput={(props) => (
+              <TextField
+                {...props}
+                label="Search"
+                onChange={({ target }) => {
+                  setQuery(target.value);
+                  submitForm().catch((error) => {
+                    throw error;
+                  });
+                }}
+              />
+            )}
+            className="w-[8rem] sm:w-[10rem]"
           />
         </Form>
       )}
