@@ -28,7 +28,7 @@ export const SortBar = () => {
   };
   const { t } = useTranslation();
   return (
-    <div className="flex">
+    <div className="flex gap-2">
       <Typography
         sx={{
           display: 'flex',
@@ -38,7 +38,7 @@ export const SortBar = () => {
         {t('dropDown.sort.name')}
       </Typography>
       <FormControl
-        sx={{ m: 1, minWidth: 120 }}
+        className="max-w-[7rem]"
         size="small"
       >
         <Select
@@ -50,9 +50,6 @@ export const SortBar = () => {
             handleSort(e, currentFilter, param, setPriceSort).catch((error) => {
               throw error;
             });
-          }}
-          sx={{
-            width: '120px'
           }}
         >
           <MenuItem
@@ -66,7 +63,7 @@ export const SortBar = () => {
         </Select>
       </FormControl>
       <FormControl
-        sx={{ m: 1, minWidth: 120 }}
+        className="max-w-[7rem]"
         size="small"
       >
         <Select
@@ -78,9 +75,6 @@ export const SortBar = () => {
             handleSort(e, currentFilter, param, setRatingSort).catch((error) => {
               throw error;
             });
-          }}
-          sx={{
-            width: '120px'
           }}
         >
           <MenuItem

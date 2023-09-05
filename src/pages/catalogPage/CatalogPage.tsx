@@ -50,7 +50,7 @@ export const CatalogPage = () => {
         buttons={[ArrowButtonGroup]}
         categoriesList={categoryList}
       />
-      <div className="flex sm:pl-[18rem]">
+      <div className="mb-2 flex items-center sm:pl-[18rem]">
         <div className="pl-4 sm:hidden">
           <TemporaryDrawer>
             <FilterBar />

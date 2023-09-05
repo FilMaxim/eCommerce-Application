@@ -45,7 +45,7 @@ export const en = {
     },
     dropDown: {
       sort: {
-        name: 'Sort by:',
+        name: 'Sort:',
         price: 'price',
         rating: 'rating',
         asc: 'Ascending',
