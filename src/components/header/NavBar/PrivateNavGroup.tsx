@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import type { PrivateNavGroupProps } from '../../../utils/types';
 
 export const PrivateNavGroup = ({ isLogged, logout, clickHandler }: PrivateNavGroupProps) => {
-  const linksData = isLogged ? [links.profile, links.logout] : [links.login, links.registration];
+  const linksData = isLogged ? [links.cart, links.profile, links.logout] : [links.cart, links.login, links.registration];
 
   return (
     <>
