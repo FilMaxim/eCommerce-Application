@@ -7,5 +7,6 @@ export enum NavRoutes {
   productPage = '/product/:id',
   notFoundPagePath = '*',
   catalogPage = '/catalog',
-  profilePagePath = '/profile'
+  profilePagePath = '/profile',
+  cartPagePath = '/cart'
 }

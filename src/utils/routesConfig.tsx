@@ -10,6 +10,7 @@ import { Product } from '../pages/ProductPage';
 import { CatalogPage } from '../pages/catalogPage/CatalogPage';
 import { UserProfilePage } from '../pages/UserProfilePage';
 import { AnonymOutlet } from '../components/AnonymOutlet';
+import { CartPage } from '../pages/CartPage';
 
 export const routesConfig = [
   {
@@ -60,5 +61,9 @@ export const routesConfig = [
   {
     path: NavRoutes.notFoundPagePath,
     element: <NotFoundPage />
+  },
+  {
+    path: NavRoutes.cartPagePath,
+    element: <CartPage />
   }
 ];
