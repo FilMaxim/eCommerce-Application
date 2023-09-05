@@ -62,7 +62,7 @@ export const CatalogPage = () => {
         <div className="hidden sm:block">
           <FilterBar />
         </div>
-        <div className="m-auto flex min-h-screen flex-wrap gap-4">
+        <div className="m-auto flex min-h-screen justify-start flex-wrap gap-4">
           {cardsData.map((item) => {
             const { url, name, description, priceTag, id, attributes } = item;
             const rating = attributes?.find((obj) => obj.name === 'rating');
