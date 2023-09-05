@@ -22,7 +22,7 @@ export const SearchInput = () => {
             as={TextField}
             label="Search"
             variant="outlined"
-            size='small'
+            size="small"
             className="w-[10rem] sm:w-[12rem]"
             InputProps={{
               endAdornment: (
