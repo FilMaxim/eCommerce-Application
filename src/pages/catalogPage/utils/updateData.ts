@@ -11,7 +11,6 @@ export const updateProductsData = async (
   text?: string
 ): Promise<void> => {
   const productsData = await fetchData(quertString, sort, text);
-  console.log(productsData);
   const normalisedData = normalizeData(productsData);
 
   const setProductsData = setProducts(normalisedData);
