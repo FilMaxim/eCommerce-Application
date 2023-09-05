@@ -36,7 +36,8 @@ export const fetchProducts = async (): Promise<ProductProjectionPagedQueryRespon
 
 export const fetchFilteredProducts = async (
   filter?: string | string[] | undefined,
-  sort?: string
+  sort?: string,
+  text?: string
 ): Promise<ProductProjectionPagedQueryResponse> => {
   const response = await apiRoot
     .productProjections()
@@ -47,7 +48,8 @@ export const fetchFilteredProducts = async (
         offset: 0,
         filter,
         markMatchingVariants: true,
-        sort
+        sort,
+        'text.en-US': text
       }
     })
     .execute();

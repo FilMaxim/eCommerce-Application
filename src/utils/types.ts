@@ -274,7 +274,8 @@ export interface CategoriesContextInterface {
 
 export type FetchDataType = (
   quertString?: string | string[] | undefined,
-  sort?: string
+  sort?: string,
+  text?: string
 ) => Promise<ProductProjectionPagedQueryResponse>;
 
 export type NormolizeDataType = (

@@ -7,9 +7,10 @@ export const updateProductsData = async (
   fetchData: FetchDataType,
   normalizeData: NormolizeDataType,
   quertString?: string | string[],
-  sort?: string
+  sort?: string,
+  text?: string
 ): Promise<void> => {
-  const productsData = await fetchData(quertString, sort);
+  const productsData = await fetchData(quertString, sort, text);
   const normalisedData = normalizeData(productsData);
 
   const setProductsData = setProducts(normalisedData);
@@ -21,11 +22,12 @@ export const updateExtremumsData = async (
   fetchData: FetchDataType,
   normalizeData: NormolizeDataType,
   quertString?: string | string[],
-  sort?: string
+  sort?: string,
+  text?: string
 ): Promise<void> => {
-  const productsData = await fetchData(quertString, sort);
-  const normalisedData = normalizeData(productsData);
+  const productsData = await fetchData(quertString, sort, text);
 
+  const normalisedData = normalizeData(productsData);
   const setExtremumsData = setExtremums(normalisedData);
   dispatch(setExtremumsData);
 };
