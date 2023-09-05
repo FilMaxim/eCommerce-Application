@@ -44,6 +44,7 @@ export const fetchFilteredProducts = async (
     .search()
     .get({
       queryArgs: {
+        fuzzy: true,
         limit: 30,
         offset: 0,
         filter,
@@ -119,7 +120,7 @@ export const getProduct = async (id: string): Promise<ProductProjection | undefi
     const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
     return response.body;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
