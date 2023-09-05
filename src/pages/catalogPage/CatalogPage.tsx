@@ -58,11 +58,11 @@ export const CatalogPage = () => {
         </div>
         <SortBar />
       </div>
-      <div className="flex">
+      <div className="flex gap-2">
         <div className="hidden sm:block">
           <FilterBar />
         </div>
-        <div className="m-auto flex min-h-screen flex-wrap gap-4">
+        <div className="flex flex-wrap items-start justify-center gap-4 md:justify-start">
           {cardsData.map((item) => {
             const { url, name, description, priceTag, id, attributes } = item;
             const rating = attributes?.find((obj) => obj.name === 'rating');
