@@ -116,12 +116,8 @@ export const updateCustomer = async (
 };
 
 export const getProduct = async (id: string): Promise<ProductProjection | undefined> => {
-  try {
-    const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
-    return response.body;
-  } catch (error) {
-    console.error(error);
-  }
+  const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
+  return response.body;
 };
 
 export const updateCustomerPassword = async (body: {

@@ -100,6 +100,7 @@ export interface RootState {
   cards: ProductsDataInterface[];
   customer: Customer | null;
   extremums: number[];
+  catecories: CategoriesList[];
 }
 
 export interface AddressFieldComponent {
@@ -194,7 +195,6 @@ export interface ContainerProps {
   titleName: string;
   titleDescription?: string;
   buttons: Array<ComponentType<ButtonProps>>;
-  categoriesList: CategoriesList[];
 }
 
 export type Mapping = Record<string, string>;
@@ -267,7 +267,9 @@ export interface AddressComponentProps {
 
 export interface CategoriesContextInterface {
   categoryId: string;
+  categoryName: string;
   setCategoryId: (id: string) => void;
+  setCategoryName: (id: string) => void;
   currentFilter: string[];
   setCurrentFilter: (filter: string[]) => void;
 }

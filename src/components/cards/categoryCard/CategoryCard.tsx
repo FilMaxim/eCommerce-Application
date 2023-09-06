@@ -8,7 +8,7 @@ import type { Mapping } from '../../../utils/types';
 
 export const CategoryCard = ({ category, callback }: { category: string; callback: () => void }) => {
   const mapping: Mapping = {
-    Сompanions: droid,
+    Companions: droid,
     Cleaners: vacuum,
     Pets: pet,
     Kitchens: kitchen,
