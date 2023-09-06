@@ -6,8 +6,8 @@ import { useEffect, useState, useMemo, type ChangeEvent } from 'react';
 import type { RootState, SelectedAttribute } from '../../utils/types';
 
 import { useTranslation } from 'react-i18next';
-import { useCategoryContext } from '../../hooks/useCategoryId';
-import { updateProductsData } from '../../pages/catalogPage/utils/updateData';
+import { useCategoryContext } from '../../hooks/useCategoryContext';
+import { updateExtremumsData, updateProductsData } from '../../pages/catalogPage/utils/updateData';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
 import { PrettoSlider } from './utils/PrettoSlider';
 import { getAttributesList } from './utils/getAttributesList';
@@ -20,6 +20,7 @@ import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
 import { Formik, Field } from 'formik';
 import { CheckboxWithLabel } from 'formik-material-ui';
 import { Typography, Button, Stack, TextField } from '@mui/material';
+import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
 
 export const FilterBar = () => {
   const dispatch = useDispatch();
@@ -38,8 +39,13 @@ export const FilterBar = () => {
   const [startValue, endValue] = extremums;
 
   useEffect(() => {
+    const catecoryFilter = categoryId.length > 0 ? `categories.id:"${categoryId}"` : undefined;
+    updateExtremumsData(dispatch, fetchFilteredProducts, getExtremums, catecoryFilter).catch((error) => {
+      throw error;
+    });
+
     setSliderValue([startValue, endValue]);
-  }, [startValue, endValue]);
+  }, [startValue, endValue, dispatch, categoryId]);
 
   const [minValue, maxValue] = sliderValue;
 

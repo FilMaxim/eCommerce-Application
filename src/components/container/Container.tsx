@@ -1,36 +1,36 @@
-import type { ContainerProps } from '../../utils/types';
+import type { CategoriesList, ContainerProps, Mapping } from '../../utils/types';
 import { CategoryCard } from '../cards/categoryCard/CategoryCard';
 import { useEffect, useState } from 'react';
-import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
-import { useDispatch } from 'react-redux';
-import { useCategoryContext } from '../../hooks/useCategoryId';
-import { updateProductsData, updateExtremumsData } from '../../pages/catalogPage/utils/updateData';
-import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
-import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
+import { useCategoryContext } from '../../hooks/useCategoryContext';
 import { SearchInput } from '../searchInput/SearchInput';
+import { fetchCategories } from '../../pages/catalogPage/utils/fetchCategories';
+import { NavRoutes } from '../../utils/routes';
+import { useNavigate } from 'react-router-dom';
+import { BreadcrumbsNav } from '../readcrumbsNav/BreadcrumbsNav';
 
-export const Container = ({ titleName, titleDescription, categoriesList }: ContainerProps) => {
-  // const [categoryId, setCategoryId] = useState<string>('');
-  const [currentId, setId] = useState<string>('');
-  const { categoryId, setCategoryId } = useCategoryContext();
-  const dispatch = useDispatch();
+export const Container = ({ titleName, titleDescription }: ContainerProps) => {
+  const { setCategoryId, setCategoryName } = useCategoryContext();
+  const [categoriesList, setCategoryList] = useState<CategoriesList[]>([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleCategoryCardClick = async (id: string) => {
-      setId(categoryId);
-      await updateExtremumsData(dispatch, fetchFilteredProducts, getExtremums, `categories.id:"${id}"`);
-      await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, `categories.id:"${id}"`);
+    const updateData = async (): Promise<void> => {
+      await fetchCategories(setCategoryList);
     };
+    updateData().catch((error) => {
+      throw error;
+    });
+  }, []);
 
-    if (currentId !== '') {
-      handleCategoryCardClick(currentId).catch((error) => {
-        throw error;
-      });
-    }
-    return (): void => {
-      setId('');
-    };
-  }, [currentId, categoryId, dispatch]);
+  const routes: Mapping = {
+    Companions: NavRoutes.companionsPagePath,
+    Cleaners: NavRoutes.cleanersPagePath,
+    Pets: NavRoutes.petsPagePath,
+    Kitchens: NavRoutes.kitchensPagePath,
+    Gardens: NavRoutes.gardensPagePath,
+    Deliveries: NavRoutes.deliveriesPagePath
+  };
 
   return (
     <div className="m-auto flex max-w-7xl flex-col gap-2 p-4 lg:px-8">
@@ -42,6 +42,7 @@ export const Container = ({ titleName, titleDescription, categoriesList }: Conta
         <SearchInput />
       </div>
       <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
+      <BreadcrumbsNav />
       <div className="flex max-w-[90%] gap-2 self-center overflow-auto rounded border p-1 md:border-none">
         {categoriesList.map((category) => {
           const { name, id } = category;
@@ -50,8 +51,9 @@ export const Container = ({ titleName, titleDescription, categoriesList }: Conta
               key={id}
               category={name}
               callback={() => {
-                setId(id);
                 setCategoryId(id);
+                setCategoryName(name);
+                navigate({ pathname: routes[name] });
               }}
             />
           );

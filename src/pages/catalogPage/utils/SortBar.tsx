@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { fetchFilteredProducts } from '../../../helpers/api/apiRoot';
 import { normalizeData } from './normalizeData';
 import { useTranslation } from 'react-i18next';
-import { useCategoryContext } from '../../../hooks/useCategoryId';
+import { useCategoryContext } from '../../../hooks/useCategoryContext';
 
 export const SortBar = () => {
   const { currentFilter } = useCategoryContext();
