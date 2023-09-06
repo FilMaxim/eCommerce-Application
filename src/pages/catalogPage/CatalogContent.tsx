@@ -40,6 +40,11 @@ export const CatalogContent = () => {
     setCategoryId(id);
     const categoryEndpoint = categoryName.length > 0 ? categoryName : name;
     setCategoryName(categoryEndpoint);
+
+    if (name.length === 0) {
+      setCategoryName(name);
+    }
+
     const filter = categoryId.length > 0 ? `categories.id:"${categoryId}"` : undefined;
     const updateData = async (): Promise<void> => {
       await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter);

@@ -5,6 +5,7 @@ import { NavRoutes } from '../../utils/routes';
 
 export const BreadcrumbsNav = () => {
   const { categoryName } = useCategoryContext();
+  const isCategorySelected = Boolean(categoryName);
   return (
     <div className="inline-block sm:my-4 sm:ml-[18rem] ">
       <Breadcrumbs aria-label="breadcrumb">
@@ -14,7 +15,7 @@ export const BreadcrumbsNav = () => {
         >
           Catalog
         </Link>
-        <span>{categoryName}</span>
+        <span>{isCategorySelected ? categoryName : ''}</span>
       </Breadcrumbs>
     </div>
   );
