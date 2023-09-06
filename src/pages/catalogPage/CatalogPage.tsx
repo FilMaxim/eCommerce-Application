@@ -23,7 +23,7 @@ export const CatalogPage = () => {
         </div>
         <SortBar />
       </div>
-      <div className="flex">
+      <div className="flex gap-2">
         <div className="hidden sm:block">
           <FilterBar />
         </div>

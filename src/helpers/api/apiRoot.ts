@@ -44,6 +44,7 @@ export const fetchFilteredProducts = async (
     .search()
     .get({
       queryArgs: {
+        fuzzy: true,
         limit: 30,
         offset: 0,
         filter,
