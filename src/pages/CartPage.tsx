@@ -1,34 +1,156 @@
 import { useSelector } from 'react-redux';
-import { createCart, getCartWithCustomerId, getCartWithId } from '../helpers/api/apiRoot';
+import { createCart, getCartWithCustomerId, updateCart } from '../helpers/api/apiRoot';
 import type { RootState } from '../utils/types';
-import type { Customer } from '@commercetools/platform-sdk';
+import type { Cart } from '@commercetools/platform-sdk';
+import { useEffect, useState } from 'react';
+import { getNormalizedNumber } from './catalogPage/utils/getNormalizedNumber';
+
+const getCartFromLs = (): Cart | null => {
+  return JSON.parse(localStorage.getItem('cart') ?? 'null');
+};
+
+const setCartToLs = (cart: Cart): void => {
+  localStorage.setItem('cart', JSON.stringify(cart));
+};
+
+const createCartHandler = async (customerId?: string): Promise<Cart> => {
+  if (customerId !== undefined) {
+    const cartDraft = { customerId, currency: 'EUR' };
+    return (await createCart(cartDraft)).body;
+  }
+  return (await createCart({ currency: 'EUR' })).body;
+};
 
 export const CartPage = () => {
-  const customer = useSelector((state: { authData: RootState }) => state.authData.customer) as Customer;
-  const cart = { currency: 'EUR', customerId: customer.id };
+  const [cart, setCart] = useState<Cart | null>(null);
+  const customer = useSelector((state: { authData: RootState }) => state.authData.customer);
 
-  const showCart = async () => {
-    const newCart = await createCart(cart);
-    console.log(newCart, 'cart created');
+  useEffect(() => {
+    if (customer === null) {
+      const cartInLs = getCartFromLs();
 
-    const customerCart = await getCartWithCustomerId(customer.id);
-    console.log(customerCart, 'request cart by customerId');
+      if (cartInLs !== null) {
+        setCart(cartInLs);
+      } else {
+        createCartHandler()
+          .then((cart) => {
+            setCart(cart);
+            setCartToLs(cart);
+          })
+          .catch((e) => {
+            Error(e);
+          });
+      }
+    } else {
+      getCartWithCustomerId(customer.id)
+        .then(async (cart) => {
+          setCart(cart.body);
+        })
+        .catch(async (e) => {
+          const newCart = await createCartHandler(customer.id);
+          setCart(newCart);
+          Error(e);
+        });
+    }
+  }, [customer]);
 
-    const cartByid = await getCartWithId(newCart.body.id);
-    console.log(cartByid);
+  if (cart === null) return <p className="text-center text-lg">Loading...</p>;
+
+  const addToCart = async (cartId: string, cartVersion: number) => {
+    const productId = '56aa4cae-7f6f-41cb-b65e-1e69e9d33284';
+    const updatedCart = await updateCart(cartId, cartVersion, [
+      {
+        action: 'addLineItem',
+        productId,
+        quantity: 1,
+        externalPrice: {
+          currencyCode: 'EUR',
+          centAmount: 4200
+        }
+      }
+    ]);
+    setCart(updatedCart.body);
+
+    if (customer === null) {
+      setCartToLs(updatedCart.body);
+    }
+    console.log(updatedCart.body, 'cart updated');
+  };
+
+  const removeHandler = async (lineItemId: string, quantity: number = 1) => {
+    const updatedCart = await updateCart(cart.id, cart.version, [
+      {
+        action: 'removeLineItem',
+        lineItemId,
+        quantity
+      }
+    ]);
+    setCart(updatedCart.body);
+
+    if (customer === null) {
+      setCartToLs(updatedCart.body);
+    }
+    console.log(updatedCart.body, 'cart updated');
   };
 
   return (
     <div className="m-auto mt-4 max-w-[42rem] rounded border p-2">
-      <p
+      <button
+        className="bordder p-2"
         onClick={() => {
-          showCart().catch((e) => {
+          addToCart(cart.id, cart.version).catch((e) => {
             Error(e);
           });
         }}
       >
-        Cart test
-      </p>
+        add Item
+      </button>
+      {cart !== null && (
+        <div className="flex flex-col gap-2">
+          {cart.lineItems.map((item) => {
+            const normalizedPrice = getNormalizedNumber(
+              item.variant.prices?.[0].value.centAmount as number,
+              100
+            );
+            return (
+              <div
+                key={item.id}
+                className="flex justify-between gap-4 border p-2"
+              >
+                <p className="w-[8rem]">{item.name['en-US']}</p>
+                <img
+                  src={item.variant.images?.[0].url}
+                  alt="item.name['en-US']"
+                  width={120}
+                  height={120}
+                />
+                <div>
+                  <span>price</span>
+                  <p>{normalizedPrice}</p>
+                </div>
+                <div>
+                  <span>quantity</span>
+                  <p>{item.quantity}</p>
+                </div>
+                <div>
+                  <span>total price</span>
+                  <p>{item.quantity * normalizedPrice}</p>
+                </div>
+                <button
+                  className="border p-2"
+                  onClick={() => {
+                    removeHandler(item.id, item.quantity).catch((e) => {
+                      Error(e);
+                    });
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

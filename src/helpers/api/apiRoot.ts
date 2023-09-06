@@ -14,7 +14,8 @@ import {
   type Customer,
   type ProductProjection,
   type CartPagedQueryResponse,
-  type MyCartDraft
+  type MyCartDraft,
+  type CartUpdateAction
 } from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
@@ -161,6 +162,25 @@ export const getCartWithId = async (id: string): Promise<ClientResponse<Cart>> =
 };
 
 // получить корзину по айди кастомера (отдаст корзину или ошибку, если корзины нет)
-export const getCartWithCustomerId = async (id: string): Promise<ClientResponse<Cart>> => {
-  return await apiRoot.carts().withCustomerId({ customerId: id }).get().execute();
+export const getCartWithCustomerId = async (customerId: string): Promise<ClientResponse<Cart>> => {
+  return await apiRoot.carts().withCustomerId({ customerId }).get().execute();
+};
+
+export const updateCart = async (
+  cartId: string,
+  version: number,
+  actions: CartUpdateAction[]
+): Promise<ClientResponse<Cart>> => {
+  return await apiRoot
+    .carts()
+    .withId({
+      ID: cartId
+    })
+    .post({
+      body: {
+        version,
+        actions
+      }
+    })
+    .execute();
 };
