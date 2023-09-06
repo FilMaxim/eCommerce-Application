@@ -12,7 +12,9 @@ import {
   type CustomerSignInResult,
   type Cart,
   type Customer,
-  type ProductProjection
+  type ProductProjection,
+  type CartPagedQueryResponse,
+  type MyCartDraft
 } from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
@@ -136,4 +138,29 @@ export const updateCustomerPassword = async (body: {
       body
     })
     .execute();
+};
+
+// создать корзину (обьект корзины содержит валюту и кастомер айди или аноним айди) эти поля могут переназначаться
+export const createCart = async (cart: MyCartDraft): Promise<ClientResponse<Cart>> => {
+  return await apiRoot
+    .carts()
+    .post({
+      body: cart
+    })
+    .execute();
+};
+
+// все корзины
+export const getAllCarts = async (): Promise<ClientResponse<CartPagedQueryResponse>> => {
+  return await apiRoot.carts().get().execute();
+};
+
+// получить корзину по ее айди
+export const getCartWithId = async (id: string): Promise<ClientResponse<Cart>> => {
+  return await apiRoot.carts().withId({ ID: id }).get().execute();
+};
+
+// получить корзину по айди кастомера (отдаст корзину или ошибку, если корзины нет)
+export const getCartWithCustomerId = async (id: string): Promise<ClientResponse<Cart>> => {
+  return await apiRoot.carts().withCustomerId({ customerId: id }).get().execute();
 };
