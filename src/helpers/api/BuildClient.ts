@@ -21,6 +21,26 @@ const httpMiddlewareOptions: HttpMiddlewareOptions = {
   fetch
 };
 
+// admin
+
+// const projectKey = 'rs-online-shop';
+
+// const authMiddlewareOptions: AuthMiddlewareOptions = {
+//   host: 'https://auth.europe-west1.gcp.commercetools.com',
+//   projectKey,
+//   credentials: {
+//     clientId: 'qzlLKLTM9cLktX3nluPW07Lt',
+//     clientSecret: 'fbbojz_BQz6lNheOEBFIPKGsGUT0wpdm'
+//   },
+//   scopes: ['manage_project:rs-online-shop']
+// };
+
+// const httpMiddlewareOptions: HttpMiddlewareOptions = {
+//   host: 'https://api.europe-west1.gcp.commercetools.com'
+// };
+
+//
+
 export const buildClientWithPasswordFlow = (username: string, password: string) => {
   const options = {
     host: Endpoints.auth,
