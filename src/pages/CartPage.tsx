@@ -191,6 +191,7 @@ export const CartPage = () => {
               </div>
             );
           })}
+          <p className="self-end">Total price: {getNormalizedNumber(cart.totalPrice.centAmount, 100)}</p>
         </div>
       )}
     </div>
