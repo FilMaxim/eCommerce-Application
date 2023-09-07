@@ -4,6 +4,8 @@ import type { RootState } from '../utils/types';
 import type { Cart } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 import { getNormalizedNumber } from './catalogPage/utils/getNormalizedNumber';
+import { Link } from 'react-router-dom';
+import { NavRoutes } from '../utils/routes';
 
 const getCartFromLs = (): Cart | null => {
   return JSON.parse(localStorage.getItem('cart') ?? 'null');
@@ -118,6 +120,30 @@ export const CartPage = () => {
     }
     console.log(updatedCart.body, 'cart updated');
   };
+
+  if (cart.lineItems.length === 0) {
+    return (
+      <>
+        <button
+          className="bordder p-2"
+          onClick={() => {
+            addToCart(cart.id, cart.version).catch((e) => {
+              Error(e);
+            });
+          }}
+        >
+          add Item
+        </button>
+        <p className="text-center text-lg">Cart is empty..</p>
+        <Link
+          className="text-secondary hover:text-red-800"
+          to={NavRoutes.catalogPage}
+        >
+          Go to catalog
+        </Link>
+      </>
+    );
+  }
 
   return (
     <div className="m-auto mt-4 max-w-[42rem] rounded border p-2">
