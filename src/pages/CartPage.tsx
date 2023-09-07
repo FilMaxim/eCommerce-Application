@@ -65,7 +65,7 @@ export const CartPage = () => {
         quantity: 1,
         externalPrice: {
           currencyCode: 'EUR',
-          centAmount: 4200
+          centAmount: 39900
         }
       }
     ]);
@@ -75,6 +75,32 @@ export const CartPage = () => {
       setCartToLs(updatedCart.body);
     }
     console.log(updatedCart.body, 'cart updated');
+  };
+
+  const updateQuantity = async (
+    cartId: string,
+    cartVersion: number,
+    lineItemId: string,
+    quantity: number,
+    centAmount: number
+  ) => {
+    const updatedCart = await updateCart(cartId, cartVersion, [
+      {
+        action: 'changeLineItemQuantity',
+        lineItemId,
+        quantity,
+        externalPrice: {
+          currencyCode: 'EUR',
+          centAmount
+        }
+      }
+    ]);
+    setCart(updatedCart.body);
+
+    if (customer === null) {
+      setCartToLs(updatedCart.body);
+    }
+    console.log(updatedCart.body, 'item quantity updated');
   };
 
   const removeHandler = async (lineItemId: string, quantity: number = 1) => {
@@ -130,7 +156,23 @@ export const CartPage = () => {
                 </div>
                 <div>
                   <span>quantity</span>
-                  <p>{item.quantity}</p>
+                  <input
+                    className="w-16 rounded"
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => {
+                      updateQuantity(
+                        cart.id,
+                        cart.version,
+                        item.id,
+                        parseInt(e.target.value),
+                        item.variant.prices?.[0].value.centAmount as number
+                      ).catch((e) => {
+                        Error(e);
+                      });
+                    }}
+                    min={0}
+                  />
                 </div>
                 <div>
                   <span>total price</span>
