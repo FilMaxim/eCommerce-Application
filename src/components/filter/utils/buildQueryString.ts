@@ -6,7 +6,6 @@ export const buildQueryString = (selectedAttributes: SelectedAttribute[]): strin
   const names = _.keys(obj);
   const attrNames = names.map((item) => {
     const values = obj[item].flatMap(({ name, value }) => {
-      console.log(value);
       return name === 'rating' ? `(${Number(value) - 1} to *)` : `"${value}"`;
     });
     const prefix = item === 'rating' ? 'range' : '';
