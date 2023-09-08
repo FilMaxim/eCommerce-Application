@@ -3,9 +3,12 @@ import { submitDataWithBilling } from '../components/forms/util/submitFakeData';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RegistrationForm } from '../components/forms/RegistrationForm/RegistrationForm';
 import { getValidationSchema } from '../components/forms/util/validationSchema';
-import type { FakeOnSubmit, ImitialValues } from '../utils/types';
+import type { FakeOnSubmit, InitialValuesRegistration } from '../utils/types';
 
-export const TestRegistrationForm = (fakeOnSubmit: FakeOnSubmit, initialValues: ImitialValues) => {
+export const TestRegistrationForm = (
+  fakeOnSubmit: FakeOnSubmit,
+  initialValues: InitialValuesRegistration
+) => {
   return (
     <BrowserRouter>
       <Routes>
@@ -31,7 +34,7 @@ describe('registrationForm submit correctly', () => {
 
     await waitFor(() => {
       // eslint-disable-next-line testing-library/no-wait-for-side-effects
-      fireEvent.click(screen.getByText(/Submit/i));
+      fireEvent.click(screen.getByText(/Create Account/i));
     });
 
     expect(fakeOnSubmit.mock.calls).toHaveLength(1);
@@ -55,9 +58,29 @@ describe('registrationForm submit correctly', () => {
 
     await waitFor(() => {
       // eslint-disable-next-line testing-library/no-wait-for-side-effects
-      fireEvent.click(screen.getByText(/Submit/i));
+      fireEvent.click(screen.getByText(/Create Account/i));
     });
 
     expect(fakeOnSubmit.mock.calls).toHaveLength(0);
+  });
+
+  it('no default address fields if checkbox unchecked', async () => {
+    const fakeOnSubmit = jest.fn();
+    render(TestRegistrationForm(fakeOnSubmit, submitDataWithBilling));
+    // defaultShippingAddress;
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-wait-for-side-effects
+      fireEvent.click(screen.getByText(/as default/i));
+    });
+
+    await waitFor(() => {
+      // eslint-disable-next-line testing-library/no-wait-for-side-effects
+      fireEvent.click(screen.getByText(/Create Account/i));
+    });
+
+    expect(fakeOnSubmit.mock.calls[0][0]).toStrictEqual({
+      ...submitDataWithBilling,
+      shippingStateChecked: false
+    });
   });
 });

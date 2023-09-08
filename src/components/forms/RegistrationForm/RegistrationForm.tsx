@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import { PasswordInput } from '../inputs/PasswordInput';
-import { SubmitBtn } from '../inputs/SubmitBtn';
-import { AdressFieldSet } from '../inputs/AdressFieldSet';
+import { SubmitBtn } from '../../buttons/SubmitBtn';
+import { AddressFieldSet } from '../inputs/AddressFieldSet';
 import { Link } from 'react-router-dom';
 import { links } from '../../../utils/links';
 import { useState } from 'react';
@@ -26,59 +26,50 @@ export const RegistrationForm = ({ initialValues, getValidationSchema, onSubmit 
     >
       {(formik) => {
         return (
-          <Form className="flex w-96 flex-col justify-center gap-1 rounded-2xl bg-slate-200 px-8 pb-8 pt-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,1.1)] max-sm:w-56">
-            <Input
-              name={firstName.name}
-              placeholder={firstName.placeholder}
-              type={firstName.type}
-              formik={formik}
-            />
-            <Input
-              name={lastName.name}
-              placeholder={lastName.placeholder}
-              type={lastName.type}
-              formik={formik}
-            />
-            <Input
-              name={date.name}
-              placeholder={date.placeholder}
-              type={date.type}
-              formik={formik}
-            />
-            <Input
-              name={email.name}
-              placeholder={email.placeholder}
-              type={email.type}
-              formik={formik}
-            />
-            <PasswordInput formik={formik} />
-            <AdressFieldSet
+          <Form className="flex max-w-2xl flex-col items-center justify-center gap-2 rounded p-6">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {[firstName, lastName, date, email].map(({ name, placeholder, type }) => (
+                <Input
+                  key={name}
+                  name={name}
+                  placeholder={placeholder}
+                  type={type}
+                  formik={formik}
+                />
+              ))}
+              <PasswordInput
+                formik={formik}
+                placeholder="Password:"
+                name="password"
+              />
+            </div>
+            <AddressFieldSet
               fieldSet={FieldSetName.Shipping}
               formik={formik}
             />
-
             <FormControlLabel
               control={
                 <Checkbox
                   name={'toggle'}
                   checked={isSameAddress}
                   onChange={handleCheckboxChange}
+                  color="secondary"
                 />
               }
               label="same as billing address"
             />
             {!isSameAddress && (
-              <AdressFieldSet
+              <AddressFieldSet
                 fieldSet={FieldSetName.Billing}
                 formik={formik}
               />
             )}
-            <SubmitBtn />
+            <SubmitBtn title="Create Account" />
             <p className="mt-3 text-center text-[14px]">
               Have an account?
               <Link
                 to={links.login.path}
-                className="text-link-color"
+                className="text-secondary hover:text-red-600"
               >
                 {' '}
                 Log In

@@ -1,22 +1,40 @@
 import { ErrorMessage, Field } from 'formik';
-import type { AddressFieldSetProps } from '../../../utils/types';
+import type { CountryInputProps } from '../../../utils/types';
 import { countries } from '../util/countriesList';
+import { useState } from 'react';
+import { InputClasses } from './inputsData';
 
-export const CountryInput = ({ fieldSet }: AddressFieldSetProps) => {
+export const CountryInput = ({ fieldSet, setPostalCodeDisabled, formik, disabled }: CountryInputProps) => {
+  const hasFieldSetName = fieldSet !== undefined;
+  const [isFoucus, setIsFoucus] = useState<boolean>(false);
+
   return (
-    <>
+    <div
+      className={InputClasses.wrapper}
+      onFocus={() => {
+        setIsFoucus(true);
+      }}
+      onBlur={() => {
+        setIsFoucus(false);
+      }}
+    >
       <label
-        htmlFor={`${fieldSet}Country`}
-        className="text-sm font-bold text-gray-700"
+        htmlFor={hasFieldSetName ? `${fieldSet}Country` : 'country'}
+        className={`${InputClasses.labelWrapper} ${isFoucus ? 'block' : 'hidden'}`}
       >
         Country:
       </label>
       <Field
         as="select"
-        className="focus:shadow-outline appearance-none rounded border border-cyan-500 px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+        className={`${InputClasses.input} ${isFoucus ? 'pt-4' : ''}`}
         type="text"
-        name={`${fieldSet}Country`}
+        name={hasFieldSetName ? `${fieldSet}Country` : 'country'}
         placeholder="Country"
+        onChange={(e: Event) => {
+          formik.handleChange(e);
+          setPostalCodeDisabled(false);
+        }}
+        disabled={disabled}
       >
         <option
           value=""
@@ -34,10 +52,10 @@ export const CountryInput = ({ fieldSet }: AddressFieldSetProps) => {
         ))}
       </Field>
       <ErrorMessage
-        name={`${fieldSet}Country`}
+        name={hasFieldSetName ? `${fieldSet}Country` : 'country'}
         component="p"
-        className="text-xs italic text-red-500"
+        className={InputClasses.error}
       />
-    </>
+    </div>
   );
 };

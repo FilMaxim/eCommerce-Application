@@ -11,7 +11,7 @@ export const NotFoundPage = () => (
     <p className="mt-3 text-center text-[30px]">Sorry, the page you requested was not found...</p>
     <Link
       to={NavRoutes.mainPagePath}
-      className="text-[30px] text-link-color"
+      className="text-[30px]"
     >
       Go To Home
     </Link>
