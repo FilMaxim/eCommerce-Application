@@ -197,7 +197,7 @@ export const CartPage = () => {
                         Error(e);
                       });
                     }}
-                    min={0}
+                    min={1}
                   />
                 </div>
                 <div>
