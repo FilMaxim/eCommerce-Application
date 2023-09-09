@@ -152,17 +152,14 @@ export const createCart = async (cart: MyCartDraft): Promise<ClientResponse<Cart
     .execute();
 };
 
-// все корзины
 export const getAllCarts = async (): Promise<ClientResponse<CartPagedQueryResponse>> => {
   return await apiRoot.carts().get().execute();
 };
 
-// получить корзину по ее айди
 export const getCartWithId = async (id: string): Promise<ClientResponse<Cart>> => {
   return await apiRoot.carts().withId({ ID: id }).get().execute();
 };
 
-// получить корзину по айди кастомера (отдаст корзину или ошибку, если корзины нет)
 export const getCartWithCustomerId = async (customerId: string): Promise<ClientResponse<Cart>> => {
   return await apiRoot.carts().withCustomerId({ customerId }).get().execute();
 };
@@ -185,23 +182,3 @@ export const updateCart = async (
     })
     .execute();
 };
-
-// export const getProduct = async (id: string): Promise<ProductProjection | undefined> => {
-//   const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
-//   return response.body;
-// };
-
-// export const updateCustomerPassword = async (body: {
-//   id: string;
-//   version: number;
-//   currentPassword: string;
-//   newPassword: string;
-// }): Promise<ClientResponse<Customer>> => {
-//   return await apiRoot
-//     .customers()
-//     .password()
-//     .post({
-//       body
-//     })
-//     .execute();
-// };
