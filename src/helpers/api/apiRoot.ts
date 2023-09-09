@@ -47,6 +47,7 @@ export const fetchFilteredProducts = async (
     .search()
     .get({
       queryArgs: {
+        fuzzy: true,
         limit: 30,
         offset: 0,
         filter,
@@ -184,3 +185,23 @@ export const updateCart = async (
     })
     .execute();
 };
+
+// export const getProduct = async (id: string): Promise<ProductProjection | undefined> => {
+//   const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
+//   return response.body;
+// };
+
+// export const updateCustomerPassword = async (body: {
+//   id: string;
+//   version: number;
+//   currentPassword: string;
+//   newPassword: string;
+// }): Promise<ClientResponse<Customer>> => {
+//   return await apiRoot
+//     .customers()
+//     .password()
+//     .post({
+//       body
+//     })
+//     .execute();
+// };

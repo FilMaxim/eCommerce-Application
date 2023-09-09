@@ -27,11 +27,10 @@ export const en = {
       },
       rating: {
         title: 'Rating',
-        1: '1 & Up',
-        2: '2 & Up',
-        3: '3 & Up',
-        4: '4 & Up',
-        5: '5 & Up'
+        2: '1 & Up',
+        3: '2 & Up',
+        4: '3 & Up',
+        5: '4 & Up'
       },
       type: {
         title: 'Type',
@@ -45,7 +44,7 @@ export const en = {
     },
     dropDown: {
       sort: {
-        name: 'Sort by:',
+        name: 'Sort:',
         price: 'price',
         rating: 'rating',
         asc: 'Ascending',

@@ -8,5 +8,11 @@ export enum NavRoutes {
   notFoundPagePath = '*',
   catalogPage = '/catalog',
   profilePagePath = '/profile',
-  cartPagePath = '/cart'
+  cartPagePath = '/cart',
+  companionsPagePath = '/catalog/companions',
+  cleanersPagePath = '/catalog/cleaners',
+  petsPagePath = '/catalog/pets',
+  kitchensPagePath = '/catalog/kitchens',
+  gardensPagePath = '/catalog/gardens',
+  deliveriesPagePath = '/catalog/deliveries'
 }

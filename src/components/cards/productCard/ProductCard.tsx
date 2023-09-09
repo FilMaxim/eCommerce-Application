@@ -6,6 +6,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import type { ProductCardInterface } from '../../../utils/types';
 import { Button, Rating } from '@mui/material';
 import { PriceTag } from './PriceTag';
+import { useNavigate } from 'react-router-dom';
 
 export const ProductCard = ({
   imageUrl,
@@ -17,8 +18,9 @@ export const ProductCard = ({
   id,
   rating
 }: ProductCardInterface) => {
+  const navigate = useNavigate();
   const handleCardClick = (id: string) => {
-    window.location.href = `/product/${id}`;
+    navigate({ pathname: `/product/${id}` });
   };
 
   return (

@@ -65,5 +65,29 @@ export const routesConfig = [
   {
     path: NavRoutes.cartPagePath,
     element: <CartPage />
+  },
+  {
+    path: NavRoutes.companionsPagePath,
+    element: <CatalogPage />
+  },
+  {
+    path: NavRoutes.cleanersPagePath,
+    element: <CatalogPage />
+  },
+  {
+    path: NavRoutes.petsPagePath,
+    element: <CatalogPage />
+  },
+  {
+    path: NavRoutes.kitchensPagePath,
+    element: <CatalogPage />
+  },
+  {
+    path: NavRoutes.gardensPagePath,
+    element: <CatalogPage />
+  },
+  {
+    path: NavRoutes.deliveriesPagePath,
+    element: <CatalogPage />
   }
 ];
