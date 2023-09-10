@@ -304,3 +304,11 @@ export interface AddToCartParams {
   centAmount: number;
   quantity?: number;
 }
+
+export interface UpdateItemQuantity {
+  cartId: string;
+  cartVersion: number;
+  lineItemId: string;
+  quantity: number;
+  centAmount: number;
+}

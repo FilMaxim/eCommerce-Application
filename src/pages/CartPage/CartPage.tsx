@@ -84,13 +84,13 @@ export const CartPage = () => {
                     type="number"
                     value={item.quantity}
                     onChange={(e) => {
-                      updateQuantity(
-                        cart.id,
-                        cart.version,
-                        item.id,
-                        parseInt(e.target.value),
-                        item.variant.prices?.[0].value.centAmount as number
-                      ).catch((e) => {
+                      updateQuantity({
+                        cartId: cart.id,
+                        cartVersion: cart.version,
+                        lineItemId: item.id,
+                        centAmount: item.variant.prices?.[0].value.centAmount as number,
+                        quantity: parseInt(e.target.value)
+                      }).catch((e) => {
                         Error(e);
                       });
                     }}

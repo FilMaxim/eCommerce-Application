@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateCart } from '../helpers/api/apiRoot';
 import { setCartToLs } from '../pages/CartPage/utils/cartStorage';
 import { setCart } from '../slices/cartSlice';
-import { type RootState, type AddToCartParams } from '../utils/types';
+import type { RootState, AddToCartParams, UpdateItemQuantity } from '../utils/types';
 
 export const useCart = () => {
   const cart = useSelector((state: { cart: RootState }) => state.cart.cart);
@@ -28,13 +28,13 @@ export const useCart = () => {
     }
   };
 
-  const updateQuantity = async (
-    cartId: string,
-    cartVersion: number,
-    lineItemId: string,
-    quantity: number,
-    centAmount: number
-  ) => {
+  const updateQuantity = async ({
+    cartId,
+    cartVersion,
+    lineItemId,
+    quantity,
+    centAmount
+  }: UpdateItemQuantity) => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: 'changeLineItemQuantity',
