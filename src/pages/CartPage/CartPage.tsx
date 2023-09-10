@@ -1,79 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { updateCart } from '../../helpers/api/apiRoot';
-import type { AddToCartParams, RootState } from '../../utils/types';
 import { getNormalizedNumber } from '../catalogPage/utils/getNormalizedNumber';
 import { Link } from 'react-router-dom';
 import { NavRoutes } from '../../utils/routes';
-import { setCartToLs } from './utils/cartStorage';
-import { setCart } from '../../slices/cartSlice';
+import { useCart } from '../../hooks/useCart';
 
 export const CartPage = () => {
-  const customer = useSelector((state: { authData: RootState }) => state.authData.customer);
-  const cart = useSelector((state: { cart: RootState }) => state.cart.cart);
-  const dispatch = useDispatch();
+  const { addToCart, updateQuantity, removeItemFromCart, cart } = useCart();
 
   if (cart === null) return <p className="text-center text-lg">Loading...</p>;
-
-  const addToCart = async ({ cartId, cartVersion, productId, centAmount, quantity = 1 }: AddToCartParams) => {
-    const updatedCart = await updateCart(cartId, cartVersion, [
-      {
-        action: 'addLineItem',
-        productId,
-        quantity,
-        externalPrice: {
-          currencyCode: 'EUR',
-          centAmount
-        }
-      }
-    ]);
-    dispatch(setCart(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
-  };
-
-  const updateQuantity = async (
-    cartId: string,
-    cartVersion: number,
-    lineItemId: string,
-    quantity: number,
-    centAmount: number
-  ) => {
-    const updatedCart = await updateCart(cartId, cartVersion, [
-      {
-        action: 'changeLineItemQuantity',
-        lineItemId,
-        quantity,
-        externalPrice: {
-          currencyCode: 'EUR',
-          centAmount
-        }
-      }
-    ]);
-    dispatch(setCart(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
-    console.log(updatedCart.body, 'item quantity updated');
-  };
-
-  const removeHandler = async (lineItemId: string, quantity: number = 1) => {
-    const updatedCart = await updateCart(cart.id, cart.version, [
-      {
-        action: 'removeLineItem',
-        lineItemId,
-        quantity
-      }
-    ]);
-    dispatch(setCart(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
-    console.log(updatedCart.body, 'cart updated');
-  };
 
   if (cart.lineItems.length === 0) {
     return (
@@ -171,7 +104,7 @@ export const CartPage = () => {
                 <button
                   className="border p-2"
                   onClick={() => {
-                    removeHandler(item.id, item.quantity).catch((e) => {
+                    removeItemFromCart(item.id, item.quantity).catch((e) => {
                       Error(e);
                     });
                   }}

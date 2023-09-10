@@ -5,10 +5,11 @@ import { Logo } from '../../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 import { PrivateNavGroup } from './PrivateNavGroup';
 import { NavGroup } from './NavGroup';
+import { useCart } from '../../../hooks/useCart';
 
 export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
   const isLogged = useSelector((state: { authData: RootState }) => state.authData.isLogged);
-  const cart = useSelector((state: { cart: RootState }) => state.cart.cart);
+  const { cart } = useCart();
   const { logout } = useAuth();
 
   return (
