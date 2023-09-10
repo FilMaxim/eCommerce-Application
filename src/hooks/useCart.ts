@@ -3,6 +3,7 @@ import { updateCart } from '../helpers/api/apiRoot';
 import { setCartToLs } from '../pages/CartPage/utils/cartStorage';
 import { setCart } from '../slices/cartSlice';
 import type { RootState, AddToCartParams, UpdateItemQuantity } from '../utils/types';
+import type { LineItem } from '@commercetools/platform-sdk';
 
 const enum UpdateCartActions {
   addLineItem = 'addLineItem',
@@ -72,7 +73,6 @@ export const useCart = () => {
     lineItemId: string,
     quantity: number
   ): Promise<void> => {
-    if (cart === null) return;
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: UpdateCartActions.removeLineItem,
@@ -105,5 +105,20 @@ export const useCart = () => {
     }
   };
 
-  return { addToCart, updateQuantity, removeItemFromCart, mergeAnonymousCartAfterSignUp, cart };
+  const clearCart = async (cartId: string, cartVersion: number, itemsList: LineItem[]): Promise<void> => {
+    const removeActions = itemsList.map((item) => ({
+      action: UpdateCartActions.removeLineItem,
+      lineItemId: item.id,
+      quantity: item.quantity
+    }));
+
+    const updatedCart = await updateCart(cartId, cartVersion, removeActions);
+    dispatch(setCart(updatedCart.body));
+
+    if (customer === null) {
+      setCartToLs(updatedCart.body);
+    }
+  };
+
+  return { addToCart, updateQuantity, removeItemFromCart, mergeAnonymousCartAfterSignUp, clearCart, cart };
 };
