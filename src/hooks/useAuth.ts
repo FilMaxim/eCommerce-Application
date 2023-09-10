@@ -9,6 +9,7 @@ import { setCustomer, setLogged } from '../slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { type Customer } from '@commercetools/platform-sdk';
 import { StatusCodes } from '../utils/statusCodes';
+import { setCart } from '../slices/cartSlice';
 
 export const useAuth = (): AuthReturnInterface => {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ export const useAuth = (): AuthReturnInterface => {
     localStorage.clear();
     dispatch(setLogged(false));
     dispatch(setCustomer(null));
+    dispatch(setCart(null));
   };
 
   const signUp = async (values: HandleSubmitWithBoth): Promise<void> => {

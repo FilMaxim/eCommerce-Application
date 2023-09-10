@@ -7,7 +7,8 @@ import type {
   Image,
   Customer,
   Attribute,
-  ProductProjectionPagedQueryResponse
+  ProductProjectionPagedQueryResponse,
+  Cart
 } from '@commercetools/platform-sdk';
 
 interface UserName {
@@ -101,6 +102,7 @@ export interface RootState {
   customer: Customer | null;
   extremums: number[];
   catecories: CategoriesList[];
+  cart: Cart | null;
 }
 
 export interface AddressFieldComponent {

@@ -1,46 +1,16 @@
-import { useSelector } from 'react-redux';
-import { getCartWithCustomerId, updateCart } from '../../helpers/api/apiRoot';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCart } from '../../helpers/api/apiRoot';
 import type { AddToCartParams, RootState } from '../../utils/types';
-import type { Cart } from '@commercetools/platform-sdk';
-import { useEffect, useState } from 'react';
 import { getNormalizedNumber } from '../catalogPage/utils/getNormalizedNumber';
 import { Link } from 'react-router-dom';
 import { NavRoutes } from '../../utils/routes';
-import { getCartFromLs, setCartToLs } from './utils/cartStorage';
-import { createCartHandler } from './utils/createCartHandler';
+import { setCartToLs } from './utils/cartStorage';
+import { setCart } from '../../slices/cartSlice';
 
 export const CartPage = () => {
-  const [cart, setCart] = useState<Cart | null>(null);
   const customer = useSelector((state: { authData: RootState }) => state.authData.customer);
-
-  useEffect(() => {
-    if (customer === null) {
-      const cartInLs = getCartFromLs();
-
-      if (cartInLs !== null) {
-        setCart(cartInLs);
-      } else {
-        createCartHandler()
-          .then((cart) => {
-            setCart(cart);
-            setCartToLs(cart);
-          })
-          .catch((e) => {
-            Error(e);
-          });
-      }
-    } else {
-      getCartWithCustomerId(customer.id)
-        .then(async (cart) => {
-          setCart(cart.body);
-        })
-        .catch(async (e) => {
-          const newCart = await createCartHandler(customer.id);
-          setCart(newCart);
-          Error(e);
-        });
-    }
-  }, [customer]);
+  const cart = useSelector((state: { cart: RootState }) => state.cart.cart);
+  const dispatch = useDispatch();
 
   if (cart === null) return <p className="text-center text-lg">Loading...</p>;
 
@@ -56,7 +26,7 @@ export const CartPage = () => {
         }
       }
     ]);
-    setCart(updatedCart.body);
+    dispatch(setCart(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
@@ -81,7 +51,7 @@ export const CartPage = () => {
         }
       }
     ]);
-    setCart(updatedCart.body);
+    dispatch(setCart(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
@@ -97,7 +67,7 @@ export const CartPage = () => {
         quantity
       }
     ]);
-    setCart(updatedCart.body);
+    dispatch(setCart(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
@@ -115,7 +85,7 @@ export const CartPage = () => {
               cartId: cart.id,
               cartVersion: cart.version,
               productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284',
-              centAmount: cart.lineItems[0].variant.prices?.[0].value.centAmount as number
+              centAmount: 39900
             }).catch((e) => {
               Error(e);
             });
@@ -143,7 +113,7 @@ export const CartPage = () => {
             cartId: cart.id,
             cartVersion: cart.version,
             productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284',
-            centAmount: cart.lineItems[0].variant.prices?.[0].value.centAmount as number
+            centAmount: 39900
           }).catch((e) => {
             Error(e);
           });
