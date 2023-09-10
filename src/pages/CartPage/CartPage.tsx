@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { createCart, getCartWithCustomerId, updateCart } from '../../helpers/api/apiRoot';
+import { getCartWithCustomerId, updateCart } from '../../helpers/api/apiRoot';
 import type { RootState } from '../../utils/types';
 import type { Cart } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
@@ -7,14 +7,7 @@ import { getNormalizedNumber } from '../catalogPage/utils/getNormalizedNumber';
 import { Link } from 'react-router-dom';
 import { NavRoutes } from '../../utils/routes';
 import { getCartFromLs, setCartToLs } from './utils/cartStorage';
-
-const createCartHandler = async (customerId?: string): Promise<Cart> => {
-  if (customerId !== undefined) {
-    const cartDraft = { customerId, currency: 'EUR' };
-    return (await createCart(cartDraft)).body;
-  }
-  return (await createCart({ currency: 'EUR' })).body;
-};
+import { createCartHandler } from './utils/createCartHandler';
 
 export const CartPage = () => {
   const [cart, setCart] = useState<Cart | null>(null);
