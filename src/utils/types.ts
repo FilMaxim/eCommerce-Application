@@ -293,3 +293,11 @@ export interface SelectedAttribute {
   name: string;
   value: string;
 }
+
+export interface AddToCartParams {
+  cartId: string;
+  cartVersion: number;
+  productId: string;
+  centAmount: number;
+  quantity?: number;
+}

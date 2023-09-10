@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { getCartWithCustomerId, updateCart } from '../../helpers/api/apiRoot';
-import type { RootState } from '../../utils/types';
+import type { AddToCartParams, RootState } from '../../utils/types';
 import type { Cart } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
 import { getNormalizedNumber } from '../catalogPage/utils/getNormalizedNumber';
@@ -44,16 +44,15 @@ export const CartPage = () => {
 
   if (cart === null) return <p className="text-center text-lg">Loading...</p>;
 
-  const addToCart = async (cartId: string, cartVersion: number) => {
-    const productId = '56aa4cae-7f6f-41cb-b65e-1e69e9d33284';
+  const addToCart = async ({ cartId, cartVersion, productId, centAmount, quantity = 1 }: AddToCartParams) => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: 'addLineItem',
         productId,
-        quantity: 1,
+        quantity,
         externalPrice: {
           currencyCode: 'EUR',
-          centAmount: 39900
+          centAmount
         }
       }
     ]);
@@ -62,7 +61,6 @@ export const CartPage = () => {
     if (customer === null) {
       setCartToLs(updatedCart.body);
     }
-    console.log(updatedCart.body, 'cart updated');
   };
 
   const updateQuantity = async (
@@ -113,7 +111,12 @@ export const CartPage = () => {
         <button
           className="bordder p-2"
           onClick={() => {
-            addToCart(cart.id, cart.version).catch((e) => {
+            addToCart({
+              cartId: cart.id,
+              cartVersion: cart.version,
+              productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284',
+              centAmount: cart.lineItems[0].variant.prices?.[0].value.centAmount as number
+            }).catch((e) => {
               Error(e);
             });
           }}
@@ -136,7 +139,12 @@ export const CartPage = () => {
       <button
         className="bordder p-2"
         onClick={() => {
-          addToCart(cart.id, cart.version).catch((e) => {
+          addToCart({
+            cartId: cart.id,
+            cartVersion: cart.version,
+            productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284',
+            centAmount: cart.lineItems[0].variant.prices?.[0].value.centAmount as number
+          }).catch((e) => {
             Error(e);
           });
         }}
