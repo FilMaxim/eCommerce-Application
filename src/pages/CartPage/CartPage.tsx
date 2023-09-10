@@ -58,9 +58,12 @@ export const CartPage = () => {
         <button
           className="border p-2"
           onClick={() => {
-            clearCart(cart.id, cart.version, cart.lineItems).catch((e) => {
-              Error(e);
-            });
+            const confirm = window.confirm('Delete all items?');
+            if (confirm) {
+              clearCart(cart.id, cart.version, cart.lineItems).catch((e) => {
+                Error(e);
+              });
+            }
           }}
         >
           Clear Cart
