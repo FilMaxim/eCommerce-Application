@@ -1,19 +1,12 @@
 import { useSelector } from 'react-redux';
-import { createCart, getCartWithCustomerId, updateCart } from '../helpers/api/apiRoot';
-import type { RootState } from '../utils/types';
+import { createCart, getCartWithCustomerId, updateCart } from '../../helpers/api/apiRoot';
+import type { RootState } from '../../utils/types';
 import type { Cart } from '@commercetools/platform-sdk';
 import { useEffect, useState } from 'react';
-import { getNormalizedNumber } from './catalogPage/utils/getNormalizedNumber';
+import { getNormalizedNumber } from '../catalogPage/utils/getNormalizedNumber';
 import { Link } from 'react-router-dom';
-import { NavRoutes } from '../utils/routes';
-
-const getCartFromLs = (): Cart | null => {
-  return JSON.parse(localStorage.getItem('cart') ?? 'null');
-};
-
-const setCartToLs = (cart: Cart): void => {
-  localStorage.setItem('cart', JSON.stringify(cart));
-};
+import { NavRoutes } from '../../utils/routes';
+import { getCartFromLs, setCartToLs } from './utils/cartStorage';
 
 const createCartHandler = async (customerId?: string): Promise<Cart> => {
   if (customerId !== undefined) {
