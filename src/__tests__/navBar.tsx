@@ -10,6 +10,8 @@ export const renderPrivateNavGroup = (isLogged: boolean) =>
           path={''}
           element={
             <PrivateNavGroup
+              itemsCount={0}
+              clickHandler={() => {}}
               isLogged={isLogged}
               logout={() => {}}
             />

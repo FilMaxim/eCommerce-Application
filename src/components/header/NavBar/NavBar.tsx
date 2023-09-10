@@ -8,6 +8,7 @@ import { NavGroup } from './NavGroup';
 
 export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
   const isLogged = useSelector((state: { authData: RootState }) => state.authData.isLogged);
+  const cart = useSelector((state: { cart: RootState }) => state.cart.cart);
   const { logout } = useAuth();
 
   return (
@@ -22,6 +23,7 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
       <BurgerBtn clickHandler={clickHandler} />
       <ul className="hidden gap-3 sm:flex">
         <PrivateNavGroup
+          itemsCount={cart?.lineItems.length}
           clickHandler={clickHandler}
           isLogged={isLogged}
           logout={logout}
