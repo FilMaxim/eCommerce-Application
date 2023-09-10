@@ -40,6 +40,7 @@ export const useAuth = (): AuthReturnInterface => {
   const logout = (): void => {
     localStorage.clear();
     dispatch(setLogged(false));
+    dispatch(setCustomer(null));
   };
 
   const signUp = async (values: HandleSubmitWithBoth): Promise<void> => {

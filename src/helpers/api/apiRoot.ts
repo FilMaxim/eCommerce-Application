@@ -12,7 +12,10 @@ import {
   type CustomerSignInResult,
   type Cart,
   type Customer,
-  type ProductProjection
+  type ProductProjection,
+  type CartPagedQueryResponse,
+  type MyCartDraft,
+  type CartUpdateAction
 } from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
@@ -116,8 +119,12 @@ export const updateCustomer = async (
 };
 
 export const getProduct = async (id: string): Promise<ProductProjection | undefined> => {
-  const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
-  return response.body;
+  try {
+    const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
+    return response.body;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const updateCustomerPassword = async (body: {
@@ -131,6 +138,47 @@ export const updateCustomerPassword = async (body: {
     .password()
     .post({
       body
+    })
+    .execute();
+};
+
+// создать корзину (обьект корзины содержит валюту и кастомер айди или аноним айди) эти поля могут переназначаться
+export const createCart = async (cart: MyCartDraft): Promise<ClientResponse<Cart>> => {
+  return await apiRoot
+    .carts()
+    .post({
+      body: cart
+    })
+    .execute();
+};
+
+export const getAllCarts = async (): Promise<ClientResponse<CartPagedQueryResponse>> => {
+  return await apiRoot.carts().get().execute();
+};
+
+export const getCartWithId = async (id: string): Promise<ClientResponse<Cart>> => {
+  return await apiRoot.carts().withId({ ID: id }).get().execute();
+};
+
+export const getCartWithCustomerId = async (customerId: string): Promise<ClientResponse<Cart>> => {
+  return await apiRoot.carts().withCustomerId({ customerId }).get().execute();
+};
+
+export const updateCart = async (
+  cartId: string,
+  version: number,
+  actions: CartUpdateAction[]
+): Promise<ClientResponse<Cart>> => {
+  return await apiRoot
+    .carts()
+    .withId({
+      ID: cartId
+    })
+    .post({
+      body: {
+        version,
+        actions
+      }
     })
     .execute();
 };
