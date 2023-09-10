@@ -69,5 +69,19 @@ export const useCart = () => {
     }
   };
 
-  return { addToCart, updateQuantity, removeItemFromCart, cart };
+  const mergeAnonymousCartAfterSignUp = async (cartId: string, cartVersion: number, customerId: string) => {
+    const updatedCart = await updateCart(cartId, cartVersion, [
+      {
+        action: 'setCustomerId',
+        customerId
+      }
+    ]);
+    dispatch(setCart(updatedCart.body));
+
+    if (customer === null) {
+      setCartToLs(updatedCart.body);
+    }
+  };
+
+  return { addToCart, updateQuantity, removeItemFromCart, mergeAnonymousCartAfterSignUp, cart };
 };
