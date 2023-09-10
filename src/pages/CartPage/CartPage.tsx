@@ -104,7 +104,7 @@ export const CartPage = () => {
                 <button
                   className="border p-2"
                   onClick={() => {
-                    removeItemFromCart(item.id, item.quantity).catch((e) => {
+                    removeItemFromCart(cart.id, cart.version, item.id, item.quantity).catch((e) => {
                       Error(e);
                     });
                   }}

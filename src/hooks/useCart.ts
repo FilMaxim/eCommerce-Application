@@ -4,15 +4,22 @@ import { setCartToLs } from '../pages/CartPage/utils/cartStorage';
 import { setCart } from '../slices/cartSlice';
 import type { RootState, AddToCartParams, UpdateItemQuantity } from '../utils/types';
 
+const enum UpdateCartActions {
+  addLineItem = 'addLineItem',
+  changeLineItemQuantity = 'changeLineItemQuantity',
+  removeLineItem = 'removeLineItem',
+  setCustomerId = 'setCustomerId'
+}
+
 export const useCart = () => {
   const cart = useSelector((state: { cart: RootState }) => state.cart.cart);
   const customer = useSelector((state: { authData: RootState }) => state.authData.customer);
   const dispatch = useDispatch();
 
-  const addToCart = async ({ cartId, cartVersion, productId, centAmount, quantity = 1 }: AddToCartParams) => {
+  const addToCart = async ({ cartId, cartVersion, productId, centAmount, quantity = 1 }: AddToCartParams): Promise<void> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
-        action: 'addLineItem',
+        action: UpdateCartActions.addLineItem,
         productId,
         quantity,
         externalPrice: {
@@ -34,10 +41,10 @@ export const useCart = () => {
     lineItemId,
     quantity,
     centAmount
-  }: UpdateItemQuantity) => {
+  }: UpdateItemQuantity): Promise<void> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
-        action: 'changeLineItemQuantity',
+        action: UpdateCartActions.changeLineItemQuantity,
         lineItemId,
         quantity,
         externalPrice: {
@@ -53,11 +60,11 @@ export const useCart = () => {
     }
   };
 
-  const removeItemFromCart = async (lineItemId: string, quantity: number = 1) => {
+  const removeItemFromCart = async (cartId: string, cartVersion: number, lineItemId: string, quantity: number): Promise<void> => {
     if (cart === null) return;
-    const updatedCart = await updateCart(cart.id, cart.version, [
+    const updatedCart = await updateCart(cartId, cartVersion, [
       {
-        action: 'removeLineItem',
+        action: UpdateCartActions.removeLineItem,
         lineItemId,
         quantity
       }
@@ -69,10 +76,10 @@ export const useCart = () => {
     }
   };
 
-  const mergeAnonymousCartAfterSignUp = async (cartId: string, cartVersion: number, customerId: string) => {
+  const mergeAnonymousCartAfterSignUp = async (cartId: string, cartVersion: number, customerId: string): Promise<void> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
-        action: 'setCustomerId',
+        action: UpdateCartActions.setCustomerId,
         customerId
       }
     ]);
