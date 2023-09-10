@@ -9,11 +9,11 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    setCart: (state, { payload }) => {
+    setCartData: (state, { payload }) => {
       state.cart = payload;
     }
   }
 });
 
-export const { setCart } = cartSlice.actions;
+export const { setCartData } = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

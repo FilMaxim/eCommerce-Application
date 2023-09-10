@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCart } from '../helpers/api/apiRoot';
 import { setCartToLs } from '../pages/CartPage/utils/cartStorage';
-import { setCart } from '../slices/cartSlice';
+import { setCartData } from '../slices/cartSlice';
 import type { RootState, AddToCartParams, UpdateItemQuantity } from '../utils/types';
 
 const enum UpdateCartActions {
@@ -34,7 +34,7 @@ export const useCart = () => {
         }
       }
     ]);
-    dispatch(setCart(updatedCart.body));
+    dispatch(setCartData(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
@@ -59,7 +59,7 @@ export const useCart = () => {
         }
       }
     ]);
-    dispatch(setCart(updatedCart.body));
+    dispatch(setCartData(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
@@ -80,7 +80,7 @@ export const useCart = () => {
         quantity
       }
     ]);
-    dispatch(setCart(updatedCart.body));
+    dispatch(setCartData(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
@@ -98,7 +98,7 @@ export const useCart = () => {
         customerId
       }
     ]);
-    dispatch(setCart(updatedCart.body));
+    dispatch(setCartData(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);

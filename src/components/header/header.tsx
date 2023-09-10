@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCartWithCustomerId } from '../../helpers/api/apiRoot';
 import { getCartFromLs, setCartToLs } from '../../pages/CartPage/utils/cartStorage';
 import { createCartHandler } from '../../pages/CartPage/utils/createCartHandler';
-import { setCart } from '../../slices/cartSlice';
+import { setCartData } from '../../slices/cartSlice';
 import { type RootState } from '../../utils/types';
 
 export const Header = () => {
@@ -18,11 +18,11 @@ export const Header = () => {
       const cartInLs = getCartFromLs();
 
       if (cartInLs !== null) {
-        dispatch(setCart(cartInLs));
+        dispatch(setCartData(cartInLs));
       } else {
         createCartHandler()
           .then((cart) => {
-            dispatch(setCart(cart));
+            dispatch(setCartData(cart));
             setCartToLs(cart);
           })
           .catch((e) => {
@@ -32,11 +32,11 @@ export const Header = () => {
     } else {
       getCartWithCustomerId(customer.id)
         .then(async (cart) => {
-          dispatch(setCart(cart.body));
+          dispatch(setCartData(cart.body));
         })
         .catch(async (e) => {
           const newCart = await createCartHandler(customer.id);
-          dispatch(setCart(newCart));
+          dispatch(setCartData(newCart));
           // Error(e);
         });
     }

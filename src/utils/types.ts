@@ -10,7 +10,7 @@ import type {
   ProductProjectionPagedQueryResponse,
   Cart
 } from '@commercetools/platform-sdk';
-import { CartInitialstate } from '../slices/cartSlice';
+// import { CartInitialstate } from '../slices/cartSlice';
 
 interface UserName {
   firstName: string;

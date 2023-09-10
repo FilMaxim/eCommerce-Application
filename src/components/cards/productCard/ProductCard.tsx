@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,16 +12,15 @@ import { useState } from 'react';
 import { addProductToCart } from '../../../helpers/api/cart/addProductToCart';
 import { setCart } from '../../../helpers/api/cart/setCart';
 import { LoadingButton } from '@mui/lab';
-import { CartInitialstate } from '../../../slices/cartSlice';
+// import { CartInitialstate } from '../../../slices/cartSlice';
 import type { Cart } from '@commercetools/platform-sdk';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCartData } from '../../../slices/cartSlice';
 
-
-const normalizeCartData = (data: Cart): CartInitialstate => {
-  const { anonymousId, id, lineItems, version, totalLineItemQuantity, totalPrice } = data;
-  return { anonymousId, id, lineItems, version, totalLineItemQuantity, totalPrice };
-}
+// const normalizeCartData = (data: Cart): CartInitialstate => {
+//   const { anonymousId, id, lineItems, version, totalLineItemQuantity, totalPrice } = data;
+//   return { anonymousId, id, lineItems, version, totalLineItemQuantity, totalPrice };
+// }
 
 export const ProductCard = ({
   imageUrl,
@@ -37,7 +37,7 @@ export const ProductCard = ({
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const cardsData = useSelector((state: { cartData: RootState }) => state.cartData);
+  const cartData = useSelector((state: { cart: RootState }) => state.cart);
 
 
   const handleCardClick = (id: string): void => {
@@ -102,7 +102,7 @@ export const ProductCard = ({
           readOnly
         />
       </p>
-      <Button
+      <LoadingButton
         size="medium"
         variant="contained"
         className="w-full transition-all hover:opacity-80"
@@ -112,9 +112,9 @@ export const ProductCard = ({
           try {
             await setCart();
             const response = await addProductToCart(id);
-            const normalizedData = normalizeCartData(response.body);
-            dispatch(setCartData(normalizedData));
-            console.log(cardsData);
+
+            dispatch(setCartData(response.body));
+            console.log(cartData);
             if (response.statusCode === 200) {
               // setSubmitting(false);
             }

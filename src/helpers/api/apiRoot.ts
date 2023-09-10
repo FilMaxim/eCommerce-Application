@@ -145,6 +145,10 @@ export const updateCustomerPassword = async (body: {
     })
     .execute();
 };
+const anonymousClient = buildClientWithAnonymousSessionFlow();
+export const anonymousApiRoot = createApiBuilderFromCtpClient(anonymousClient).withProjectKey({
+  projectKey: ClientApiData.projectKey
+});
 
 // создать корзину (обьект корзины содержит валюту и кастомер айди или аноним айди) эти поля могут переназначаться
 export const createCart = async (cart: MyCartDraft): Promise<ClientResponse<Cart>> => {
