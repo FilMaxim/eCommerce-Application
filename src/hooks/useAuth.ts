@@ -9,10 +9,13 @@ import { setCustomer, setLogged } from '../slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { type Customer } from '@commercetools/platform-sdk';
 import { StatusCodes } from '../utils/statusCodes';
+import { setCart } from '../slices/cartSlice';
+import { useCart } from './useCart';
 
 export const useAuth = (): AuthReturnInterface => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { cart, mergeAnonymousCartAfterSignUp } = useCart();
 
   const successfulAuth = (customer: Customer, message: string) => {
     showToastMessage(message, 'green');
@@ -41,15 +44,22 @@ export const useAuth = (): AuthReturnInterface => {
     localStorage.clear();
     dispatch(setLogged(false));
     dispatch(setCustomer(null));
+    dispatch(setCart(null));
   };
 
   const signUp = async (values: HandleSubmitWithBoth): Promise<void> => {
     try {
       const normalizedData = addressAdapter(values);
-      const { statusCode } = await createCustomer(normalizedData);
+      const {
+        statusCode,
+        body: { customer }
+      } = await createCustomer(normalizedData);
 
       if (statusCode === StatusCodes.CREATED) {
         showToastMessage(AuthMessages.successRegistrationMessage, 'green');
+        if (cart !== null) {
+          await mergeAnonymousCartAfterSignUp(cart.id, cart.version, customer.id);
+        }
         await login({ email: values.email, password: values.password });
       }
     } catch (error) {

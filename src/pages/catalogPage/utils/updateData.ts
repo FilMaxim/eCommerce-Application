@@ -1,5 +1,5 @@
 import type { Dispatch } from '@reduxjs/toolkit';
-import { setExtremums, setProducts } from '../../../slices/productCardsSlice';
+import { setExtremums, setProducts } from '../../../slices/ProductCardsSlice';
 import type { NormolizeDataType, FetchDataType } from '../../../utils/types';
 
 export const updateProductsData = async (

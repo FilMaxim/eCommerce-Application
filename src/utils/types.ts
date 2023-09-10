@@ -7,7 +7,8 @@ import type {
   Image,
   Customer,
   Attribute,
-  ProductProjectionPagedQueryResponse
+  ProductProjectionPagedQueryResponse,
+  Cart
 } from '@commercetools/platform-sdk';
 
 interface UserName {
@@ -101,6 +102,7 @@ export interface RootState {
   customer: Customer | null;
   extremums: number[];
   catecories: CategoriesList[];
+  cart: Cart | null;
 }
 
 export interface AddressFieldComponent {
@@ -153,6 +155,7 @@ export interface PrivateNavGroupProps {
   isLogged: boolean;
   logout: () => void;
   clickHandler: (open: boolean) => void;
+  itemsCount?: number;
 }
 
 export type FakeOnSubmit = (values: HandleSubmitWithBoth) => Promise<void>;
@@ -292,4 +295,20 @@ export interface AttributesList {
 export interface SelectedAttribute {
   name: string;
   value: string;
+}
+
+export interface AddToCartParams {
+  cartId: string;
+  cartVersion: number;
+  productId: string;
+  centAmount: number;
+  quantity?: number;
+}
+
+export interface UpdateItemQuantity {
+  cartId: string;
+  cartVersion: number;
+  lineItemId: string;
+  quantity: number;
+  centAmount: number;
 }

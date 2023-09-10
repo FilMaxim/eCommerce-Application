@@ -43,5 +43,9 @@ export const links = {
     icon: <HowToRegOutlinedIcon color="secondary" />
   },
   product: { text: 'Product', path: NavRoutes.productPage },
-  cart: { text: 'Cart', path: NavRoutes.cartPagePath, icon: <ShoppingCartOutlinedIcon color="secondary" /> }
+  cart: {
+    text: 'Cart',
+    path: NavRoutes.cartPagePath,
+    icon: <ShoppingCartOutlinedIcon color="secondary" />
+  }
 };
