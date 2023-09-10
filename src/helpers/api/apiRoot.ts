@@ -1,6 +1,10 @@
 import { ClientApiData } from '../../utils/clientApiData';
 import type { CustomerData } from '../../utils/types';
-import { buildClientWithClientCredentialsFlow, buildClientWithPasswordFlow } from './BuildClient';
+import {
+  buildClientWithAnonymousSessionFlow,
+  buildClientWithClientCredentialsFlow,
+  buildClientWithPasswordFlow
+} from './BuildClient';
 import {
   createApiBuilderFromCtpClient,
   type CustomerChangeAddressAction,
