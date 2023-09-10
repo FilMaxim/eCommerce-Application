@@ -16,7 +16,13 @@ export const useCart = () => {
   const customer = useSelector((state: { authData: RootState }) => state.authData.customer);
   const dispatch = useDispatch();
 
-  const addToCart = async ({ cartId, cartVersion, productId, centAmount, quantity = 1 }: AddToCartParams): Promise<void> => {
+  const addToCart = async ({
+    cartId,
+    cartVersion,
+    productId,
+    centAmount,
+    quantity = 1
+  }: AddToCartParams): Promise<void> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: UpdateCartActions.addLineItem,
@@ -60,7 +66,12 @@ export const useCart = () => {
     }
   };
 
-  const removeItemFromCart = async (cartId: string, cartVersion: number, lineItemId: string, quantity: number): Promise<void> => {
+  const removeItemFromCart = async (
+    cartId: string,
+    cartVersion: number,
+    lineItemId: string,
+    quantity: number
+  ): Promise<void> => {
     if (cart === null) return;
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
@@ -76,7 +87,11 @@ export const useCart = () => {
     }
   };
 
-  const mergeAnonymousCartAfterSignUp = async (cartId: string, cartVersion: number, customerId: string): Promise<void> => {
+  const mergeAnonymousCartAfterSignUp = async (
+    cartId: string,
+    cartVersion: number,
+    customerId: string
+  ): Promise<void> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: UpdateCartActions.setCustomerId,
