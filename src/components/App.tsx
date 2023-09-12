@@ -20,7 +20,7 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Header />
-        <main className="m-auto w-full max-w-7xl px-2">
+        <main className="mx-auto mb-auto w-full max-w-7xl px-2">
           <Routes>
             {routesConfig.map((route, index) => (
               <Route
