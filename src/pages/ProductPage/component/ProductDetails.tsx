@@ -10,7 +10,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product, rating,
   if (cart == null || id == null) {
     return <div className="text-center text-2xl">Can&apos;t find cart</div>;
   }
-  const productLineItem = cart.lineItems.find(lineItem => lineItem.productId === id);
+  const productLineItem = cart.lineItems.find((lineItem) => lineItem.productId === id);
 
   const onAdd = () => {
     if (id == null || cart == null) return;

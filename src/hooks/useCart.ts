@@ -72,7 +72,6 @@ export const useCart = () => {
     lineItemId: string,
     quantity: number
   ): Promise<void> => {
-    console.log(111);
     if (cart === null) return;
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
