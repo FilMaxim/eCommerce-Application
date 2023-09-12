@@ -52,7 +52,7 @@ export const Product = () => {
         stopOnHover
       >
         {product.images?.map((image) => (
-          <div
+          <button
             key={image.url}
             onClick={() => {
               setModalPreviewOpen(true);
@@ -63,7 +63,7 @@ export const Product = () => {
               src={image.url}
               alt={image.label}
             />
-          </div>
+          </button>
         ))}
       </Carousel>
       <ProductDetails

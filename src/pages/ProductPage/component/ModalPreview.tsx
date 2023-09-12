@@ -16,6 +16,13 @@ export const ModalPreview: React.FC<ModalPreviewProps> = ({
           setModalPreviewOpen(false);
         }
       }}
+      role="presentation"
+      tabIndex={-1}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') {
+          setModalPreviewOpen(false);
+        }
+      }}
     >
       <div className="relative flex max-w-[90%] items-center justify-center rounded bg-white lg:max-w-[60rem]">
         <button
@@ -39,7 +46,7 @@ export const ModalPreview: React.FC<ModalPreviewProps> = ({
           stopOnHover
         >
           {product.images?.map((img) => (
-            <div
+            <button
               key={img.url}
               onClick={() => {
                 setModalPreviewOpen(false);
@@ -50,7 +57,7 @@ export const ModalPreview: React.FC<ModalPreviewProps> = ({
                 src={img.url}
                 alt={img.label}
               />
-            </div>
+            </button>
           ))}
         </Carousel>
       </div>

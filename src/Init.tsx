@@ -5,7 +5,7 @@ import { store } from './slices';
 export const Init = () => {
   return (
     <Provider store={store}>
-      <div className="min-h-screen">
+      <div className="flex min-h-screen flex-col justify-between">
         <App />
       </div>
     </Provider>
