@@ -19,19 +19,13 @@ export const useCart = () => {
   const addToCart = async ({
     cartId,
     cartVersion,
-    productId,
-    centAmount,
-    quantity = 1
-  }: AddToCartParams): Promise<void> => {
+    productId
+  }: AddToCartParams): Promise<number | undefined> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: UpdateCartActions.addLineItem,
         productId,
-        quantity,
-        externalPrice: {
-          currencyCode: 'EUR',
-          centAmount
-        }
+        quantity: 1
       }
     ]);
     dispatch(setCartData(updatedCart.body));
@@ -39,24 +33,20 @@ export const useCart = () => {
     if (customer === null) {
       setCartToLs(updatedCart.body);
     }
+    return updatedCart.statusCode;
   };
 
   const updateQuantity = async ({
     cartId,
     cartVersion,
     lineItemId,
-    quantity,
-    centAmount
+    quantity
   }: UpdateItemQuantity): Promise<void> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: UpdateCartActions.changeLineItemQuantity,
         lineItemId,
-        quantity,
-        externalPrice: {
-          currencyCode: 'EUR',
-          centAmount
-        }
+        quantity
       }
     ]);
     dispatch(setCartData(updatedCart.body));

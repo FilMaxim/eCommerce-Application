@@ -17,8 +17,7 @@ export const CartPage = () => {
             addToCart({
               cartId: cart.id,
               cartVersion: cart.version,
-              productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284',
-              centAmount: 39900
+              productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284'
             }).catch((e) => {
               Error(e);
             });
@@ -45,8 +44,7 @@ export const CartPage = () => {
           addToCart({
             cartId: cart.id,
             cartVersion: cart.version,
-            productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284',
-            centAmount: 39900
+            productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284'
           }).catch((e) => {
             Error(e);
           });

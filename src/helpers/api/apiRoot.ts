@@ -152,7 +152,8 @@ export const anonymousApiRoot = createApiBuilderFromCtpClient(anonymousClient).w
 
 // создать корзину (обьект корзины содержит валюту и кастомер айди или аноним айди) эти поля могут переназначаться
 export const createCart = async (cart: MyCartDraft): Promise<ClientResponse<Cart>> => {
-  return await apiRoot
+  return await anonymousApiRoot
+    .me()
     .carts()
     .post({
       body: cart

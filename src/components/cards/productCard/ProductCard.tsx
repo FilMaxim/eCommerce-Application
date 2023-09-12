@@ -1,26 +1,12 @@
-/* eslint-disable */
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import { Typography, CircularProgress, CardMedia, CardContent, Card, Rating } from '@mui/material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import type { ProductCardInterface, RootState } from '../../../utils/types';
-import { Button, Rating } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import type { ProductCardInterface } from '../../../utils/types';
 import { PriceTag } from './PriceTag';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { addProductToCart } from '../../../helpers/api/cart/addProductToCart';
-import { setCart } from '../../../helpers/api/cart/setCart';
+import { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
-// import { CartInitialstate } from '../../../slices/cartSlice';
-import type { Cart } from '@commercetools/platform-sdk';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCartData } from '../../../slices/cartSlice';
-
-// const normalizeCartData = (data: Cart): CartInitialstate => {
-//   const { anonymousId, id, lineItems, version, totalLineItemQuantity, totalPrice } = data;
-//   return { anonymousId, id, lineItems, version, totalLineItemQuantity, totalPrice };
-// }
+import { useCart } from '../../../hooks/useCart';
 
 export const ProductCard = ({
   imageUrl,
@@ -35,34 +21,114 @@ export const ProductCard = ({
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
+  const [isFulfilled, setFulfiled] = useState<boolean>(false);
 
-  const dispatch = useDispatch();
-  const cartData = useSelector((state: { cart: RootState }) => state.cart);
-
+  const { addToCart, cart } = useCart();
 
   const handleCardClick = (id: string): void => {
     navigate({ pathname: `/product/${id}` });
   };
 
+  useEffect(() => {
+    if (cart !== null) {
+      const { lineItems } = cart;
+      const isAdded = Boolean(lineItems.find((item) => item.productId === id));
+      setFulfiled(isAdded);
+    }
+  }, [cart, id]);
+
+  const CartIcon = ({ predicate }: { predicate: boolean }) => {
+    // prettier-ignore
+    return predicate
+      ? (
+        <>
+          <Typography
+            variant="body1"
+            color="text.primary"
+            fontWeight="bold"
+          >
+            To Cart
+          </Typography>
+          <ShoppingCartIcon
+            sx={{
+              color: '#DB4444',
+              transform: ' translate(10px)'
+            }}
+            fontSize="large"
+          />
+        </>)
+      : (
+        <ShoppingCartOutlinedIcon fontSize="large" />);
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const handleAddClick = async () => {
+    setSubmitting(true);
+    isFulfilled && navigate({ pathname: '/cart' });
+    const productId = id;
+
+    if (cart !== null && !isFulfilled) {
+      const { id, version } = cart;
+      try {
+        await addToCart({ cartId: id, cartVersion: version, productId });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    setSubmitting(false);
+    setFulfiled(true);
+  };
+
   return (
     <Card className="group grid grid-cols-[14rem] grid-rows-catalog-cards items-center justify-items-start gap-[0.3rem] hover:shadow-xl">
       <CardMedia
-        sx={{ height: '14rem', width: '14rem' }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        sx={{
+          height: '12rem',
+          width: '12rem',
+          justifySelf: 'center',
+          cursor: 'pointer'
+        }}
         image={imageUrl}
         title={title}
-        className="transition-all group-hover:scale-110"
+        className=""
+        onClick={() => {
+          handleCardClick(id);
+        }}
       />
-      <CardContent>
+      <CardContent
+        sx={{
+          height: '8rem',
+          padding: '0 1rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.3rem'
+        }}
+      >
         <Typography
           gutterBottom
           variant="h6"
           component="p"
-          align="center"
+          color={isHovered ? '#DB4444' : 'text.primary'}
           sx={{
             fontSize: '1.25rem',
             lineHeight: '1.5rem',
-            height: '1.5rem',
-            overflow: 'hidden'
+            margin: 0,
+            '&:hover': {
+              color: '#DB4444'
+            },
+            cursor: 'pointer'
+          }}
+          onClick={() => {
+            handleCardClick(id);
           }}
         >
           {titleName}
@@ -85,8 +151,8 @@ export const ProductCard = ({
       <CardContent
         sx={{
           display: 'inline-flex',
-          marginLeft: '-1rem',
-          gap: '12px'
+          gap: '1rem',
+          padding: 0
         }}
       >
         <PriceTag
@@ -94,36 +160,41 @@ export const ProductCard = ({
           discount={discount}
         />
       </CardContent>
-      <p>
-        <Rating
-          name="read-only"
-          precision={0.1}
-          defaultValue={rating}
-          readOnly
-        />
-      </p>
+      <Rating
+        sx={{
+          padding: '0 1rem'
+        }}
+        name="read-only"
+        precision={0.1}
+        defaultValue={rating}
+        readOnly
+      />
       <LoadingButton
         size="medium"
-        variant="contained"
+        disabled={isSubmitting}
+        sx={{
+          height: '41px',
+          borderRadius: '0 0 4px 4px'
+        }}
+        variant={isFulfilled || isSubmitting ? 'outlined' : 'contained'}
         className="w-full transition-all hover:opacity-80"
-        // disabled={isSubmitting}
-        onClick={async () => {
-          setSubmitting(true);
-          try {
-            await setCart();
-            const response = await addProductToCart(id);
-
-            dispatch(setCartData(response.body));
-            console.log(cartData);
-            if (response.statusCode === 200) {
-              // setSubmitting(false);
-            }
-          } catch (error) {
-            console.log(error);
-          }
+        onClick={() => {
+          handleAddClick().catch((error) => {
+            console.error(error);
+          });
         }}
       >
-        <ShoppingCartOutlinedIcon fontSize="large" />
+        {
+          // prettier-ignore
+          isSubmitting
+            ? (
+              <CircularProgress
+                sx={{ color: '#DB4444' }}
+                size="1.5rem"
+              />)
+            : (
+              <CartIcon predicate={isFulfilled} />)
+        }
       </LoadingButton>
     </Card>
   );
