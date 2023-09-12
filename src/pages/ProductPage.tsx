@@ -53,7 +53,7 @@ export const Product = () => {
         stopOnHover
       >
         {product.images?.map((image) => (
-          <div
+          <button
             key={image.url}
             onClick={() => {
               setModalPreviewOpen(true);
@@ -64,7 +64,7 @@ export const Product = () => {
               src={image.url}
               alt={image.label}
             />
-          </div>
+          </button>
         ))}
       </Carousel>
       <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:max-w-[70%] lg:w-[350px]">
@@ -127,6 +127,13 @@ export const Product = () => {
               setModalPreviewOpen(false);
             }
           }}
+          role="presentation"
+          tabIndex={-1}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setModalPreviewOpen(false);
+            }
+          }}
         >
           <div className="relative flex max-w-[90%] items-center justify-center rounded bg-white lg:max-w-[60rem]">
             <button
@@ -150,7 +157,7 @@ export const Product = () => {
               stopOnHover
             >
               {product.images?.map((img) => (
-                <div
+                <button
                   key={img.url}
                   onClick={() => {
                     setModalPreviewOpen(false);
@@ -161,7 +168,7 @@ export const Product = () => {
                     src={img.url}
                     alt={img.label}
                   />
-                </div>
+                </button>
               ))}
             </Carousel>
           </div>
