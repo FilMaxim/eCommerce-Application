@@ -11,7 +11,7 @@ export const Footer = () => {
   const linksData = isLogged ? [links.cart, links.profile] : [links.cart, links.login, links.registration];
 
   return (
-    <footer className="bg-black text-secondary bg-burger-bender bg-[length:100px_200px] bg-right-bottom bg-no-repeat sm:bg-footer-bender sm:bg-left-bottom sm:bg-[length:110px_110px]">
+    <footer className="bg-black bg-burger-bender bg-[length:100px_200px] bg-right-bottom bg-no-repeat text-secondary sm:bg-footer-bender sm:bg-[length:110px_110px] sm:bg-left-bottom">
       <nav
         className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 p-4 sm:flex-row lg:px-8"
         aria-label="Global"
@@ -39,7 +39,10 @@ export const Footer = () => {
             ))}
           </ul>
         </div>
-        <Link to={'https://rs.school/'} className='mr-8'>
+        <Link
+          to={'https://rs.school/'}
+          className="mr-8"
+        >
           <img
             src={logo}
             alt="rs_school_js"
