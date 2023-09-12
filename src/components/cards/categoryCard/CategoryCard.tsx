@@ -16,7 +16,7 @@ export const CategoryCard = ({ category, callback }: { category: string; callbac
     Deliveries: delivery
   };
   return (
-    <div
+    <button
       className="flex h-[5.5rem] w-[5.5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2 rounded border border-gray-300 sm:h-[7rem] sm:w-[7rem]"
       onClick={callback}
     >
@@ -25,7 +25,7 @@ export const CategoryCard = ({ category, callback }: { category: string; callbac
         src={mapping[category]}
         alt={category}
       />
-      <p className="text-sm sm:text-lg">{category}</p>
-    </div>
+      <span className="text-sm sm:text-lg">{category}</span>
+    </button>
   );
 };
