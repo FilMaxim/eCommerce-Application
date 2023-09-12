@@ -39,10 +39,7 @@ export const Footer = () => {
             ))}
           </ul>
         </div>
-        <Link
-          to={'https://rs.school/'}
-          className="mr-8"
-        >
+        <Link to={'https://rs.school/'}>
           <img
             src={logo}
             alt="rs_school_js"
