@@ -113,11 +113,11 @@ export const AboutPage = () => {
                         {member.name} ({member.JobTitle})
                       </p>
                       <p className="mb-3 text-center italic">{member.location}</p>
-                      <p className="whitespace-pre-line text-justify indent-7">
+                      <div className="whitespace-pre-line text-justify indent-7">
                         {member.biography.split('\n').map((line, index) => (
                           <p key={index}>{line}</p>
                         ))}
-                      </p>
+                      </div>
                     </div>
                   </div>
                   <hr className="mb-10" />

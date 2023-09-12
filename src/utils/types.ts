@@ -312,3 +312,17 @@ export interface UpdateItemQuantity {
   quantity: number;
   centAmount: number;
 }
+
+export interface ModalPreviewProps {
+  product: ProductsDataInterface;
+  currentImageIndex: number;
+  setCurrentImageIndex: (index: number) => void;
+  setModalPreviewOpen: (isOpen: boolean) => void;
+}
+
+export interface ProductDetailsProps {
+  product: ProductsDataInterface;
+  rating?: Attribute;
+  color?: Attribute;
+  id: string | undefined;
+}
