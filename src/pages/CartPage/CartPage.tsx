@@ -5,7 +5,7 @@ import { useCart } from '../../hooks/useCart';
 
 export const CartPage = () => {
   const { addToCart, updateQuantity, removeItemFromCart, cart } = useCart();
-
+  console.log(cart);
   if (cart === null) return <p className="text-center text-lg">Loading...</p>;
 
   if (cart.lineItems.length === 0) {

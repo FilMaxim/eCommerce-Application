@@ -1,0 +1,87 @@
+import React from 'react';
+import { Button, Rating } from '@mui/material';
+import { PriceTag } from '../../../components/cards/productCard/PriceTag';
+import Box from '@mui/material/Box';
+import { type ProductDetailsProps } from '../../../utils/types';
+// import { useCart } from '../../../hooks/useCart';
+
+export const ProductDetails: React.FC<ProductDetailsProps> = ({
+  product,
+  rating,
+  color,
+  id
+}) => {
+  // const { addToCart, removeItemFromCart, cart } = useCart();
+  // if (cart === null || id === undefined) return <div className="text-center text-2xl">Can&apos;t find cart</div>;
+  // const isProduct = Boolean(cart.lineItems.find((product: LineItem) => product.id === id));
+
+  return (
+    <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:max-w-[70%] lg:w-[350px]">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-2xl font-bold">{product.name}</h1>
+        {rating !== undefined && (
+          <p>
+            <Rating
+              name="read-only"
+              precision={0.1}
+              defaultValue={rating.value}
+              readOnly
+            />
+          </p>
+        )}
+        {product.priceTag !== undefined && (
+          <div className="flex justify-between">
+            <PriceTag
+              price={product.priceTag.price}
+              discount={product.priceTag.discount}
+            />
+          </div>
+        )}
+        <p className="">{product.description}</p>
+        <hr />
+      </div>
+      {color !== undefined && (
+        <p className="bold flex items-center gap-3 ">
+          <span className="font-bold">Colours:</span>
+          {color.value.map((colorName: string) => {
+            return (
+              <Box
+                key={colorName}
+                component="span"
+                sx={{
+                  bgcolor: colorName,
+                  width: 20,
+                  height: 20,
+                  borderRadius: '50%',
+                  border: 2
+                }}
+              />
+            );
+          })}
+        </p>
+      )}
+      <Button
+        color="secondary"
+        className="w-full self-center"
+        variant="contained"
+        onClick={() => {
+          //   if (id === undefined) return;
+          //   (!isProduct)
+          //     ? addToCart({
+          //       cartId: cart.id,
+          //       cartVersion: cart.version,
+          //       productId: id,
+          //       centAmount: 39900
+          //     }).catch((e) => {
+          //       Error(e);
+          //     })
+          // removeItemFromCart(cart.id, cart.version, id, 1).catch((e) => {
+          //   Error(e);
+          // });
+        }}
+      >
+        Buy Now
+      </Button>
+    </div>
+  );
+};
