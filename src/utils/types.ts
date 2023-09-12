@@ -64,7 +64,7 @@ export interface LogoParams {
 }
 
 export interface ClickHandlerInterface {
-  clickHandler: (open: boolean) => void;
+  clickHandler?: (open: boolean) => void;
 }
 
 export interface BurgerMenuProps {

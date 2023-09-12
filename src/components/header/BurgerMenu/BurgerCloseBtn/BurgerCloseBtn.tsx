@@ -7,6 +7,7 @@ export const BurgerCloseBtn = ({ clickHandler }: ClickHandlerInterface) => {
       type="button"
       className="-m-2.5 rounded-md p-2.5 text-secondary"
       onClick={() => {
+        if (clickHandler === undefined) return;
         clickHandler(false);
       }}
     >

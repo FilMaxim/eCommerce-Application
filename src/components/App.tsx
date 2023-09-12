@@ -2,6 +2,7 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { routesConfig } from '../utils/routesConfig';
 import { Header } from './header/header';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Footer } from './footer/Footer';
 
 const theme = createTheme({
   palette: {
@@ -30,6 +31,7 @@ export const App = () => {
             ))}
           </Routes>
         </main>
+        <Footer />
       </Router>
     </ThemeProvider>
   );

@@ -9,9 +9,13 @@ export const NavGroup = ({ clickHandler }: ClickHandlerInterface) => {
       {linksData.map((item) => (
         <li key={item.text}>
           <Link
-            onClick={() => {
-              clickHandler(false);
-            }}
+            {...(clickHandler !== undefined
+              ? {
+                  onClick: () => {
+                    clickHandler(false);
+                  }
+                }
+              : {})}
             to={item.path}
             className="hover:opacity-70"
           >

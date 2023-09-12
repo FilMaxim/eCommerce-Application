@@ -25,7 +25,7 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
       <ul className="hidden gap-3 sm:flex">
         <PrivateNavGroup
           itemsCount={cart?.lineItems.length}
-          clickHandler={clickHandler}
+          clickHandler={clickHandler as (open: boolean) => void}
           isLogged={isLogged}
           logout={logout}
         />
