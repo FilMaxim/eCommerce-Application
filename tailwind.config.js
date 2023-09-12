@@ -10,6 +10,7 @@ module.exports = {
       },
       backgroundImage: {
         'burger-bender': "url('/src/assets/burger-bender.png')",
+        'footer-bender': "url('/src/assets/footer-bender.png')",
       },
       gridTemplateRows: {
         'catalog-cards': '14rem 9rem 2.5rem 2.5rem',

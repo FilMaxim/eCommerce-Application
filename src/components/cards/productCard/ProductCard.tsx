@@ -138,14 +138,14 @@ export const ProductCard = ({
           color="text.secondary"
         >
           <span className="inline-block max-h-10 overflow-hidden text-gray-500">{description}</span>
-          <span
+          <button
             className="mt-[-0.5rem] block cursor-pointer text-secondary"
             onClick={() => {
               handleCardClick(id);
             }}
           >
             ...more
-          </span>
+          </button>
         </Typography>
       </CardContent>
       <CardContent

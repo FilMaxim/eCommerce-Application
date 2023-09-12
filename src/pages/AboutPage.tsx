@@ -113,11 +113,11 @@ export const AboutPage = () => {
                         {member.name} ({member.JobTitle})
                       </p>
                       <p className="mb-3 text-center italic">{member.location}</p>
-                      <p className="whitespace-pre-line text-justify indent-7">
+                      <div className="whitespace-pre-line text-justify indent-7">
                         {member.biography.split('\n').map((line, index) => (
                           <p key={index}>{line}</p>
                         ))}
-                      </p>
+                      </div>
                     </div>
                   </div>
                   <hr className="mb-10" />
@@ -126,7 +126,7 @@ export const AboutPage = () => {
             })}
           </div>
         </section>
-        <section className="mb-32 text-center">
+        <section className="mb-2 text-center">
           <h2 className="mb-6 text-3xl font-bold">The difficult path to success</h2>
           <div className="text-justify indent-10">
             <p> Our &apos;console.log&apos; team are masters, who love what they do.</p>

@@ -65,7 +65,7 @@ export interface LogoParams {
 }
 
 export interface ClickHandlerInterface {
-  clickHandler: (open: boolean) => void;
+  clickHandler?: (open: boolean) => void;
 }
 
 export interface BurgerMenuProps {
@@ -310,4 +310,18 @@ export interface UpdateItemQuantity {
   lineItemId: string;
   quantity: number;
   centAmount: number;
+}
+
+export interface ModalPreviewProps {
+  product: ProductsDataInterface;
+  currentImageIndex: number;
+  setCurrentImageIndex: (index: number) => void;
+  setModalPreviewOpen: (isOpen: boolean) => void;
+}
+
+export interface ProductDetailsProps {
+  product: ProductsDataInterface;
+  rating?: Attribute;
+  color?: Attribute;
+  id: string | undefined;
 }
