@@ -4,8 +4,10 @@ import { NavRoutes } from '../../utils/routes';
 import { useCart } from '../../hooks/useCart';
 
 export const CartPage = () => {
-  const { addToCart, updateQuantity, removeItemFromCart, cart } = useCart();
+  const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart } = useCart();
+
   if (cart === null) return <p className="text-center text-lg">Loading...</p>;
+
   if (cart.lineItems.length === 0) {
     return (
       <>
@@ -37,21 +39,36 @@ export const CartPage = () => {
 
   return (
     <div className="m-auto mt-4 max-w-[42rem] rounded border p-2">
-      <button
-        className="bordder p-2"
-        onClick={() => {
-          addToCart({
-            cartId: cart.id,
-            cartVersion: cart.version,
-            productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284',
-            centAmount: 39900
-          }).catch((e) => {
-            Error(e);
-          });
-        }}
-      >
-        add Item
-      </button>
+      <div className="mb-1 flex justify-between">
+        <button
+          className="border p-2"
+          onClick={() => {
+            addToCart({
+              cartId: cart.id,
+              cartVersion: cart.version,
+              productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284',
+              centAmount: 39900
+            }).catch((e) => {
+              Error(e);
+            });
+          }}
+        >
+          add Item
+        </button>
+        <button
+          className="border p-2"
+          onClick={() => {
+            const confirm = window.confirm('Delete all items?');
+            if (confirm) {
+              clearCart(cart.id, cart.version, cart.lineItems).catch((e) => {
+                Error(e);
+              });
+            }
+          }}
+        >
+          Clear Cart
+        </button>
+      </div>
       {cart !== null && (
         <div className="flex flex-col gap-2">
           {cart.lineItems.map((item) => {
