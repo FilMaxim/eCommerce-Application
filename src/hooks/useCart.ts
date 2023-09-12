@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCart } from '../helpers/api/apiRoot';
 import { setCartToLs } from '../pages/CartPage/utils/cartStorage';
-import { setCart } from '../slices/cartSlice';
+import { setCartData } from '../slices/cartSlice';
 import type { RootState, AddToCartParams, UpdateItemQuantity } from '../utils/types';
 import type { LineItem } from '@commercetools/platform-sdk';
 
@@ -20,47 +20,37 @@ export const useCart = () => {
   const addToCart = async ({
     cartId,
     cartVersion,
-    productId,
-    centAmount,
-    quantity = 1
-  }: AddToCartParams): Promise<void> => {
+    productId
+  }: AddToCartParams): Promise<number | undefined> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: UpdateCartActions.addLineItem,
         productId,
-        quantity,
-        externalPrice: {
-          currencyCode: 'EUR',
-          centAmount
-        }
+        quantity: 1
       }
     ]);
-    dispatch(setCart(updatedCart.body));
+    dispatch(setCartData(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
     }
+    return updatedCart.statusCode;
   };
 
   const updateQuantity = async ({
     cartId,
     cartVersion,
     lineItemId,
-    quantity,
-    centAmount
+    quantity
   }: UpdateItemQuantity): Promise<void> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: UpdateCartActions.changeLineItemQuantity,
         lineItemId,
-        quantity,
-        externalPrice: {
-          currencyCode: 'EUR',
-          centAmount
-        }
+        quantity
       }
     ]);
-    dispatch(setCart(updatedCart.body));
+    dispatch(setCartData(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
@@ -80,7 +70,7 @@ export const useCart = () => {
         quantity
       }
     ]);
-    dispatch(setCart(updatedCart.body));
+    dispatch(setCartData(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
@@ -98,7 +88,7 @@ export const useCart = () => {
         customerId
       }
     ]);
-    dispatch(setCart(updatedCart.body));
+    dispatch(setCartData(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);
@@ -113,7 +103,7 @@ export const useCart = () => {
     }));
 
     const updatedCart = await updateCart(cartId, cartVersion, removeActions);
-    dispatch(setCart(updatedCart.body));
+    dispatch(setCartData(updatedCart.body));
 
     if (customer === null) {
       setCartToLs(updatedCart.body);

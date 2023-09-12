@@ -7,6 +7,7 @@ export enum ClientApiData {
 }
 
 export enum Endpoints {
-  base = 'https://api.europe-west1.gcp.commercetools.com',
-  auth = 'https://auth.europe-west1.gcp.commercetools.com'
+  base = 'https://api.europe-west1.gcp.commercetools.com/',
+  auth = 'https://auth.europe-west1.gcp.commercetools.com',
+  oauth = 'https://auth.europe-west1.gcp.commercetools.com/oauth/token'
 }

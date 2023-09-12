@@ -10,6 +10,7 @@ import type {
   ProductProjectionPagedQueryResponse,
   Cart
 } from '@commercetools/platform-sdk';
+// import { CartInitialstate } from '../slices/cartSlice';
 
 interface UserName {
   firstName: string;
@@ -301,8 +302,6 @@ export interface AddToCartParams {
   cartId: string;
   cartVersion: number;
   productId: string;
-  centAmount: number;
-  quantity?: number;
 }
 
 export interface UpdateItemQuantity {

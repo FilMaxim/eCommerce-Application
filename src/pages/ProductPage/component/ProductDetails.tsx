@@ -18,8 +18,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product, rating,
     void addToCart({
       cartId: cart.id,
       cartVersion: cart.version,
-      productId: id,
-      centAmount: 39900
+      productId: id
     });
   };
   const onRemove = () => {

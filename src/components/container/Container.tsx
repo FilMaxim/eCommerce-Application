@@ -6,18 +6,19 @@ import { SearchInput } from '../searchInput/SearchInput';
 import { fetchCategories } from '../../pages/catalogPage/utils/fetchCategories';
 import { NavRoutes } from '../../utils/routes';
 import { useNavigate } from 'react-router-dom';
-import { BreadcrumbsNav } from '../readcrumbsNav/BreadcrumbsNav';
+import { BreadcrumbsNav } from '../breadcrumbsNav/BreadcrumbsNav';
 
 export const Container = ({ titleName, titleDescription }: ContainerProps) => {
   const { setCategoryId, setCategoryName } = useCategoryContext();
-  const [categoriesList, setCategoryList] = useState<CategoriesList[]>([]);
+  const [categories, setCategoriesList] = useState<CategoriesList[]>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const updateData = async (): Promise<void> => {
-      await fetchCategories(setCategoryList);
+      await fetchCategories(setCategoriesList);
     };
+
     updateData().catch((error) => {
       throw error;
     });
@@ -44,20 +45,22 @@ export const Container = ({ titleName, titleDescription }: ContainerProps) => {
       <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
       <BreadcrumbsNav />
       <div className="flex max-w-[90%] gap-2 self-center overflow-auto rounded border p-1 md:border-none">
-        {categoriesList.map((category) => {
-          const { name, id } = category;
-          return (
-            <CategoryCard
-              key={id}
-              category={name}
-              callback={() => {
-                setCategoryId(id);
-                setCategoryName(name);
-                navigate({ pathname: routes[name] });
-              }}
-            />
-          );
-        })}
+        {categories.length > 0 &&
+          categories.map((category) => {
+            const { name, id } = category;
+
+            return (
+              <CategoryCard
+                key={id}
+                category={name}
+                callback={() => {
+                  setCategoryId(id);
+                  setCategoryName(name);
+                  navigate({ pathname: routes[name] });
+                }}
+              />
+            );
+          })}
       </div>
     </div>
   );

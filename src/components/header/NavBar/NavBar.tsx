@@ -24,7 +24,7 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
       <BurgerBtn clickHandler={clickHandler} />
       <ul className="hidden gap-3 sm:flex">
         <PrivateNavGroup
-          itemsCount={cart?.lineItems.length}
+          itemsCount={cart?.totalLineItemQuantity}
           clickHandler={clickHandler as (open: boolean) => void}
           isLogged={isLogged}
           logout={logout}
