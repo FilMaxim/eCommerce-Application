@@ -3,17 +3,30 @@ import { Button, Rating } from '@mui/material';
 import { PriceTag } from '../../../components/cards/productCard/PriceTag';
 import Box from '@mui/material/Box';
 import { type ProductDetailsProps } from '../../../utils/types';
-// import { useCart } from '../../../hooks/useCart';
+import { useCart } from '../../../hooks/useCart';
 
-export const ProductDetails: React.FC<ProductDetailsProps> = ({
-  product,
-  rating,
-  color,
-  id
-}) => {
-  // const { addToCart, removeItemFromCart, cart } = useCart();
-  // if (cart === null || id === undefined) return <div className="text-center text-2xl">Can&apos;t find cart</div>;
-  // const isProduct = Boolean(cart.lineItems.find((product: LineItem) => product.id === id));
+export const ProductDetails: React.FC<ProductDetailsProps> = ({ product, rating, color, id }) => {
+  const { addToCart, removeItemFromCart, cart } = useCart();
+  if (cart == null || id == null) {
+    return <div className="text-center text-2xl">Can&apos;t find cart</div>;
+  }
+  const productLineItem = cart.lineItems.find(lineItem => lineItem.productId === id);
+
+  const onAdd = () => {
+    if (id == null || cart == null) return;
+
+    void addToCart({
+      cartId: cart.id,
+      cartVersion: cart.version,
+      productId: id,
+      centAmount: 39900
+    });
+  };
+  const onRemove = () => {
+    if (productLineItem == null || cart == null) return;
+
+    void removeItemFromCart(cart.id, cart.version, productLineItem.id, 10);
+  };
 
   return (
     <div className="flex max-w-[90%] flex-col justify-between gap-4 sm:max-w-[70%] lg:w-[350px]">
@@ -60,28 +73,26 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
           })}
         </p>
       )}
-      <Button
-        color="secondary"
-        className="w-full self-center"
-        variant="contained"
-        onClick={() => {
-          //   if (id === undefined) return;
-          //   (!isProduct)
-          //     ? addToCart({
-          //       cartId: cart.id,
-          //       cartVersion: cart.version,
-          //       productId: id,
-          //       centAmount: 39900
-          //     }).catch((e) => {
-          //       Error(e);
-          //     })
-          // removeItemFromCart(cart.id, cart.version, id, 1).catch((e) => {
-          //   Error(e);
-          // });
-        }}
-      >
-        Buy Now
-      </Button>
+      {productLineItem == null && (
+        <Button
+          color="secondary"
+          className="w-full self-center"
+          variant="contained"
+          onClick={onAdd}
+        >
+          Buy Now
+        </Button>
+      )}
+      {productLineItem != null && (
+        <Button
+          color="primary"
+          className="w-full self-center"
+          variant="contained"
+          onClick={onRemove}
+        >
+          Remove From Card
+        </Button>
+      )}
     </div>
   );
 };

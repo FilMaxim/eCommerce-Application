@@ -14,7 +14,7 @@ export const Product = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [modalPreviewOpen, setModalPreviewOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  console.log(333);
+
   const fetchProduct = async (id: string) => {
     setIsLoading(true);
     const newProduct = await getProduct(id);
