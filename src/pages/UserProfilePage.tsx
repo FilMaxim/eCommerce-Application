@@ -29,7 +29,7 @@ export const UserProfilePage = () => {
   const addressInitialValues = getAddressesInitialValues(customer);
 
   return (
-    <div className="m-auto mt-4 max-w-[42rem] rounded border p-2">
+    <div className="mx-auto mb-auto flex max-w-[42rem] flex-col items-center justify-start rounded border p-2">
       <TabsPanel titles={['Personal Information', 'Addresses', 'Change Password']}>
         <CustomerPageForm
           initialValues={personalDataInitialValues}

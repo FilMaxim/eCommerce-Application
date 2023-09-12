@@ -39,7 +39,7 @@ export const Product = () => {
   const rating = product.attributes?.find((obj) => obj.name === 'rating');
   const color = product.attributes?.find((obj) => obj.name === 'color');
   return (
-    <div className="flex flex-wrap justify-center gap-8 p-1 sm:p-4">
+    <div className="sm:p- mb-8 flex flex-wrap justify-center gap-8 p-1">
       <Carousel
         className="w-[30rem] max-w-[90%] object-contain"
         selectedItem={currentImageIndex}
