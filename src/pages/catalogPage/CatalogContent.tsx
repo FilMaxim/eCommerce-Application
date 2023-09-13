@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useDispatch, useSelector } from 'react-redux';
 import { useCategoryContext } from '../../hooks/useCategoryContext';
 import type { RootState } from '../../utils/types';
@@ -34,7 +33,7 @@ export const CatalogContent = () => {
       });
 
       const id = eindpointData.length > 0 ? eindpointData[0].id : '';
-      if (!Boolean(id)) {
+      if (id === null) {
         setCategoryId('');
         setCategoryName('');
       }
@@ -46,7 +45,7 @@ export const CatalogContent = () => {
     updateData().catch((error) => {
       throw error;
     });
-  }, [categoryId, dispatch, endpoint]);
+  }, [categoryId, dispatch, endpoint, setCategoryId, setCategoryName]);
   return (
     <div className="m-auto flex flex-wrap justify-center gap-4">
       {cardsData.map((item) => {
