@@ -23,7 +23,8 @@ export const en = {
         'FS-44': 'FS-44',
         'FT-6567': 'FT-6567',
         G44: 'G44',
-        'GP-45+': 'GP-45+'
+        'GP-45+': 'GP-45+',
+        WG47: 'WG47'
       },
       rating: {
         title: 'Rating',
@@ -34,9 +35,11 @@ export const en = {
       },
       type: {
         title: 'Type',
-        ants: 'Ants',
-        bee: 'Bee',
-        dog: 'Dog'
+        animal: 'Animal',
+        insects: 'Insects',
+        bird: 'Bird',
+        humanoid: 'Humanoid',
+        car: 'car'
       }
     },
     button: {
