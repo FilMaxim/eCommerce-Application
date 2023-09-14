@@ -3,7 +3,7 @@ import { updateCart } from '../helpers/api/apiRoot';
 import { setCartToLs } from '../pages/CartPage/utils/cartStorage';
 import { setCartData } from '../slices/cartSlice';
 import type { RootState, AddToCartParams, UpdateItemQuantity } from '../utils/types';
-import type { CartUpdateAction, LineItem } from '@commercetools/platform-sdk';
+import type { Cart, CartUpdateAction, LineItem } from '@commercetools/platform-sdk';
 
 const enum UpdateCartActions {
   addLineItem = 'addLineItem',
@@ -18,6 +18,14 @@ export const useCart = () => {
   const customer = useSelector((state: { authData: RootState }) => state.authData.customer);
   const dispatch = useDispatch();
 
+  const setCart = (cart: Cart) => {
+    dispatch(setCartData(cart));
+
+    if (customer === null) {
+      setCartToLs(cart);
+    }
+  };
+
   const addToCart = async ({
     cartId,
     cartVersion,
@@ -30,11 +38,7 @@ export const useCart = () => {
         quantity: 1
       }
     ]);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
     return updatedCart.statusCode;
   };
 
@@ -51,11 +55,7 @@ export const useCart = () => {
         quantity
       }
     ]);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
   };
 
   const removeItemFromCart = async (
@@ -71,11 +71,7 @@ export const useCart = () => {
         quantity
       }
     ]);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
   };
 
   const mergeAnonymousCartAfterSignUp = async (
@@ -89,11 +85,7 @@ export const useCart = () => {
         customerId
       }
     ]);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
   };
 
   const clearCart = async (cartId: string, cartVersion: number, itemsList: LineItem[]): Promise<void> => {
@@ -104,11 +96,7 @@ export const useCart = () => {
     }));
 
     const updatedCart = await updateCart(cartId, cartVersion, removeActions);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
   };
 
   const applyDiscount = async (cartId: string, cartVersion: number, discountCode: string): Promise<void> => {
@@ -119,11 +107,7 @@ export const useCart = () => {
       }
     ]);
 
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
   };
 
   return {
