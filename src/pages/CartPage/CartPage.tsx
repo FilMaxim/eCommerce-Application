@@ -5,7 +5,6 @@ import { useCart } from '../../hooks/useCart';
 import { queryDiscounts } from '../../helpers/api/apiRoot';
 import { useState } from 'react';
 import { showToastMessage } from '../../helpers/showToastMessage';
-import { StatusCodes } from '../../utils/statusCodes';
 
 export const CartPage = () => {
   const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
@@ -16,7 +15,6 @@ export const CartPage = () => {
   const initialPrice = cart.lineItems.reduce((acc, item) => {
     return acc + item.price.value.centAmount * item.quantity;
   }, 0);
-  // const discount = 100 - ((initialPrice / (cart?.totalPrice.centAmount ?? 0)) * 100);
 
   if (cart.lineItems.length === 0) {
     return (
@@ -50,14 +48,13 @@ export const CartPage = () => {
     const discountsList = (await queryDiscounts()).body.results;
     const currentDiscount = discountsList.find((discount) => discount.code === discounts);
     setDiscounts('');
+
     if (currentDiscount !== undefined) {
-      const status = await applyDiscount(cart.id, cart.version, currentDiscount.code);
-      status === StatusCodes.OK
-        ? showToastMessage(`Promocode ${currentDiscount.code} applied!`, 'green')
-        : showToastMessage('Invalid promocode', 'red');
+      await applyDiscount(cart.id, cart.version, currentDiscount.code);
+      showToastMessage(`Promocode ${currentDiscount.code} applied!`, 'green');
       return;
     }
-    showToastMessage('Invalid promocode', 'red');
+    showToastMessage('Invalid promocode outside', 'red');
   };
 
   return (
@@ -165,13 +162,13 @@ export const CartPage = () => {
               onChange={(e) => {
                 setDiscounts(e.target.value);
               }}
-              // onKeyDown={(event: KeyboardEvent) => {
-              //   if (event.key === 'Enter') {
-              //     discountHandler().catch((e) => {
-              //       Error(e);
-              //     });
-              //   }
-              // }}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  discountHandler().catch((e) => {
+                    Error(e);
+                  });
+                }
+              }}
             />
             <button
               className="col-span-1"
@@ -184,10 +181,10 @@ export const CartPage = () => {
               Apply
             </button>
           </label>
-          <p className="self-end">
+          <p className="self-end text-2xl">
             Total price: {cart.totalPrice.centAmount / 100}{' '}
             {cart.discountCodes.length > 0 && (
-              <span className="text-gray-500 line-through">{initialPrice / 100}</span>
+              <span className="text-sm text-gray-500 line-through">{initialPrice / 100}</span>
             )}
           </p>
         </div>
