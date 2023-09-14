@@ -4,6 +4,7 @@ import { NavRoutes } from '../../utils/routes';
 import { useCart } from '../../hooks/useCart';
 import { queryDiscounts } from '../../helpers/api/apiRoot';
 import { useState } from 'react';
+import { showToastMessage } from '../../helpers/showToastMessage';
 
 export const CartPage = () => {
   const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
@@ -44,10 +45,16 @@ export const CartPage = () => {
     const currentDiscount = discountsList.find((discount) => discount.code === discounts);
     setDiscounts('');
     if (currentDiscount !== undefined) {
-      applyDiscount(cart.id, cart.version, currentDiscount.code).catch((e) => {
-        Error(e);
-      });
+      applyDiscount(cart.id, cart.version, currentDiscount.code)
+        .then(() => {
+          showToastMessage('Promocode applied!', 'green');
+        })
+        .catch((e) => {
+          Error(e);
+        });
+      return;
     }
+    showToastMessage('Invalid promocode', 'red');
   };
 
   return (
@@ -84,10 +91,11 @@ export const CartPage = () => {
       {cart !== null && (
         <div className="flex flex-col gap-2">
           {cart.lineItems.map((item) => {
-            const normalizedPrice = getNormalizedNumber(
-              item.variant.prices?.[0].value.centAmount as number,
-              100
-            );
+            const price =
+              item.variant.prices?.[0].discounted !== undefined
+                ? item.variant.prices?.[0].discounted?.value.centAmount
+                : item.variant.prices?.[0].value.centAmount;
+            const normalizedPrice = getNormalizedNumber(price as number, 100);
             return (
               <div
                 key={item.id}
@@ -141,8 +149,13 @@ export const CartPage = () => {
               </div>
             );
           })}
-          <label htmlFor="discount">
+          <label
+            htmlFor="discount"
+            className="grid max-w-xs grid-cols-5"
+          >
+            <span className="col-span-2">Promocode:</span>
             <input
+              className="col-span-4"
               name="discount"
               type="text"
               value={discounts}
@@ -158,6 +171,7 @@ export const CartPage = () => {
               // }}
             />
             <button
+              className="col-span-1"
               onClick={() => {
                 discountHandler().catch((e) => {
                   Error(e);
