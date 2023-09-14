@@ -4,9 +4,12 @@ import { PriceTag } from '../../../components/cards/productCard/PriceTag';
 import Box from '@mui/material/Box';
 import { type ProductDetailsProps } from '../../../utils/types';
 import { useCart } from '../../../hooks/useCart';
+import { showToastMessage } from '../../../helpers/showToastMessage';
+import { UpdateMessage } from '../../../components/forms/customerProfile/util/updateMessage';
 
 export const ProductDetails: React.FC<ProductDetailsProps> = ({ product, rating, color, id }) => {
   const { addToCart, removeItemFromCart, cart } = useCart();
+  console.log(cart);
   if (cart == null || id == null) {
     return <div className="text-center text-2xl">Can&apos;t find cart</div>;
   }
@@ -19,12 +22,16 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product, rating,
       cartId: cart.id,
       cartVersion: cart.version,
       productId: id
-    });
+    })
+      .then(() => { showToastMessage(UpdateMessage.success, 'green'); })
+      .catch(() => { showToastMessage(UpdateMessage.error, 'red'); });
   };
   const onRemove = () => {
     if (productLineItem == null || cart == null) return;
 
-    void removeItemFromCart(cart.id, cart.version, productLineItem.id, 10);
+    void removeItemFromCart(cart.id, cart.version, productLineItem.id, productLineItem.quantity)
+      .then(() => { showToastMessage(UpdateMessage.success, 'green'); })
+      .catch(() => { showToastMessage(UpdateMessage.error, 'red'); });
   };
 
   return (
