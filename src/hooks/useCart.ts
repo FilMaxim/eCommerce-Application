@@ -111,7 +111,11 @@ export const useCart = () => {
     }
   };
 
-  const applyDiscount = async (cartId: string, cartVersion: number, discountCode: string): Promise<void> => {
+  const applyDiscount = async (
+    cartId: string,
+    cartVersion: number,
+    discountCode: string
+  ): Promise<number | undefined> => {
     const updatedCart = await updateCart(cartId, cartVersion, [
       {
         action: UpdateCartActions.addDiscountCode,
@@ -124,6 +128,7 @@ export const useCart = () => {
     if (customer === null) {
       setCartToLs(updatedCart.body);
     }
+    return updatedCart.statusCode;
   };
 
   return {

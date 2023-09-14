@@ -5,6 +5,7 @@ import { useCart } from '../../hooks/useCart';
 import { queryDiscounts } from '../../helpers/api/apiRoot';
 import { useState } from 'react';
 import { showToastMessage } from '../../helpers/showToastMessage';
+import { StatusCodes } from '../../utils/statusCodes';
 
 export const CartPage = () => {
   const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
@@ -45,13 +46,10 @@ export const CartPage = () => {
     const currentDiscount = discountsList.find((discount) => discount.code === discounts);
     setDiscounts('');
     if (currentDiscount !== undefined) {
-      applyDiscount(cart.id, cart.version, currentDiscount.code)
-        .then(() => {
-          showToastMessage('Promocode applied!', 'green');
-        })
-        .catch((e) => {
-          Error(e);
-        });
+      const status = await applyDiscount(cart.id, cart.version, currentDiscount.code);
+      status === StatusCodes.OK
+        ? showToastMessage('Promocode applied!', 'green')
+        : showToastMessage('Invalid promocode', 'red');
       return;
     }
     showToastMessage('Invalid promocode', 'red');
