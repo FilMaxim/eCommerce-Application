@@ -13,6 +13,11 @@ export const CartPage = () => {
 
   if (cart === null) return <p className="text-center text-lg">Loading...</p>;
 
+  const initialPrice = cart.lineItems.reduce((acc, item) => {
+    return acc + item.price.value.centAmount * item.quantity;
+  }, 0);
+  // const discount = 100 - ((initialPrice / (cart?.totalPrice.centAmount ?? 0)) * 100);
+
   if (cart.lineItems.length === 0) {
     return (
       <>
@@ -48,7 +53,7 @@ export const CartPage = () => {
     if (currentDiscount !== undefined) {
       const status = await applyDiscount(cart.id, cart.version, currentDiscount.code);
       status === StatusCodes.OK
-        ? showToastMessage('Promocode applied!', 'green')
+        ? showToastMessage(`Promocode ${currentDiscount.code} applied!`, 'green')
         : showToastMessage('Invalid promocode', 'red');
       return;
     }
@@ -179,7 +184,12 @@ export const CartPage = () => {
               Apply
             </button>
           </label>
-          <p className="self-end">Total price: {getNormalizedNumber(cart.totalPrice.centAmount, 100)}</p>
+          <p className="self-end">
+            Total price: {cart.totalPrice.centAmount / 100}{' '}
+            {cart.discountCodes.length > 0 && (
+              <span className="text-gray-500 line-through">{initialPrice / 100}</span>
+            )}
+          </p>
         </div>
       )}
     </div>
