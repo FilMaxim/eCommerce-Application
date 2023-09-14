@@ -23,15 +23,23 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product, rating,
       cartVersion: cart.version,
       productId: id
     })
-      .then(() => { showToastMessage(UpdateMessage.success, 'green'); })
-      .catch(() => { showToastMessage(UpdateMessage.error, 'red'); });
+      .then(() => {
+        showToastMessage(UpdateMessage.success, 'green');
+      })
+      .catch(() => {
+        showToastMessage(UpdateMessage.error, 'red');
+      });
   };
   const onRemove = () => {
     if (productLineItem == null || cart == null) return;
 
     void removeItemFromCart(cart.id, cart.version, productLineItem.id, productLineItem.quantity)
-      .then(() => { showToastMessage(UpdateMessage.success, 'green'); })
-      .catch(() => { showToastMessage(UpdateMessage.error, 'red'); });
+      .then(() => {
+        showToastMessage(UpdateMessage.success, 'green');
+      })
+      .catch(() => {
+        showToastMessage(UpdateMessage.error, 'red');
+      });
   };
 
   return (
