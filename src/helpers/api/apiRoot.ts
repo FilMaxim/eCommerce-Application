@@ -19,7 +19,8 @@ import {
   type ProductProjection,
   type CartPagedQueryResponse,
   type MyCartDraft,
-  type CartUpdateAction
+  type CartUpdateAction,
+  type CartDiscountDraft
 } from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
@@ -189,5 +190,21 @@ export const updateCart = async (
         actions
       }
     })
+    .execute();
+};
+
+export const createCartDiscount = async (data: CartDiscountDraft) => {
+  return await apiRoot
+    .cartDiscounts()
+    .post({
+      body: data
+    })
+    .execute();
+};
+
+export const queryDiscounts = async () => {
+  return await apiRoot
+    .cartDiscounts()
+    .get()
     .execute();
 };

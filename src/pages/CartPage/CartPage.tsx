@@ -2,9 +2,12 @@ import { getNormalizedNumber } from '../catalogPage/utils/getNormalizedNumber';
 import { Link } from 'react-router-dom';
 import { NavRoutes } from '../../utils/routes';
 import { useCart } from '../../hooks/useCart';
+import { queryDiscounts } from '../../helpers/api/apiRoot';
+import { useState } from 'react';
 
 export const CartPage = () => {
   const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart } = useCart();
+  const [discounts, setDiscounts] = useState<string>('');
 
   if (cart === null) return <p className="text-center text-lg">Loading...</p>;
 
@@ -35,6 +38,13 @@ export const CartPage = () => {
       </>
     );
   }
+
+  const discountHandler = async () => {
+    const discountsList = (await queryDiscounts()).body.results;
+    const currentDiscount = discountsList.find((discount) => discount.name.en === discounts);
+    console.log(Boolean(currentDiscount));
+    setDiscounts('');
+  };
 
   return (
     <div className="m-auto mt-4 max-w-[42rem] rounded border p-2">
@@ -127,6 +137,32 @@ export const CartPage = () => {
               </div>
             );
           })}
+          <label htmlFor="discount">
+            <input
+              name="discount"
+              type="text"
+              value={discounts}
+              onChange={(e) => {
+                setDiscounts(e.target.value);
+              }}
+              // onKeyDown={(event: KeyboardEvent) => {
+              //   if (event.key === 'Enter') {
+              //     discountHandler().catch((e) => {
+              //       Error(e);
+              //     });
+              //   }
+              // }}
+            />
+            <button
+              onClick={() => {
+                discountHandler().catch((e) => {
+                  Error(e);
+                });
+              }}
+            >
+              Apply
+            </button>
+          </label>
           <p className="self-end">Total price: {getNormalizedNumber(cart.totalPrice.centAmount, 100)}</p>
         </div>
       )}
