@@ -54,7 +54,7 @@ export const CartPage = () => {
       showToastMessage(`Promocode ${currentDiscount.code} applied!`, 'green');
       return;
     }
-    showToastMessage('Invalid promocode outside', 'red');
+    showToastMessage('Invalid promocode', 'red');
   };
 
   return (
