@@ -3,13 +3,14 @@ import { updateCart } from '../helpers/api/apiRoot';
 import { setCartToLs } from '../pages/CartPage/utils/cartStorage';
 import { setCartData } from '../slices/cartSlice';
 import type { RootState, AddToCartParams, UpdateItemQuantity } from '../utils/types';
-import type { LineItem } from '@commercetools/platform-sdk';
+import type { CartUpdateAction, LineItem } from '@commercetools/platform-sdk';
 
 const enum UpdateCartActions {
   addLineItem = 'addLineItem',
   changeLineItemQuantity = 'changeLineItemQuantity',
   removeLineItem = 'removeLineItem',
-  setCustomerId = 'setCustomerId'
+  setCustomerId = 'setCustomerId',
+  addDiscountCode = 'addDiscountCode'
 }
 
 export const useCart = () => {
@@ -96,7 +97,7 @@ export const useCart = () => {
   };
 
   const clearCart = async (cartId: string, cartVersion: number, itemsList: LineItem[]): Promise<void> => {
-    const removeActions = itemsList.map((item) => ({
+    const removeActions: CartUpdateAction[] = itemsList.map((item) => ({
       action: UpdateCartActions.removeLineItem,
       lineItemId: item.id,
       quantity: item.quantity
@@ -110,5 +111,28 @@ export const useCart = () => {
     }
   };
 
-  return { addToCart, updateQuantity, removeItemFromCart, mergeAnonymousCartAfterSignUp, clearCart, cart };
+  const applyDiscount = async (cartId: string, cartVersion: number, discountCode: string): Promise<void> => {
+    const updatedCart = await updateCart(cartId, cartVersion, [
+      {
+        action: UpdateCartActions.addDiscountCode,
+        code: discountCode
+      }
+    ]);
+
+    dispatch(setCartData(updatedCart.body));
+
+    if (customer === null) {
+      setCartToLs(updatedCart.body);
+    }
+  };
+
+  return {
+    addToCart,
+    updateQuantity,
+    removeItemFromCart,
+    mergeAnonymousCartAfterSignUp,
+    applyDiscount,
+    clearCart,
+    cart
+  };
 };

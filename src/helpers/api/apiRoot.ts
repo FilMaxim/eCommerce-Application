@@ -20,7 +20,11 @@ import {
   type CartPagedQueryResponse,
   type MyCartDraft,
   type CartUpdateAction,
-  type CartDiscountDraft
+  type DiscountCodeDraft,
+  type DiscountCodePagedQueryResponse,
+  type DiscountCode,
+  type CartDiscount,
+  type CartDiscountUpdateAction
 } from '@commercetools/platform-sdk';
 
 const ctpClient = buildClientWithClientCredentialsFlow();
@@ -193,18 +197,36 @@ export const updateCart = async (
     .execute();
 };
 
-export const createCartDiscount = async (data: CartDiscountDraft) => {
+// for development
+export const createDiscountCode = async (data: DiscountCodeDraft): Promise<ClientResponse<DiscountCode>> => {
   return await apiRoot
-    .cartDiscounts()
+    .discountCodes()
     .post({
       body: data
     })
     .execute();
 };
 
-export const queryDiscounts = async () => {
+export const queryDiscounts = async (): Promise<ClientResponse<DiscountCodePagedQueryResponse>> => {
+  return await apiRoot.discountCodes().get().execute();
+};
+
+// for development
+export const updateCartDiscount = async (
+  id: string,
+  version: number,
+  actions: CartDiscountUpdateAction[]
+): Promise<ClientResponse<CartDiscount>> => {
   return await apiRoot
     .cartDiscounts()
-    .get()
+    .withId({
+      ID: id
+    })
+    .post({
+      body: {
+        version,
+        actions
+      }
+    })
     .execute();
 };

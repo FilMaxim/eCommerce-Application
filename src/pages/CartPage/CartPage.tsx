@@ -6,7 +6,7 @@ import { queryDiscounts } from '../../helpers/api/apiRoot';
 import { useState } from 'react';
 
 export const CartPage = () => {
-  const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart } = useCart();
+  const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
   const [discounts, setDiscounts] = useState<string>('');
 
   if (cart === null) return <p className="text-center text-lg">Loading...</p>;
@@ -41,9 +41,13 @@ export const CartPage = () => {
 
   const discountHandler = async () => {
     const discountsList = (await queryDiscounts()).body.results;
-    const currentDiscount = discountsList.find((discount) => discount.name.en === discounts);
-    console.log(Boolean(currentDiscount));
+    const currentDiscount = discountsList.find((discount) => discount.code === discounts);
     setDiscounts('');
+    if (currentDiscount !== undefined) {
+      applyDiscount(cart.id, cart.version, currentDiscount.code).catch((e) => {
+        Error(e);
+      });
+    }
   };
 
   return (
