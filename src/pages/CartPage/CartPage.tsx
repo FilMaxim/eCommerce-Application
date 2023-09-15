@@ -6,44 +6,44 @@ import { queryDiscounts } from '../../helpers/api/apiRoot';
 import { useState } from 'react';
 import { showToastMessage } from '../../helpers/showToastMessage';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
+import Button from '@mui/material/Button';
+import bender from '../../assets/cart-bender.png';
+
+const EmptyCart = () => {
+  return (
+    <div className="m-auto mt-[5vh] flex max-w-[42rem] flex-col items-center justify-center gap-2 p-2">
+      <img
+        src={bender}
+        alt="scaried robot"
+        width={200}
+        height={200}
+      />
+      <p className="text-center text-lg">Cart is empty...</p>
+      <Link
+        className="text-secondary hover:text-red-800"
+        to={NavRoutes.catalogPage}
+      >
+        <Button
+          variant="contained"
+          color="secondary"
+        >
+          Catalog
+        </Button>
+      </Link>
+    </div>
+  );
+};
 
 export const CartPage = () => {
   const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
   const [discounts, setDiscounts] = useState<string>('');
 
   if (cart === null) return <ProgressBar />;
+  if (cart.lineItems.length === 0) return <EmptyCart />;
 
   const initialPrice = cart.lineItems.reduce((acc, item) => {
     return acc + item.price.value.centAmount * item.quantity;
   }, 0);
-
-  if (cart.lineItems.length === 0) {
-    return (
-      <>
-        <button
-          className="bordder p-2"
-          onClick={() => {
-            addToCart({
-              cartId: cart.id,
-              cartVersion: cart.version,
-              productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284'
-            }).catch((e) => {
-              Error(e);
-            });
-          }}
-        >
-          add Item
-        </button>
-        <p className="text-center text-lg">Cart is empty..</p>
-        <Link
-          className="text-secondary hover:text-red-800"
-          to={NavRoutes.catalogPage}
-        >
-          Go to catalog
-        </Link>
-      </>
-    );
-  }
 
   const discountHandler = async () => {
     const discountsList = (await queryDiscounts()).body.results;
