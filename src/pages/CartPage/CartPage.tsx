@@ -1,4 +1,3 @@
-import { getNormalizedNumber } from '../catalogPage/utils/getNormalizedNumber';
 import { Link } from 'react-router-dom';
 import { NavRoutes } from '../../utils/routes';
 import { useCart } from '../../hooks/useCart';
@@ -11,6 +10,8 @@ import bender from '../../assets/cart-bender.png';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { SimpleInput } from '../../components/forms/inputs/SimpleInput';
+
+const priceDelim = 100;
 
 const EmptyCart = () => {
   return (
@@ -62,7 +63,7 @@ export const CartPage = () => {
   };
 
   return (
-    <div className="m-auto mt-4 flex max-w-[45rem] flex-col gap-2 p-2">
+    <div className="mx-auto my-4 flex max-w-[45rem] flex-col gap-2 p-2">
       <Button
         size="small"
         onClick={() => {
@@ -85,7 +86,8 @@ export const CartPage = () => {
             item.variant.prices?.[0].discounted !== undefined
               ? item.variant.prices?.[0].discounted?.value.centAmount
               : item.variant.prices?.[0].value.centAmount;
-          const normalizedPrice = getNormalizedNumber(price as number, 100);
+          if (price === undefined) throw new Error('Price is undefined');
+          const normalizedPrice = price / priceDelim;
 
           return (
             <li
@@ -164,10 +166,11 @@ export const CartPage = () => {
             Apply
           </Button>
         </label>
-        <p className="self-end text-2xl">
-          Total price: {cart.totalPrice.centAmount / 100}{' '}
+        <p className="self-end text-2xl font-bold text-secondary">
+          <span className="font-normal text-black">Total price:</span> €{' '}
+          {cart.totalPrice.centAmount / priceDelim}{' '}
           {cart.discountCodes.length > 0 && (
-            <span className="text-sm text-gray-500 line-through">{initialPrice / 100}</span>
+            <span className="text-sm text-gray-500 line-through">{initialPrice / priceDelim}</span>
           )}
         </p>
       </ul>
