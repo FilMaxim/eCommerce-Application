@@ -35,19 +35,6 @@ export const CartPage = () => {
     showToastMessage('Invalid promocode', 'red');
   };
 
-  const discountHandler = async () => {
-    const discountsList = (await queryDiscounts()).body.results;
-    const currentDiscount = discountsList.find((discount) => discount.code === discounts);
-    setDiscounts('');
-
-    if (currentDiscount !== undefined) {
-      await applyDiscount(cart.id, cart.version, currentDiscount.code);
-      showToastMessage(`Promocode ${currentDiscount.code} applied!`, 'green');
-      return;
-    }
-    showToastMessage('Invalid promocode', 'red');
-  };
-
   return (
     <div className="mx-auto my-4 flex max-w-[45rem] flex-col gap-2 p-2">
       <Button
