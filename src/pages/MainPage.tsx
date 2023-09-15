@@ -37,49 +37,55 @@ const HeroSection = () => {
   );
 };
 
+const OurIdeas = () => {
+  return (
+    <section>
+      <div className="container mx-auto max-w-6xl space-y-2 p-6">
+        <h2 className="title-font mt-4 text-center text-4xl font-extrabold leading-10 tracking-tight sm:text-4xl sm:leading-none md:text-4xl">
+          Our ideas
+        </h2>
+        <div className="mx-auto block max-w-sm gap-3 sm:max-w-full lg:grid lg:grid-cols-12">
+          <img
+            src="https://global-uploads.webflow.com/620c0d2e51cac37f5958848f/632871c1e7d7f142d9f72917_0919_2-p-1600.jpg"
+            alt="roboto future"
+            className="my-auto h-64 w-full rounded object-cover shadow-xl dark:bg-gray-500 sm:h-96 lg:col-span-5"
+          />
+          <div className="space-y-2 p-6 lg:col-span-7">
+            <h3 className="text-2xl font-semibold sm:text-4xl">Human-made robots of the future</h3>
+            <span className="text-xs dark:text-gray-400">September 16, 2023</span>
+            <p>
+              Our task is to share with all people in the World information about innovative robots and
+              robotic technologies that shape the modern and future future of our great Planet Earth.
+            </p>
+            <p>
+              We are here to inspire, inform, and empower a growing community of robot consumers like you,
+              whether they are hobbyists, scientists, enthusiasts, or curious shoppers.
+            </p>
+            <p>
+              Our friendly team of editors collects all the information from around the world you need to fuel
+              your high-tech lifestyle: what robots are on the market, where to buy them, how to use them and
+              how they get into competing products, their future in human development.
+            </p>
+            <p>
+              In addition, on our website you have the opportunity to study new wireless nanotechnologies, the
+              stages of humanitys creation of artificial intelligence, and many other interesting things
+              designed to keep you one step ahead.
+            </p>
+            <p className="font-bold">
+              We are ready to inform you about new robots of the future that will change your lifestyle!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 export const MainPage = () => {
   return (
     <>
       <HeroSection />
-      <section>
-        <div className="container mx-auto max-w-6xl space-y-2 p-6">
-          <h2 className="title-font mt-4 text-center text-4xl font-extrabold leading-10 tracking-tight sm:text-4xl sm:leading-none md:text-4xl">
-            Our ideas
-          </h2>
-          <div className="mx-auto block max-w-sm gap-3 sm:max-w-full lg:grid lg:grid-cols-12">
-            <img
-              src="https://global-uploads.webflow.com/620c0d2e51cac37f5958848f/632871c1e7d7f142d9f72917_0919_2-p-1600.jpg"
-              alt="roboto future"
-              className="my-auto h-64 w-full rounded object-cover shadow-xl dark:bg-gray-500 sm:h-96 lg:col-span-5"
-            />
-            <div className="space-y-2 p-6 lg:col-span-7">
-              <h3 className="text-2xl font-semibold sm:text-4xl">Human-made robots of the future</h3>
-              <span className="text-xs dark:text-gray-400">September 16, 2023</span>
-              <p>
-                Our task is to share with all people in the World information about innovative robots and
-                robotic technologies that shape the modern and future future of our great Planet Earth.
-              </p>
-              <p>
-                We are here to inspire, inform, and empower a growing community of robot consumers like you,
-                whether they are hobbyists, scientists, enthusiasts, or curious shoppers.
-              </p>
-              <p>
-                Our friendly team of editors collects all the information from around the world you need to
-                fuel your high-tech lifestyle: what robots are on the market, where to buy them, how to use
-                them and how they get into competing products, their future in human development.
-              </p>
-              <p>
-                In addition, on our website you have the opportunity to study new wireless nanotechnologies,
-                the stages of humanitys creation of artificial intelligence, and many other interesting things
-                designed to keep you one step ahead.
-              </p>
-              <p className="font-bold">
-                We are ready to inform you about new robots of the future that will change your lifestyle!
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <OurIdeas />
       <section>
         <div
           id="services"
