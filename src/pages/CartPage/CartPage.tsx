@@ -1,42 +1,17 @@
-import { Link } from 'react-router-dom';
-import { NavRoutes } from '../../utils/routes';
 import { useCart } from '../../hooks/useCart';
 import { queryDiscounts } from '../../helpers/api/apiRoot';
 import { useState } from 'react';
 import { showToastMessage } from '../../helpers/showToastMessage';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 import Button from '@mui/material/Button';
-import bender from '../../assets/cart-bender.png';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { SimpleInput } from '../../components/forms/inputs/SimpleInput';
+import { EmptyCart } from '../../components/cart/emptyCart';
+import { getInitialCartTotalPrice } from './utils/utils';
+import { Link } from 'react-router-dom';
 
 const priceDelim = 100;
-
-const EmptyCart = () => {
-  return (
-    <div className="m-auto mt-[5vh] flex max-w-[42rem] flex-col items-center justify-center gap-2 p-2">
-      <img
-        src={bender}
-        alt="scaried robot"
-        width={200}
-        height={200}
-      />
-      <p className="text-center text-lg">Cart is empty...</p>
-      <Link
-        className="text-secondary hover:text-red-800"
-        to={NavRoutes.catalogPage}
-      >
-        <Button
-          variant="contained"
-          color="secondary"
-        >
-          Catalog
-        </Button>
-      </Link>
-    </div>
-  );
-};
 
 export const CartPage = () => {
   const { updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
@@ -45,9 +20,7 @@ export const CartPage = () => {
   if (cart === null) return <ProgressBar />;
   if (cart.lineItems.length === 0) return <EmptyCart />;
 
-  const initialPrice = cart.lineItems.reduce((acc, item) => {
-    return acc + item.price.value.centAmount * item.quantity;
-  }, 0);
+  const initialPrice = getInitialCartTotalPrice(cart.lineItems);
 
   const discountHandler = async () => {
     const discountsList = (await queryDiscounts()).body.results;
@@ -87,6 +60,7 @@ export const CartPage = () => {
               ? item.variant.prices?.[0].discounted?.value.centAmount
               : item.variant.prices?.[0].value.centAmount;
           if (price === undefined) throw new Error('Price is undefined');
+
           const normalizedPrice = price / priceDelim;
 
           return (
@@ -94,12 +68,17 @@ export const CartPage = () => {
               key={item.id}
               className="grid grid-cols-5 grid-rows-2 items-center justify-items-center gap-2 rounded border p-2 text-sm shadow-md sm:grid-cols-7 sm:justify-items-end sm:gap-x-6"
             >
-              <img
-                src={item.variant.images?.[0].url}
-                alt={item.name['en-US']}
-                className="col-span-2 row-span-2 max-w-[7.5rem] rounded object-contain sm:mr-8"
-              />
-              <p className="col-span-2 row-span-2 w-[8rem] sm:mr-8">{item.name['en-US']}</p>
+              <Link
+                to={`/product/${item.productId}`}
+                className="group col-span-4 row-span-2 flex w-full items-center justify-around gap-4 hover:text-secondary"
+              >
+                <img
+                  src={item.variant.images?.[0].url}
+                  alt={item.name['en-US']}
+                  className="max-w-[7.5rem] rounded group-hover:opacity-75"
+                />
+                <p className="max-w-[7.5rem]">{item.name['en-US']}</p>
+              </Link>
               <IconButton
                 aria-label="delete"
                 onClick={() => {
