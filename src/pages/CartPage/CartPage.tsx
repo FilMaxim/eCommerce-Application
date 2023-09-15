@@ -5,12 +5,13 @@ import { useCart } from '../../hooks/useCart';
 import { queryDiscounts } from '../../helpers/api/apiRoot';
 import { useState } from 'react';
 import { showToastMessage } from '../../helpers/showToastMessage';
+import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 
 export const CartPage = () => {
   const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
   const [discounts, setDiscounts] = useState<string>('');
 
-  if (cart === null) return <p className="text-center text-lg">Loading...</p>;
+  if (cart === null) return <ProgressBar />;
 
   const initialPrice = cart.lineItems.reduce((acc, item) => {
     return acc + item.price.value.centAmount * item.quantity;
