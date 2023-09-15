@@ -6,10 +6,12 @@ import { PrivateNavGroup } from '../NavBar/PrivateNavGroup';
 import { useAuth } from '../../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { NavGroup } from '../NavBar/NavGroup';
+import { useCart } from '../../../hooks/useCart';
 
 export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProps) => {
   const isLogged = useSelector((state: { authData: RootState }) => state.authData.isLogged);
   const { logout } = useAuth();
+  const { cart } = useCart();
 
   return (
     <Dialog
@@ -31,6 +33,7 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
             clickHandler={setMobileMenuOpen}
             isLogged={isLogged}
             logout={logout}
+            itemsCount={cart?.totalLineItemQuantity}
           />
         </ul>
       </Dialog.Panel>
