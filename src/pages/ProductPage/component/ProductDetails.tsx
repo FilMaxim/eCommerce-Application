@@ -9,7 +9,6 @@ import { UpdateMessage } from '../../../components/forms/customerProfile/util/up
 
 export const ProductDetails: React.FC<ProductDetailsProps> = ({ product, rating, color, id }) => {
   const { addToCart, removeItemFromCart, cart } = useCart();
-  console.log(cart);
   if (cart == null || id == null) {
     return <div className="text-center text-2xl">Can&apos;t find cart</div>;
   }
@@ -24,7 +23,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product, rating,
       productId: id
     })
       .then(() => {
-        showToastMessage(UpdateMessage.success, 'green');
+        showToastMessage(UpdateMessage.addCart, 'green');
       })
       .catch(() => {
         showToastMessage(UpdateMessage.error, 'red');
@@ -35,7 +34,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product, rating,
 
     void removeItemFromCart(cart.id, cart.version, productLineItem.id, productLineItem.quantity)
       .then(() => {
-        showToastMessage(UpdateMessage.success, 'green');
+        showToastMessage(UpdateMessage.delCart, 'green');
       })
       .catch(() => {
         showToastMessage(UpdateMessage.error, 'red');

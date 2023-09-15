@@ -43,7 +43,7 @@ export const Header = () => {
   }, [customer, dispatch]);
 
   return (
-    <header className="h-[5rem] border-b bg-black text-secondary">
+    <header className="h-[5rem] bg-black text-secondary">
       <NavBar clickHandler={setMobileMenuOpen} />
       <BurgerMenu
         mobileMenuOpen={mobileMenuOpen}
