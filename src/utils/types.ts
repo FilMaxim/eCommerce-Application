@@ -128,6 +128,9 @@ export interface InputProps {
   placeholder: string;
   formik?: FormikProps;
   disabled?: boolean;
+  onChange?: (e: string) => void;
+  value?: string;
+  onKeyDown?: () => Promise<void>;
 }
 
 export interface AddressFieldSetProps {

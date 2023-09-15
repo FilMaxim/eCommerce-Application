@@ -7,6 +7,7 @@ import { getProductParams } from '../catalogPage/utils/getProductParams';
 import { type ProductsDataInterface } from '../../utils/types';
 import { ModalPreview } from './component/ModalPreview';
 import { ProductDetails } from './component/ProductDetails';
+import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 
 export const Product = () => {
   const { id } = useParams();
@@ -32,7 +33,7 @@ export const Product = () => {
     }
   }, [id]);
 
-  if (isLoading) return <div className="text-center text-2xl">Loading...</div>;
+  if (isLoading) return <ProgressBar />;
 
   if (product === null) return <div className="text-center text-2xl">Can&apos;t find product</div>;
   const rating = product.attributes?.find((obj) => obj.name === 'rating');

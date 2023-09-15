@@ -1,48 +1,39 @@
-import { getNormalizedNumber } from '../catalogPage/utils/getNormalizedNumber';
-import { Link } from 'react-router-dom';
-import { NavRoutes } from '../../utils/routes';
 import { useCart } from '../../hooks/useCart';
 import { queryDiscounts } from '../../helpers/api/apiRoot';
 import { useState } from 'react';
 import { showToastMessage } from '../../helpers/showToastMessage';
+import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { SimpleInput } from '../../components/forms/inputs/SimpleInput';
+import { EmptyCart } from '../../components/cart/emptyCart';
+import { getInitialCartTotalPrice } from './utils/utils';
+import { Link } from 'react-router-dom';
+
+const priceDelim = 100;
 
 export const CartPage = () => {
-  const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
+  const { updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
   const [discounts, setDiscounts] = useState<string>('');
 
-  if (cart === null) return <p className="text-center text-lg">Loading...</p>;
+  if (cart === null) return <ProgressBar />;
+  if (cart.lineItems.length === 0) return <EmptyCart />;
 
-  const initialPrice = cart.lineItems.reduce((acc, item) => {
-    return acc + item.price.value.centAmount * item.quantity;
-  }, 0);
+  const initialPrice = getInitialCartTotalPrice(cart.lineItems);
 
-  if (cart.lineItems.length === 0) {
-    return (
-      <>
-        <button
-          className="bordder p-2"
-          onClick={() => {
-            addToCart({
-              cartId: cart.id,
-              cartVersion: cart.version,
-              productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284'
-            }).catch((e) => {
-              Error(e);
-            });
-          }}
-        >
-          add Item
-        </button>
-        <p className="text-center text-lg">Cart is empty..</p>
-        <Link
-          className="text-secondary hover:text-red-800"
-          to={NavRoutes.catalogPage}
-        >
-          Go to catalog
-        </Link>
-      </>
-    );
-  }
+  const discountHandler = async () => {
+    const discountsList = (await queryDiscounts()).body.results;
+    const currentDiscount = discountsList.find((discount) => discount.code === discounts);
+    setDiscounts('');
+
+    if (currentDiscount !== undefined) {
+      await applyDiscount(cart.id, cart.version, currentDiscount.code);
+      showToastMessage(`Promocode ${currentDiscount.code} applied!`, 'green');
+      return;
+    }
+    showToastMessage('Invalid promocode', 'red');
+  };
 
   const discountHandler = async () => {
     const discountsList = (await queryDiscounts()).body.results;
@@ -58,137 +49,123 @@ export const CartPage = () => {
   };
 
   return (
-    <div className="m-auto mt-4 max-w-[42rem] rounded border p-2">
-      <div className="mb-1 flex justify-between">
-        <button
-          className="border p-2"
-          onClick={() => {
-            addToCart({
-              cartId: cart.id,
-              cartVersion: cart.version,
-              productId: '56aa4cae-7f6f-41cb-b65e-1e69e9d33284'
-            }).catch((e) => {
+    <div className="mx-auto my-4 flex max-w-[45rem] flex-col gap-2 p-2">
+      <Button
+        size="small"
+        onClick={() => {
+          const confirm = window.confirm('Delete all items?');
+          if (confirm) {
+            clearCart(cart.id, cart.version, cart.lineItems).catch((e) => {
               Error(e);
             });
-          }}
-        >
-          add Item
-        </button>
-        <button
-          className="border p-2"
-          onClick={() => {
-            const confirm = window.confirm('Delete all items?');
-            if (confirm) {
-              clearCart(cart.id, cart.version, cart.lineItems).catch((e) => {
-                Error(e);
-              });
-            }
-          }}
-        >
-          Clear Cart
-        </button>
-      </div>
-      {cart !== null && (
-        <div className="flex flex-col gap-2">
-          {cart.lineItems.map((item) => {
-            const price =
-              item.variant.prices?.[0].discounted !== undefined
-                ? item.variant.prices?.[0].discounted?.value.centAmount
-                : item.variant.prices?.[0].value.centAmount;
-            const normalizedPrice = getNormalizedNumber(price as number, 100);
-            return (
-              <div
-                key={item.id}
-                className="flex justify-between gap-4 border p-2"
+          }
+        }}
+        color="secondary"
+        variant="text"
+        className="self-end"
+      >
+        Clear Cart
+      </Button>
+      <ul className="flex flex-col gap-2">
+        {cart.lineItems.map((item) => {
+          const price =
+            item.variant.prices?.[0].discounted !== undefined
+              ? item.variant.prices?.[0].discounted?.value.centAmount
+              : item.variant.prices?.[0].value.centAmount;
+          if (price === undefined) throw new Error('Price is undefined');
+
+          const normalizedPrice = price / priceDelim;
+
+          return (
+            <li
+              key={item.id}
+              className="grid grid-cols-5 grid-rows-2 items-center justify-items-center gap-2 rounded border p-2 text-sm shadow-md sm:grid-cols-7 sm:justify-items-end sm:gap-x-6"
+            >
+              <Link
+                to={`/product/${item.productId}`}
+                className="group col-span-4 row-span-2 flex w-full items-center justify-around gap-4 hover:text-secondary"
               >
-                <p className="w-[8rem]">{item.name['en-US']}</p>
                 <img
                   src={item.variant.images?.[0].url}
-                  alt="item.name['en-US']"
-                  width={120}
-                  height={120}
+                  alt={item.name['en-US']}
+                  className="max-w-[7.5rem] rounded group-hover:opacity-75"
                 />
-                <div>
-                  <span>price</span>
-                  <p>{normalizedPrice}</p>
-                </div>
-                <div>
-                  <span>quantity</span>
-                  <input
-                    className="w-16 rounded"
-                    type="number"
-                    value={item.quantity}
-                    onChange={(e) => {
-                      updateQuantity({
-                        cartId: cart.id,
-                        cartVersion: cart.version,
-                        lineItemId: item.id,
-                        centAmount: item.variant.prices?.[0].value.centAmount as number,
-                        quantity: parseInt(e.target.value)
-                      }).catch((e) => {
-                        Error(e);
-                      });
-                    }}
-                    min={1}
-                  />
-                </div>
-                <div>
-                  <span>total price</span>
-                  <p>{item.quantity * normalizedPrice}</p>
-                </div>
-                <button
-                  className="border p-2"
-                  onClick={() => {
-                    removeItemFromCart(cart.id, cart.version, item.id, item.quantity).catch((e) => {
-                      Error(e);
-                    });
-                  }}
-                >
-                  Remove
-                </button>
-              </div>
-            );
-          })}
-          <label
-            htmlFor="discount"
-            className="grid max-w-xs grid-cols-5"
-          >
-            <span className="col-span-2">Promocode:</span>
-            <input
-              className="col-span-4"
-              name="discount"
-              type="text"
-              value={discounts}
-              onChange={(e) => {
-                setDiscounts(e.target.value);
-              }}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  discountHandler().catch((e) => {
+                <p className="max-w-[7.5rem]">{item.name['en-US']}</p>
+              </Link>
+              <IconButton
+                aria-label="delete"
+                onClick={() => {
+                  removeItemFromCart(cart.id, cart.version, item.id, item.quantity).catch((e) => {
                     Error(e);
                   });
-                }
-              }}
-            />
-            <button
-              className="col-span-1"
-              onClick={() => {
-                discountHandler().catch((e) => {
-                  Error(e);
-                });
-              }}
-            >
-              Apply
-            </button>
-          </label>
-          <p className="self-end text-2xl">
-            Total price: {cart.totalPrice.centAmount / 100}{' '}
-            {cart.discountCodes.length > 0 && (
-              <span className="text-sm text-gray-500 line-through">{initialPrice / 100}</span>
-            )}
-          </p>
-        </div>
-      )}
+                }}
+                className="self-center hover:text-secondary sm:col-span-3"
+              >
+                <DeleteIcon />
+              </IconButton>
+              <div className="col-span-2 sm:col-span-1">
+                Price:
+                <p className="whitespace-nowrap font-bold">€ {normalizedPrice}</p>
+              </div>
+              <input
+                className="h-10 w-16 rounded"
+                type="number"
+                value={item.quantity}
+                onChange={(e) => {
+                  updateQuantity({
+                    cartId: cart.id,
+                    cartVersion: cart.version,
+                    lineItemId: item.id,
+                    centAmount: item.variant.prices?.[0].value.centAmount as number,
+                    quantity: parseInt(e.target.value)
+                  }).catch((e) => {
+                    Error(e);
+                  });
+                }}
+                min={1}
+              />
+              <div className="col-span-2 sm:col-span-1">
+                Subtotal:
+                <p className=" whitespace-nowrap text-lg font-bold text-secondary">
+                  € {item.quantity * normalizedPrice}
+                </p>
+              </div>
+            </li>
+          );
+        })}
+        <label
+          htmlFor="discount"
+          className="flex max-w-xs items-center gap-2"
+        >
+          <SimpleInput
+            name="promocode"
+            type="text"
+            placeholder="Promocode"
+            value={discounts}
+            onChange={setDiscounts}
+            onKeyDown={discountHandler}
+          />
+          <Button
+            size="small"
+            color="secondary"
+            variant="text"
+            onClick={() => {
+              discountHandler().catch((e) => {
+                Error(e);
+              });
+            }}
+          >
+            Apply
+          </Button>
+        </label>
+        <p className="self-end text-2xl font-bold text-secondary">
+          <span className="font-normal text-black">Total price:</span> €{' '}
+          {cart.totalPrice.centAmount / priceDelim}{' '}
+          {cart.discountCodes.length > 0 && (
+            <span className="text-sm text-gray-500 line-through">{initialPrice / priceDelim}</span>
+          )}
+        </p>
+      </ul>
     </div>
   );
 };
