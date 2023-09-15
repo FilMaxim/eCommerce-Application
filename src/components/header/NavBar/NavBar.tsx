@@ -14,7 +14,7 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
 
   return (
     <nav
-      className="mx-auto flex items-center justify-between gap-4 p-4 lg:px-8"
+      className="mx-auto flex items-center justify-between gap-2 md:gap-4 py-4 px-2 lg:px-8"
       aria-label="Global"
     >
       <Logo className="block" />
