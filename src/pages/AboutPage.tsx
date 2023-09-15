@@ -11,7 +11,7 @@ export const team = [
     email: 'https://marker661@gmail.com',
     telegram: 'https://t.me/VladislavGa',
     biography:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      'I always liked technology and wanted to try my hand at programming. Also, I consider myself a visual person - a person who experiences the world through visual images. I see beauty in symmetry and graphic patterns. For these reasons, I didn’t think long about which development direction to choose - Front-end, of course. My other hobbies are medicine and biology, sports, finance, sci-fi and fantasy.'
   },
   {
     id: 2,
