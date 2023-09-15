@@ -14,10 +14,6 @@ export const links = {
     text: 'About',
     path: NavRoutes.aboutPage
   },
-  contacts: {
-    text: 'Contacts',
-    path: NavRoutes.contactsPage
-  },
   catalog: {
     text: 'Catalog',
     path: NavRoutes.catalogPage

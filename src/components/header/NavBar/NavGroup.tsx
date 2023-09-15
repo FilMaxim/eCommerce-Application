@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import type { ClickHandlerInterface } from '../../../utils/types';
 
 export const NavGroup = ({ clickHandler }: ClickHandlerInterface) => {
-  const linksData = [links.main, links.catalog, links.about, links.contacts];
+  const linksData = [links.main, links.catalog, links.about];
   return (
     <>
       {linksData.map((item) => (
