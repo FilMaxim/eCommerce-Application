@@ -43,12 +43,14 @@ export const Header = () => {
   }, [customer, dispatch]);
 
   return (
-    <header className="h-[5rem] bg-black text-secondary">
-      <NavBar clickHandler={setMobileMenuOpen} />
-      <BurgerMenu
-        mobileMenuOpen={mobileMenuOpen}
-        setMobileMenuOpen={setMobileMenuOpen}
-      />
+    <header className="h-[5rem] bg-black  text-secondary">
+      <div className="container mx-auto px-2 ">
+        <NavBar clickHandler={setMobileMenuOpen} />
+        <BurgerMenu
+          mobileMenuOpen={mobileMenuOpen}
+          setMobileMenuOpen={setMobileMenuOpen}
+        />
+      </div>
     </header>
   );
 };

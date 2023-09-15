@@ -1,43 +1,46 @@
 import { useNavigate } from 'react-router-dom';
 import mainFoto from '../assets/main.png';
 
-export const MainPage = () => {
+const HeroSection = () => {
   const navigate = useNavigate();
+
+  return (
+    <section>
+      <div className="bg-black text-white">
+        <div className="container mx-auto mb-1 flex flex-col items-center sm:justify-center md:flex-row">
+          <div className="flex flex-col items-start justify-center p-8 max-md:pb-0 lg:w-3/4">
+            <h2 className="mb-2 text-2xl leading-relaxed md:text-4xl md:leading-snug">
+              Robots Unleashed. Shop the Future.
+            </h2>
+            <p className="mb-4 text-sm text-gray-50 md:text-lg">
+              We are an online store for the latest robot designs, offering a wide selection of affordable and
+              fashionable devices that can make your life easier. Use our solutions and your life will take on
+              new colors.
+            </p>
+            <button
+              className="rounded border border-yellow-300 bg-transparent px-4 py-2 text-yellow-300 shadow hover:border-transparent hover:bg-yellow-300 hover:text-black hover:shadow-lg"
+              onClick={() => {
+                navigate({ pathname: '/catalog/' });
+              }}
+            >
+              Catalog
+            </button>
+          </div>
+          <img
+            className="max-w-sm sm:max-w-[50%] sm:self-end"
+            src={mainFoto}
+            alt="roboto main"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const MainPage = () => {
   return (
     <>
-      <section>
-        <div className="bg-black text-white">
-          <div className="container mx-auto mb-1 flex flex-col items-center sm:justify-center md:flex-row">
-            <div className="flex flex-col items-start justify-center p-8 max-md:pb-0 lg:w-3/4">
-              <h2 className="mb-2 text-2xl leading-relaxed md:text-4xl md:leading-snug">
-                The machines must work. People must think.
-              </h2>
-              <p className="mb-4 text-sm text-gray-50 md:text-lg">
-                We are an online store for the latest robot designs, offering a wide selection of affordable
-                and fashionable devices that can make your life easier. Use our solutions and your life will
-                take on new colors.
-              </p>
-              <button
-                className="rounded border border-yellow-300 bg-transparent px-4 py-2 text-yellow-300 shadow hover:border-transparent hover:bg-yellow-300 hover:text-black hover:shadow-lg"
-                onClick={() => {
-                  navigate({ pathname: '/catalog/' });
-                }}
-              >
-                Catalog
-              </button>
-            </div>
-            <div className="mb-6 ml-0 mt-12 justify-center p-0 max-md:m-0 md:mb-0  md:mt-0 lg:w-1/2">
-              <div className="flex h-48 flex-wrap content-center">
-                <img
-                  className="mt-24 inline-block max-md:mt-0 max-md:h-full max-md:p-0 md:mt-0"
-                  src={mainFoto}
-                  alt="roboto main"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
       <section>
         <div className="container mx-auto max-w-6xl space-y-2 p-6">
           <h2 className="title-font mt-4 text-center text-4xl font-extrabold leading-10 tracking-tight sm:text-4xl sm:leading-none md:text-4xl">
