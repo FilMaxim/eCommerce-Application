@@ -253,29 +253,31 @@ const WhatWeDoSection = () => {
 
 const SpecialOfferSection = () => {
   return (
-    <section className="container mx-auto mb-4 overflow-hidden rounded-lg shadow-2xl md:grid md:grid-cols-3">
-      <img
-        alt="save roboto"
-        src="https://klike.net/uploads/posts/2022-12/1671597204_3-18.jpg"
-        className="h-32 w-full object-cover md:h-full"
-      />
+    <section className="px-2">
+      <div className="container mx-auto mb-4 overflow-hidden rounded-lg shadow-2xl md:grid md:grid-cols-3">
+        <img
+          alt="save roboto"
+          src="https://klike.net/uploads/posts/2022-12/1671597204_3-18.jpg"
+          className="h-32 w-full object-cover md:h-full"
+        />
 
-      <div className="p-4 text-center sm:p-6 md:col-span-2 lg:p-8">
-        <p className="text-sm font-semibold uppercase tracking-widest">just now</p>
+        <div className="p-4 text-center sm:p-6 md:col-span-2 lg:p-8">
+          <p className="text-sm font-semibold uppercase tracking-widest">just now</p>
 
-        <h2 className="mt-6 font-black uppercase">
-          <span className="text-4xl font-black sm:text-5xl lg:text-6xl">Get 20% off</span>
+          <h2 className="mt-6 font-black uppercase">
+            <span className="text-4xl font-black sm:text-5xl lg:text-6xl">Get 20% off</span>
 
-          <span className="mt-2 block text-sm">On your next order over $50</span>
-        </h2>
+            <span className="mt-2 block text-sm">On your next order over $50</span>
+          </h2>
 
-        <div className="mt-8 inline-block w-full bg-black py-4 text-sm font-bold uppercase tracking-widest text-white">
-          With Code:
-          <span className="text-2xl lowercase italic text-red-500"> vlad20</span>
+          <div className="mt-8 inline-block w-full bg-black py-4 text-sm font-bold uppercase tracking-widest text-white">
+            With Code:
+            <span className="text-2xl lowercase italic text-red-500"> vlad20</span>
+          </div>
+          <p className="mt-8 text-xs font-medium uppercase text-gray-400">
+            Offer valid until 30th September, 2023 *
+          </p>
         </div>
-        <p className="mt-8 text-xs font-medium uppercase text-gray-400">
-          Offer valid until 30th September, 2023 *
-        </p>
       </div>
     </section>
   );
