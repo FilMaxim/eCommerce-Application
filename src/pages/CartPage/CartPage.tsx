@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import bender from '../../assets/cart-bender.png';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { SimpleInput } from '../../components/forms/inputs/SimpleInput';
 
 const EmptyCart = () => {
   return (
@@ -73,7 +74,7 @@ export const CartPage = () => {
           }
         }}
         color="secondary"
-        variant="outlined"
+        variant="text"
         className="self-end"
       >
         Clear Cart
@@ -140,27 +141,20 @@ export const CartPage = () => {
         })}
         <label
           htmlFor="discount"
-          className="grid max-w-xs grid-cols-5"
+          className="flex max-w-xs items-center gap-2"
         >
-          <span className="col-span-2">Promocode:</span>
-          <input
-            className="col-span-4"
-            name="discount"
+          <SimpleInput
+            name="promocode"
             type="text"
+            placeholder="Promocode"
             value={discounts}
-            onChange={(e) => {
-              setDiscounts(e.target.value);
-            }}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                discountHandler().catch((e) => {
-                  Error(e);
-                });
-              }
-            }}
+            onChange={setDiscounts}
+            onKeyDown={discountHandler}
           />
-          <button
-            className="col-span-1"
+          <Button
+            size="small"
+            color="secondary"
+            variant="text"
             onClick={() => {
               discountHandler().catch((e) => {
                 Error(e);
@@ -168,7 +162,7 @@ export const CartPage = () => {
             }}
           >
             Apply
-          </button>
+          </Button>
         </label>
         <p className="self-end text-2xl">
           Total price: {cart.totalPrice.centAmount / 100}{' '}
