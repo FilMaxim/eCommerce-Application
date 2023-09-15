@@ -2,11 +2,19 @@ import { getNormalizedNumber } from '../catalogPage/utils/getNormalizedNumber';
 import { Link } from 'react-router-dom';
 import { NavRoutes } from '../../utils/routes';
 import { useCart } from '../../hooks/useCart';
+import { queryDiscounts } from '../../helpers/api/apiRoot';
+import { useState } from 'react';
+import { showToastMessage } from '../../helpers/showToastMessage';
 
 export const CartPage = () => {
-  const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart } = useCart();
+  const { addToCart, updateQuantity, removeItemFromCart, cart, clearCart, applyDiscount } = useCart();
+  const [discounts, setDiscounts] = useState<string>('');
 
   if (cart === null) return <p className="text-center text-lg">Loading...</p>;
+
+  const initialPrice = cart.lineItems.reduce((acc, item) => {
+    return acc + item.price.value.centAmount * item.quantity;
+  }, 0);
 
   if (cart.lineItems.length === 0) {
     return (
@@ -35,6 +43,19 @@ export const CartPage = () => {
       </>
     );
   }
+
+  const discountHandler = async () => {
+    const discountsList = (await queryDiscounts()).body.results;
+    const currentDiscount = discountsList.find((discount) => discount.code === discounts);
+    setDiscounts('');
+
+    if (currentDiscount !== undefined) {
+      await applyDiscount(cart.id, cart.version, currentDiscount.code);
+      showToastMessage(`Promocode ${currentDiscount.code} applied!`, 'green');
+      return;
+    }
+    showToastMessage('Invalid promocode', 'red');
+  };
 
   return (
     <div className="m-auto mt-4 max-w-[42rem] rounded border p-2">
@@ -70,10 +91,11 @@ export const CartPage = () => {
       {cart !== null && (
         <div className="flex flex-col gap-2">
           {cart.lineItems.map((item) => {
-            const normalizedPrice = getNormalizedNumber(
-              item.variant.prices?.[0].value.centAmount as number,
-              100
-            );
+            const price =
+              item.variant.prices?.[0].discounted !== undefined
+                ? item.variant.prices?.[0].discounted?.value.centAmount
+                : item.variant.prices?.[0].value.centAmount;
+            const normalizedPrice = getNormalizedNumber(price as number, 100);
             return (
               <div
                 key={item.id}
@@ -127,7 +149,44 @@ export const CartPage = () => {
               </div>
             );
           })}
-          <p className="self-end">Total price: {getNormalizedNumber(cart.totalPrice.centAmount, 100)}</p>
+          <label
+            htmlFor="discount"
+            className="grid max-w-xs grid-cols-5"
+          >
+            <span className="col-span-2">Promocode:</span>
+            <input
+              className="col-span-4"
+              name="discount"
+              type="text"
+              value={discounts}
+              onChange={(e) => {
+                setDiscounts(e.target.value);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  discountHandler().catch((e) => {
+                    Error(e);
+                  });
+                }
+              }}
+            />
+            <button
+              className="col-span-1"
+              onClick={() => {
+                discountHandler().catch((e) => {
+                  Error(e);
+                });
+              }}
+            >
+              Apply
+            </button>
+          </label>
+          <p className="self-end text-2xl">
+            Total price: {cart.totalPrice.centAmount / 100}{' '}
+            {cart.discountCodes.length > 0 && (
+              <span className="text-sm text-gray-500 line-through">{initialPrice / 100}</span>
+            )}
+          </p>
         </div>
       )}
     </div>
