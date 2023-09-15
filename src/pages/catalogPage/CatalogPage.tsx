@@ -10,24 +10,26 @@ import { CatalogContent } from './CatalogContent';
 export const CatalogPage = () => {
   return (
     <CategoriesProveder>
-      <Container
-        titleName="Categories"
-        titleDescription="Browse By Category"
-        buttons={[ArrowButtonGroup]}
-      />
-      <div className="mb-2 flex items-center sm:pl-[18rem]">
-        <div className="pl-4 sm:hidden">
-          <TemporaryDrawer>
+      <div className="container mx-auto">
+        <Container
+          titleName="Categories"
+          titleDescription="Browse By Category"
+          buttons={[ArrowButtonGroup]}
+        />
+        <div className="mb-2 flex items-center sm:pl-[18rem]">
+          <div className="pl-4 sm:hidden">
+            <TemporaryDrawer>
+              <FilterBar />
+            </TemporaryDrawer>
+          </div>
+          <SortBar />
+        </div>
+        <div className="mb-2 flex gap-2">
+          <div className="hidden sm:block">
             <FilterBar />
-          </TemporaryDrawer>
+          </div>
+          <CatalogContent />
         </div>
-        <SortBar />
-      </div>
-      <div className="mb-2 flex gap-2">
-        <div className="hidden sm:block">
-          <FilterBar />
-        </div>
-        <CatalogContent />
       </div>
     </CategoriesProveder>
   );
