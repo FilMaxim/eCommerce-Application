@@ -58,13 +58,9 @@ export const CatalogContent = () => {
     }
   }, [dispatch, categories, categoryFilter]);
 
-  const memoCurrentFilter = useMemo(() => currentFilter, [currentFilter]);
-
-  const memoCategoryFilter = useMemo(() => categoryFilter, [categoryFilter]);
-
   useEffect(() => {
     const updateData = async () => {
-      const filter = [memoCategoryFilter, ...memoCurrentFilter];
+      const filter = [categoryFilter, ...currentFilter];
       const productsData = await fetchFilteredProducts({ filter, offset, limit: 8 });
       updateProductsData(dispatch, productsData);
       update(true);
@@ -74,7 +70,7 @@ export const CatalogContent = () => {
         console.error(error);
       });
     }
-  }, [offset, memoCurrentFilter, memoCategoryFilter, dispatch, categories.length]);
+  }, [offset, dispatch, categoryFilter, categories.length]);
 
   useEffect(() => {
     const pagesCount = Math.ceil((total ?? 0) / cardsPerPage);
