@@ -31,7 +31,7 @@ export const FilterBar = () => {
   const { categoryId, setCurrentFilter } = useCategoryContext();
   const { cardsData } = useSelector((state: { productsData: RootState }) => state.productsData);
 
-  const [prouctsCount, setCount] = useState<number | undefined>(0);
+  const [prouctsCount, setCount] = useState<string>('');
   const [sliderValues, setSliderValues] = useState<number[]>([0, 0]);
   const [rawValues, setRawValues] = useState<number[]>([0, 0]);
   const [extremums, setExtremums] = useState<number[]>([0, 0]);
@@ -65,7 +65,7 @@ export const FilterBar = () => {
       setExtremums(extremums);
 
       if (!isUpdatedValues) {
-        setCount(data.total);
+        setCount('');
         setRawValues([startValue, endValue]);
       }
     };
@@ -80,7 +80,7 @@ export const FilterBar = () => {
       const productsData = await fetchFilteredProducts({ filter });
 
       if (isUpdatedValues) {
-        setCount(productsData.total);
+        setCount(String(productsData.total));
       }
     };
 
@@ -89,7 +89,7 @@ export const FilterBar = () => {
         throw error;
       });
     }
-  }, [isUpdatedValues, selectedAttributes, filter, cardsData.length]);
+  }, [isUpdatedValues, selectedAttributes, filter, cardsData.length, sliderValues]);
 
   useEffect(() => {
     setUpdated(false);
@@ -99,23 +99,19 @@ export const FilterBar = () => {
     setSelectedAttributes([]);
   }, [categoryId]);
 
-  useEffect(() => {
-    setSliderValues([startValue, endValue]);
-  }, [extremums, startValue, endValue]);
-
   return (
     <Formik
       initialValues={{
         attributes: []
       }}
       onSubmit={async (values, { setSubmitting }): Promise<void> => {
+        setSliderValues(rawValues);
         setSubmitting(false);
         setCurrentFilter(filter);
-        setSliderValues([startValue, endValue]);
 
         const data = await fetchFilteredProducts({ filter, limit: 8 });
         updateProductsData(dispatch, data);
-        setCount(data.total);
+        setCount(String(data.total));
 
         const extremumsData = await fetchFilteredProducts({ filter });
         const extremums = getExtremums(extremumsData);
@@ -169,9 +165,12 @@ export const FilterBar = () => {
               variant="standard"
               onKeyDown={handleKeyDawn}
               onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                e.preventDefault();
                 const { value } = e.target;
-                setSliderValues([startValue, Number(value)]);
+                setUpdated(true);
                 setInputEnd(value);
+                setRawValues([startValue, Number(value)]);
+                setSliderValues([startValue, Number(value)]);
               }}
             />
             <Field
@@ -180,9 +179,9 @@ export const FilterBar = () => {
               value={rawValues}
               onChange={(event: Event, newValue: number | number[], activeThumb: number): void => {
                 handleSliderChange(event, newValue, activeThumb, rawValues, setRawValues);
+                setUpdated(true);
               }}
               onChangeCommitted={() => {
-                setUpdated(true);
                 setSliderValues(rawValues);
               }}
               valueLabelDisplay="auto"
@@ -201,7 +200,9 @@ export const FilterBar = () => {
                 setInputEnd('');
                 resetForm();
                 setSelectedAttributes([]);
+                setRawValues(extremums);
                 setSliderValues([startValue, endValue]);
+                setUpdated(false);
                 submitForm().catch((error) => {
                   throw error;
                 });
@@ -235,7 +236,7 @@ export const FilterBar = () => {
                       color="secondary"
                       key={`${String(attr)}-${index}`}
                       value={String(attr)}
-                      Label={{ label: `${String(attr)}` }}
+                      Label={{ label: t(`attributes.${name}.${String(attr)}`) }}
                       onChange={(e: ChangeEvent) => {
                         handleChange(e);
                         setUpdated(true);
@@ -255,13 +256,14 @@ export const FilterBar = () => {
           <Button
             className="hover:opacity-80"
             variant="contained"
+            disabled={!isUpdatedValues}
             onClick={() => {
               submitForm().catch((error) => {
                 throw error;
               });
             }}
           >
-            {`show (${prouctsCount ?? 0})`}
+            {prouctsCount.length > 0 ? `show (${prouctsCount})` : 'set filter'}
           </Button>
         </Stack>
       )}
