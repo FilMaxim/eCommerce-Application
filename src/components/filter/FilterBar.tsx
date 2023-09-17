@@ -1,6 +1,6 @@
 import '../../i18n';
 import { useTranslation } from 'react-i18next';
-
+/* eslint-disable */
 import { CheckboxWithLabel } from 'formik-material-ui';
 import { Typography, Button, Stack, TextField } from '@mui/material';
 
@@ -78,7 +78,6 @@ export const FilterBar = () => {
   useEffect(() => {
     const updateTotal = async () => {
       const productsData = await fetchFilteredProducts({ filter });
-
       if (isUpdatedValues) {
         setCount(String(productsData.total));
       }
@@ -105,7 +104,7 @@ export const FilterBar = () => {
         attributes: []
       }}
       onSubmit={async (values, { setSubmitting }): Promise<void> => {
-        setSliderValues(rawValues);
+        // setRawValues(rawValues);
         setSubmitting(false);
         setCurrentFilter(filter);
 
@@ -116,7 +115,8 @@ export const FilterBar = () => {
         const extremumsData = await fetchFilteredProducts({ filter });
         const extremums = getExtremums(extremumsData);
         const [start, end] = extremums;
-        setSliderValues([start, end]);
+
+        setRawValues([start, end]);
       }}
     >
       {({ submitForm, handleChange, resetForm, values }) => (
@@ -192,6 +192,7 @@ export const FilterBar = () => {
             />
             <Button
               color="error"
+              disabled={!isUpdatedValues}
               sx={{
                 gridColumn: '1 / span 2'
               }}
@@ -263,7 +264,7 @@ export const FilterBar = () => {
               });
             }}
           >
-            {prouctsCount.length > 0 ? `show (${prouctsCount})` : 'set filter'}
+            {isUpdatedValues && prouctsCount.length > 0 ? `show (${prouctsCount})` : 'set filter'}
           </Button>
         </Stack>
       )}

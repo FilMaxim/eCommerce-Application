@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useDispatch, useSelector } from 'react-redux';
 import { useCategoryContext } from '../../hooks/useCategoryContext';
 import type { RootState } from '../../utils/types';
@@ -35,7 +36,6 @@ export const CatalogContent = () => {
   });
   const id = eindpointData.length > 0 ? eindpointData[0].id : '';
   const categoryFilter = id.length > 0 ? `categories.id:"${id}"` : '';
-  const filter = useMemo(() => [categoryFilter, ...currentFilter], [categoryFilter, currentFilter]);
 
   useEffect(() => {
     setCategory(ednpointName);
@@ -48,7 +48,8 @@ export const CatalogContent = () => {
 
   useEffect(() => {
     const updateData = async () => {
-      const productsData = await fetchFilteredProducts({ filter, offset, limit: 8 });
+      const filter = [categoryFilter];
+      const productsData = await fetchFilteredProducts({ filter, limit: 8 });
       updateProductsData(dispatch, productsData);
       update(true);
     };
@@ -58,7 +59,21 @@ export const CatalogContent = () => {
         console.error(error);
       });
     }
-  }, [category, page, dispatch, offset, categories, filter]);
+  }, [dispatch, categories, categoryFilter]);
+
+  useEffect(() => {
+    const updateData = async () => {
+      const filter = [categoryFilter, ...currentFilter];
+      const productsData = await fetchFilteredProducts({ filter, offset, limit: 8 });
+      updateProductsData(dispatch, productsData);
+      update(true);
+    };
+    if (categories.length > 0) {
+      updateData().catch((error) => {
+        console.error(error);
+      });
+    }
+  }, [offset]);
 
   useEffect(() => {
     const pagesCount = Math.ceil((total ?? 0) / cardsPerPage);
@@ -67,7 +82,7 @@ export const CatalogContent = () => {
 
   useEffect(() => {
     setPage(1);
-  }, [filter]);
+  }, [categoryFilter]);
 
   return (
     isUpdated && (

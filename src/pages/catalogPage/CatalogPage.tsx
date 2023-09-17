@@ -20,9 +20,9 @@ export const CatalogPage = () => {
       />
       <div className="mb-2 flex items-center sm:pl-[18rem]">
         <div className="pl-4 sm:hidden">
-          <TemporaryDrawer>
+          {/* <TemporaryDrawer>
             <FilterBar key="main-filter" />
-          </TemporaryDrawer>
+          </TemporaryDrawer> */}
         </div>
         <SortBar />
       </div>

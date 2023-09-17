@@ -9,11 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import { BreadcrumbsNav } from '../breadcrumbsNav/BreadcrumbsNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategoriesData } from '../../slices/categoriesSlice';
+import { useCategoryContext } from '../../hooks/useCategoryContext';
 
 export const Container = ({ titleName, titleDescription }: ContainerProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { setCategoryName, currentFilter, setCategoryId, setCurrentFilter } = useCategoryContext();
   const categories = useSelector((state: { categoriesData: RootState }) => state.categoriesData.categories);
 
   useEffect(() => {
