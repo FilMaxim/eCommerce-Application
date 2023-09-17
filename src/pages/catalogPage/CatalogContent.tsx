@@ -80,7 +80,7 @@ export const CatalogContent = () => {
   useEffect(() => {
     setPage(1);
   }, [categoryFilter]);
-
+  
   return (
     isUpdated && (
       <div className="grid-row-3 grid w-full grid-cols-1 gap-4 sm:col-start-2 sm:row-start-3">

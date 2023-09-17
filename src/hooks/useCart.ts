@@ -3,19 +3,28 @@ import { updateCart } from '../helpers/api/apiRoot';
 import { setCartToLs } from '../pages/CartPage/utils/cartStorage';
 import { setCartData } from '../slices/cartSlice';
 import type { RootState, AddToCartParams, UpdateItemQuantity } from '../utils/types';
-import type { LineItem } from '@commercetools/platform-sdk';
+import type { Cart, CartUpdateAction, LineItem } from '@commercetools/platform-sdk';
 
 const enum UpdateCartActions {
   addLineItem = 'addLineItem',
   changeLineItemQuantity = 'changeLineItemQuantity',
   removeLineItem = 'removeLineItem',
-  setCustomerId = 'setCustomerId'
+  setCustomerId = 'setCustomerId',
+  addDiscountCode = 'addDiscountCode'
 }
 
 export const useCart = () => {
   const cart = useSelector((state: { cart: RootState }) => state.cart.cart);
   const customer = useSelector((state: { authData: RootState }) => state.authData.customer);
   const dispatch = useDispatch();
+
+  const setCart = (cart: Cart) => {
+    dispatch(setCartData(cart));
+
+    if (customer === null) {
+      setCartToLs(cart);
+    }
+  };
 
   const addToCart = async ({
     cartId,
@@ -29,11 +38,7 @@ export const useCart = () => {
         quantity: 1
       }
     ]);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
     return updatedCart.statusCode;
   };
 
@@ -50,11 +55,7 @@ export const useCart = () => {
         quantity
       }
     ]);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
   };
 
   const removeItemFromCart = async (
@@ -70,11 +71,7 @@ export const useCart = () => {
         quantity
       }
     ]);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
   };
 
   const mergeAnonymousCartAfterSignUp = async (
@@ -88,27 +85,38 @@ export const useCart = () => {
         customerId
       }
     ]);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
   };
 
   const clearCart = async (cartId: string, cartVersion: number, itemsList: LineItem[]): Promise<void> => {
-    const removeActions = itemsList.map((item) => ({
+    const removeActions: CartUpdateAction[] = itemsList.map((item) => ({
       action: UpdateCartActions.removeLineItem,
       lineItemId: item.id,
       quantity: item.quantity
     }));
 
     const updatedCart = await updateCart(cartId, cartVersion, removeActions);
-    dispatch(setCartData(updatedCart.body));
-
-    if (customer === null) {
-      setCartToLs(updatedCart.body);
-    }
+    setCart(updatedCart.body);
   };
 
-  return { addToCart, updateQuantity, removeItemFromCart, mergeAnonymousCartAfterSignUp, clearCart, cart };
+  const applyDiscount = async (cartId: string, cartVersion: number, discountCode: string): Promise<void> => {
+    const updatedCart = await updateCart(cartId, cartVersion, [
+      {
+        action: UpdateCartActions.addDiscountCode,
+        code: discountCode
+      }
+    ]);
+
+    setCart(updatedCart.body);
+  };
+
+  return {
+    addToCart,
+    updateQuantity,
+    removeItemFromCart,
+    mergeAnonymousCartAfterSignUp,
+    applyDiscount,
+    clearCart,
+    cart
+  };
 };

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const team = [
+export const team = [
   {
     id: 1,
     name: 'Vladislav',
