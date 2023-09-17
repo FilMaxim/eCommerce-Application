@@ -28,17 +28,15 @@ export const SortBar = () => {
   };
   const { t } = useTranslation();
   return (
-    <div className="flex gap-2">
+    <div className="flex justify-center gap-2 sm:col-start-2">
       <Typography
         sx={{
           display: 'flex',
           alignItems: 'center'
         }}
-      >
-        {t('dropDown.sort.name')}
-      </Typography>
+      ></Typography>
       <FormControl
-        className="max-w-[7rem]"
+        className="w-[10rem]"
         size="small"
       >
         <Select
@@ -63,7 +61,7 @@ export const SortBar = () => {
         </Select>
       </FormControl>
       <FormControl
-        className="max-w-[7rem]"
+        className="w-[10rem]"
         size="small"
       >
         <Select

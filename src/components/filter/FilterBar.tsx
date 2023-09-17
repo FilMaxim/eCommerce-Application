@@ -104,7 +104,6 @@ export const FilterBar = () => {
         attributes: []
       }}
       onSubmit={async (values, { setSubmitting }): Promise<void> => {
-        // setRawValues(rawValues);
         setSubmitting(false);
         setCurrentFilter(filter);
 

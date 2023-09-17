@@ -5,23 +5,25 @@ import { CategoriesProveder } from '../../components/CategoriesProvider';
 import { TemporaryDrawer } from '../../components/drawer/Drawer';
 import { SortBar } from './utils/SortBar';
 import { CatalogContent } from './CatalogContent';
+import { Categories } from '../../components/categories/Categories';
 
 export const CatalogPage = () => {
   return (
     <CategoriesProveder>
       <Container titleName="Categories" />
-      <div className="mb-2 flex items-center sm:pl-[18rem]">
-        <div className="pl-4 sm:hidden">
-          <TemporaryDrawer>
-            <FilterBar key="main-filter" />
-          </TemporaryDrawer>
-        </div>
-        <SortBar />
-      </div>
-      <div className="mb-2 flex gap-2">
-        <div className="hidden sm:block">
+      <div className="grid-auto-rows grid grid-cols-1 grid-rows-[120px_40px_auto] gap-8 sm:grid-cols-[240px_auto]">
+        <div className="row-span-3 hidden sm:block">
           <FilterBar key="hidden-filter" />
         </div>
+        <Categories />
+        <div className="mb-2 flex items-center justify-center sm:hidden sm:pl-[18rem]">
+          <div className="pl-4">
+            <TemporaryDrawer>
+              <FilterBar key="main-filter" />
+            </TemporaryDrawer>
+          </div>
+        </div>
+        <SortBar />
         <CatalogContent />
       </div>
     </CategoriesProveder>

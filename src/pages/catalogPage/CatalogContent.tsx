@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useDispatch, useSelector } from 'react-redux';
 import { useCategoryContext } from '../../hooks/useCategoryContext';
 import type { RootState } from '../../utils/types';
@@ -26,7 +25,6 @@ export const CatalogContent = () => {
   const endpoint = pathname.substring(pathname.lastIndexOf('/') + 1);
 
   const ednpointName = endpoint === 'catalog' ? '' : endpoint;
-  const [category, setCategory] = useState<string>(ednpointName);
 
   const cardsPerPage = 8;
   const offset = useMemo(() => (page - 1) * cardsPerPage, [page, cardsPerPage]);
@@ -38,7 +36,6 @@ export const CatalogContent = () => {
   const categoryFilter = id.length > 0 ? `categories.id:"${id}"` : '';
 
   useEffect(() => {
-    setCategory(ednpointName);
     setCategoryName(ednpointName);
     setCategoryId(id);
     setCurrentFilter([]);
@@ -73,7 +70,7 @@ export const CatalogContent = () => {
         console.error(error);
       });
     }
-  }, [offset]);
+  }, [offset, categoryFilter, currentFilter, dispatch, categories.length]);
 
   useEffect(() => {
     const pagesCount = Math.ceil((total ?? 0) / cardsPerPage);
@@ -86,27 +83,29 @@ export const CatalogContent = () => {
 
   return (
     isUpdated && (
-      <div className="grid-row-3 grid h-max w-full grid-cols-1 gap-4">
-        <div className="m-auto flex flex-wrap justify-center gap-4 pb-4">
-          {cardsData.map((item) => {
-            const { url, name, description, priceTag, id, attributes } = item;
-            const rating = attributes?.find((obj) => obj.name === 'rating');
-            const { price, discount } = priceTag;
-            const formattedDescription = trimText(description);
-            return (
-              <ProductCard
-                imageUrl={url}
-                title={name}
-                titleName={name}
-                description={formattedDescription}
-                key={id}
-                id={id}
-                price={price}
-                discount={discount}
-                rating={rating?.value}
-              />
-            );
-          })}
+      <div className="grid-row-3 grid w-full grid-cols-1 gap-4 sm:col-start-2 sm:row-start-3">
+        <div className="flex justify-center">
+          <div className="grid grid-flow-row grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {cardsData.map((item) => {
+              const { url, name, description, priceTag, id, attributes } = item;
+              const rating = attributes?.find((obj) => obj.name === 'rating');
+              const { price, discount } = priceTag;
+              const formattedDescription = trimText(description);
+              return (
+                <ProductCard
+                  imageUrl={url}
+                  title={name}
+                  titleName={name}
+                  description={formattedDescription}
+                  key={id}
+                  id={id}
+                  price={price}
+                  discount={discount}
+                  rating={rating?.value}
+                />
+              );
+            })}
+          </div>
         </div>
         <Stack
           spacing={2}
