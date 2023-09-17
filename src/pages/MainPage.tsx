@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import mainFoto from '../assets/main.png';
+import mainFoto from '../assets/main.webp';
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -259,6 +259,7 @@ const SpecialOfferSection = () => {
           alt="save roboto"
           src="https://klike.net/uploads/posts/2022-12/1671597204_3-18.jpg"
           className="h-32 w-full object-cover md:h-full"
+          loading='lazy'
         />
 
         <div className="p-4 text-center sm:p-6 md:col-span-2 lg:p-8">

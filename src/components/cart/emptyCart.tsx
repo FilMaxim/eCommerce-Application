@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { NavRoutes } from '../../utils/routes';
-import bender from '../../assets/cart-bender.png';
+import bender from '../../assets/cart-bender.webp';
 
 export const EmptyCart = () => {
   return (

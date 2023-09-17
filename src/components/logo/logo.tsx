@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { NavRoutes } from '../../utils/routes';
 import type { LogoParams } from '../../utils/types';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.webp';
 
 export const Logo = ({ className }: LogoParams) => {
   return (

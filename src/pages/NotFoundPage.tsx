@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import error404 from '../assets/404.png';
+import error404 from '../assets/404.webp';
 import { NavRoutes } from '../utils/routes';
 export const NotFoundPage = () => (
   <div className="flex flex-col items-center pb-5">
