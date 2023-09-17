@@ -85,7 +85,7 @@ export const CatalogContent = () => {
     isUpdated && (
       <div className="grid-row-3 grid w-full grid-cols-1 gap-4 sm:col-start-2 sm:row-start-3">
         <div className="flex justify-center">
-          <div className="grid grid-rows-[508px_auto_auto] grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 grid-rows-[508px_auto_auto] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {cardsData.map((item) => {
               const { url, name, description, priceTag, id, attributes } = item;
               const rating = attributes?.find((obj) => obj.name === 'rating');
