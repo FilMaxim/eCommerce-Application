@@ -1,5 +1,5 @@
 import { ClientApiData } from '../../utils/clientApiData';
-import type { CustomerData } from '../../utils/types';
+import type { CustomerData, QueryArgs } from '../../utils/types';
 import {
   buildClientWithAnonymousSessionFlow,
   buildClientWithClientCredentialsFlow,
@@ -42,22 +42,18 @@ export const fetchProducts = async (): Promise<ProductProjectionPagedQueryRespon
 };
 
 export const fetchFilteredProducts = async (
-  filter?: string | string[] | undefined,
-  sort?: string,
-  text?: string
+  queryArgs: QueryArgs
 ): Promise<ProductProjectionPagedQueryResponse> => {
+  const limit = queryArgs.limit ?? 200;
   const response = await apiRoot
     .productProjections()
     .search()
     .get({
       queryArgs: {
         fuzzy: true,
-        limit: 30,
-        offset: 0,
-        filter,
         markMatchingVariants: true,
-        sort,
-        'text.en-US': text
+        ...queryArgs,
+        limit
       }
     })
     .execute();

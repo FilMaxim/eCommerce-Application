@@ -1,8 +1,6 @@
 import type { initialValuesRegistration } from '../components/forms/inputs/inputsData';
 import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
-import type { ComponentType } from 'react';
-import type { ButtonProps } from '@mui/material';
 import type {
   Image,
   Customer,
@@ -10,7 +8,6 @@ import type {
   ProductProjectionPagedQueryResponse,
   Cart
 } from '@commercetools/platform-sdk';
-// import { CartInitialstate } from '../slices/cartSlice';
 
 interface UserName {
   firstName: string;
@@ -99,11 +96,12 @@ export interface UseUpdateCustomer {
 
 export interface RootState {
   isLogged: boolean;
-  cards: ProductsDataInterface[];
+  cardsData: ProductsDataInterface[];
   customer: Customer | null;
   extremums: number[];
-  catecories: CategoriesList[];
+  categories: CategoriesList[];
   cart: Cart | null;
+  total: number;
 }
 
 export interface AddressFieldComponent {
@@ -177,8 +175,9 @@ export interface ProductsDataInterface {
 }
 
 export interface InitialProductsStateInterace {
-  cards: ProductsDataInterface[];
+  cardsData: ProductsDataInterface[];
   extremums: number[];
+  total: number;
 }
 
 export interface ProductCardInterface extends PriceTagInterface {
@@ -198,7 +197,6 @@ export interface CategoriesList {
 export interface ContainerProps {
   titleName: string;
   titleDescription?: string;
-  buttons: Array<ComponentType<ButtonProps>>;
 }
 
 export type Mapping = Record<string, string>;
@@ -277,12 +275,14 @@ export interface CategoriesContextInterface {
   currentFilter: string[];
   setCurrentFilter: (filter: string[]) => void;
 }
-
-export type FetchDataType = (
-  quertString?: string | string[] | undefined,
-  sort?: string,
-  text?: string
-) => Promise<ProductProjectionPagedQueryResponse>;
+export interface QueryArgs {
+  offset?: number;
+  filter?: string | string[];
+  sort?: string;
+  'text.en-US'?: string;
+  limit?: number;
+}
+export type FetchDataType = (queryArgs: QueryArgs) => Promise<ProductProjectionPagedQueryResponse>;
 
 export type NormolizeDataType = (
   productData: ProductProjectionPagedQueryResponse

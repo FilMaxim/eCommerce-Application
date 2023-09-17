@@ -1,8 +1,8 @@
-import type { AttributesList, RootState } from '../../../utils/types';
+import type { AttributesList, ProductsDataInterface } from '../../../utils/types';
 import _ from 'lodash';
 
-export const getAttributesList = (productsData: RootState): AttributesList[] => {
-  const attributesCollection = _.flatMap(productsData.cards, 'attributes');
+export const getAttributesList = (productsData: ProductsDataInterface[]): AttributesList[] => {
+  const attributesCollection = _.flatMap(productsData, 'attributes');
 
   const uniqueKeys = _.chain(attributesCollection).map('name').uniq().sort().value();
 

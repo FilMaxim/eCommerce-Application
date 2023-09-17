@@ -1,28 +1,31 @@
-import type { CategoriesList, ContainerProps, Mapping } from '../../utils/types';
+/* eslint-disable */
+import type { ContainerProps, Mapping, RootState } from '../../utils/types';
 import { CategoryCard } from '../cards/categoryCard/CategoryCard';
-import { useEffect, useState } from 'react';
-import { useCategoryContext } from '../../hooks/useCategoryContext';
+import { useEffect } from 'react';
 import { SearchInput } from '../searchInput/SearchInput';
 import { fetchCategories } from '../../pages/catalogPage/utils/fetchCategories';
 import { NavRoutes } from '../../utils/routes';
 import { useNavigate } from 'react-router-dom';
 import { BreadcrumbsNav } from '../breadcrumbsNav/BreadcrumbsNav';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategoriesData } from '../../slices/categoriesSlice';
 
 export const Container = ({ titleName, titleDescription }: ContainerProps) => {
-  const { setCategoryId, setCategoryName } = useCategoryContext();
-  const [categories, setCategoriesList] = useState<CategoriesList[]>([]);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const categories = useSelector((state: { categoriesData: RootState }) => state.categoriesData.categories);
 
   useEffect(() => {
     const updateData = async (): Promise<void> => {
-      await fetchCategories(setCategoriesList);
+      const catecoriesData = await fetchCategories();
+      dispatch(setCategoriesData(catecoriesData));
     };
 
     updateData().catch((error) => {
       throw error;
     });
-  }, []);
+  }, [dispatch]);
 
   const routes: Mapping = {
     Companions: NavRoutes.companionsPagePath,
@@ -45,22 +48,18 @@ export const Container = ({ titleName, titleDescription }: ContainerProps) => {
       <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
       <BreadcrumbsNav />
       <div className="flex max-w-[90%] gap-2 self-center overflow-auto rounded border p-1 md:border-none">
-        {categories.length > 0 &&
-          categories.map((category) => {
-            const { name, id } = category;
-
-            return (
-              <CategoryCard
-                key={id}
-                category={name}
-                callback={() => {
-                  setCategoryId(id);
-                  setCategoryName(name);
-                  navigate({ pathname: routes[name] });
-                }}
-              />
-            );
-          })}
+        {categories.map((category) => {
+          const { name, id } = category;
+          return (
+            <CategoryCard
+              key={id}
+              category={name}
+              callback={() => {
+                navigate({ pathname: routes[name] });
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   );

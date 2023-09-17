@@ -14,12 +14,13 @@ export const Header = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const updateLs = (): void => {
+    if (customer === null) {
       const cartInLs = getCartFromLs();
-      // prettier-ignore
-      cartInLs !== null
-        ? dispatch(setCartData(cartInLs))
-        : createCartHandler()
+
+      if (cartInLs !== null) {
+        dispatch(setCartData(cartInLs));
+      } else {
+        createCartHandler()
           .then((cart) => {
             dispatch(setCartData(cart));
             setCartToLs(cart);
@@ -27,11 +28,9 @@ export const Header = () => {
           .catch((e) => {
             Error(e);
           });
-    };
-    // prettier-ignore
-    customer === null
-      ? updateLs()
-      : getCartWithCustomerId(customer.id)
+      }
+    } else {
+      getCartWithCustomerId(customer.id)
         .then(async (cart) => {
           dispatch(setCartData(cart.body));
         })
@@ -40,6 +39,7 @@ export const Header = () => {
           dispatch(setCartData(newCart));
           // Error(e);
         });
+    }
   }, [customer, dispatch]);
 
   return (

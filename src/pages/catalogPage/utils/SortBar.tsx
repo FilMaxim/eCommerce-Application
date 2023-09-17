@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { updateProductsData } from './updateData';
 import { useDispatch } from 'react-redux';
 import { fetchFilteredProducts } from '../../../helpers/api/apiRoot';
-import { normalizeData } from './normalizeData';
 import { useTranslation } from 'react-i18next';
 import { useCategoryContext } from '../../../hooks/useCategoryContext';
 
@@ -24,7 +23,8 @@ export const SortBar = () => {
     setter(value);
 
     const sort = `${param} ${value}`;
-    await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter, sort);
+    const data = await fetchFilteredProducts({ filter, sort });
+    updateProductsData(dispatch, data);
   };
   const { t } = useTranslation();
   return (

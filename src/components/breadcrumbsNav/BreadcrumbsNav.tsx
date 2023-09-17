@@ -4,7 +4,7 @@ import { useCategoryContext } from '../../hooks/useCategoryContext';
 import { NavRoutes } from '../../utils/routes';
 
 export const BreadcrumbsNav = () => {
-  const { categoryName } = useCategoryContext();
+  const { categoryName, setCategoryName, setCategoryId, setCurrentFilter } = useCategoryContext();
   const isCategorySelected = Boolean(categoryName);
 
   return (
@@ -13,6 +13,11 @@ export const BreadcrumbsNav = () => {
         <Link
           to={NavRoutes.catalogPage}
           className="text-black transition-all hover:text-secondary"
+          onClick={() => {
+            setCategoryName('');
+            setCategoryId('');
+            setCurrentFilter([]);
+          }}
         >
           Catalog
         </Link>
