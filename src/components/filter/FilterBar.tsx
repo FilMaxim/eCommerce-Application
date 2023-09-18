@@ -1,6 +1,6 @@
 import '../../i18n';
 import { useTranslation } from 'react-i18next';
-/* eslint-disable */
+
 import { CheckboxWithLabel } from 'formik-material-ui';
 import { Typography, Button, Stack, TextField } from '@mui/material';
 
