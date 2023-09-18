@@ -15,7 +15,7 @@ export const CategoriesProveder = ({ children }: { children: ReactNode }) => {
       currentFilter,
       setCurrentFilter
     }),
-    [categoryId, currentFilter, categoryName]
+    [categoryId, currentFilter, categoryName, setCategoryId, setCategoryName, setCurrentFilter]
   );
 
   return <CategoriesContext.Provider value={category}>{children}</CategoriesContext.Provider>;

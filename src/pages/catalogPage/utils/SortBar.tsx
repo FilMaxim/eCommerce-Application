@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { updateProductsData } from './updateData';
 import { useDispatch } from 'react-redux';
 import { fetchFilteredProducts } from '../../../helpers/api/apiRoot';
-import { normalizeData } from './normalizeData';
 import { useTranslation } from 'react-i18next';
 import { useCategoryContext } from '../../../hooks/useCategoryContext';
 
@@ -24,21 +23,20 @@ export const SortBar = () => {
     setter(value);
 
     const sort = `${param} ${value}`;
-    await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter, sort);
+    const data = await fetchFilteredProducts({ filter, sort });
+    updateProductsData(dispatch, data);
   };
   const { t } = useTranslation();
   return (
-    <div className="flex gap-2">
+    <div className="flex justify-center gap-2 sm:col-start-2">
       <Typography
         sx={{
           display: 'flex',
           alignItems: 'center'
         }}
-      >
-        {t('dropDown.sort.name')}
-      </Typography>
+      ></Typography>
       <FormControl
-        className="max-w-[7rem]"
+        className="w-[8rem]"
         size="small"
       >
         <Select
@@ -63,7 +61,7 @@ export const SortBar = () => {
         </Select>
       </FormControl>
       <FormControl
-        className="max-w-[7rem]"
+        className="w-[8rem]"
         size="small"
       >
         <Select

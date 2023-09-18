@@ -1,66 +1,16 @@
-import type { CategoriesList, ContainerProps, Mapping } from '../../utils/types';
-import { CategoryCard } from '../cards/categoryCard/CategoryCard';
-import { useEffect, useState } from 'react';
-import { useCategoryContext } from '../../hooks/useCategoryContext';
+import type { ContainerProps } from '../../utils/types';
 import { SearchInput } from '../searchInput/SearchInput';
-import { fetchCategories } from '../../pages/catalogPage/utils/fetchCategories';
-import { NavRoutes } from '../../utils/routes';
-import { useNavigate } from 'react-router-dom';
 import { BreadcrumbsNav } from '../breadcrumbsNav/BreadcrumbsNav';
 
-export const Container = ({ titleName, titleDescription }: ContainerProps) => {
-  const { setCategoryId, setCategoryName } = useCategoryContext();
-  const [categories, setCategoriesList] = useState<CategoriesList[]>([]);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const updateData = async (): Promise<void> => {
-      await fetchCategories(setCategoriesList);
-    };
-
-    updateData().catch((error) => {
-      throw error;
-    });
-  }, []);
-
-  const routes: Mapping = {
-    Companions: NavRoutes.companionsPagePath,
-    Cleaners: NavRoutes.cleanersPagePath,
-    Pets: NavRoutes.petsPagePath,
-    Kitchens: NavRoutes.kitchensPagePath,
-    Gardens: NavRoutes.gardensPagePath,
-    Deliveries: NavRoutes.deliveriesPagePath
-  };
-
+export const Container = ({ titleName }: ContainerProps) => {
   return (
-    <div className="m-auto flex max-w-7xl flex-col gap-2 p-4 lg:px-8">
+    <div className="col-span-2 m-auto w-full p-8 pb-4 sm:p-8">
       <div className="flex justify-between">
         <div className="flex items-center gap-4">
           <div className="h-10 w-5 rounded bg-secondary"></div>
-          <p className="text-lg font-bold text-secondary">{titleName}</p>
+          <BreadcrumbsNav>{titleName}</BreadcrumbsNav>
         </div>
         <SearchInput />
-      </div>
-      <p className="mb-2 text-2xl font-bold sm:text-3xl">{titleDescription}</p>
-      <BreadcrumbsNav />
-      <div className="flex max-w-[90%] gap-2 self-center overflow-auto rounded border p-1 md:border-none">
-        {categories.length > 0 &&
-          categories.map((category) => {
-            const { name, id } = category;
-
-            return (
-              <CategoryCard
-                key={id}
-                category={name}
-                callback={() => {
-                  setCategoryId(id);
-                  setCategoryName(name);
-                  navigate({ pathname: routes[name] });
-                }}
-              />
-            );
-          })}
       </div>
     </div>
   );
