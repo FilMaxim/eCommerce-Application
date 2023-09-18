@@ -22,7 +22,8 @@ export const team = [
     github: 'https://github.com/Pavelvl21',
     email: 'https://p.yudenko@gmail.com',
     telegram: 'https://t.me/Pavel_vld',
-    biography: 'I\'m 37 years old and I live and work in Minsk. I have a degree in economics, which I obtained from the International University MITSO. I have extensive experience working in teams. Currently, I work in the largest online store in Belarus🚀, managing a product category.\nI have a passion for programming, which has become an integral part of both my hobby and professional activities. Solving challenging problems and finding effective solutions always excite me.\nIn addition, one of my unusual hobbies is growing trees from seeds.🌳 It\'s a fascinating activity that teaches me to care for nature and the environment.\nMy dream is to make the world a little better by creating connections between people and technology. I believe that with the help of innovation and technological advancement, we can improve the quality of life and make our planet more harmonious and sustainable.🌍'
+    biography:
+      "I'm 37 years old and I live and work in Minsk. I have a degree in economics, which I obtained from the International University MITSO. I have extensive experience working in teams. Currently, I work in the largest online store in Belarus🚀, managing a product category.\nI have a passion for programming, which has become an integral part of both my hobby and professional activities. Solving challenging problems and finding effective solutions always excite me.\nIn addition, one of my unusual hobbies is growing trees from seeds.🌳 It's a fascinating activity that teaches me to care for nature and the environment.\nMy dream is to make the world a little better by creating connections between people and technology. I believe that with the help of innovation and technological advancement, we can improve the quality of life and make our planet more harmonious and sustainable.🌍"
   },
   {
     id: 3,
@@ -91,7 +92,7 @@ export const AboutPage = () => {
                           </svg>
                         </Link>
                         <Link
-                          to={member.email}
+                          to={`mailto:${member.email}`}
                           className="px-2 hover:scale-110"
                         >
                           <svg
