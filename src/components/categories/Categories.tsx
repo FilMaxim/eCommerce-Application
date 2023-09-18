@@ -34,7 +34,7 @@ export const Categories = () => {
   };
 
   return (
-    <div className="flex justify-center gap-2 self-center overflow-auto rounded border p-1 md:border-none">
+    <div className="flex max-w-[45rem] justify-between gap-2 self-center overflow-auto rounded border p-1 md:border-none  lg:ml-[5vw]">
       {categories.map((category) => {
         const { name, id } = category;
         return (

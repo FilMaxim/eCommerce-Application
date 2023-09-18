@@ -16,7 +16,8 @@ module.exports = {
         'catalog-cards': '14rem 9rem 2.5rem 2.5rem',
       },
       gridTemplateColumns: {
-        'filters': 'auto auto'
+        'filters': 'auto auto',
+        'catalog-cards': 'repeat(auto-fill, minmax(14rem, auto))',
       }
     }
   },

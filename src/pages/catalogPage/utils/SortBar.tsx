@@ -36,7 +36,7 @@ export const SortBar = () => {
         }}
       ></Typography>
       <FormControl
-        className="w-[10rem]"
+        className="w-[8rem]"
         size="small"
       >
         <Select
@@ -61,7 +61,7 @@ export const SortBar = () => {
         </Select>
       </FormControl>
       <FormControl
-        className="w-[10rem]"
+        className="w-[8rem]"
         size="small"
       >
         <Select

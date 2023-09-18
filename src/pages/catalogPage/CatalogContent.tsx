@@ -80,32 +80,30 @@ export const CatalogContent = () => {
   useEffect(() => {
     setPage(1);
   }, [categoryFilter]);
-  
+
   return (
     isUpdated && (
-      <div className="grid-row-3 grid w-full grid-cols-1 gap-4 sm:col-start-2 sm:row-start-3">
-        <div className="flex justify-center">
-          <div className="grid grid-cols-1 grid-rows-[508px_auto_auto] gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {cardsData.map((item) => {
-              const { url, name, description, priceTag, id, attributes } = item;
-              const rating = attributes?.find((obj) => obj.name === 'rating');
-              const { price, discount } = priceTag;
-              const formattedDescription = trimText(description);
-              return (
-                <ProductCard
-                  imageUrl={url}
-                  title={name}
-                  titleName={name}
-                  description={formattedDescription}
-                  key={id}
-                  id={id}
-                  price={price}
-                  discount={discount}
-                  rating={rating?.value}
-                />
-              );
-            })}
-          </div>
+      <div className="flex flex-col items-center justify-center gap-4 sm:col-start-2 sm:row-start-3">
+        <div className="grid w-full grid-cols-catalog-cards justify-center gap-4">
+          {cardsData.map((item) => {
+            const { url, name, description, priceTag, id, attributes } = item;
+            const rating = attributes?.find((obj) => obj.name === 'rating');
+            const { price, discount } = priceTag;
+            const formattedDescription = trimText(description);
+            return (
+              <ProductCard
+                imageUrl={url}
+                title={name}
+                titleName={name}
+                description={formattedDescription}
+                key={id}
+                id={id}
+                price={price}
+                discount={discount}
+                rating={rating?.value}
+              />
+            );
+          })}
         </div>
         <Stack
           spacing={2}

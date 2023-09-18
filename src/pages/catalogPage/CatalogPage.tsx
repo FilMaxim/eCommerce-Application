@@ -11,19 +11,17 @@ export const CatalogPage = () => {
   return (
     <CategoriesProveder>
       <Container titleName="Categories" />
-      <div className="grid-auto-rows grid grid-cols-1 grid-rows-[120px_40px_auto] gap-8 sm:grid-cols-[240px_auto]">
+      <div className="grid grid-rows-[120px_40px_auto] gap-2 sm:grid-cols-[240px_auto]">
         <div className="row-span-3 hidden sm:block">
           <FilterBar key="hidden-filter" />
         </div>
         <Categories />
-        <div className="mb-2 flex items-center justify-center sm:hidden sm:pl-[18rem]">
-          <div className="pl-4">
-            <TemporaryDrawer>
-              <FilterBar key="main-filter" />
-            </TemporaryDrawer>
-          </div>
+        <div className="mb-2 flex items-center justify-center sm:hidden">
+          <TemporaryDrawer>
+            <FilterBar key="main-filter" />
+          </TemporaryDrawer>
+          <SortBar />
         </div>
-        <SortBar />
         <CatalogContent />
       </div>
     </CategoriesProveder>
