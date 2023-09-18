@@ -106,7 +106,6 @@ export const ProductCard = ({
       />
       <CardContent
         sx={{
-          height: '8rem',
           padding: '0 1rem',
           display: 'flex',
           flexDirection: 'column',

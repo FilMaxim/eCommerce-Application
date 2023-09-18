@@ -1,0 +1,43 @@
+import { Skeleton, Stack } from '@mui/material';
+
+export const SkeletonCard = () => (
+  <Stack
+    spacing={1}
+    width={224}
+  >
+    <Skeleton
+      variant="rectangular"
+      height={224}
+    />
+    <Skeleton
+      variant="rectangular"
+      height={55.19}
+    />
+    <Skeleton
+      variant="rectangular"
+      height={32}
+    />
+    <Skeleton
+      variant="rectangular"
+      height={32}
+    />
+    <Skeleton
+      variant="rectangular"
+      height={12}
+    />
+    <Skeleton
+      variant="rectangular"
+      width={32}
+      height={32}
+    />
+    <Skeleton
+      variant="rectangular"
+      width={152}
+      height={24}
+    />
+    <Skeleton
+      variant="rectangular"
+      height={41}
+    />
+  </Stack>
+);

@@ -8,6 +8,8 @@ import { ProductCard } from '../../components/cards/productCard/ProductCard';
 import { trimText } from './utils/trimText';
 import { useLocation } from 'react-router-dom';
 import { Pagination, Stack } from '@mui/material';
+import { SkeletonCard } from '../../components/ProgressBar/SkeletonCard';
+import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 
 export const CatalogContent = () => {
   const { setCategoryName, currentFilter, setCategoryId, setCurrentFilter } = useCategoryContext();
@@ -41,14 +43,15 @@ export const CatalogContent = () => {
     setCurrentFilter([]);
   }, [ednpointName, setCategoryName, setCategoryId, id, setCurrentFilter]);
 
-  const [isUpdated, update] = useState<boolean>(false);
+  const [isUpdated, setUpdated] = useState<boolean>(false);
+  const [isLoaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     const updateData = async () => {
       const filter = [categoryFilter];
       const productsData = await fetchFilteredProducts({ filter, limit: 8 });
       updateProductsData(dispatch, productsData);
-      update(true);
+      setUpdated(true);
     };
 
     if (categories.length > 0) {
@@ -61,16 +64,18 @@ export const CatalogContent = () => {
   useEffect(() => {
     const updateData = async () => {
       const filter = [categoryFilter, ...currentFilter];
-      const productsData = await fetchFilteredProducts({ filter, offset, limit: 8 });
-      updateProductsData(dispatch, productsData);
-      update(true);
+      const updatedProductsData = await fetchFilteredProducts({ filter, offset, limit: 8 });
+      updateProductsData(dispatch, updatedProductsData);
+      setUpdated(true);
+      setLoaded(true);
     };
     if (categories.length > 0) {
+      setLoaded(false);
       updateData().catch((error) => {
         console.error(error);
       });
     }
-  }, [offset, dispatch, categoryFilter, categories.length]);
+  }, [offset, dispatch, categories.length]);
 
   useEffect(() => {
     const pagesCount = Math.ceil((total ?? 0) / cardsPerPage);
@@ -81,28 +86,32 @@ export const CatalogContent = () => {
     setPage(1);
   }, [categoryFilter]);
 
+  if (!isUpdated) {
+    return <ProgressBar />;
+  }
   return (
     isUpdated && (
-      <div className="flex flex-col items-center justify-center gap-4 sm:col-start-2 sm:row-start-3">
-        <div className="grid w-full grid-cols-catalog-cards justify-center gap-4">
+      <div className="flex flex-col items-center gap-4 sm:col-start-2 sm:row-start-3">
+        <div className="grid max-w-[90%] grid-cols-catalog-cards justify-center gap-4">
           {cardsData.map((item) => {
             const { url, name, description, priceTag, id, attributes } = item;
             const rating = attributes?.find((obj) => obj.name === 'rating');
             const { price, discount } = priceTag;
             const formattedDescription = trimText(description);
-            return (
-              <ProductCard
+            // prettier-ignore
+            return isLoaded
+              ? (<ProductCard
                 imageUrl={url}
                 title={name}
                 titleName={name}
                 description={formattedDescription}
-                key={id}
+                key={`card-${id}`}
                 id={id}
                 price={price}
                 discount={discount}
                 rating={rating?.value}
-              />
-            );
+              />)
+              : <SkeletonCard key={`skeleton-${id}`} />;
           })}
         </div>
         <Stack
