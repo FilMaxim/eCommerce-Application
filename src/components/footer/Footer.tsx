@@ -13,7 +13,7 @@ export const Footer = () => {
   return (
     <footer className="bg-black text-secondary ">
       <nav
-        className="mx-auto mb-[-1rem] flex max-w-7xl flex-col items-start justify-between gap-4 bg-burger-bender bg-[length:100px_200px] bg-right-bottom bg-no-repeat p-4 pb-8 sm:flex-row sm:bg-footer-bender sm:bg-[length:110px_110px] sm:bg-left-bottom lg:px-8"
+        className="container mx-auto mb-[-1rem] flex flex-col items-start justify-between gap-4 bg-burger-bender bg-[length:100px_200px] bg-right-bottom bg-no-repeat p-4 pb-8 sm:flex-row sm:bg-footer-bender sm:bg-[length:110px_110px] sm:bg-left-bottom lg:px-8"
         aria-label="Global"
       >
         <Logo />
