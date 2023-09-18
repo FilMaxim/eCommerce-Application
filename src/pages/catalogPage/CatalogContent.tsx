@@ -105,13 +105,13 @@ export const CatalogContent = () => {
                 title={name}
                 titleName={name}
                 description={formattedDescription}
-                key={id}
+                key={`card-${id}`}
                 id={id}
                 price={price}
                 discount={discount}
                 rating={rating?.value}
               />)
-              : <SkeletonCard />;
+              : <SkeletonCard key={`skeleton-${id}`} />;
           })}
         </div>
         <Stack
