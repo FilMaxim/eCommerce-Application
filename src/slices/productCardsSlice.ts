@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { InitialProductsStateInterace } from '../utils/types';
+import { normalizeData } from '../pages/catalogPage/utils/normalizeData';
 
 const initialState: InitialProductsStateInterace = {
-  cards: [],
-  extremums: [0, 0]
+  cardsData: [],
+  extremums: [0, 0],
+  total: 0
 };
 
 const productCardsSlice = createSlice({
@@ -11,7 +13,9 @@ const productCardsSlice = createSlice({
   initialState,
   reducers: {
     setProducts: (state, { payload }) => {
-      state.cards = payload;
+      const normalisedData = normalizeData(payload);
+      state.cardsData = normalisedData;
+      state.total = payload.total;
     },
     setExtremums: (state, { payload }) => {
       state.extremums = payload;

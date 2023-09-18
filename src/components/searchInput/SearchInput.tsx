@@ -9,8 +9,8 @@ export const SearchInput = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState('');
 
-  const { cards } = useSelector((state: { productsData: RootState }) => state.productsData);
-  const labels = cards.map((card) => card.name);
+  const { cardsData } = useSelector((state: { productsData: RootState }) => state.productsData);
+  const labels = cardsData.map((card) => card.name);
 
   return (
     <Formik

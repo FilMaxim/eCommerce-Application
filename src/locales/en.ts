@@ -39,7 +39,7 @@ export const en = {
         insects: 'Insects',
         bird: 'Bird',
         humanoid: 'Humanoid',
-        car: 'Сar'
+        car: 'Car'
       }
     },
     button: {
