@@ -9,6 +9,7 @@ import { trimText } from './utils/trimText';
 import { useLocation } from 'react-router-dom';
 import { Pagination, Stack } from '@mui/material';
 import { SkeletonCard } from '../../components/ProgressBar/SkeletonCard';
+import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 
 export const CatalogContent = () => {
   const { setCategoryName, currentFilter, setCategoryId, setCurrentFilter } = useCategoryContext();
@@ -85,10 +86,13 @@ export const CatalogContent = () => {
     setPage(1);
   }, [categoryFilter]);
 
+  if (!isUpdated) {
+    return <ProgressBar />;
+  }
   return (
     isUpdated && (
       <div className="flex flex-col items-center gap-4 sm:col-start-2 sm:row-start-3">
-        <div className="grid w-full grid-cols-catalog-cards justify-center gap-4">
+        <div className="grid max-w-[90%] grid-cols-catalog-cards justify-center gap-4">
           {cardsData.map((item) => {
             const { url, name, description, priceTag, id, attributes } = item;
             const rating = attributes?.find((obj) => obj.name === 'rating');
