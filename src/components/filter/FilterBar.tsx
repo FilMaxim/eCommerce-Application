@@ -1,13 +1,18 @@
 import '../../i18n';
+import { useTranslation } from 'react-i18next';
+
+import { CheckboxWithLabel } from 'formik-material-ui';
+import { Typography, Button, Stack, TextField } from '@mui/material';
+
+import type { AttributesList, RootState, SelectedAttribute } from '../../utils/types';
+
+import { Formik, Field } from 'formik';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, useMemo, type ChangeEvent } from 'react';
 
-import type { RootState, SelectedAttribute } from '../../utils/types';
-
-import { useTranslation } from 'react-i18next';
 import { useCategoryContext } from '../../hooks/useCategoryContext';
-import { updateExtremumsData, updateProductsData } from '../../pages/catalogPage/utils/updateData';
+import { updateProductsData } from '../../pages/catalogPage/utils/updateData';
 import { normalizeData } from '../../pages/catalogPage/utils/normalizeData';
 import { PrettoSlider } from './utils/PrettoSlider';
 import { getAttributesList } from './utils/getAttributesList';
@@ -16,75 +21,104 @@ import { handleSliderChange } from './utils/handleSliderChange';
 import { buildQueryString } from './utils/buildQueryString';
 import { handleKeyDawn } from './utils/handleKeydown';
 import { fetchFilteredProducts } from '../../helpers/api/apiRoot';
-
-import { Formik, Field } from 'formik';
-import { CheckboxWithLabel } from 'formik-material-ui';
-import { Typography, Button, Stack, TextField } from '@mui/material';
 import { getExtremums } from '../../pages/catalogPage/utils/getExtremums';
 
 export const FilterBar = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
 
-  const extremums = useSelector((state: { productsData: RootState }) => state.productsData.extremums);
-  const productsData = useSelector((state: { productsData: RootState }) => state.productsData);
+  const { categoryId, setCurrentFilter } = useCategoryContext();
+  const { cardsData } = useSelector((state: { productsData: RootState }) => state.productsData);
 
+  const [prouctsCount, setCount] = useState<string>('');
+  const [sliderValues, setSliderValues] = useState<number[]>([0, 0]);
+  const [rawValues, setRawValues] = useState<number[]>([0, 0]);
+  const [extremums, setExtremums] = useState<number[]>([0, 0]);
+  const [attributesList, setAttributesLis] = useState<AttributesList[]>([]);
+  const [isUpdatedValues, setUpdated] = useState<boolean>(false);
+  const [inputStart, setInputStart] = useState<string>('');
+  const [inputEnd, setInputEnd] = useState<string>('');
   const [selectedAttributes, setSelectedAttributes] = useState<SelectedAttribute[]>([
     { name: '', value: '' }
   ]);
-  const [prouctsCount, setCount] = useState(productsData.cards.length);
-  const [sliderValue, setSliderValue] = useState<number[]>([0, 0]);
-
-  const { categoryId, setCurrentFilter } = useCategoryContext();
 
   const [startValue, endValue] = extremums;
+  const [minValue, maxValue] = sliderValues;
+  const [currentMinValue, currentMaxValue] = rawValues;
+
+  const filter = useMemo(() => {
+    const priceFilter = `variants.price.centAmount:range(${minValue * 100} to ${maxValue * 100})`;
+    const attributesFilter = buildQueryString(selectedAttributes);
+    const catecoryFilter = categoryId.length > 0 ? `categories.id:"${categoryId}"` : '';
+    return [catecoryFilter, priceFilter, ...attributesFilter];
+  }, [minValue, maxValue, categoryId, selectedAttributes]);
 
   useEffect(() => {
-    const catecoryFilter = categoryId.length > 0 ? `categories.id:"${categoryId}"` : undefined;
-    updateExtremumsData(dispatch, fetchFilteredProducts, getExtremums, catecoryFilter).catch((error) => {
-      throw error;
-    });
+    const updateExtremums = async () => {
+      const catecoryFilter = categoryId.length > 0 ? `categories.id:"${categoryId}"` : undefined;
+      const data = await fetchFilteredProducts({ filter: catecoryFilter });
+      const extremums = getExtremums(data);
+      const normalizedData = normalizeData(data);
 
-    setSliderValue([startValue, endValue]);
-  }, [startValue, endValue, dispatch, categoryId]);
+      setAttributesLis(getAttributesList(normalizedData));
+      setExtremums(extremums);
 
-  const [minValue, maxValue] = sliderValue;
-
-  const priceFilter = `variants.price.centAmount:range(${minValue * 100} to ${maxValue * 100})`;
-  const attributesFilter = buildQueryString(selectedAttributes);
-  const catecoryFilter = categoryId.length > 0 ? `categories.id:"${categoryId}"` : '';
-  const filter = useMemo(
-    () => [catecoryFilter, priceFilter, ...attributesFilter],
-    [priceFilter, attributesFilter, catecoryFilter]
-  );
-
-  useEffect(() => {
-    const handleRelease = async () => {
-      const data = (await fetchFilteredProducts(filter)).results;
-      setCount(data.length);
+      if (!isUpdatedValues) {
+        setCount('');
+        setRawValues([startValue, endValue]);
+      }
     };
 
-    handleRelease().catch((error) => {
+    updateExtremums().catch((error) => {
       throw error;
     });
-  }, [filter]);
+  }, [categoryId, startValue, endValue, isUpdatedValues]);
 
-  const { t } = useTranslation();
-  const attributesList = getAttributesList(productsData);
+  useEffect(() => {
+    const updateTotal = async () => {
+      const productsData = await fetchFilteredProducts({ filter });
+      if (isUpdatedValues) {
+        setCount(String(productsData.total));
+      }
+    };
 
-  const [currentMinValue, currentMaxValue] = sliderValue;
+    if (cardsData.length > 0) {
+      updateTotal().catch((error) => {
+        throw error;
+      });
+    }
+  }, [isUpdatedValues, selectedAttributes, filter, cardsData.length, sliderValues]);
+
+  useEffect(() => {
+    setUpdated(false);
+  }, [categoryId]);
+
+  useEffect(() => {
+    setSelectedAttributes([]);
+  }, [categoryId]);
+
   return (
     <Formik
       initialValues={{
-        minValue: 1,
-        numbers: []
+        attributes: []
       }}
-      onSubmit={async (_values, { setSubmitting }): Promise<void> => {
+      onSubmit={async (values, { setSubmitting }): Promise<void> => {
         setSubmitting(false);
         setCurrentFilter(filter);
-        await updateProductsData(dispatch, fetchFilteredProducts, normalizeData, filter);
+
+        const data = await fetchFilteredProducts({ filter, limit: 8 });
+        updateProductsData(dispatch, data);
+        setCount(String(data.total));
+
+        const extremumsData = await fetchFilteredProducts({ filter });
+        const extremums = getExtremums(extremumsData);
+        const [start, end] = extremums;
+
+        setRawValues([start, end]);
       }}
     >
-      {({ submitForm, handleChange, resetForm }) => (
+      {({ submitForm, handleChange, resetForm, values }) => (
         <Stack
           component="form"
           spacing={1}
@@ -102,7 +136,8 @@ export const FilterBar = () => {
               <hr className="my-2" />
             </Typography>
             <TextField
-              id="standard-number"
+              value={inputStart}
+              id="start-number"
               label="From"
               type="number"
               InputLabelProps={{
@@ -113,11 +148,13 @@ export const FilterBar = () => {
               onKeyDown={handleKeyDawn}
               onChange={(e: ChangeEvent<HTMLInputElement>): void => {
                 const { value } = e.target;
-                setSliderValue([Number(value), endValue]);
+                setSliderValues([Number(value), endValue]);
+                setInputStart(value);
               }}
             />
             <TextField
-              id="standard-number"
+              value={inputEnd}
+              id="end-number"
               label="To"
               type="number"
               InputLabelProps={{
@@ -127,16 +164,24 @@ export const FilterBar = () => {
               variant="standard"
               onKeyDown={handleKeyDawn}
               onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                e.preventDefault();
                 const { value } = e.target;
-                setSliderValue([startValue, Number(value)]);
+                setUpdated(true);
+                setInputEnd(value);
+                setRawValues([startValue, Number(value)]);
+                setSliderValues([startValue, Number(value)]);
               }}
             />
             <Field
               component={PrettoSlider}
               name="slider"
-              value={sliderValue}
+              value={rawValues}
               onChange={(event: Event, newValue: number | number[], activeThumb: number): void => {
-                handleSliderChange(event, newValue, activeThumb, sliderValue, setSliderValue);
+                handleSliderChange(event, newValue, activeThumb, rawValues, setRawValues);
+                setUpdated(true);
+              }}
+              onChangeCommitted={() => {
+                setSliderValues(rawValues);
               }}
               valueLabelDisplay="auto"
               aria-labelledby="discrete-slider-restrict"
@@ -146,13 +191,18 @@ export const FilterBar = () => {
             />
             <Button
               color="error"
+              disabled={!isUpdatedValues}
               sx={{
                 gridColumn: '1 / span 2'
               }}
               onClick={() => {
+                setInputStart('');
+                setInputEnd('');
                 resetForm();
                 setSelectedAttributes([]);
-                setSliderValue([startValue, endValue]);
+                setRawValues(extremums);
+                setSliderValues([startValue, endValue]);
+                setUpdated(false);
                 submitForm().catch((error) => {
                   throw error;
                 });
@@ -164,7 +214,7 @@ export const FilterBar = () => {
           {attributesList.map(({ name, attributes }, i) => (
             <div
               className="border-b pb-4"
-              key={`attributes-${i}`}
+              key={`attributes-${name}`}
             >
               <Typography
                 sx={{
@@ -178,14 +228,19 @@ export const FilterBar = () => {
                   return (
                     <Field
                       type="checkbox"
+                      checked={selectedAttributes.some((item) => {
+                        return item.name === name && item.value === String(attr);
+                      })}
                       component={CheckboxWithLabel}
-                      name="numbers"
+                      name="attributes"
                       color="secondary"
                       key={`${String(attr)}-${index}`}
                       value={String(attr)}
                       Label={{ label: t(`attributes.${name}.${String(attr)}`) }}
                       onChange={(e: ChangeEvent) => {
                         handleChange(e);
+                        setUpdated(true);
+                        setSliderValues([startValue, endValue]);
                         handleCheckboxChange(
                           { name: `${name}`, value: `${String(attr)}` },
                           selectedAttributes,
@@ -201,13 +256,14 @@ export const FilterBar = () => {
           <Button
             className="hover:opacity-80"
             variant="contained"
+            disabled={!isUpdatedValues}
             onClick={() => {
               submitForm().catch((error) => {
                 throw error;
               });
             }}
           >
-            {`show (${prouctsCount})`}
+            {isUpdatedValues && prouctsCount.length > 0 ? `show (${prouctsCount})` : 'set filter'}
           </Button>
         </Stack>
       )}

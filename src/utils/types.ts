@@ -1,13 +1,12 @@
 import type { initialValuesRegistration } from '../components/forms/inputs/inputsData';
 import type * as yup from 'yup';
 import type { FieldInputProps } from 'formik';
-import type { ComponentType } from 'react';
-import type { ButtonProps } from '@mui/material';
 import type {
   Image,
   Customer,
   Attribute,
-  ProductProjectionPagedQueryResponse
+  ProductProjectionPagedQueryResponse,
+  Cart
 } from '@commercetools/platform-sdk';
 
 interface UserName {
@@ -63,7 +62,7 @@ export interface LogoParams {
 }
 
 export interface ClickHandlerInterface {
-  clickHandler: (open: boolean) => void;
+  clickHandler?: (open: boolean) => void;
 }
 
 export interface BurgerMenuProps {
@@ -97,10 +96,12 @@ export interface UseUpdateCustomer {
 
 export interface RootState {
   isLogged: boolean;
-  cards: ProductsDataInterface[];
+  cardsData: ProductsDataInterface[];
   customer: Customer | null;
   extremums: number[];
-  catecories: CategoriesList[];
+  categories: CategoriesList[];
+  cart: Cart | null;
+  total: number;
 }
 
 export interface AddressFieldComponent {
@@ -125,6 +126,9 @@ export interface InputProps {
   placeholder: string;
   formik?: FormikProps;
   disabled?: boolean;
+  onChange?: (e: string) => void;
+  value?: string;
+  onKeyDown?: () => Promise<void>;
 }
 
 export interface AddressFieldSetProps {
@@ -153,6 +157,7 @@ export interface PrivateNavGroupProps {
   isLogged: boolean;
   logout: () => void;
   clickHandler: (open: boolean) => void;
+  itemsCount?: number;
 }
 
 export type FakeOnSubmit = (values: HandleSubmitWithBoth) => Promise<void>;
@@ -173,8 +178,9 @@ export interface ProductsDataInterface {
 }
 
 export interface InitialProductsStateInterace {
-  cards: ProductsDataInterface[];
+  cardsData: ProductsDataInterface[];
   extremums: number[];
+  total: number;
 }
 
 export interface ProductCardInterface extends PriceTagInterface {
@@ -194,7 +200,6 @@ export interface CategoriesList {
 export interface ContainerProps {
   titleName: string;
   titleDescription?: string;
-  buttons: Array<ComponentType<ButtonProps>>;
 }
 
 export type Mapping = Record<string, string>;
@@ -273,12 +278,14 @@ export interface CategoriesContextInterface {
   currentFilter: string[];
   setCurrentFilter: (filter: string[]) => void;
 }
-
-export type FetchDataType = (
-  quertString?: string | string[] | undefined,
-  sort?: string,
-  text?: string
-) => Promise<ProductProjectionPagedQueryResponse>;
+export interface QueryArgs {
+  offset?: number;
+  filter?: string | string[];
+  sort?: string;
+  'text.en-US'?: string;
+  limit?: number;
+}
+export type FetchDataType = (queryArgs: QueryArgs) => Promise<ProductProjectionPagedQueryResponse>;
 
 export type NormolizeDataType = (
   productData: ProductProjectionPagedQueryResponse
@@ -292,4 +299,32 @@ export interface AttributesList {
 export interface SelectedAttribute {
   name: string;
   value: string;
+}
+
+export interface AddToCartParams {
+  cartId: string;
+  cartVersion: number;
+  productId: string;
+}
+
+export interface UpdateItemQuantity {
+  cartId: string;
+  cartVersion: number;
+  lineItemId: string;
+  quantity: number;
+  centAmount: number;
+}
+
+export interface ModalPreviewProps {
+  product: ProductsDataInterface;
+  currentImageIndex: number;
+  setCurrentImageIndex: (index: number) => void;
+  setModalPreviewOpen: (isOpen: boolean) => void;
+}
+
+export interface ProductDetailsProps {
+  product: ProductsDataInterface;
+  rating?: Attribute;
+  color?: Attribute;
+  id: string | undefined;
 }

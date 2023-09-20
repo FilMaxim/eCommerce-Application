@@ -3,6 +3,7 @@ import { NavRoutes } from './routes';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 export const links = {
   main: {
@@ -12,10 +13,6 @@ export const links = {
   about: {
     text: 'About',
     path: NavRoutes.aboutPage
-  },
-  contacts: {
-    text: 'Contacts',
-    path: NavRoutes.contactsPage
   },
   catalog: {
     text: 'Catalog',
@@ -41,5 +38,10 @@ export const links = {
     path: NavRoutes.registrationPagePath,
     icon: <HowToRegOutlinedIcon color="secondary" />
   },
-  product: { text: 'Product', path: NavRoutes.productPage }
+  product: { text: 'Product', path: NavRoutes.productPage },
+  cart: {
+    text: 'Cart',
+    path: NavRoutes.cartPagePath,
+    icon: <ShoppingCartOutlinedIcon color="secondary" />
+  }
 };

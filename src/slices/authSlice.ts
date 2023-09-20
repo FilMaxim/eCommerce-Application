@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isLogged: Boolean(localStorage.getItem('customer')),
-  customer: JSON.parse(localStorage.getItem('customer') ?? '{}')
+  customer: JSON.parse(localStorage.getItem('customer') ?? 'null')
 };
 
 const authSlice = createSlice({

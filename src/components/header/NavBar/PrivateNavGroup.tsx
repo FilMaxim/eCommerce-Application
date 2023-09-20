@@ -1,9 +1,12 @@
 import { links } from '../../../utils/links';
 import { Link } from 'react-router-dom';
 import type { PrivateNavGroupProps } from '../../../utils/types';
+import Badge from '@mui/material/Badge';
 
-export const PrivateNavGroup = ({ isLogged, logout, clickHandler }: PrivateNavGroupProps) => {
-  const linksData = isLogged ? [links.profile, links.logout] : [links.login, links.registration];
+export const PrivateNavGroup = ({ isLogged, logout, clickHandler, itemsCount }: PrivateNavGroupProps) => {
+  const linksData = isLogged
+    ? [links.cart, links.profile, links.logout]
+    : [links.cart, links.login, links.registration];
 
   return (
     <>
@@ -14,6 +17,7 @@ export const PrivateNavGroup = ({ isLogged, logout, clickHandler }: PrivateNavGr
         >
           <Link
             to={item.path}
+            aria-label={item.text}
             onClick={
               item.text === 'Logout'
                 ? () => {
@@ -25,7 +29,22 @@ export const PrivateNavGroup = ({ isLogged, logout, clickHandler }: PrivateNavGr
                   }
             }
           >
-            {item.icon}
+            {
+              /* prettier-ignore */
+              item.text === 'Cart'
+                ? (
+              <Badge
+                className="r-1 t-2"
+                color="warning"
+                badgeContent={itemsCount}
+              >
+                {item.icon}
+              </Badge>
+                  )
+                : (
+                    item.icon
+                  )
+            }
           </Link>
         </li>
       ))}

@@ -6,10 +6,12 @@ import { PrivateNavGroup } from '../NavBar/PrivateNavGroup';
 import { useAuth } from '../../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { NavGroup } from '../NavBar/NavGroup';
+import { useCart } from '../../../hooks/useCart';
 
 export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProps) => {
   const isLogged = useSelector((state: { authData: RootState }) => state.authData.isLogged);
   const { logout } = useAuth();
+  const { cart } = useCart();
 
   return (
     <Dialog
@@ -18,8 +20,8 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
       open={mobileMenuOpen}
       onClose={setMobileMenuOpen}
     >
-      <Dialog.Panel className="fixed inset-0 z-10 flex flex-col overflow-y-auto bg-black bg-burger-bender bg-[length:200px_400px] bg-right-bottom bg-no-repeat p-6">
-        <div className="mx-[-8px] mt-[-8px] flex items-center justify-between">
+      <Dialog.Panel className="fixed inset-0 z-10 flex flex-col overflow-y-auto bg-black bg-burger-bender bg-[length:200px_400px] bg-right-bottom bg-no-repeat px-4 py-6">
+        <div className="mx-[-7px] mt-[-7px] flex items-center justify-between">
           <Logo />
           <BurgerCloseBtn clickHandler={setMobileMenuOpen} />
         </div>
@@ -31,6 +33,7 @@ export const BurgerMenu = ({ mobileMenuOpen, setMobileMenuOpen }: BurgerMenuProp
             clickHandler={setMobileMenuOpen}
             isLogged={isLogged}
             logout={logout}
+            itemsCount={cart?.totalLineItemQuantity}
           />
         </ul>
       </Dialog.Panel>

@@ -84,9 +84,22 @@ export const AddressComponent = ({
                 setIsNewAddress(false);
               }
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                setIsNewAddress(false);
+              }
+            }}
+            role="textbox"
+            tabIndex={-1}
+            aria-labelledby="new-address"
           >
             <div className="mx-2 flex max-w-[42rem] flex-wrap items-center justify-center rounded bg-white p-6">
-              <h3 className="text-center">New address</h3>
+              <h3
+                className="text-center"
+                aria-label="new-address"
+              >
+                New address
+              </h3>
               <CustomerPageForm
                 initialValues={newAddressInitialValues}
                 onSubmit={(value) => {

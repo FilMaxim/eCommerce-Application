@@ -22,10 +22,8 @@ export const getExtremums = (productsData: ProductProjectionPagedQueryResponse):
     return prices;
   });
 
-  const [min, max] = values;
-
-  const minValue = isFinite(min) ? Math.floor(Math.min(...values)) : 0;
-  const maxValue = isFinite(max) ? Math.ceil(Math.max(...values)) : 0;
+  const minValue = Math.floor(Math.min(...values));
+  const maxValue = Math.ceil(Math.max(...values));
 
   return [minValue, maxValue];
 };

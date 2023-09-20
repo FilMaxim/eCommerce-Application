@@ -46,3 +46,21 @@ export const buildClientWithClientCredentialsFlow = () => {
     .withHttpMiddleware(httpMiddlewareOptions)
     .build();
 };
+
+const oauthMiddlewareOptions: AuthMiddlewareOptions = {
+  host: Endpoints.auth,
+  projectKey: ClientApiData.projectKey,
+  credentials: {
+    clientId: ClientApiData.clientId,
+    clientSecret: ClientApiData.clientSecret
+  },
+  scopes: ClientApiData.scopes.split(' '),
+  fetch
+};
+
+export const buildClientWithAnonymousSessionFlow = () => {
+  return new ClientBuilder()
+    .withAnonymousSessionFlow(oauthMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
+};

@@ -5,14 +5,16 @@ import { Logo } from '../../logo/logo';
 import { BurgerBtn } from './BurgerBtn/BurgerBtn';
 import { PrivateNavGroup } from './PrivateNavGroup';
 import { NavGroup } from './NavGroup';
+import { useCart } from '../../../hooks/useCart';
 
 export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
   const isLogged = useSelector((state: { authData: RootState }) => state.authData.isLogged);
+  const { cart } = useCart();
   const { logout } = useAuth();
 
   return (
     <nav
-      className="mx-auto flex max-w-7xl items-center justify-between gap-4 p-4 lg:px-8"
+      className="mx-auto flex items-center justify-between gap-2 px-2 py-4 md:gap-4 lg:px-8"
       aria-label="Global"
     >
       <Logo className="block" />
@@ -22,7 +24,8 @@ export const NavBar = ({ clickHandler }: ClickHandlerInterface) => {
       <BurgerBtn clickHandler={clickHandler} />
       <ul className="hidden gap-3 sm:flex">
         <PrivateNavGroup
-          clickHandler={clickHandler}
+          itemsCount={cart?.totalLineItemQuantity}
+          clickHandler={clickHandler as (open: boolean) => void}
           isLogged={isLogged}
           logout={logout}
         />

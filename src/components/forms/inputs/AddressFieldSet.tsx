@@ -16,11 +16,11 @@ export const AddressFieldSet = ({ fieldSet, formik, disabled }: AddressFieldSetP
   const hasFieldSetName = fieldSet !== undefined;
 
   return (
-    <div>
+    <fieldset>
       {hasFieldSetName && (
-        <h3 className="mb-4 inline-block rounded-full border border-secondary bg-secondary-light p-1 text-sm text-gray-700">
+        <legend className="mb-4 inline-block rounded-full border border-secondary bg-secondary-light p-1 text-sm text-gray-700">
           {fieldSet === FieldSetName.Billing ? 'Billing address:' : 'Shipping address:'}
-        </h3>
+        </legend>
       )}
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         {[streetName, city].map(({ name, placeholder, type }) => (
@@ -64,6 +64,6 @@ export const AddressFieldSet = ({ fieldSet, formik, disabled }: AddressFieldSetP
           labelPlacement="start"
         />
       )}
-    </div>
+    </fieldset>
   );
 };
